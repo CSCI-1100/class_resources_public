@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Adventure: Crisis at Chaotic University</title>
+    <link rel="stylesheet" type="text/css" href="https://haasr.github.io/class_resources_public/intro_to_programming_with_python/python_game/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <h1>🎓 Crisis at Chaotic University! 🚨</h1>
+            <p>Technology has failed campus-wide! Use Python programming and computational thinking to save the day!</p>
+            <div class="progress-bar">
+                <div id="progressBar" class="progress-fill"></div>
+            </div>
+            <div id="levelDisplay" class="level-display">Level 0: Choose Your Scenario!</div>
+            <div id="playerInfo" class="hidden">
+                <span id="playerName"></span> | <span id="playerRole"></span>
+            </div>
+        </div>
+
+        <!-- Character Creation -->
+        <div id="characterCreation" class="content-area">
+            <div class="crisis-banner">
+                <h2>🚨 CAMPUS-WIDE EMERGENCY! 🚨</h2>
+                <p>The university is in crisis! All computer systems at Chaotic University have mysteriously crashed overnight!</p>
+                <p>Classes start tomorrow and everyone is in a panic!</p>
+            </div>
+            <div class="character-dialogue"><span class="character-name">Dean Doomer:</span> "We need heroes who can learn Python quickly to wrangle disorganized data and solve critical problems! The fate of the semester depends on you!"</div>
+            <div style="margin: 20px 0;">
+                <label for="nameInput" style="font-size: 18px;">Enter your name, brave volunteer:</label>
+                <input type="text" id="nameInput" class="name-input" placeholder="Your name here..." />
+            </div>
+
+            <h3>Choose Your Crisis to Solve:</h3>
+            <div class="role-selection">
+                <div class="role-card" data-role="professor-scatterbrain">
+                    <h4>👨‍🏫 Professor Scatterbrain</h4>
+                    <p><strong>Crisis:</strong> Student rosters are scrambled across classes!</p>
+                    <p>Help organize attendance lists and grade data before tomorrow's classes.</p>
+                </div>
+                <div class="role-card" data-role="admin-alice">
+                    <h4>💼 Administrator Alice</h4>
+                    <p><strong>Crisis:</strong> Enrollment system crashed during registration!</p>
+                    <p>Process hundreds of pending applications and create organized student records.</p>
+                </div>
+                <div class="role-card" data-role="researcher-ray">
+                    <h4>🔬 Researcher Ray</h4>
+                    <p><strong>Crisis:</strong> Lab data from multiple experiments is mixed up!</p>
+                    <p>Sort and analyze research data to save months of work.</p>
+                </div>
+                <div class="role-card" data-role="it-hero">
+                    <h4>💻 IT Hero</h4>
+                    <p><strong>Crisis:</strong> User accounts and permissions are chaos!</p>
+                    <p>Automate user management and fix access control systems.</p>
+                </div>
+            </div>
+            <button id="startAdventure" class="btn hidden">Start Your Python Adventure!</button>
+        </div>
+
+        <!-- Level 1: Introduction to Python -->
+        <div id="level1" class="content-area hidden">
+            <h2>Level 1: Introduction to Python 🐍</h2>
+            <div class="scenario-box">
+                <h3>Your First Challenge!</h3>
+                <p id="scenarioText">Welcome to your role! You need to learn Python to solve real university problems.</p>
+            </div>
+
+            <p>Python is a popular programming language with easy-to-read syntax. Let's start with the basics!</p>
+            
+            <h3 style="margin-top: 1.6rem;">What is a Variable?</h3>
+            <p>A <span class="vocab-term" title="A labeled container that holds information">variable</span> in Python is like a labeled container that holds information.</p>
+            
+            <div class="code-example">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code class="language-python"># Employee review data
+employee_name = "Sarah Chen"
+review_score = 4.2
+is_promotion_eligible = True
+department_list = ["Engineering", "Marketing", "Sales", "HR"]</code></pre>
+                </div>
+                <div class="output-box">
+                    <h4>📤 What this creates in memory:</h4>
+                    <div class="output-content">
+                        <p>employee_name → "Sarah Chen"</p>
+                        <p>review_score → 4.2</p>
+                        <p>is_promotion_eligible → True</p>
+                        <p>department_list → ["Engineering", "Marketing", "Sales", "HR"]</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h4>🎯 Interactive Challenge: Create Your First Variable</h4>
+                <p>Create a variable that stores your favorite programming language (hint: it should be "Python"!)</p>
+                <input type="text" id="variable-challenge" class="question-input" placeholder="Type your code here..." />
+                <button class="btn" onclick="checkVariableChallenge()">Check Answer</button>
+                <div id="variable-feedback"></div>
+                <div class="hint">💡 Hint: Use the format: variable_name = "value"</div>
+            </div>
+
+            <button class="btn" onclick="completeLevel(1)">Continue to Level 2 »</button>
+        </div>
+
+        <!-- Level 2: Data Types -->
+        <div id="level2" class="content-area hidden">
+            <h2>Level 2: Data Types and Operations 📊</h2>
+            <div class="scenario-box">
+                <h3>Data Organization Challenge</h3>
+                <p id="level2Scenario">You need to organize different types of university data efficiently.</p>
+            </div>
+
+            <h3>Python Data Types</h3>
+            <p>Different types of data require different <span class="vocab-term" title="Categories that define what operations can be performed on data">data types</span>:</p>
+            
+            <div class="code-example">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code class="language-python"># Different data types for different purposes
+# Essential Python data types
+student_id = 12847                  # int (integer) - for whole numbers 
+name = "Aisha Patel"                # str (string) - for text
+gpa = 3.85                          # float - for decimal numbers
+is_enrolled = True                  # bool (boolean) - for True/False
+courses = ["CS101", "MATH201"]      # list - for collections of items
+
+print(f"ID: {student_id}")
+print(f"Name: {name}")
+print(f"GPA: {gpa}")
+print(f"Enrolled: {is_enrolled}")
+print(f"Courses: {courses}")</code></pre>
+                </div>
+                <div class="output-box">
+                    <h4>📤 Output:</h4>
+                    <div class="output-content">
+                        <p>ID: 12847</p>
+                        <p>Name: Aisha Patel</p>
+                        <p>GPA: 3.85</p>
+                        <p>Enrolled: True</p>
+                        <p>Courses: ['CS101', 'MATH201']</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="multiple-choice">
+                <h4>🎯 Question: Which data type is correct for storing whole numbers in Python?</h4>
+                <div class="choice-option" data-answer="correct" onclick="selectChoice(this, 'datatypes')">int</div>
+                <div class="choice-option" data-answer="wrong" onclick="selectChoice(this, 'datatypes')">float</div>
+                <div class="choice-option" data-answer="wrong" onclick="selectChoice(this, 'datatypes')">str</div>
+                <div class="choice-option" data-answer="wrong" onclick="selectChoice(this, 'datatypes')">bool</div>
+                <button class="btn" onclick="checkMultipleChoice('datatypes')">Check Answer</button>
+                <div id="datatypes-feedback"></div>
+            </div>
+
+            <button class="btn" onclick="completeLevel(2)">Continue to Level 3 »</button>
+        </div>
+
+        <!-- Level 3: Input and Output -->
+        <div id="level3" class="content-area hidden">
+            <h2>Level 3: Input and Output - Connecting with Users 💬</h2>
+            <div class="scenario-box">
+                <h3>Interactive System Challenge</h3>
+                <p id="level3Scenario">Create an interactive system for your university role.</p>
+            </div>
+
+            <h3>Getting User Input and Displaying Results</h3>
+            <p>The <span class="vocab-term" title="A function that gets text input from the user">input() function</span> always returns a string, even if the user types numbers!</p>
+            
+            <div class="code-example">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code class="language-python"># Getting input from users
+student_name = input("Enter student name: ")
+credit_hours = int(input("Total credit hours completed: "))
+
+# Processing and displaying results
+if credit_hours < 30:
+    status = "Freshman"
+elif credit_hours < 60:
+    status = "Sophomore"
+elif credit_hours < 90:
+    status = "Junior"
+else:
+    status = "Senior"
+
+print(f"\n{student_name}'s status: {status}")</code></pre>
+                </div>
+                <div class="output-box">
+                    <h4>📤 Output:</h4>
+                    <div class="output-content">
+                        <p><span class="input-prompt">Enter student name: </span><span class="user-input">Amara Johnson</span></p>
+                        <p><span class="input-prompt">Total credit hours completed: </span><span class="user-input">30</span></p>
+                        <br>
+                        <p>Amara Johnson's status: Sophomore</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h4>🎯 F-string Challenge</h4>
+                <p>Complete this f-string to display a person's name: <code>print(f"Hello, ____")</code></p>
+                <input type="text" id="fstring-challenge" class="question-input" placeholder="Fill in the blanks..." />
+                <button class="btn" onclick="checkFstringChallenge()">Check Answer</button>
+                <div id="fstring-feedback"></div>
+                <div class="hint">💡 Hint: F-strings use curly braces {} to include variables</div>
+            </div>
+
+            <button class="btn" onclick="completeLevel(3)">Continue to Level 4 »</button>
+        </div>
+
+        <!-- Level 4: Lists -->
+        <div id="level4" class="content-area hidden">
+            <h2>Level 4: Lists - Managing Collections of Data 📋</h2>
+            <div class="scenario-box">
+                <h3>Data Collection Challenge</h3>
+                <p id="level4Scenario">Organize multiple pieces of related data efficiently.</p>
+            </div>
+
+            <h3>Working with Lists</h3>
+            <p><span class="vocab-term" title="An ordered collection of items that can be changed">Lists</span> can hold collections of data. Python uses <span class="vocab-term" title="Counting that starts at 0 instead of 1">zero-based indexing</span>!</p>
+            
+            <div class="code-example">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code class="language-python"># Creating and managing lists
+students = ["Aisha", "Carlos", "Amara", "Diane"]
+grades = [95, 87, 92, 88]
+
+print("Class Roster:")
+for i in range(len(students)):
+    print(f"{i+1}. {students[i]} - Grade: {grades[i]}")
+
+# Adding new student
+students.append("Eve")
+grades.append(94)
+
+print(f"\nTotal students: {len(students)}")
+print(f"Average grade: {sum(grades)/len(grades):.1f}")</code></pre>
+                </div>
+                <div class="output-box">
+                    <h4>📤 Output:</h4>
+                    <div class="output-content">
+                        <p>Class Roster:</p>
+                        <p>1. Aisha - Grade: 95</p>
+                        <p>2. Carlos - Grade: 87</p>
+                        <p>3. Amara - Grade: 92</p>
+                        <p>4. Diane - Grade: 88</p>
+                        <br>
+                        <p>Total students: 5</p>
+                        <p>Average grade: 91.2</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h4>🎯 List Creation Challenge</h4>
+                <p>Create a list containing three of your favorite subjects:</p>
+                <input type="text" id="list-challenge" class="question-input" placeholder="subjects = [...]" />
+                <button class="btn" onclick="checkListChallenge()">Check Answer</button>
+                <div id="list-feedback"></div>
+            </div>
+
+            <h3>Useful List Functions</h3>
+            <p>Python has built-in functions that help you work with lists more effectively:</p>
+
+            <div class="code-example">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code class="language-python"># Useful list functions
+grades = [95, 87, 92, 88, 94]
+students = ["Carlos", "Eve", "Diane", "Jamal", "Sofia"]
+
+# len() tells you how many items are in a list
+total_students = len(students)
+total_grades = len(grades)
+
+# sum() adds up all numbers in a list
+total_points = sum(grades)
+
+# Calculate average
+average_grade = sum(grades) / len(grades)
+
+print(f"Total students: {total_students}")
+print(f"Total points: {total_points}")
+print(f"Average grade: {average_grade:.1f}")
+
+# You can also use len() to check if a list is empty
+if len(students) > 0:
+    print("We have students!")
+else:
+    print("No students yet.")</code></pre>
+                </div>
+            <div class="output-box">
+                    <h4>📤 Output:</h4>
+                    <div class="output-content">
+                        <p>Total students: 5</p>
+                        <p>Total points: 456</p>
+                        <p>Average grade: 91.2</p>
+                        <p>We have students!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h4>🎯 Function Challenge</h4>
+                <p>You have a list of test scores: [85, 92, 78, 96, 89]. What function would you use to find how many scores there are?</p>
+                <input type="text" id="function-challenge" class="question-input" placeholder="function_name(test_scores)" />
+                <button class="btn" onclick="checkFunctionChallenge()">Check Answer</button>
+                <div id="function-feedback"></div>
+                <div class="hint">💡 Hint: This function counts the number of items in a list</div>
+            </div>
+
+            <button class="btn" onclick="completeLevel(4)">Continue to Level 5  »</button>
+        </div>
+
+        <!-- Level 5: Decision Making -->
+        <div id="level5" class="content-area hidden">
+            <h2>Level 5: Decision Making - Automated Logic 🤔</h2>
+            <div class="scenario-box">
+                <h3>Automation Challenge</h3>
+                <p id="level5Scenario">Create automated decision-making systems for your university role.</p>
+            </div>
+
+            <h3>Boolean Logic and If Statements</h3>
+            <p><span class="vocab-term" title="Values that can only be True or False">Boolean logic</span> allows programs to make decisions based on conditions.</p>
+            
+            <div class="code-example">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code class="language-python"># Automated student evaluation
+students = [
+    {"name": "Aisha", "grade": 95, "attendance": 0.98},
+    {"name": "Carlos", "grade": 72, "attendance": 0.85},
+    {"name": "Diane", "grade": 88, "attendance": 0.92}
+]
+
+for student in students:
+    name = student["name"]
+    grade = student["grade"]
+    attendance = student["attendance"]
+    
+    print(f"\nEvaluating {name}:")
+    print(f"  Grade: {grade}")
+    print(f"  Attendance: {attendance:.0%}")
+    
+    if grade >= 90 and attendance >= 0.95:
+        status = "Dean's List"
+    elif grade >= 70 and attendance >= 0.80:
+        status = "Passing"
+    else:
+        status = "Needs Improvement"
+    
+    print(f"  Status: {status}")</code></pre>
+                </div>
+                <div class="output-box">
+                    <h4>📤 Output:</h4>
+                    <div class="output-content">
+                        <p>Evaluating Aisha:</p>
+                        <p>&nbsp;&nbsp;Grade: 95</p>
+                        <p>&nbsp;&nbsp;Attendance: 98%</p>
+                        <p>&nbsp;&nbsp;Status: Dean's List</p>
+                        <p></p>
+                        <p>Evaluating Carlos:</p>
+                        <p>&nbsp;&nbsp;Grade: 72</p>
+                        <p>&nbsp;&nbsp;Attendance: 85%</p>
+                        <p>&nbsp;&nbsp;Status: Passing</p>
+                        <p></p>
+                        <p>Evaluating Diane:</p>
+                        <p>&nbsp;&nbsp;Grade: 88</p>
+                        <p>&nbsp;&nbsp;Attendance: 92%</p>
+                        <p>&nbsp;&nbsp;Status: Passing</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h4>🎯 If Statement Challenge</h4>
+                <p>Complete this if statement to check if a score is passing (>= 70):</p>
+                <input type="text" id="if-challenge" class="question-input" placeholder="if score __ 70:" />
+                <button class="btn" onclick="checkIfChallenge()">Check Answer</button>
+                <div id="if-feedback"></div>
+            </div>
+
+            <button class="btn" onclick="completeLevel(5)">Continue to Final Challenge</button>
+        </div>
+
+        <!-- Level 6: Final Scenario-Specific Challenge -->
+        <div id="level6" class="content-area hidden">
+            <h2 id="finalLevelTitle">Level 6: Final Challenge</h2>
+            <div class="scenario-box">
+                <h3 id="finalChallengeTitle">The Ultimate Test</h3>
+                <p id="finalScenarioText">Time to put all your skills together!</p>
+            </div>
+
+            <div id="finalChallengeContent">
+                <!-- Content will be populated by JavaScript based on selected role -->
+            </div>
+
+            <button class="btn" id="completeLevel6" onclick="completeLevel(6)">Complete Your Quest & See Full Solution!</button>
+        </div>
+
+        <!-- Completion -->
+        <div id="completion" class="content-area hidden">
+            <div id="completionContent">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+            <button class="btn" onclick="resetGame()">Start New Adventure</button>
+        </div>
+    </div>
+
+    <div id="certificateModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="certificate">
+                <div class="certificate-header">
+                    <h1>🏆 Certificate of Achievement</h1>
+                    <div class="certificate-subtitle">Python Programming & Computational Thinking</div>
+                </div>
+                
+                <div class="certificate-text">This certifies that</div>
+                <div class="certificate-name" id="certificateName">[Student Name]</div>
+                <div class="certificate-text">has successfully completed</div>
+                <div class="certificate-course">Crisis at Chaotic University</div>
+                <div class="certificate-scenario" id="certificateScenario">[Scenario Description]</div>
+                
+                <div class="skills-mastered">
+                    <h4>🛠️ Skills Mastered:</h4>
+                    <div class="skills-grid" id="certificateSkills">
+                        <!-- Skills will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="certificate-footer">
+                    <div class="certificate-date">
+                        Completed on: <span id="certificateDate">[Date]</span>
+                    </div>
+                    <div class="certificate-signature">
+                        <div><strong>Professor Ryan Haas</strong></div>
+                        <div>Introduction to Programming with Python</div>
+                        <div>Chaotic University</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn" onclick="printCertificateOnly()">🖨️ Save as PDF</button>
+                <button class="btn btn-secondary" onclick="closeCertificate()">Close</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://haasr.github.io/class_resources_public/intro_to_programming_with_python/python_game/js/game.js"></script>    
+</body>
+</html>
