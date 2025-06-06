@@ -1,11 +1,11 @@
 
 Contents
-1. [[#Variables and Data Types|Variables and Data Types]]
-2. [[#Input and Output|Input and Output]]
-3. [[#Strings|Strings]]
-4. [[#Working with Lists|Working with Lists]]
-5. [[#Control Flow|Control Flow]]
-6. [[#Logical Operators|Logical Operators]]
+1. [Variables and Data Types](#Variables and Data Types)
+2. [Input and Output](#Input and Output)
+3. [Strings](#Strings)
+4. [Working with Lists](#Working with Lists)
+5. [Control Flow](#Control Flow)
+6. [Logical Operators](#Logical Operators)
 
 ## Variables and Data Types
 
