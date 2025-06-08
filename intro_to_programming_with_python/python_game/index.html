@@ -197,7 +197,7 @@ print(f"Courses: {courses}")</code></pre>
             </div>
 
             <h3>Getting User Input and Displaying Results</h3>
-            <p>The <span class="vocab-term" title="A function that gets text input from the user">input() function</span>always stores users' responses as a string (the 'text' data type), even if they type numbers!</p>
+            <p>The <span class="vocab-term" title="A function that gets text input from the user">input() function</span>waits for the user to type in their input. It does not proceed until the enter key is pressed.</p>
 
             <div class="code-example">
                 <div class="code-block">
@@ -256,7 +256,7 @@ print(f"\n{student_name}'s status: {status}")</code></pre>
 
             <div class="interactive-section">
                 <h4>📝 Converting User Input to Numbers</h4>
-                <p>The <code>input()</code> function always gives you text, even if the user types a number!</p>
+                <p>The <code>input()</code> function always stores the user's input as text, even if they type a number!</p>
                 <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">
                     <p><strong>Problem:</strong> <code>age = input("Your age: ")</code> → age is text like "25"</p>
                     <p><strong>Solution:</strong> Convert text to numbers using:</p>
@@ -411,19 +411,19 @@ else:
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     <pre><code class="language-python"># Processing employee data with split()
-            employee_data = "John Smith,30,Manager,75000"
+employee_data = "John Smith,30,Manager,75000"
 
-            # Split by commas to get individual pieces
-            info = employee_data.split(",")
+# Split by commas to get individual pieces
+info = employee_data.split(",")
 
-            name = info[0]        # "John Smith"
-            age = int(info[1])    # 30 (converted to number)
-            position = info[2]    # "Manager"  
-            salary = int(info[3]) # 75000 (converted to number)
+name = info[0]        # "John Smith"
+age = int(info[1])    # 30 (converted to number)
+position = info[2]    # "Manager"  
+salary = int(info[3]) # 75000 (converted to number)
 
-            print(f"Employee: {name}")
-            print(f"Position: {position}")
-            print(f"Salary: ${salary:,}")</code></pre>
+print(f"Employee: {name}")
+print(f"Position: {position}")
+print(f"Salary: ${salary:,}")</code></pre>
                 </div>
                 <div class="output-box">
                     <h4>📤 Output:</h4>
