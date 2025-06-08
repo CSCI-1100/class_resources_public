@@ -422,10 +422,21 @@ function checkFstringChallenge() {
     const input = document.getElementById('fstring-challenge').value.trim();
     const feedback = document.getElementById('fstring-feedback');
     
-    if (input.includes('{') && input.includes('}') && input.includes('name')) {
+    if (input.includes('{') && input.includes('}') && input.toLowerCase().includes('student_name')) {
         feedback.innerHTML = '<div class="feedback correct">🎉 Correct! F-strings use {variable_name} to include variables!</div>';
     } else {
         feedback.innerHTML = '<div class="feedback incorrect">❌ Try again! Use {name} to include the variable in the f-string.</div>';
+    }
+}
+
+function checkSplitChallenge() {
+    const input = document.getElementById('split-challenge').value.trim();
+    const feedback = document.getElementById('split-feedback');
+    
+    if (input.toLowerCase().includes('split') && input.includes('(') && input.includes(')') && input.includes(',')) {
+        feedback.innerHTML = '<div class="feedback correct">🎉 Correct! split(",") breaks the string into a list at each comma!</div>';
+    } else {
+        feedback.innerHTML = '<div class="feedback incorrect">❌ Try again! Use split(",") to break apart by commas.</div>';
     }
 }
 

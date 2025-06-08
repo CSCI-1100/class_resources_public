@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python Adventure: Crisis at Chaotic University</title>
-    <link rel="stylesheet" type="text/css" href="https://csci-1100.github.io/class_resources_public/intro_to_programming_with_python/python_game/css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 <body>
@@ -28,7 +28,14 @@
                 <p>The university is in crisis! All computer systems at Chaotic University have mysteriously crashed overnight!</p>
                 <p>Classes start tomorrow and everyone is in a panic!</p>
             </div>
-            <div class="character-dialogue"><span class="character-name">Dean Doomer:</span> "We need heroes who can learn Python quickly to wrangle disorganized data and solve critical problems! The fate of the semester depends on you!"</div>
+            <div class="character-dialogue">
+                <img src="img/doomer.png" style="float: left; margin-right: 10px;" alt="Doomer Wojack illustration" width="70">
+                <span class="character-name">Dean Doomer:</span>
+                "We are definitely doomed if we can't find someone who knows Python to disentangle this disorganized data.
+                I doubt we have anyone brave enough to wrangle the tangled up text in these terrible tables to make
+                them coherent, organized, and stable--but if you want to try--be my guest. The fate of the semester depends on you.
+                No pressure."
+            </div>
             <div style="margin: 20px 0;">
                 <label for="nameInput" style="font-size: 18px;">Enter your name, brave volunteer:</label>
                 <input type="text" id="nameInput" class="name-input" placeholder="Your name here..." />
@@ -72,7 +79,18 @@
             
             <h3 style="margin-top: 1.6rem;">What is a Variable?</h3>
             <p>A <span class="vocab-term" title="A labeled container that holds information">variable</span> in Python is like a labeled container that holds information.</p>
-            
+
+            <div class="interactive-section">
+                <h4>📝 How to Define a Variable</h4>
+                <p>We define a variable using this pattern: <code>variable_name = value</code></p>
+                <p><strong>Important:</strong> Text must have quotes around it, but numbers don't need quotes.</p>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                    <p><strong>Examples:</strong></p>
+                    <p><code>name = "Sarah"</code> ← Text needs quotes</p>
+                    <p><code>age = 25</code> ← Numbers don't need quotes</p>
+                    <p><code>is_student = True</code> ← True/False don't need quotes</p>
+                </div>
+            </div>
             <div class="code-example">
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
@@ -95,7 +113,7 @@ department_list = ["Engineering", "Marketing", "Sales", "HR"]</code></pre>
 
             <div class="interactive-section">
                 <h4>🎯 Interactive Challenge: Create Your First Variable</h4>
-                <p>Create a variable that stores your favorite programming language (hint: it should be "Python"!)</p>
+                <p>Create a variable that stores the name of your favorite programming language (hint: it should be "Python"!)</p>
                 <input type="text" id="variable-challenge" class="question-input" placeholder="Type your code here..." />
                 <button class="btn" onclick="checkVariableChallenge()">Check Answer</button>
                 <div id="variable-feedback"></div>
@@ -115,6 +133,18 @@ department_list = ["Engineering", "Marketing", "Sales", "HR"]</code></pre>
 
             <h3>Python Data Types</h3>
             <p>Different types of data require different <span class="vocab-term" title="Categories that define what operations can be performed on data">data types</span>:</p>
+
+            <div class="interactive-section">
+                <h4>📝 The Five Main Data Types</h4>
+                <p>Python has five main data types you need to know:</p>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                    <p><strong>int</strong> = whole numbers (like 25, 100, -5)</p>
+                    <p><strong>float</strong> = decimal numbers (like 3.14, 98.6, -2.5)</p>
+                    <p><strong>str</strong> = text (always needs quotes: "Hello", "Python")</p>
+                    <p><strong>bool</strong> = True or False (no quotes needed)</p>
+                    <p><strong>list</strong> = collection of items (uses square brackets [ ])</p>
+                </div>
+            </div>
             
             <div class="code-example">
                 <div class="code-block">
@@ -167,8 +197,8 @@ print(f"Courses: {courses}")</code></pre>
             </div>
 
             <h3>Getting User Input and Displaying Results</h3>
-            <p>The <span class="vocab-term" title="A function that gets text input from the user">input() function</span> always returns a string, even if the user types numbers!</p>
-            
+            <p>The <span class="vocab-term" title="A function that gets text input from the user">input() function</span>always stores users' responses as a string (the 'text' data type), even if they type numbers!</p>
+
             <div class="code-example">
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
@@ -200,12 +230,61 @@ print(f"\n{student_name}'s status: {status}")</code></pre>
             </div>
 
             <div class="interactive-section">
+                <h4>📝 What is an F-string?</h4>
+                <p>An <strong>f-string</strong> (formatted string) is a way to format text by including variables inside it. Let's see the difference:</p>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                    <p><strong>Without f-string (harder way):</strong></p>
+                    <p><code>print("Hello, " + name + "!")</code></p>
+                    <br>
+                    <p><strong>With f-string (easier way):</strong></p>
+                    <p><code>print(f"Hello, {name}!")</code></p>
+                    <br>
+                    <p>F-strings use curly braces <code>{}</code> to include variables inside the text.</p>
+                </div>
+            </div>
+
+            <div class="interactive-section">
                 <h4>🎯 F-string Challenge</h4>
-                <p>Complete this f-string to display a person's name: <code>print(f"Hello, ____")</code></p>
+                <p>The variable, <code>student_name</code>, stores a student's name.</p>
+                <p>Complete this f-string to display the student's name: <code>print(f"Hello, ____")</code></p>
+                <p><em>Remember: F-strings use curly braces {} to include variables!</em></p>
                 <input type="text" id="fstring-challenge" class="question-input" placeholder="Fill in the blanks..." />
                 <button class="btn" onclick="checkFstringChallenge()">Check Answer</button>
                 <div id="fstring-feedback"></div>
                 <div class="hint">💡 Hint: F-strings use curly braces {} to include variables</div>
+            </div>
+
+            <div class="interactive-section">
+                <h4>📝 Converting User Input to Numbers</h4>
+                <p>The <code>input()</code> function always gives you text, even if the user types a number!</p>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                    <p><strong>Problem:</strong> <code>age = input("Your age: ")</code> → age is text like "25"</p>
+                    <p><strong>Solution:</strong> Convert text to numbers using:</p>
+                    <p><code>int()</code> = converts to whole numbers</p>
+                    <p><code>float()</code> = converts to decimal numbers</p>
+                    <p><strong>Example:</strong> <code>age = int(input("Your age: "))</code></p>
+                </div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code class="language-python"># Getting numbers from users
+years_text = input("Years of experience: ") # This is text: "5"
+years_number = int(years_text) # Convert to integer: 5
+
+# Or do it in one step (more common)
+years_experience = int(input("Years of experience: "))
+current_salary = float(input("Current salary: ")) # float for decimals</code></pre>
+                </div>
+                <div class="output-box">
+                    <h4>📤 What happens:</h4>
+                    <div class="output-content">
+                        <p><span class="input-prompt">Years of experience: </span><span class="user-input">5</span></p>
+                        <p><span class="input-prompt">Current salary: </span><span class="user-input">65000.50</span></p>
+                        <p>Now you can do math with these numbers!</p>
+                    </div>
+                </div>
             </div>
 
             <button class="btn" onclick="completeLevel(3)">Continue to Level 4 »</button>
@@ -313,6 +392,57 @@ else:
                 <div class="hint">💡 Hint: This function counts the number of items in a list</div>
             </div>
 
+            <h3>The split() Method - Breaking Strings Apart</h3>
+            <p>The <span class="vocab-term" title="A method that breaks a string into a list">split() method</span> is very useful for processing data. It breaks a string into a list based on a separator.</p>
+
+            <div class="interactive-section">
+                <h4>📝 How split() Works</h4>
+                <p>The <code>split()</code> method turns a string into a list by breaking it apart:</p>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                    <p><strong>Example:</strong></p>
+                    <p><code>data = "Alice,25,Engineer"</code></p>
+                    <p><code>parts = data.split(",")</code></p>
+                    <p><strong>Result:</strong> <code>["Alice", "25", "Engineer"]</code></p>
+                    <p>The comma tells split() where to break the string apart!</p>
+                </div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre><code class="language-python"># Processing employee data with split()
+            employee_data = "John Smith,30,Manager,75000"
+
+            # Split by commas to get individual pieces
+            info = employee_data.split(",")
+
+            name = info[0]        # "John Smith"
+            age = int(info[1])    # 30 (converted to number)
+            position = info[2]    # "Manager"  
+            salary = int(info[3]) # 75000 (converted to number)
+
+            print(f"Employee: {name}")
+            print(f"Position: {position}")
+            print(f"Salary: ${salary:,}")</code></pre>
+                </div>
+                <div class="output-box">
+                    <h4>📤 Output:</h4>
+                    <div class="output-content">
+                        <p>Employee: John Smith</p>
+                        <p>Position: Manager</p>
+                        <p>Salary: $75,000</p>
+                    </div>
+                </div>
+            </div>
+            <div class="interactive-section">
+                <h4>🎯 Split Method Challenge</h4>
+                <p>You have the string <code>"Math,Science,History"</code>. What would you write to split it into a list of subjects?</p>
+                <input type="text" id="split-challenge" class="question-input" placeholder='subjects.split(...)' />
+                <button class="btn" onclick="checkSplitChallenge()">Check Answer</button>
+                <div id="split-feedback"></div>
+                <div class="hint">💡 Hint: Use split(",") to break apart by commas</div>
+            </div>
+
             <button class="btn" onclick="completeLevel(4)">Continue to Level 5  »</button>
         </div>
 
@@ -378,7 +508,7 @@ for student in students:
 
             <div class="interactive-section">
                 <h4>🎯 If Statement Challenge</h4>
-                <p>Complete this if statement to check if a score is passing (>= 70):</p>
+                <p>Write an if statement to check if a score is passing (>= 70):</p>
                 <input type="text" id="if-challenge" class="question-input" placeholder="if score __ 70:" />
                 <button class="btn" onclick="checkIfChallenge()">Check Answer</button>
                 <div id="if-feedback"></div>
@@ -450,6 +580,6 @@ for student in students:
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="https://csci-1100.github.io/class_resources_public/intro_to_programming_with_python/python_game/js/game.js"></script>    
+    <script type="text/javascript" src="js/game.js"></script>    
 </body>
 </html>

@@ -360,13 +360,26 @@ body {
 }
 
 .vocab-term {
-    background: #e8f5e8;
-    padding: 3px 8px;
-    border-radius: 4px;
-    color: #2e7d32;
-    font-weight: bold;
+    position: relative;
     cursor: help;
-    border-bottom: 2px dotted #4CAF50;
+}
+
+.vocab-term:hover {
+    content: attr(title);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    opacity: 1;
+    z-index: 1000;
 }
 
 .hidden {
