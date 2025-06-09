@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSCI 1100/1150: Online Asynchronous Course</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .slideshow-container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .slide-frame {
+            width: 100%;
+            height: 600px;
+            border: none;
+            background: white;
+        }
+        
+        .navigation {
+            background: #2c3e50;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        
+        .nav-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        .nav-button:hover:not(:disabled) {
+            background: #2980b9;
+        }
+        
+        .nav-button:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+        }
+        
+        .slide-counter {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <iframe id="slideFrame" class="slide-frame"></iframe>
+        <div class="navigation">
+            <button id="prevBtn" class="nav-button" onclick="previousSlide()">← Previous</button>
+            <div class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
+            </div>
+            <button id="nextBtn" class="nav-button" onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        const slides = [
+            // Slide 1: Welcome
+            `<!DOCTYPE html>
+            <html><head><style>
+                body { 
+                    font-family: 'Segoe UI', sans-serif; 
+                    margin: 0; 
+                    padding: 40px; 
+                    background: linear-gradient(135deg, #3b82f6, #1e40af);
+                    color: white;
+                    min-height: 560px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+                .header { text-align: center; margin-bottom: 40px; }
+                .title { font-size: 3em; margin-bottom: 20px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+                .subtitle { font-size: 1.4em; margin-bottom: 10px; }
+                .instructor { font-size: 1.2em; margin-top: 30px; }
+                .highlight { background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; margin-top: 30px; }
+                .format-badge { background: #10b981; padding: 10px 20px; border-radius: 25px; display: inline-block; margin: 10px; font-weight: bold; }
+            </style></head>
+            <body>
+                <div class="header">
+                    <div class="title">CSCI 1100/1150</div>
+                    <div class="subtitle">Using Information Technology</div>
+                    <div class="subtitle">Summer Session 1 • 2025 • Section 901</div>
+                    <div class="format-badge">ONLINE ASYNCHRONOUS</div>
+                    <div class="instructor">Mr. Ryan Haas<br>Assistant Director & Lecturer</div>
+                </div>
+                <div class="highlight">
+                    <h3>🚀 Navigate the Digital Age Confidently!</h3>
+                    <p style="font-size: 1.1em;">Master essential tech skills to become an informed and enlightened digital citizen through our accelerated summer program.</p>
+                </div>
+            </body></html>`,
+
+            // Slide 2: Course Format & Accelerated Pace
+            `<!DOCTYPE html>
+            <html><head><style>
+                body { 
+                    font-family: 'Segoe UI', sans-serif; 
+                    margin: 0; 
+                    padding: 40px; 
+                    background: linear-gradient(135deg, #f59e0b, #d97706);
+                    color: white;
+                    min-height: 560px;
+                }
+                .title { font-size: 2.5em; text-align: center; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+                .format-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+                .format-card { background: rgba(255,255,255,0.15); padding: 25px; border-radius: 15px; backdrop-filter: blur(10px); }
+                .format-title { font-size: 1.4em; font-weight: bold; margin-bottom: 15px; text-align: center; }
+                .format-desc { font-size: 1em; line-height: 1.5; }
+                .warning-box { background: #dc2626; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; }
+                .warning-title { font-size: 1.3em; font-weight: bold; margin-bottom: 10px; }
+            </style></head>
+            <body>
+                <div class="title">📚 Course Format</div>
+                <div class="format-grid">
+                    <div class="format-card">
+                        <div class="format-title">🖥️ CSCI 1100 (Lecture)</div>
+                        <div class="format-desc">
+                            <strong>Asynchronous Online Delivery</strong><br>
+                            • Pre-recorded lecture videos<br>
+                            • Interactive activities<br>
+                            • Various media content<br>
+                            • Delivered via D2L Brightspace<br>
+                            • NO set meeting times
+                        </div>
+                    </div>
+                    <div class="format-card">
+                        <div class="format-title">🔬 CSCI 1150 (Lab)</div>
+                        <div class="format-desc">
+                            <strong>Asynchronous Online Delivery</strong><br>
+                            • Lab instruction documents<br>
+                            • Supplemental links & media<br>
+                            • Personal Learning Labs<br>
+                            • Delivered via D2L Brightspace<br>
+                            • NO set meeting times
+                        </div>
+                    </div>
+                </div>
+                <div class="warning-box">
+                    <div class="warning-title">⚡ ACCELERATED SUMMER PACE</div>
+                    <div>Some weeks feature TWO modules due to our condensed 10-week summer format!</div>
+                </div>
+            </body></html>`,
+
+            // Slide 3: Communication - Email Protocol
+            `<!DOCTYPE html>
+            <html><head><style>
+                body { 
+                    font-family: 'Segoe UI', sans-serif; 
+                    margin: 0; 
+                    padding: 40px; 
+                    background: linear-gradient(135deg, #dc2626, #991b1b);
+                    color: white;
+                    min-height: 560px;
+                }
+                .title { font-size: 2.5em; text-align: center; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+                .email-box { background: rgba(255,255,255,0.15); padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 30px; backdrop-filter: blur(10px); }
+                .email-address { font-size: 2em; font-weight: bold; background: #fbbf24; color: #1f2937; padding: 15px 25px; border-radius: 10px; display: inline-block; margin: 15px 0; }
+                .rule-list { background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; }
+                .rule-item { margin: 15px 0; font-size: 1.1em; line-height: 1.4; }
+                .warning { background: #fbbf24; color: #1f2937; padding: 15px; border-radius: 8px; margin-top: 20px; font-weight: bold; }
+                .check { color: #10b981; font-weight: bold; }
+                .cross { color: #ef4444; font-weight: bold; }
+            </style></head>
+            <body>
+                <div class="title">📧 COMMUNICATION PROTOCOL</div>
+                <div class="email-box">
+                    <h2>ALL Course Email Goes To:</h2>
+                    <div class="email-address">csci1100@etsu.edu</div>
+                    <p style="font-size: 1.1em; margin-top: 20px;">Use this email for questions, comments, feedback, etc.</p>
+                </div>
+                <div class="rule-list">
+                    <div class="rule-item"><span class="cross">✗</span> Don't email my personal email. This will delay our communication!</div>
+                    <div class="rule-item"><span class="check">✓</span> Always include your section number (901)</div>
+                    <div class="rule-item"><span class="check">✓</span> Use format: "CSCI-1150-901 - Your Question"</div>
+                    <div class="rule-item"><span class="check">✓</span> Allow up to 48 hours for response (M-F)</div>
+                </div>
+                <div class="warning">
+                    ⚠️ Waiting for email response within 48 hours of due date will NOT excuse late assignments!
+                </div>
+            </body></html>`,
+
+            // Slide 4: Learning Outcomes
+            `<!DOCTYPE html>
+            <html><head><style>
+                body { 
+                    font-family: 'Segoe UI', sans-serif; 
+                    margin: 0; 
+                    padding: 40px; 
+                    background: linear-gradient(135deg, #10b981, #047857);
+                    color: white;
+                    min-height: 560px;
+                }
+                .title { font-size: 2.5em; text-align: center; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+                .outcomes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+                .outcome-card { background: rgba(255,255,255,0.15); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px); }
+                .outcome-icon { font-size: 2em; margin-bottom: 10px; }
+                .outcome-title { font-size: 1.1em; font-weight: bold; margin-bottom: 10px; }
+                .outcome-desc { font-size: 0.95em; line-height: 1.4; }
+            </style></head>
+            <body>
+                <div class="title">🎯 Learning Outcomes</div>
+                <div class="outcomes-grid">
+                    <div class="outcome-card">
+                        <div class="outcome-icon">🛡️</div>
+                        <div class="outcome-title">Digital Citizenship</div>
+                        <div class="outcome-desc">Engage securely and responsibly in digital communities with understanding of ethical behavior, privacy, and online safety.</div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-icon">🔍</div>
+                        <div class="outcome-title">Information Assessment</div>
+                        <div class="outcome-desc">Critically assess information sources for credibility, ethical use, and security risks using data literacy skills.</div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-icon">💡</div>
+                        <div class="outcome-title">Tech Solutions</div>
+                        <div class="outcome-desc">Design and implement technology-based solutions to solve real-world problems using computing principles.</div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-icon">💬</div>
+                        <div class="outcome-title">Communication</div>
+                        <div class="outcome-desc">Communicate effectively on topics related to computing technology and the digital landscape.</div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-icon">⚡</div>
+                        <div class="outcome-title">Modern Tools</div>
+                        <div class="outcome-desc">Apply software tools and platforms to streamline workflows, enhance collaboration, and drive innovation.</div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-icon">🤖</div>
+                        <div class="outcome-title">AI & Emerging Tech</div>
+                        <div class="outcome-desc">Explore and use Artificial Intelligence and emerging technologies to enhance productivity.</div>
+                    </div>
+                </div>
+            </body></html>`,
+
+            // Slide 5: Major Topics
+            `<!DOCTYPE html>
+            <html><head><style>
+                body { 
+                    font-family: 'Segoe UI', sans-serif; 
+                    margin: 0; 
+                    padding: 40px; 
+                    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+                    color: white;
+                    min-height: 560px;
+                }
+                .title { font-size: 2.5em; text-align: center; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+                .topics-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+                .topic-card { background: rgba(255,255,255,0.15); padding: 20px; border-radius: 12px; text-align: center; backdrop-filter: blur(10px); transition: transform 0.3s; }
+                .topic-card:hover { transform: translateY(-5px); }
+                .topic-icon { font-size: 2.5em; margin-bottom: 15px; }
+                .topic-title { font-size: 1.2em; font-weight: bold; margin-bottom: 8px; }
+                .accelerated-note { background: #fbbf24; color: #1f2937; padding: 15px; border-radius: 10px; margin-top: 30px; text-align: center; font-weight: bold; }
+            </style></head>
+            <body>
+                <div class="title">📋 Major Topics Covered</div>
+                <div class="topics-container">
+                    <div class="topic-card">
+                        <div class="topic-icon">💻</div>
+                        <div class="topic-title">Digital Literacy</div>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">🔧</div>
+                        <div class="topic-title">Tech Product Literacy</div>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">👨‍💻</div>
+                        <div class="topic-title">Programming Intro</div>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">🌐</div>
+                        <div class="topic-title">Connected World</div>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">🕸️</div>
+                        <div class="topic-title">Web Literacy</div>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">📊</div>
+                        <div class="topic-title">Data Literacy</div>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">🎨</div>
+                        <div class="topic-title">Digital Content</div>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">🤖</div>
+                        <div class="topic-title">AI & Machine Learning</div>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">🔒</div>
+                        <div class="topic-title">Cybersecurity</div>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">👥</div>
+                        <div class="topic-title">Digital Citizenship</div>
+                    </div>
+                </div>
+                <div class="accelerated-note">
+                    ⚡ Remember: Some weeks cover multiple topics due to our accelerated summer pace!
+                </div>
+            </body></html>`,
+
+            // Slide 6: Assignments & Grading
+            `<!DOCTYPE html>
+            <html><head><style>
+                body { 
+                    font-family: 'Segoe UI', sans-serif; 
+                    margin: 0; 
+                    padding: 40px; 
+                    background: linear-gradient(135deg, #6366f1, #4f46e5);
+                    color: white;
+                    min-height: 560px;
+                }
+                .title { font-size: 2.5em; text-align: center; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+                .assignment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
+                .assignment-card { background: rgba(255,255,255,0.15); padding: 25px; border-radius: 15px; backdrop-filter: blur(10px); }
+                .assignment-title { font-size: 1.3em; font-weight: bold; margin-bottom: 15px; color: #fbbf24; }
+                .assignment-desc { font-size: 1em; line-height: 1.5; margin-bottom: 15px; }
+                .percentage { font-size: 1.5em; font-weight: bold; background: #10b981; padding: 8px 15px; border-radius: 25px; display: inline-block; }
+                .grade-table { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-top: 20px; }
+                .grade-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 15px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2); }
+                .grade-header { font-weight: bold; background: #1f2937; padding: 10px; text-align: center; }
+                .deadline-note { background: #dc2626; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center; font-weight: bold; }
+            </style></head>
+            <body>
+                <div class="title">📊 Assignments & Grading</div>
+                <div class="assignment-grid">
+                    <div class="assignment-card">
+                        <div class="assignment-title">📝 Personal Learning Labs</div>
+                        <div class="assignment-desc">
+                            Customized assignments matching lecture topics. Complete individually without generative AI unless specified.
+                        </div>
+                        <div class="percentage">1/6 (16.67%)</div>
+                    </div>
+                    <div class="assignment-card">
+                        <div class="assignment-title">📋 Weekly Quizzes</div>
+                        <div class="assignment-desc">
+                            Cover weekly lesson materials. Two attempts allowed - higher score counts. Multiple choice, T/F, fill-in-blank.
+                        </div>
+                        <div class="percentage">1/6 (16.67%)</div>
+                    </div>
+                    <div class="assignment-card">
+                        <div class="assignment-title">🎫 Exit Tickets</div>
+                        <div class="assignment-desc">
+                            Summarize learning after reviewing materials. Help instructors gauge understanding and your reflection.
+                        </div>
+                        <div class="percentage">1/6 (16.67%)</div>
+                    </div>
+                    <div class="assignment-card">
+                        <div class="assignment-title">🏆 Digital Citizenship Audit</div>
+                        <div class="assignment-desc">
+                            Final project demonstrating all literacy competencies. Any format allowed - be creative and thorough!
+                        </div>
+                        <div class="percentage">1/2 (50%)</div>
+                    </div>
+                </div>
+                <div class="grade-table">
+                    <div class="grade-row">
+                        <div class="grade-header">Grade</div>
+                        <div class="grade-header">Range</div>
+                        <div class="grade-header">Grade</div>
+                        <div class="grade-header">Range</div>
+                    </div>
+                    <div class="grade-row">
+                        <div>A+</div><div>97-100%</div><div>C+</div><div>77-79.99%</div>
+                    </div>
+                    <div class="grade-row">
+                        <div>A</div><div>93-96.99%</div><div>C</div><div>73-76.99%</div>
+                    </div>
+                    <div class="grade-row">
+                        <div>A-</div><div>90-92.99%</div><div>C-</div><div>70-72.99%</div>
+                    </div>
+                    <div class="grade-row">
+                        <div>B+</div><div>87-89.99%</div><div>D+</div><div>67-69.99%</div>
+                    </div>
+                    <div class="grade-row">
+                        <div>B</div><div>83-86.99%</div><div>D</div><div>63-66.99%</div>
+                    </div>
+                    <div class="grade-row">
+                        <div>B-</div><div>80-82.99%</div><div>D-</div><div>60-62.99%</div>
+                    </div>
+                </div>
+                <div class="deadline-note">
+                    ⏰ All Lab, Quiz, and Exit Ticket assignments due Sundays at 11:59 PM EDT
+                </div>
+            </body></html>`,
+
+            // Slide 7: Detailed Schedule Part 1 (Weeks 1-5)
+            `<!DOCTYPE html>
+            <html><head><style>
+                body { 
+                    font-family: 'Segoe UI', sans-serif; 
+                    margin: 0; 
+                    padding: 30px; 
+                    background: linear-gradient(135deg, #059669, #047857);
+                    color: white;
+                    min-height: 560px;
+                    font-size: 0.9em;
+                }
+                .title { font-size: 2.2em; text-align: center; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+                .schedule-table { background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; overflow-x: auto; }
+                .week-row { display: grid; grid-template-columns: 80px 150px 200px 80px 80px 150px; gap: 10px; padding: 12px 5px; border-bottom: 1px solid rgba(255,255,255,0.2); align-items: center; }
+                .header-row { background: #1f2937; border-radius: 8px; font-weight: bold; margin-bottom: 10px; }
+                .week-header { font-weight: bold; background: #3b82f6; padding: 8px; border-radius: 5px; text-align: center; }
+                .double-module { background: #fbbf24; color: #1f2937; padding: 4px 8px; border-radius: 15px; font-weight: bold; margin: 2px 0; }
+                .note { background: #dc2626; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center; font-weight: bold; }
+            </style></head>
+            <body>
+                <div class="title">📅 Course Schedule (Weeks 1-5)</div>
+                <div class="schedule-table">
+                    <div class="week-row header-row">
+                        <div>Week</div>
+                        <div>Dates</div>
+                        <div>Lecture Series</div>
+                        <div>Exit Ticket</div>
+                        <div>Quiz</div>
+                        <div>Lab Assignment</div>
+                    </div>
+                    
+                    <div class="week-row">
+                        <div class="week-header">1</div>
+                        <div>Jun 9-15</div>
+                        <div>
+                            <div class="double-module">Course Introduction & Digital Literacy</div>
+                            <div class="double-module">Technology Product Literacy</div>
+                        </div>
+                        <div>Yes</div>
+                        <div>Yes</div>
+                        <div>
+                            <div>1. Digital Literacy Lab</div>
+                            <div>2. Tech Product Literacy Lab</div>
+                        </div>
+                    </div>
+
+                    <div class="week-row">
+                        <div class="week-header">2</div>
+                        <div>Jun 16-22</div>
+                        <div>
+                            <div class="double-module">Information Technology Tools 1: MS Word</div>
+                            <div class="double-module">Information Technology Tools 2: MS PowerPoint</div>
+                        </div>
+                        <div>Yes</div>
+                        <div>Yes</div>
+                        <div>
+                            <div>1. ITT Series: MS Word Lab</div>
+                            <div>2. ITT Series: MS PowerPoint Lab</div>
+                        </div>
+                    </div>
+
+                    <div class="week-row">
+                        <div class="week-header">3</div>
+                        <div>Jun 23-29</div>
+                        <div>Introduction to Programming</div>
+                        <div>Yes</div>
+                        <div>Yes</div>
+                        <div>Programming Lab</div>
+                    </div>
+
+                    <div class="week-row">
+                        <div class="week-header">4</div>
+                        <div>Jun 23-29</div>
+                        <div>
+                            <div class="double-module">1. The Connected World</div>
+                            <div class="double-module">2. Web Literacy</div>
+                        </div>
+                        <div>Yes</div>
+                        <div>Yes</div>
+                        <div>
+                            <div>No lab for Connected World</div>
+                            <div>Web Literacy Lab</div>
+                        </div>
+                    </div>
+
+                    <div class="week-row">
+                        <div class="week-header">5</div>
+                        <div>Jun 30-Jul 6</div>
+                        <div>Information Technology Tools 3: MS Excel</div>
+                        <div>Yes</div>
+                        <div>Yes</div>
+                        <div>ITT Series: MS Excel Lab</div>
+                    </div>
+                </div>
+                <div class="note">
+                    ⚡ Notice the accelerated pace - multiple modules per week in several weeks!
+                </div>
+            </body></html>`,
+
+            // Slide 8: Detailed Schedule Part 2 (Weeks 6-10)
+            `<!DOCTYPE html>
+            <html><head><style>
+                body { 
+                    font-family: 'Segoe UI', sans-serif; 
+                    margin: 0; 
+                    padding: 30px; 
+                    background: linear-gradient(135deg, #0891b2, #0e7490);
+                    color: white;
+                    min-height: 560px;
+                    font-size: 0.9em;
+                }
+                .title { font-size: 2.2em; text-align: center; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+                .schedule-table { background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; overflow-x: auto; }
+                .week-row { display: grid; grid-template-columns: 80px 150px 200px 80px 80px 150px; gap: 10px; padding: 12px 5px; border-bottom: 1px solid rgba(255,255,255,0.2); align-items: center; }
+                .header-row { background: #1f2937; border-radius: 8px; font-weight: bold; margin-bottom: 10px; }
+                .week-header { font-weight: bold; background: #3b82f6; padding: 8px; border-radius: 5px; text-align: center; }
+                .final-week { background: #dc2626; color: white; padding: 8px; border-radius: 5px; text-align: center; font-weight: bold; }
+                .dca-highlight { background: #fbbf24; color: #1f2937; padding: 8px; border-radius: 8px; font-weight: bold; }
+                .final-note { background: #dc2626; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center; font-weight: bold; }
+            </style></head>
+            <body>
+                <div class="title">📅 Course Schedule (Weeks 6-10)</div>
+                <div class="schedule-table">
+                    <div class="week-row header-row">
+                        <div>Week</div>
+                        <div>Dates</div>
+                        <div>Lecture Series</div>
+                        <div>Exit Ticket</div>
+                        <div>Quiz</div>
+                        <div>Lab Assignment</div>
+                    </div>
+                    
+                    <div class="week-row">
+                        <div class="week-header">6</div>
+                        <div>Jul 7-13</div>
+                        <div>Data Literacy</div>
+                        <div>Yes</div>
+                        <div>Yes</div>
+                        <div>Data Literacy Lab</div>
+                    </div>
+
+                    <div class="week-row">
+                        <div class="week-header">7</div>
+                        <div>Jul 14-20</div>
+                        <div>Digital Content Creation</div>
+                        <div>Yes</div>
+                        <div>Yes</div>
+                        <div>Digital Content Creation Lab</div>
+                    </div>
+
+                    <div class="week-row">
+                        <div class="week-header">8</div>
+                        <div>Jul 21-27</div>
+                        <div>AI and Machine Learning</div>
+                        <div>Yes</div>
+                        <div>Yes</div>
+                        <div>
+                            <div>AI Literacy Lab</div>
+                            <div class="dca-highlight">DCA Announced & Released!</div>
+                        </div>
+                    </div>
+
+                    <div class="week-row">
+                        <div class="week-header">9</div>
+                        <div>Jul 28-Aug 3</div>
+                        <div>Cybersecurity and Privacy</div>
+                        <div>No</div>
+                        <div>No</div>
+                        <div class="dca-highlight">Begin work on DCA</div>
+                    </div>
+
+                    <div class="week-row">
+                        <div class="final-week">10</div>
+                        <div>Aug 4-8</div>
+                        <div>Digital Citizenship</div>
+                        <div>No</div>
+                        <div>No</div>
+                        <div class="dca-highlight">DCA DUE Fri, Aug 8 at 11:59 PM!</div>
+                    </div>
+                </div>
+                <div class="final-note">
+                    🏆 The Digital Citizenship Audit (DCA) is your final project worth 50% of your grade!<br>
+                    📝 Exit Tickets: 2 lowest grades automatically dropped (but they're still important!)
+                </div>
+            </body></html>`,
+
+            // Slide 9: Course Policies & AI Policy
+            `<!DOCTYPE html>
+            <html><head><style>
+                body { 
+                    font-family: 'Segoe UI', sans-serif; 
+                    margin: 0; 
+                    padding: 35px; 
+                    background: linear-gradient(135deg, #be185d, #9d174d);
+                    color: white;
+                    min-height: 560px;
+                }
+                .title { font-size: 2.5em; text-align: center; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+                .policy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
+                .policy-card { background: rgba(255,255,255,0.15); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px); }
+                .policy-title { font-size: 1.3em; font-weight: bold; margin-bottom: 15px; color: #fbbf24; }
+                .policy-text { font-size: 0.95em; line-height: 1.4; margin-bottom: 10px; }
+                .ai-policy { background: #dc2626; padding: 20px; border-radius: 15px; margin-top: 20px; }
+                .ai-title { font-size: 1.4em; font-weight: bold; margin-bottom: 15px; text-align: center; }
+                .highlight { background: #fbbf24; color: #1f2937; padding: 8px 12px; border-radius: 6px; font-weight: bold; display: inline-block; margin: 5px 0; }
+                .late-work { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin-top: 15px; }
+            </style></head>
+            <body>
+                <div class="title">📋 Course Policies</div>
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="policy-title">📚 Participation</div>
+                        <div class="policy-text">
+                            • Regularly access both D2L sites<br>
+                            • Engage with ALL course materials<br>
+                            • Complete assignments on time<br>
+                            • Ask questions and be curious!
+                        </div>
+                        <div class="highlight">Success Tip: Hard to catch up once behind!</div>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-title">⚕️ Late Work Policy</div>
+                        <div class="policy-text">
+                            <strong>Extenuating Circumstances:</strong><br>
+                            • Medical emergencies<br>
+                            • Family emergencies<br>
+                            • Natural disasters<br>
+                            • Mental health challenges
+                        </div>
+                        <div class="late-work">
+                            <strong>Contact us BEFORE due date!</strong><br>
+                            Two makeup sessions provided for labs.<br>
+                            Exit Tickets & Quizzes: 2 lowest dropped.
+                        </div>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-title">🎓 Academic Integrity</div>
+                        <div class="policy-text">
+                            • All work must be your own<br>
+                            • Plagiarism strictly prohibited<br>
+                            • If you receive help, cite it:<br>
+                            <em>"Resource: [Name/Link]<br>
+                            Assistance: [What help received]<br>
+                            My Contribution: [What you did]"</em>
+                        </div>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-title">📧 Grade Appeals</div>
+                        <div class="policy-text">
+                            <strong>Appeal within 3 weeks with:</strong><br>
+                            • Written justification<br>
+                            • Supporting evidence<br>
+                            • Proposed resolution<br><br>
+                            Response within one week guaranteed.
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-policy">
+                    <div class="ai-title">🤖 ARTIFICIAL INTELLIGENCE POLICY</div>
+                    <div class="policy-text" style="text-align: center; font-size: 1.1em;">
+                        <strong>Using generative AI to complete assignments = Honor Code Violation</strong><br><br>
+                        ✅ <strong>ALLOWED:</strong> Use AI as a copilot or tutor for learning<br>
+                        ❌ <strong>PROHIBITED:</strong> Submitting AI-generated work as your own<br><br>
+                        <div class="highlight">Goal: Grow YOUR literacies - You are capable!</div>
+                    </div>
+                </div>
+            </body></html>`,
+
+            // Slide 10: Resources & Getting Started
+            `<!DOCTYPE html>
+            <html><head><style>
+                body { 
+                    font-family: 'Segoe UI', sans-serif; 
+                    margin: 0; 
+                    padding: 40px; 
+                    background: linear-gradient(135deg, #1f2937, #374151);
+                    color: white;
+                    min-height: 560px;
+                }
+                .title { font-size: 2.5em; text-align: center; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+                .resources-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
+                .resource-card { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px); }
+                .resource-title { font-size: 1.2em; font-weight: bold; margin-bottom: 15px; color: #fbbf24; }
+                .resource-text { font-size: 0.95em; line-height: 1.4; }
+                .contact-info { background: #3b82f6; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 25px; }
+                .software-req { background: #dc2626; padding: 20px; border-radius: 15px; margin-bottom: 25px; }
+                .success-tips { background: linear-gradient(135deg, #10b981, #047857); padding: 25px; border-radius: 15px; text-align: center; }
+                .email-big { font-size: 1.5em; font-weight: bold; background: #fbbf24; color: #1f2937; padding: 10px 15px; border-radius: 8px; display: inline-block; margin: 10px 0; }
+                .tip-list { text-align: left; margin: 15px 0; }
+                .tip-item { margin: 8px 0; font-size: 1.1em; }
+            </style></head>
+            <body>
+                <div class="title">📚 Resources & Getting Started</div>
+                
+                <div class="contact-info">
+                    <h3>📧 Primary Contact</h3>
+                    <div class="email-big">csci1100@etsu.edu</div>
+                    <p>Use this email for ALL course communication!</p>
+                </div>
+
+                <div class="software-req">
+                    <h3>💻 Required Software</h3>
+                    <p><strong>Microsoft Office Required!</strong> Install via portal.office.com with your ETSU credentials. Online/mobile versions may not be compatible with all labs.</p>
+                </div>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-title">🏫 Campus Resources</div>
+                        <div class="resource-text">
+                            • <strong>ITS Help Desk:</strong> (423) 439-4648<br>
+                            • <strong>Disability Services:</strong> D.P. Culp Center, Suite 390<br>
+                            • <strong>BucsCARE:</strong> Mental health & academic support<br>
+                            • <strong>Sherrod Library:</strong> Research & tech lending
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-title">🔧 Technical Support</div>
+                        <div class="resource-text">
+                            • <strong>D2L Help:</strong> Built-in knowledge base<br>
+                            • <strong>Turnitin:</strong> Plagiarism detection tool<br>
+                            • <strong>Office Hours:</strong> Available by appointment<br>
+                            • <strong>Email Response:</strong> Within 48 hours (M-F)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-tips">
+                    <h3>🚀 Success Tips for Online Learning</h3>
+                    <div class="tip-list">
+                        <div class="tip-item">✅ Check D2L daily for updates and announcements</div>
+                        <div class="tip-item">✅ Set aside 2-3 hours study time for every class hour</div>
+                        <div class="tip-item">✅ Don't wait until Sunday night - start assignments early!</div>
+                        <div class="tip-item">✅ Remember: Some weeks have TWO modules due to summer pace</div>
+                        <div class="tip-item">✅ Ask questions early - don't wait until the last minute</div>
+                        <div class="tip-item">✅ Engage with ALL course materials, not just assignments</div>
+                    </div>
+                    <p style="font-size: 1.2em; margin-top: 20px;"><strong>You've got this! 🎓</strong></p>
+                </div>
+            </body></html>`
+        ];
+
+        let currentSlideIndex = 0; // Starting at slide 6 (index 5)
+        const totalSlides = 10;
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                loadSlide(currentSlideIndex);
+                updateNavigation();
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                loadSlide(currentSlideIndex);
+                updateNavigation();
+            }
+        }
+
+        function loadSlide(index) {
+            const iframe = document.getElementById('slideFrame');
+            iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(slides[index]);
+        }
+
+        function updateNavigation() {
+            document.getElementById('currentSlide').textContent = currentSlideIndex + 1;
+            document.getElementById('totalSlides').textContent = totalSlides;
+            
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentSlideIndex === 0; // Can't go before slide 6
+            nextBtn.disabled = currentSlideIndex === totalSlides - 1;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSlide(0);
+            updateNavigation();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+    </script>
+</body>
+</html>

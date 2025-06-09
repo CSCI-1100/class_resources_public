@@ -982,7 +982,7 @@
             </html>`
         ];
 
-        let currentSlideIndex = 1;
+          let currentSlideIndex = 0; // Starting at slide 6 (index 5)
         const totalSlides = 10;
 
         function nextSlide() {
@@ -1010,20 +1010,20 @@
             document.getElementById('currentSlide').textContent = currentSlideIndex + 1;
             document.getElementById('totalSlides').textContent = totalSlides;
             
-            // Update button states
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             
-            prevBtn.disabled = currentSlideIndex === 0;
+            prevBtn.disabled = currentSlideIndex === 0; // Can't go before slide 6
             nextBtn.disabled = currentSlideIndex === totalSlides - 1;
         }
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
+            loadSlide(0);
             updateNavigation();
         });
 
-        // Optional: Add keyboard navigation
+        // Keyboard navigation
         document.addEventListener('keydown', function(event) {
             if (event.key === 'ArrowRight') {
                 nextSlide();
