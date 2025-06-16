@@ -802,7 +802,7 @@ ______ = []  # Suspended accounts
 
 print("User management system initialized")`,
                 blanks: [
-                    { id: 'professors', correctAnswers: ['professors', 'faculty', 'teachers'], hint: 'What would you call a list of faculty members or professors? Try faculty' },
+                    { id: 'professors', correctAnswers: ['professors', 'faculty', 'teachers'], hint: 'What would you call a list of faculty members or professors? Try professors' },
                     { id: 'students', correctAnswers: ['students', 'student_accounts'], hint: 'What would you call a list of students? Try students' },
                     { id: 'staff', correctAnswers: ['staff', 'admin_staff', 'administrators'], hint: 'What would you call a list of staff members? Try staff, or admin_staff' },
                     { id: 'suspended', correctAnswers: ['suspended', 'suspended_accounts', 'blocked'], hint: 'What would you call accounts that are suspended? Try suspended or blocked' }
