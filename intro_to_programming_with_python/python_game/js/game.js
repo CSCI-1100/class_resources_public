@@ -432,9 +432,14 @@ function checkFstringChallenge() {
 function checkSplitChallenge() {
     const input = document.getElementById('split-challenge').value.trim();
     const feedback = document.getElementById('split-feedback');
-    
-    if (input.toLowerCase().includes('split') && input.includes('(') && input.includes(')') && input.includes(',')) {
-        feedback.innerHTML = '<div class="feedback correct">🎉 Correct! split(",") breaks the string into a list at each comma!</div>';
+    input = input.toLowerCase();
+
+    if (input.includes('split') && input.includes('(') && input.includes(')') && input.includes(',')) {
+        if (input.includes('math') || input.includes('science') || input.includes('history')) {
+            feedback.innerHTML = '<div class="feedback incorrect">❌ Try again! The split function is only looking for you to tell it what character(s) it should split by.</div>';
+        }
+        else
+            feedback.innerHTML = '<div class="feedback correct">🎉 Correct! split(",") breaks the string into a list at each comma!</div>';
     } else {
         feedback.innerHTML = '<div class="feedback incorrect">❌ Try again! Use split(",") to break apart by commas.</div>';
     }
