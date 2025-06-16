@@ -1840,6 +1840,102 @@ function closeCertificate() {
     modal.style.display = 'none';
 }
 
+async function downloadCertificateAsPDF() {
+    const certificateElement = document.querySelector('.certificate');
+    
+    if (!certificateElement) {
+        console.error('Certificate element not found');
+        return;
+    }
+
+    // Generate filename
+    const d = new Date();
+    let year = d.getFullYear();
+    let month = d.getMonth();
+    let date = d.getDate();
+    let semester = '';
+
+    if (month < 5) semester = '10';                     // Spring
+    else if (month > 7 && date < 15) semester = '80';   // Fall 
+    else semester = '50';                               // Summer
+    
+    let fullDate = `${year}${semester}`;
+    let playerName = gameState.playerName.replace(/\s+/g, "");
+    let fileName = `csci1100_${fullDate}_programintro_certificate_${playerName}.pdf`;
+
+    try {
+        // Show loading indicator (optional)
+        const loadingDiv = document.createElement('div');
+        loadingDiv.innerHTML = 'Generating PDF...';
+        loadingDiv.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border:2px solid #4CAF50;border-radius:10px;z-index:10000;';
+        document.body.appendChild(loadingDiv);
+
+        // Convert HTML to canvas
+        const canvas = await html2canvas(certificateElement, {
+            scale: 2, // Higher resolution
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff'
+        });
+
+        // Create PDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+        });
+
+        // A4 landscape dimensions in mm
+        const pageWidth = 210;
+        const pageHeight = 297;
+        
+        // Add some margin
+        const margin = 10;
+        const availableWidth = pageWidth - (2 * margin);
+        const availableHeight = pageHeight - (2 * margin);
+        
+        // Calculate scaling to fit within available space
+        const canvasAspectRatio = canvas.width / canvas.height;
+        const availableAspectRatio = availableWidth / availableHeight;
+        
+        let finalWidth, finalHeight, xOffset, yOffset;
+        
+        if (canvasAspectRatio > availableAspectRatio) {
+            // Canvas is wider relative to available space - fit to width
+            finalWidth = availableWidth;
+            finalHeight = finalWidth / canvasAspectRatio;
+            xOffset = margin;
+            yOffset = margin + (availableHeight - finalHeight) / 2; // Center vertically
+        } else {
+            // Canvas is taller relative to available space - fit to height
+            finalHeight = availableHeight;
+            finalWidth = finalHeight * canvasAspectRatio;
+            xOffset = margin + (availableWidth - finalWidth) / 2; // Center horizontally
+            yOffset = margin;
+        }
+        
+        // Add image to PDF with calculated dimensions and position
+        const imgData = canvas.toDataURL('image/png');
+        pdf.addImage(imgData, 'PNG', xOffset, yOffset, finalWidth, finalHeight);
+
+        // Download the PDF
+        pdf.save(fileName);
+
+        // Remove loading indicator
+        document.body.removeChild(loadingDiv);
+        
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert('Error generating PDF. Please try again.');
+        // Remove loading indicator if it exists
+        const loadingDiv = document.querySelector('div');
+        if (loadingDiv && loadingDiv.innerHTML === 'Generating PDF...') {
+            document.body.removeChild(loadingDiv);
+        }
+    }
+}
+
 // New function to print only the certificate
 function printCertificateOnly() {
     const certificateContent = document.querySelector('.certificate').cloneNode(true);
