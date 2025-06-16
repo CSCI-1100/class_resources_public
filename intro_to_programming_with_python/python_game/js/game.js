@@ -802,7 +802,7 @@ ______ = []  # Suspended accounts
 
 print("User management system initialized")`,
                 blanks: [
-                    { id: 'professors', correctAnswers: ['professors', 'faculty', 'teachers'], hint: 'What would you call a list of faculty members or professors? Try professors' },
+                    { id: 'professors', correctAnswers: ['professors', 'faculty', 'teachers'], hint: 'What would you call a list of faculty members or professors? Try faculty' },
                     { id: 'students', correctAnswers: ['students', 'student_accounts'], hint: 'What would you call a list of students? Try students' },
                     { id: 'staff', correctAnswers: ['staff', 'admin_staff', 'administrators'], hint: 'What would you call a list of staff members? Try staff, or admin_staff' },
                     { id: 'suspended', correctAnswers: ['suspended', 'suspended_accounts', 'blocked'], hint: 'What would you call accounts that are suspended? Try suspended or blocked' }
@@ -1854,16 +1854,18 @@ function printCertificateOnly() {
     let semester = '';
 
     if (month < 5) semester = '10'; 					// Spring
-    else if (month > 7 && date < 15) semester = '80';  // Fall 
+    else if (month > 7 && date < 15) semester = '80';   // Fall 
     else semester = '50';							    // Summer
     let fullDate = `${year}${semester}`;
+    let playerName = gameState.playerName.replace(/\s+/g, ""); // Replace whitespace with null
+    let fileName = `csci1100_${fullDate}_programintro_certificate_${playerName}`;
 
     
     printWindow.document.write(`
         <!DOCTYPE html>
         <html>
         <head>
-            <title>csci1100_${fullDate}_programintro_certificate_${gameState.playerName}</title>
+            <title>csci1100_${fileName}</title>
             <style>
                 /* Copy relevant certificate styles */
                 body {
