@@ -14,7 +14,7 @@ Python is a popular, beginner-friendly programming language used in web developm
 
 ### Option 1: Official Installer (Recommended)
 
-- Go to [https://www.python.org/downloads/](https://www.python.org/downloads/
+- Go to [https://www.python.org/downloads/](https://www.python.org/downloads/)
 - Download the latest version for your operating system
 - During installation, **check the box that says "Add Python to PATH"**
 ---
