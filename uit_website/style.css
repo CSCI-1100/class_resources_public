@@ -785,7 +785,7 @@ input:checked + .slider:before {
 }
 
 .highlight {
-  background-color: #E1D28E;
+  background-color: hsl( var(--clr-putty-yellow) );
   padding: 0.2em 0.4em;
   border-radius: 0.2em;
 }
