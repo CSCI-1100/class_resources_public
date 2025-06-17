@@ -26,7 +26,7 @@
 * 6. [🔀 Decision Structures](#DecisionStructures)
 	* 6.1. [if, elif, else](#ifelifelse)
 
-##  1. <a name='BasicDataTypes'></a>🔢 Basic Data Types
+##  <a name='BasicDataTypes'></a>🔢 Basic Data Types
 
 ###  1.1. <a name='int'></a>int
 - **Definition**: Represents whole numbers (integers).
