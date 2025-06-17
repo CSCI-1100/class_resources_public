@@ -246,7 +246,7 @@ Computational thinking and Python programming skills apply to:
 
 ---
 
-## Study Tips
+## Tips for Learning Python
 
 ### Top-Down Approach
 - Start with the big picture and overall problem structure
