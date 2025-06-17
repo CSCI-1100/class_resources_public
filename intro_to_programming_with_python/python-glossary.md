@@ -1,6 +1,6 @@
-# Python Basics Reference Guide
+# Python Basics Glossary
 
-- [Python Basics Reference Guide](#python-basics-reference-guide)
+- [Python Basics Glossary](#python-basics-glossary)
   - [🔢 Basic Data Types](#-basic-data-types)
     - [int](#int)
     - [float](#float)
