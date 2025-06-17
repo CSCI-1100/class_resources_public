@@ -790,14 +790,6 @@ input:checked + .slider:before {
   border-radius: 0.2em;
 }
 
-.bold {
-    font-weight: bold;
-}
-
-.bolder {
-    font-weight: bolder;
-}
-
 .folder-path > * {
     font: var(--ff-sans-cond);
     font-size: var(--fs-300);
