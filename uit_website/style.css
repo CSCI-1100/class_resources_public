@@ -784,6 +784,20 @@ input:checked + .slider:before {
     padding: 10px 10px 12% 10px;
 }
 
+.highlight {
+  background-color: #E1D28E;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.bolder {
+    font-weight: bolder;
+}
+
 .folder-path > * {
     font: var(--ff-sans-cond);
     font-size: var(--fs-300);
