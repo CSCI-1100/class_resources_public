@@ -73,7 +73,10 @@ text1 = 'Hello'             # Single quotes
 text2 = "World"             # Double quotes
 
 # Triple quotes let you write across multiple lines
-text3 = """Dessert jelly beans cake toffee donut brownie soufflé wafer. Gummies carrot cake cheesecake biscuit dragée muffin fruitcake marzipan topping. Gummies jujubes sesame snaps halvah toffee soufflé candy. Tart gingerbread pie toffee marshmallow halvah wafer marzipan.""" 
+text3 = """Dessert jelly beans cake toffee donut brownie soufflé wafer.
+Gummies carrot cake cheesecake biscuit dragée muffin fruitcake marzipan topping.
+Gummies jujubes sesame snaps halvah toffee soufflé candy.
+Tart gingerbread pie toffee marshmallow halvah wafer marzipan.""" 
 
 # Common string operations
 combined = "Hello" + " World"    # Concatenation: "Hello World"
