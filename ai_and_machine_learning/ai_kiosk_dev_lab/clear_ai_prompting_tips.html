@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompting with CLEAR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .col-md {
+            background-color: #eef0f5!important;
+        }
+        .section, .checklist li {
+            display: block!important;
+            align-items: left!important;
+        }
+        .checklist li {
+            text-indent: -2em!important;
+            margin-left: 1em!important;
+        }
+    </style>
+</head>
+<body>
+    <div class="roadmap-container">
+        <div class="header">
+            <h1>🚀 AI Prompting with CLEAR</h1>
+            <p>Using AI as an effective copilot for powerful projects requires an effective, iterative prompting strategy!</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <div class="page" style="display: block;">
+                <div class="row">
+                    <div class="col-md m-2" style="border-radius: 15px; border: 2px dashed #E55442;">
+                        <div class="phase-header mt-2">
+                            <div class="phase-number">📋</div>
+                            <div class="phase-info">
+                                <h2>The CLEAR Framework</h2>
+                                <p>Your roadmap for effective AI prompting throughout this lab</p>
+                            </div>
+                        </div>
+
+                        <div class="clear-framework">
+                            <div class="clear-item">
+                                <div class="clear-letter">C</div>
+                                <h3>Clarity</h3>
+                                <p>Ensure that the prompt is clear and specific, with a clearly defined goal in mind.</p>
+                            </div>
+                            <div class="clear-item">
+                                <div class="clear-letter">L</div>
+                                <h3>Logistics</h3>
+                                <p>Include practical considerations and details including types of input, steps to take, and desired output.</p>
+                            </div>
+                            <div class="clear-item">
+                                <div class="clear-letter">E</div>
+                                <h3>Examples</h3>
+                                <p>Provide examples to better describe your intended output. Also helpful to say what you do NOT want.</p>
+                            </div>
+                            <div class="clear-item">
+                                <div class="clear-letter">A</div>
+                                <h3>Audience</h3>
+                                <p>Identify your target population and include their characteristics, needs, existing knowledge and expectations.</p>
+                            </div>
+                            <div class="clear-item">
+                                <div class="clear-letter">R</div>
+                                <h3>Refinement</h3>
+                                <p>Refine the prompt by providing constructive feedback and output specifications to optimize results.</p>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h3>Why CLEAR Works for AI Development</h3>
+                            <ul class="checklist">
+                                <li>Provides specific context AI needs to generate relevant code</li>
+                                <li>Reduces back-and-forth iterations and debugging time</li>
+                                <li>Ensures generated code matches your actual requirements</li>
+                                <li>Helps AI understand both technical and user experience needs</li>
+                            </ul>
+                        </div>
+
+                        <div class="code-snippet">
+Sample CLEAR Prompt Structure:
+"I need to create a [SPECIFIC GOAL] using [TECHNOLOGY].
+The system should handle [LOGISTICS/CONSTRAINTS].
+Here's an example of the data: [EXAMPLE DATA].
+This will be used by [AUDIENCE DESCRIPTION].
+Please [SPECIFIC REQUIREMENTS AND REFINEMENTS]."
+                        </div>
+                    </div>
+
+                    <div class="col-md m-2" style="border-radius: 15px; border: 2px dashed #f39c12;">
+                        <div class="phase-header mt-2">
+                            <div class="phase-number">💡</div>
+                            <div class="phase-info">
+                                <h2>AI Prompting Tips & Troubleshooting</h2>
+                                <p>Best practices for getting excellent results from your AI assistant</p>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h3>Getting Better Results</h3>
+                            <ul class="checklist">
+                                <li><strong>Be Specific:</strong> Instead of "make a calendar," say "make a TV-optimized course schedule display"</li>
+                                <li><strong>Provide Context:</strong> Always include the CSV structure and sample data</li>
+                                <li><strong>Ask for Explanations:</strong> "Explain why you chose this approach"</li>
+                                <li><strong>Iterate:</strong> If the first result isn't quite right, ask for modifications</li>
+                            </ul>
+                        </div>
+
+                        <div class="section">
+                            <h3>Testing AI-Generated Code</h3>
+                            <ul class="checklist">
+                                <li><strong>Save Code Properly:</strong> Copy code into appropriate files (.py for Python, .html for web pages)</li>
+                                <li><strong>Check Dependencies:</strong> If code imports libraries you don't have, ask AI for alternatives</li>
+                                <li><strong>Test Incrementally:</strong> Don't wait until the end - verify each phase works</li>
+                                <li><strong>Read the Code:</strong> Try to understand what the AI generated, don't just copy-paste blindly</li>
+                            </ul>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>When Things Go Wrong</h4>
+                            <ul class="checklist">
+                                <li><strong>Share Error Messages:</strong> Copy exact error text into your next prompt</li>
+                                <li><strong>Describe the Problem:</strong> "The CSV reader works but the calendar display is blank"</li>
+                                <li><strong>Ask for Debugging Help:</strong> "How can I test if the time parsing is working correctly?"</li>
+                            </ul>
+                        </div>
+
+                        <div class="code-snippet">
+Example Debug Prompt:
+"I'm getting this error: [PASTE EXACT ERROR]
+The code runs until line X, then fails.
+I'm trying to [DESCRIBE WHAT SHOULD HAPPEN].
+Can you help me debug this and suggest a fix?"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="export-button" onclick="exportToPDF()">📄 Export Page to PDF</button>
+        </div>
+    </div>
+
+    <script>
+        async function exportToPDF() {
+            try {
+                // Show loading state
+                const exportButton = document.querySelector('.export-button');
+                const originalText = exportButton.textContent;
+                exportButton.textContent = '📄 Generating PDF...';
+                exportButton.disabled = true;
+
+                // Get the main elements
+                const header = document.querySelector('.header');
+                const columns = document.querySelectorAll('.col-md');
+                
+                if (columns.length !== 2) {
+                    throw new Error('Expected exactly 2 columns for PDF export');
+                }
+
+                // Store original styles
+                const originalHeaderStyle = header.style.cssText;
+                const originalColumn1Style = columns[0].style.cssText;
+                const originalColumn2Style = columns[1].style.cssText;
+                const originalBodyStyle = document.body.style.cssText;
+                const originalHtmlStyle = document.documentElement.style.cssText;
+                
+                // Hide the export button
+                exportButton.style.display = 'none';
+
+                // Create PDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'pt',
+                    format: 'letter'
+                });
+
+                // Letter size dimensions with margins
+                const pdfWidth = 612;
+                const pdfHeight = 792;
+                const margin = 36; // 0.5 inch margins
+                const contentWidth = pdfWidth - (margin * 2);
+                const contentHeight = pdfHeight - (margin * 2);
+
+                // PAGE 1: Header + First Column
+                // Set up styles for page 1
+                document.documentElement.style.overflow = 'visible';
+                document.documentElement.style.height = 'auto';
+                document.body.style.height = 'auto';
+                document.body.style.overflow = 'visible';
+                document.body.style.margin = '0';
+                document.body.style.padding = '10px';
+                document.body.style.backgroundColor = '#ffffff';
+
+                // Create a temporary container for page 1
+                const page1Container = document.createElement('div');
+                page1Container.style.cssText = `
+                    width: 100vw;
+                    margin: 0 auto;
+                    background: white;
+                    display: block;
+                    position: relative;
+                `;
+
+                // Clone and style header for page 1
+                const headerClone = header.cloneNode(true);
+                headerClone.style.cssText = `
+                    background: linear-gradient(135deg, #2c3e50, #3498db);
+                    color: white;
+                    padding: 20px;
+                    text-align: center;
+                    border-radius: 15px 15px 0 0;
+                    margin-bottom: 0;
+                `;
+
+                // Clone and style first column
+                const column1Clone = columns[0].cloneNode(true);
+                column1Clone.style.cssText = `
+                    background-color: #eef0f5;
+                    border-radius: 0 0 15px 15px;
+                    padding: 20px;
+                    margin: 0;
+                    width: 100%;
+                    box-sizing: border-box;
+                `;
+
+                page1Container.appendChild(headerClone);
+                page1Container.appendChild(column1Clone);
+                document.body.appendChild(page1Container);
+
+                // Wait for layout
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // Capture page 1
+                const canvas1 = await html2canvas(page1Container, {
+                    scale: 2.0,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    width: page1Container.offsetWidth,
+                    height: page1Container.offsetHeight,
+                    x: 0,
+                    y: 0,
+                    logging: false
+                });
+
+                // Calculate scaling for page 1
+                const scale1 = Math.min(contentWidth / canvas1.width, contentHeight / canvas1.height);
+                const scaledWidth1 = canvas1.width * scale1;
+                const scaledHeight1 = canvas1.height * scale1;
+                const xOffset1 = margin + (contentWidth - scaledWidth1) / 2;
+                const yOffset1 = margin + (contentHeight - scaledHeight1) / 2;
+
+                // Add page 1 to PDF
+                const imgData1 = canvas1.toDataURL('image/png');
+                pdf.addImage(imgData1, 'PNG', xOffset1, yOffset1, scaledWidth1, scaledHeight1);
+
+                // PAGE 2: Second Column
+                // Remove page 1 container
+                document.body.removeChild(page1Container);
+
+                // Create container for page 2
+                const page2Container = document.createElement('div');
+                page2Container.style.cssText = `
+                    width: 82vw;
+                    margin: 0 auto;
+                    background: white;
+                    display: block;
+                    position: relative;
+                `;
+
+                // Add a simple header for page 2
+                const page2Header = document.createElement('div');
+                page2Header.style.cssText = `
+                    background: linear-gradient(135deg, #2c3e50, #3498db);
+                    color: white;
+                    padding: 15px;
+                    text-align: center;
+                    border-radius: 15px 15px 0 0;
+                    margin-bottom: 0;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-size: 18px;
+                    font-weight: 600;
+                `;
+                page2Header.textContent = '🚀 AI Prompting Tips & Troubleshooting';
+
+                // Clone and style second column
+                const column2Clone = columns[1].cloneNode(true);
+                column2Clone.style.cssText = `
+                    background-color: #eef0f5;
+                    border-radius: 0 0 15px 15px;
+                    padding: 20px;
+                    margin: 0;
+                    width: 100%;
+                    box-sizing: border-box;
+                `;
+
+                page2Container.appendChild(page2Header);
+                page2Container.appendChild(column2Clone);
+                document.body.appendChild(page2Container);
+
+                // Wait for layout
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // Capture page 2
+                const canvas2 = await html2canvas(page2Container, {
+                    scale: 2.0,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    width: page2Container.offsetWidth,
+                    height: page2Container.offsetHeight,
+                    x: 0,
+                    y: 0,
+                    logging: false
+                });
+
+                // Add new page to PDF
+                pdf.addPage();
+
+                // Calculate scaling for page 2
+                const scale2 = Math.min(contentWidth / canvas2.width, contentHeight / canvas2.height);
+                const scaledWidth2 = canvas2.width * scale2;
+                const scaledHeight2 = canvas2.height * scale2;
+                const xOffset2 = margin + (contentWidth - scaledWidth2) / 2;
+                const yOffset2 = margin + (contentHeight - scaledHeight2) / 2;
+
+                // Add page 2 to PDF
+                const imgData2 = canvas2.toDataURL('image/png');
+                pdf.addImage(imgData2, 'PNG', xOffset2, yOffset2, scaledWidth2, scaledHeight2);
+
+                // Clean up temporary containers
+                document.body.removeChild(page2Container);
+
+                // Restore original styles
+                header.style.cssText = originalHeaderStyle;
+                columns[0].style.cssText = originalColumn1Style;
+                columns[1].style.cssText = originalColumn2Style;
+                document.body.style.cssText = originalBodyStyle;
+                document.documentElement.style.cssText = originalHtmlStyle;
+                exportButton.style.display = '';
+
+                // Generate filename with current date
+                const now = new Date();
+                const dateStr = now.toISOString().split('T')[0];
+                const filename = `AI_Prompting_CLEAR_Framework_${dateStr}.pdf`;
+
+                // Save the PDF
+                pdf.save(filename);
+
+                // Reset button
+                exportButton.textContent = originalText;
+                exportButton.disabled = false;
+
+                console.log('Two-page PDF exported successfully!');
+
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                
+                // Reset button on error
+                const exportButton = document.querySelector('.export-button');
+                exportButton.textContent = '📄 Export Page to PDF';
+                exportButton.disabled = false;
+                
+                alert('Error generating PDF. Please try again or check the console for details.');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -19,8 +19,8 @@ body {
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     width: 95%;
-    max-width: 1200px;
-    height: 90vh;
+    max-width: 1300px;
+    height: 92vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
