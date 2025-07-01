@@ -6,8 +6,8 @@ let saveInterval = null;
 let shownNotifications = new Set();
 
 // Silly team name generators
-const adjectives = ['Sentient', 'Flummoxed', 'Caffeinated', 'Bewildered', 'Ambitious', 'Chaotic', 'Sleepy', 'Energetic', 'Confused', 'Brilliant', 'Quirky', 'Mysterious'];
-const nouns = ['Toasters', 'Capybaras', 'Penguins', 'Dragons', 'Llamas', 'Robots', 'Ninjas', 'Wizards', 'Pirates', 'Developers', 'Algorithms', 'Variables'];
+const adjectives = ['Sentient', 'Flummoxed', 'Caffeinated', 'Bewildered', 'Spicy', 'Ambitious', 'Chaotic', 'Sleepy', 'Energetic', 'Confused', 'Brilliant', 'Quirky', 'Mysterious'];
+const nouns = ['Toasters', 'Capybaras', 'Penguins', 'Dragons', 'Llamas', 'Potatos', 'Robots', 'Ninjas', 'Wizards', 'Pirates', 'Developers', 'Algorithms', 'Variables'];
 
 // Timer and notification system
 const phaseTimings = {
