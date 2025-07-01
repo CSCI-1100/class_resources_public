@@ -54,10 +54,10 @@ function showNotification(message) {
     messageElement.textContent = message;
     notification.classList.add('show');
     
-    // Auto-hide after 8 seconds
+    // Auto-hide after 10 seconds
     setTimeout(() => {
         notification.classList.remove('show');
-    }, 8000);
+    }, 10000);
 }
 
 function closeNotification() {
