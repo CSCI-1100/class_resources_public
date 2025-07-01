@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Kiosk Development Lab</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Timer notification element -->
+    <div id="timerNotification" class="timer-notification">
+        <button class="close-btn" onclick="closeNotification()">&times;</button>
+        <h4 id="notificationTitle">Timer Reminder</h4>
+        <p id="notificationMessage">Timer message goes here</p>
+    </div>
+
+    <!-- Timer display -->
+    <div id="timerDisplay" class="timer-display">
+        Time elapsed: <span id="elapsedTime">00:00</span>
+    </div>
+
+    <div class="roadmap-container">
+        <div class="header">
+            <h1>🚀 AI-Assisted Kiosk Development Lab</h1>
+            <p>Build a Course Schedule Display Using the CLEAR Framework</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <!-- Page 1: Overview & Setup -->
+            <div class="page active" id="page1">
+                <div class="phase-header">
+                    <div class="phase-number">🎯</div>
+                    <div class="phase-info">
+                        <h2>Lab Overview & Setup</h2>
+                        <p>Your mission: Create a TV-optimized course schedule kiosk using AI assistance</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="teamName">Team Name:</label>
+                    <input type="text" id="teamName" placeholder="Enter your team name (or use the generated one!)">
+                    <button onclick="generateTeamName()" style="margin-top: 10px; padding: 8px 16px; background: #f39c12; color: white; border: none; border-radius: 5px; cursor: pointer;">Generate Random Team Name</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="teamMembers">Team Member Names:</label>
+                    <textarea rows="5" cols="90" id="teamMembers" placeholder="Enter each team member's name (one per line)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="aiPlatform">Selected AI Platform:</label>
+                    <select id="aiPlatform">
+                        <option value="">Select your AI platform</option>
+                        <option value="ChatGPT">ChatGPT</option>
+                        <option value="Gemini">Gemini</option>
+                        <option value="Claude">Claude</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h3>🎯 Your Goal</h3>
+                        <p>Create a web-based kiosk display for CSCI 1100 (lecture) and CSCI 1150 (lab) schedules from CSV files, with a visual calendar layout similar to Google Calendar.</p>
+                    </div>
+                    <div class="overview-card">
+                        <h3>⏱️ Time Frame</h3>
+                        <p>~75 minutes total across 4 development phases. Each phase builds on the previous one to create your complete application.</p>
+                    </div>
+                </div>
+
+                <div class="team-setup">
+                    <div class="setup-card">
+                        <h4>👥 Team Size</h4>
+                        <p>4-5 students per team</p>
+                    </div>
+                    <div class="setup-card">
+                        <h4>🤖 AI Platform</h4>
+                        <p>Choose one: ChatGPT, Gemini, Claude, etc.<br><em>(Free version is fine!)</em></p>
+                    </div>
+                    <div class="setup-card">
+                        <h4>📁 File Access</h4>
+                        <p>Two CSV files with course data provided</p>
+                    </div>
+                    <div class="setup-card">
+                        <h4>📺 Target Display</h4>
+                        <p>16:9 TV-optimized interface</p>
+                    </div>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item completed">1</div>
+                    <div class="timeline-item">2</div>
+                    <div class="timeline-item">3</div>
+                    <div class="timeline-item">4</div>
+                </div>
+            </div>
+
+            <!-- Page 2: CLEAR Framework -->
+            <div class="page" id="page2">
+                <div class="phase-header">
+                    <div class="phase-number">📋</div>
+                    <div class="phase-info">
+                        <h2>The CLEAR Framework</h2>
+                        <p>Your roadmap for effective AI prompting throughout this lab</p>
+                    </div>
+                </div>
+
+                <div class="clear-framework">
+                    <div class="clear-item">
+                        <div class="clear-letter">C</div>
+                        <h3>Clarity</h3>
+                        <p>Ensure that the prompt is clear and specific, with a clearly defined goal in mind.</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">L</div>
+                        <h3>Logistics</h3>
+                        <p>Include practical considerations and details including types of input, steps to take, and desired output.</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">E</div>
+                        <h3>Examples</h3>
+                        <p>Provide examples to better describe your intended output. Also helpful to say what you do NOT want.</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">A</div>
+                        <h3>Audience</h3>
+                        <p>Identify your target population and include their characteristics, needs, existing knowledge and expectations.</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">R</div>
+                        <h3>Refinement</h3>
+                        <p>Refine the prompt by providing constructive feedback and output specifications to optimize results.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Why CLEAR Works for AI Development</h3>
+                    <ul class="checklist">
+                        <li>Provides specific context AI needs to generate relevant code</li>
+                        <li>Reduces back-and-forth iterations and debugging time</li>
+                        <li>Ensures generated code matches your actual requirements</li>
+                        <li>Helps AI understand both technical and user experience needs</li>
+                    </ul>
+                </div>
+
+                <div class="code-snippet">
+Sample CLEAR Prompt Structure:
+"I need to create a [SPECIFIC GOAL] using [TECHNOLOGY].
+The system should handle [LOGISTICS/CONSTRAINTS].
+Here's an example of the data: [EXAMPLE DATA].
+This will be used by [AUDIENCE DESCRIPTION].
+Please [SPECIFIC REQUIREMENTS AND REFINEMENTS]."
+                </div>
+            </div>
+
+            <!-- Page 3: Phase 1 -->
+            <div class="page" id="page3">
+                <div class="phase-header">
+                    <div class="phase-number">1</div>
+                    <div class="phase-info">
+                        <h2>Architecture & Data Foundation</h2>
+                        <p>20 minutes • Build the server that reads CSV files and organizes course data</p>
+                    </div>
+                </div>
+
+                <div class="clear-focus">
+                    <h4>CLEAR Elements in Focus</h4>
+                    <p><strong>Clarity</strong> & <strong>Logistics</strong></p>
+                </div>
+
+                <div class="section">
+                    <h3>What You're Building</h3>
+                    <p>The foundation of your web application - the "brain" that processes all the schedule information. Think of this as the server that can read CSV files and organize the course data into a usable structure.</p>
+                </div>
+
+                <div class="section">
+                    <h3>Key CLEAR Considerations</h3>
+                    <h4>Clarity Questions to Address:</h4>
+                    <ul class="checklist">
+                        <li>What type of Python-based web server framework do you want? (Hint: Flask is beginner-friendly)</li>
+                        <li>How should the application handle reading CSV files?</li>
+                        <li>What data structure should store the course information? Hint: ask for a format that can easily be used to display lecture and lab sections as calendar events.</li>
+                    </ul>
+
+                    <h4>Logistics Details to Include:</h4>
+                    <ul class="checklist">
+                        <li>CSV schedule files might have BOM characters (invisible characters at the start)</li>
+                        <li>Time formats like "03:10 pm-04:30 pm" need to be parsed</li>
+                        <li>Course codes like "CSCI-1100-001" have specific meaning</li>
+                        <li>Server should be easy for CS students to understand and modify</li>
+                    </ul>
+                </div>
+
+                <div class="tip-container">
+                    <h3>Prompting Tip:</h3>
+                    <p>Ask the chatbot to write the artifact in `app.py`. If it gives you more than one code file, you might need to ask follow-up questions about how to save and test the code! (Python and VS Code (a code editor) are installed on the lab computers!)</p>
+                </div>
+
+                <div class="code-snippet">
+## Lecture section CSV file sample to include:<br>
+Subj,Crse,Sec,Title,Days,Time,Instructor,Location<br>
+CSCI,1100,001,Using Info Tech Lecture,M,08:15 am-10:15 am,Chelsie Dubay,Rogers Stout Hall 118<br>
+                </div>
+                <div class="code-snippet">
+## Lab section CSV file sample to include:<br>
+Subj,Crse,Sec,Title,Days,Time,Instructor,Date (MM/DD),Location<br>
+CSCI,1150,001,Using Information Tech Lab,M,08:55 am-10:15 am,"Chelsie Dubay, Ryan Haas",08/25-12/11,Sam Wilson Hall 320<br>
+                </div>
+
+                <div class="insight-section">
+                    <h4>Key Insight/Challenge from Phase 1</h4>
+                    <textarea rows="3" cols="90" id="phase1Insight"></textarea>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Testing Your Phase 1 Code</h4>
+                    <ul class="checklist">
+                        <li>Download and save the AI-generated Python code as `app.py`</li>
+                        <li>Save one CSV file in the same folder as `app.py`</li>
+                        <li>Run the code and verify it reads and prints course data correctly</li>
+                        <li>Check: Does it handle time format? Can it identify different sections?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page 4: Phase 2 -->
+            <div class="page" id="page4">
+                <div class="phase-header">
+                    <div class="phase-number">2</div>
+                    <div class="phase-info">
+                        <h2>Calendar Logic & Time Management</h2>
+                        <p>20 minutes • Build the smart scheduling system for visual calendar organization</p>
+                    </div>
+                </div>
+
+                <div class="clear-focus">
+                    <h4>CLEAR Elements in Focus</h4>
+                    <p><strong>Examples</strong> & <strong>Refinement</strong></p>
+                </div>
+
+                <div class="section">
+                    <h3>What You're Building</h3>
+                    <p>The "smart scheduling" part that takes your course data and organizes it into a visual calendar structure. This handles the tricky parts like overlapping class sections and time conflicts.</p>
+                </div>
+
+                <div class="section">
+                    <h3>Key CLEAR Considerations</h3>
+                    <h4>Clarity Questions to Address:</h4>
+                    <ul class="checklist">
+                        <li>How should overlapping time slots be handled?</li>
+                        <li>What data structure represents a daily or weekly calendar? Separate lists?</li>
+                        <li>How do you detect if a course is currently in session?</li>
+                        <li>How many kiosk "slides" are needed & what would each slide show? (e.g. today view, weekly view, 2-3 day view?)</li>
+                    </ul>
+
+                    <h4>Logistics Details to Include:</h4>
+                    <ul class="checklist">
+                        <li>Up to 10-11 class sections might happen on the same day and sometimes two classes' times overlap</li>
+                        <li>Calendar display should cover 8 AM to 8 PM</li>
+                        <li>Need both daily view (today's schedule) and views to show the rest of the weekly schedule</li>
+                        <li>Some class sections are Monday-only, others might be M/W/F</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Examples to Provide</h3>
+                    <ul class="checklist">
+                        <li>If a class sections goes from 2:00-4:00 and another goes from 2:30-4:30, the class sections should be arranged side-by-side, not stacked</li>
+                        <li>Show how "M,W,F" should create calendar entries for 3 different days</li>
+                        <li>Explain what "current time highlighting" should look like</li>
+                    </ul>
+                </div>
+
+                <div class="insight-section">
+                    <h4>Key Insight/Challenge from Phase 2</h4>
+                    <textarea rows="3" cols="90" id="phase2Insight"></textarea>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Common Issues to Watch For</h4>
+                    <ul class="checklist">
+                        <li>Overlapping class sections stacking instead of side-by-side arrangement</li>
+                        <li>Difficulty displaying specific day/time data (we can't scroll down on a TV screen, so the information on each "slide" needs to fit the screen)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page 5: Phase 3 -->
+            <div class="page" id="page5">
+                <div class="phase-header">
+                    <div class="phase-number">3</div>
+                    <div class="phase-info">
+                        <h2>Frontend Design & Layout</h2>
+                        <p>20 minutes • Create the visual interface optimized for TV kiosk display</p>
+                    </div>
+                </div>
+
+                <div class="clear-focus">
+                    <h4>CLEAR Elements in Focus</h4>
+                    <p><strong>Audience</strong> & <strong>Examples</strong></p>
+                </div>
+
+                <div class="section">
+                    <h3>What You're Building</h3>
+                    <p>The visual interface that people will see on the TV kiosk. This needs to be clear, readable from a distance, and automatically adapt when many class sections happen simultaneously.</p>
+                </div>
+
+                <div class="section">
+                    <h3>Key CLEAR Considerations</h3>
+                    <h4>Clarity Questions to Address:</h4>
+                    <ul class="checklist">
+                        <li>How should the calendar blocks look visually?</li>
+                        <li>What happens when 8 class sections overlap at the same time?</li>
+                        <li>How do you distinguish between lectures and labs?</li>
+                    </ul>
+
+                    <h4>Logistics Details to Include:</h4>
+                    <ul class="checklist">
+                        <li>Optimized for 16:9 TV screens (not mobile phones)</li>
+                        <li>Font sizes need to be readable from across a room</li>
+                        <li>Colors should be high contrast for accessibility</li>
+                        <li>Layout must adapt: 1 course = full width, 5 class sections = equal columns</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Audience Considerations</h3>
+                    <ul class="checklist">
+                        <li>Students walking by need to quickly see their schedule</li>
+                        <li>Faculty and staff also use this information</li>
+                        <li>Must be readable from 10+ feet away</li>
+                    </ul>
+                </div>
+
+                <div class="insight-section">
+                    <h4>Key Insight/Challenge from Phase 3</h4>
+                    <textarea rows="3" cols="90" id="phase3Insight"></textarea>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Testing Your Phase 3 Code</h4>
+                    <ul class="checklist">
+                        <li>Open HTML file in browser and make it full-screen</li>
+                        <li>Check readability from 10 feet away!</li>
+                        <li>Test with plenty of class sections so you know it can handle a busy schedule!</li>
+                        <li>Verify current time highlighting is visible</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page 6: Phase 4 -->
+            <div class="page" id="page6">
+                <div class="phase-header">
+                    <div class="phase-number">4</div>
+                    <div class="phase-info">
+                        <h2>Integration & Documentation</h2>
+                        <p>15 minutes • Connect all pieces and create setup documentation</p>
+                    </div>
+                </div>
+
+                <div class="clear-focus">
+                    <h4>CLEAR Elements in Focus</h4>
+                    <p><strong>Examples</strong> & <strong>Refinement</strong></p>
+                </div>
+
+                <div class="section">
+                    <h3>What You're Building</h3>
+                    <p>The final working system plus documentation so others can set it up and use it. This includes installation instructions and basic troubleshooting.</p>
+                </div>
+
+                <div class="section">
+                    <h3>Key CLEAR Considerations</h3>
+                    <h4>Clarity Questions to Address:</h4>
+                    <ul class="checklist">
+                        <li>How do all the pieces connect together?</li>
+                        <li>What setup steps are needed to deploy this?</li>
+                        <li>How would someone add new CSV files?</li>
+                    </ul>
+
+                    <h4>Logistics Details to Include:</h4>
+                    <ul class="checklist">
+                        <li>Installation requirements (Python version, dependencies)</li>
+                        <li>File organization (where CSV files go, how to name them)</li>
+                        <li>Basic troubleshooting for common problems</li>
+                    </ul>
+
+                    <h4>Audience:</h4>
+                    <p>IT staff or other students who need to set up and maintain the kiosk</p>
+                </div>
+
+                <div class="insight-section">
+                    <h4>Key Insight/Challenge from Phase 4</h4>
+                    <textarea rows="3" cols="90" id="phase4Insight"></textarea>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Testing Your Complete System</h4>
+                    <ul class="checklist">
+                        <li>Start with a fresh folder and follow setup instructions exactly</li>
+                        <li>Can someone else on your team get it running?</li>
+                        <li>Try adding a new course to CSV - does it appear correctly?</li>
+                        <li>Are instructions clear for someone not on your team?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page 7: AI Prompting Tips -->
+            <div class="page" id="page7">
+                <div class="phase-header">
+                    <div class="phase-number">💡</div>
+                    <div class="phase-info">
+                        <h2>AI Prompting Tips & Troubleshooting</h2>
+                        <p>Best practices for getting excellent results from your AI assistant</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Getting Better Results</h3>
+                    <ul class="checklist">
+                        <li><strong style="margin-right: 10px;">Be Specific:</strong> Instead of "make a calendar," say "make a TV-optimized course schedule display"</li>
+                        <li><strong style="margin-right: 10px;">Provide Context:</strong> Always include the CSV structure and sample data</li>
+                        <li><strong style="margin-right: 10px;">Ask for Explanations:</strong> "Explain why you chose this approach"</li>
+                        <li><strong style="margin-right: 10px;">Iterate:</strong> If the first result isn't quite right, ask for modifications</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Testing AI-Generated Code</h3>
+                    <ul class="checklist">
+                        <li><strong style="margin-right: 10px;">Save Code Properly:</strong> Copy code into appropriate files (.py for Python, .html for web pages)</li>
+                        <li><strong style="margin-right: 10px;">Check Dependencies:</strong> If code imports libraries you don't have, ask AI for alternatives</li>
+                        <li><strong style="margin-right: 10px;">Test Incrementally:</strong> Don't wait until the end - verify each phase works</li>
+                        <li><strong style="margin-right: 10px;">Read the Code:</strong> Try to understand what the AI generated, don't just copy-paste blindly</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>When Things Go Wrong</h4>
+                    <ul class="checklist">
+                        <li><strong style="margin-right: 10px;">Share Error Messages:</strong> Copy exact error text into your next prompt</li>
+                        <li><strong style="margin-right: 10px;">Describe the Problem:</strong> "The CSV reader works but the calendar display is blank"</li>
+                        <li><strong style="margin-right: 10px;">Ask for Debugging Help:</strong> "How can I test if the time parsing is working correctly?"</li>
+                    </ul>
+                </div>
+
+                <div class="code-snippet">
+Example Debug Prompt:
+"I'm getting this error: [PASTE EXACT ERROR]
+The code runs until line X, then fails.
+I'm trying to [DESCRIBE WHAT SHOULD HAPPEN].
+Can you help me debug this and suggest a fix?"
+                </div>
+            </div>
+
+            <!-- Page 8: Deliverables & Reflection -->
+            <div class="page" id="page8">
+                <div class="phase-header">
+                    <div class="phase-number">✅</div>
+                    <div class="phase-info">
+                        <h2>Deliverables & Reflection</h2>
+                        <p>What you should have completed and questions for discussion</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Deliverables Checklist</h3>
+                    <p>By the end of the lab, your team should have:</p>
+                    <ul class="checklist">
+                        <li>Working Python server that reads CSV files</li>
+                        <li>Calendar logic that handles overlapping class sections</li>
+                        <li>TV-optimized frontend display</li>
+                        <li>Basic setup/installation documentation</li>
+                        <li>Tested system that can read the provided CSV files</li>
+                    </ul>
+                </div>
+
+                <div class="tip-container">
+                    <h3>Disclaimer:</h3>
+                    <ul style="margin-left: 10px; line-height: 1.2rem;">
+                        <li>It's okay if your interface has some problems or you aren't entirely sure how to connect all the components together to test the complete app!</li>
+                        <li>With more time, you could presumably figure out how to get your web app deployed (with more prompting, perhaps) and continue to refine and fix problems.</li>
+                        <li>My goal is to try to follow the documentation you generate to deploy your app so we can try them out!</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Reflection Questions</h3>
+                    <p>Please discuss these questions with your team and draft a short answer to each:</p>
+                    
+                    <div class="form-group">
+                        <label for="reflection1">Which CLEAR framework element was most important for getting good AI responses?</label>
+                        <textarea rows="3" cols="90" id="reflection1" placeholder="Discuss which element (Clarity, Logistics, Examples, Audience, or Refinement) helped you most..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reflection2">What surprised you about the AI's suggestions or approach?</label>
+                        <textarea rows="3" cols="90" id="reflection2" placeholder="What aspects of the AI's code generation or problem-solving approach were unexpected?"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reflection3">How did iterating and refining prompts improve your results?</label>
+                        <textarea rows="3" cols="90" id="reflection3" placeholder="Describe how your prompts evolved and how this affected the quality of AI responses..."></textarea>
+                    </div>
+                </div>
+
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h3>🎉 Congratulations!</h3>
+                        <p>You've successfully used AI assistance to build a complete web application. This experience demonstrates how proper prompting can accelerate development while maintaining code quality.</p>
+                    </div>
+                    <div class="overview-card" style="border: 5px solid orange;">
+                        <h3 style="font-weight: bold;">📤 Dropbox Submission</h3>
+                        <ol style="margin-bottom: 10px;">
+                            <li style="margin-bottom: 10px;">Put all your code files and documentation into a ZIP file. I can't set up your app unless I have all the files!</li>
+                            <li>Upload your ZIP file AND your exported lab report file (PDF) to the AI Literacy Dropbox!</li>
+                        </ol>
+                        <span style="font-weight: bolder;">Only one team member needs to submit to the Dropbox!</span>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="export-button" onclick="exportToPDF()">📄 Export Lab Report</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" id="prevBtn" onclick="changePage(-1)" disabled>
+                ← Previous
+            </button>
+            <div class="page-indicator">
+                <span id="currentPage">1</span> of <span id="totalPages">8</span>
+            </div>
+            <button class="nav-button" id="nextBtn" onclick="changePage(1)">
+                Next →
+            </button>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
