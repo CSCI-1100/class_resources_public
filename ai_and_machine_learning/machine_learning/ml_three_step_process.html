@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three-Step ML Process</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+        
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0;
+            gap: 30px;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .step-number-sm {
+            background: linear-gradient(135deg, #eaf4fa, #9dd7fd);
+            color: #2980b9;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+        
+        .step:hover .step-number, .step-number-sm {
+            transform: scale(1.1);
+        }
+
+        .step-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .step-description {
+            color: #7f8c8d;
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .analogy {
+            background: #f8f9fa;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            border-radius: 8px;
+            font-style: italic;
+            color: #c0392b;
+            margin-top: 15px;
+        }
+        
+        .analogy-icon {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+        
+        .arrow {
+            color: #3498db;
+            font-size: 3em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+        
+        .data-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .data-icon {
+            width: 40px;
+            height: 40px;
+            background: #ecf0f1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+        
+        .process-visual {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .visual-title {
+            text-align: center;
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .flow-box {
+            background: white;
+            border: 2px dashed #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+        
+        .flow-box:hover {
+            border-color: #2980b9;
+            background: #ebf3fd;
+            transform: translateY(-5px);
+        }
+        
+        .flow-box h4 {
+            color: #2980b9;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .flow-box p {
+            color: #7f8c8d;
+            margin: 0;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .process-flow {
+                flex-direction: column;
+            }
+            
+            .arrow {
+                transform: rotate(90deg);
+                margin: 20px 0;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">The Three-Step Machine Learning Process</h1>
+        
+        <div class="process-flow">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-title">Data Collection</div>
+                <div class="step-description">
+                    Gathering relevant, representative datasets with quality considerations for completeness, accuracy, and relevance.
+                </div>
+                <div class="data-icons">
+                    <div class="data-icon">📊</div>
+                    <div class="data-icon">📈</div>
+                    <div class="data-icon">🗂️</div>
+                    <div class="data-icon">💾</div>
+                </div>
+                <div class="analogy">
+                    <span class="analogy-icon">📚</span>
+                    Like gathering study materials for a comprehensive exam
+                </div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-title">Training</div>
+                <div class="step-description">
+                    Algorithm learns patterns from training data through iterative improvement processes.
+                </div>
+                <div class="data-icons">
+                    <div class="data-icon">🧠</div>
+                    <div class="data-icon">⚙️</div>
+                    <div class="data-icon">📝</div>
+                    <div class="data-icon">🔄</div>
+                </div>
+                <div class="analogy">
+                    <span class="analogy-icon">📖</span>
+                    Like studying for a test using practice problems
+                </div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-title">Prediction</div>
+                <div class="step-description">
+                    Making predictions on new, unseen data with performance evaluation.
+                </div>
+                <div class="data-icons">
+                    <div class="data-icon">🎯</div>
+                    <div class="data-icon">🔮</div>
+                    <div class="data-icon">📋</div>
+                    <div class="data-icon">✅</div>
+                </div>
+                <div class="analogy">
+                    <span class="analogy-icon">📝</span>
+                    Applying what you learned to solve new problems
+                </div>
+            </div>
+        </div>
+        
+        <div class="process-visual">
+            <div class="visual-title">Process Flow in Action</div>
+            <div class="flow-diagram">
+                <div class="flow-box">
+                    <div class="step-number-sm">1</div>
+                    <h4>Input Data</h4>
+                    <p>Raw datasets, features, labels</p>
+                </div>
+                <div class="flow-box">
+                    <div class="step-number-sm">2</div>
+                    <h4>Learning Algorithm</h4>
+                    <p>Pattern recognition, weight adjustment</p>
+                </div>
+                <div class="flow-box">
+                    <div class="step-number-sm">3</div>
+                    <h4>Trained Model</h4>
+                    <p>Ready to make predictions</p>
+                </div>
+                <div class="flow-box">
+                    <div class="step-number-sm">4</div>
+                    <h4>New Data</h4>
+                    <p>Unseen examples for testing</p>
+                </div>
+                <div class="flow-box">
+                    <div class="step-number-sm">5</div>
+                    <h4>Predictions</h4>
+                    <p>Classifications, recommendations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

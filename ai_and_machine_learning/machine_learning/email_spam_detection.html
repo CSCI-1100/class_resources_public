@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Spam Detection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 2.1em;
+            color: #544cbb;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+        
+        .example-flow {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+            margin: 40px 0;
+        }
+        
+        .step-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #e74c3c;
+        }
+        
+        .step-section.training {
+            border-left-color: #f39c12;
+        }
+        
+        .step-section.prediction {
+            border-left-color: #27ae60;
+        }
+        
+        .step-header {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        
+        .email-example {
+            background: white;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .email-example:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .email-example.spam {
+            border-color: #e74c3c;
+            background: #fdf2f2;
+        }
+        
+        .email-example.legitimate {
+            border-color: #27ae60;
+            background: #f2f8f2;
+        }
+        
+        .email-label {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .email-label.legitimate {
+            background: #27ae60;
+        }
+        
+        .email-header {
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .email-content {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+        
+        .features-box {
+            background: #ebf3fd;
+            border: 2px dashed #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .features-title {
+            font-weight: 600;
+            color: #2980b9;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #2c3e50;
+            border-left: 3px solid #3498db;
+        }
+        
+        .model-visualization {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        
+        .model-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .model-process {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .process-node {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            min-width: 120px;
+        }
+        
+        .process-arrow {
+            font-size: 2em;
+            opacity: 0.8;
+        }
+        
+        .prediction-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .prediction-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .new-email {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .prediction-result {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .confidence-bar {
+            background: #ecf0f1;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+            width: 85%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .example-flow {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .model-process {
+                flex-direction: column;
+            }
+            
+            .process-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Machine Learning in Action</h1>
+        <h2 class="subtitle">🛡️ Email Spam Detection</h2>
+        
+        <div class="example-flow">
+            <!-- Data Collection -->
+            <div class="step-section">
+                <div class="step-header">
+                    <span class="step-icon">📧</span>
+                    1. Data Collection
+                </div>
+                
+                <div class="email-example spam">
+                    <div class="email-label">SPAM</div>
+                    <div class="email-header">Subject: URGENT! Claim your $1000 prize NOW!</div>
+                    <div class="email-content">
+                        Congratulations! You've won $1000! Click here immediately to claim your prize before it expires! Free money waiting!!!
+                    </div>
+                </div>
+                
+                <div class="email-example legitimate">
+                    <div class="email-label legitimate">LEGITIMATE</div>
+                    <div class="email-header">Subject: Meeting agenda for tomorrow</div>
+                    <div class="email-content">
+                        Hi team, attached is the agenda for tomorrow's quarterly review meeting. Please review the documents beforehand.
+                    </div>
+                </div>
+                
+                <div class="email-example spam">
+                    <div class="email-label">SPAM</div>
+                    <div class="email-header">Subject: Weight loss miracle! Doctors hate this trick!</div>
+                    <div class="email-content">
+                        Lose 30 pounds in 30 days! No exercise needed! This one weird trick will shock you!
+                    </div>
+                </div>
+                
+                <div class="email-example legitimate">
+                    <div class="email-label legitimate">LEGITIMATE</div>
+                    <div class="email-header">Subject: Your bank statement is ready</div>
+                    <div class="email-content">
+                        Your monthly statement for account ending in 1234 is now available in your online banking portal.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Training Process -->
+            <div class="step-section training">
+                <div class="step-header">
+                    <span class="step-icon">🧠</span>
+                    2. Training Process
+                </div>
+                
+                <div class="features-box">
+                    <div class="features-title">Features the Algorithm Learns</div>
+                    <div class="feature-list">
+                        <div class="feature-item">Urgent language ("NOW!", "URGENT!")</div>
+                        <div class="feature-item">Money-related words ("$", "prize", "free")</div>
+                        <div class="feature-item">Excessive punctuation ("!!!")</div>
+                        <div class="feature-item">Suspicious sender addresses</div>
+                        <div class="feature-item">All caps text</div>
+                        <div class="feature-item">Generic greetings</div>
+                        <div class="feature-item">Misspelled words</div>
+                        <div class="feature-item">Call-to-action phrases</div>
+                    </div>
+                </div>
+                
+                <div class="model-visualization">
+                    <div class="model-title">Learning Patterns</div>
+                    <div class="model-process">
+                        <div class="process-node">
+                            <div>📊</div>
+                            <div>Feature<br>Extraction</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-node">
+                            <div>⚖️</div>
+                            <div>Weight<br>Assignment</div>
+                        </div>
+                        <div class="process-arrow">→</div>
+                        <div class="process-node">
+                            <div>🎯</div>
+                            <div>Pattern<br>Recognition</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Prediction -->
+            <div class="step-section prediction">
+                <div class="step-header">
+                    <span class="step-icon">🔮</span>
+                    3. Prediction
+                </div>
+                
+                <div class="prediction-section">
+                    <div class="prediction-title">New Email Arrives</div>
+                    
+                    <div class="new-email">
+                        <div class="email-header">Subject: Limited time offer! Act fast!</div>
+                        <div class="email-content">
+                            Amazing deals on luxury watches! 90% off today only! Don't miss out on this incredible opportunity! Click now before it's too late!!!
+                        </div>
+                    </div>
+                    
+                    <div class="prediction-result">
+                        <div style="font-weight: 600; color: #2c3e50; margin-bottom: 10px;">
+                            Algorithm Analysis
+                        </div>
+                        <div style="font-size: 0.9em; color: #7f8c8d; margin-bottom: 15px;">
+                            Detected: Urgent language, promotional content, excessive punctuation, sales pressure
+                        </div>
+                        
+                        <div class="confidence-bar">
+                            <div class="confidence-fill">
+                                85% Confidence: SPAM
+                            </div>
+                        </div>
+                        
+                        <div style="font-size: 0.9em; color: #e74c3c; font-weight: 600; margin-top: 10px;">
+                            → Moved to Spam Folder
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: #e8f5e8; border-radius: 15px; padding: 25px; margin-top: 30px; text-align: center;">
+            <div style="font-size: 1.2em; font-weight: 600; color: #27ae60; margin-bottom: 10px;">
+                ✅ Result: Successful Classification
+            </div>
+            <div style="color: #2c3e50;">
+                The model successfully identified spam characteristics and protected the user from unwanted content.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
