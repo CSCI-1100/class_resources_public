@@ -295,6 +295,7 @@ body {
     border: none;
     padding: 12px 24px;
     border-radius: 25px;
+    border: 2px solid #f39c12;
     cursor: pointer;
     font-size: 1em;
     font-weight: 600;
