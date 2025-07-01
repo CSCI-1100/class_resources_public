@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & Machine Learning Module - Lecture Slides</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-size: 1.2em;
+        }
+
+        .presentation-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 95%;
+            max-width: 1400px;
+            height: 95vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .slide-counter {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            width: 100%;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #f39c12;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+            height: 100%;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-title {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+
+        .slide-subtitle {
+            font-size: 1.9em;
+            color: #544cbb;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+        }
+
+        .section-number {
+            background: #3498db;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .section-info h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .section-info p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .ai-types {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .ai-type {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-type h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .ai-type p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .ai-type ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ai-type li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .ai-type li::before {
+            content: "•";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .ml-process {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .process-step {
+            background: #f8f9fa;
+            border: 2px solid #28a745;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            background: #28a745;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+
+        .process-step h3 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        .visual-placeholder {
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+            font-style: italic;
+        }
+
+        .clear-framework {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .clear-item {
+            background: white;
+            border: 2px solid #e74c3c;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .clear-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .clear-letter {
+            background: #e74c3c;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 0 auto 15px;
+        }
+
+        .clear-item h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .clear-item p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .activity-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .activity-box h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .activity-box h3::before {
+            content: "🎯";
+            margin-right: 10px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .nav-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .nav-button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .timer-display {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .bullet-points {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bullet-points li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .bullet-points li::before {
+            content: "▶";
+            color: #3498db;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        .highlight-box {
+            background: #e8f5e8;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .highlight-box h4 {
+            color: #28a745;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlight-box h4::before {
+            content: "💡";
+            margin-right: 10px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning-box h4::before {
+            content: "⚠️";
+            margin-right: 10px;
+        }
+
+        .link-preview {
+            position: relative;
+            width: 420px; /* width of the preview */
+            height: 200px; /* height of the preview */
+            overflow: hidden;
+            border-radius: 15px; /* rounded corners */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* optional shadow for depth */
+        }
+
+        .preview-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .preview-iframe {
+            width: 700px; /* Larger than container to create zoom effect */
+            height: 333px; /* Proportionally larger */
+            border: none;
+            transform: scale(0.6); /* 60% scale */
+            transform-origin: 0 0; /* Scale from top-left corner */
+            pointer-events: none; /* Disables all cursor interactions */
+        }
+
+        .preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%; /* Adjust height of the gradient as needed */
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+            pointer-events: none; /* Disable interaction with the gradient */
+        }
+
+        .view-link {
+            position: absolute;
+            bottom: 10px; /* Position the link slightly above the gradient */
+            left: 50%;
+            padding: 8px 16px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            pointer-events: auto; /* Make the link clickable */
+            z-index: 1; /* Ensure the link is on top of the gradient */
+            transition: all 0.2s ease;
+        }
+
+        .view-link:hover {
+            border: 2px solid #3498db;
+            background-color: white;
+            cursor: pointer;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="header">
+            <h1>AI & Machine Learning Module</h1>
+            <div class="slide-counter">
+                <span id="current-slide">1</span> / <span id="total-slides">25</span>
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="slide-content">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide active">
+                <div class="slide-title">AI & Machine Learning Module</div>
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="font-size: 1.5em; color: #2c3e50; margin-bottom: 30px;">
+                        Understanding Intelligence in the Digital Age
+                    </div>
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 30px; border-radius: 15px; max-width: 600px; margin: 0 auto;">
+                        <p style="font-size: 1.1em; margin-bottom: 15px;"><strong>Prerequisites:&nbsp;</strong> Basic programming and web concepts, computational thinking</p>
+                        <p style="font-size: 1.1em;"><strong>Focus:&nbsp;</strong> From Analytic to Generative AI</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Learning Objectives -->
+            <div class="slide">
+                <div class="slide-title">Learning Objectives</div>
+                <div style="margin-top: 40px;">
+                    <p style="font-size: 1.3em; color: #2c3e50; margin-bottom: 30px; text-align: center;">
+                        By the end of this module, you will be able to:
+                    </p>
+                    <ul class="bullet-points" style="font-size: 1.2em; max-width: 900px; margin: 0 auto;">
+                        <li>Distinguish between Analytic AI and Generative AI applications</li>
+                        <li>Explain the three-step machine learning process and common pitfalls</li>
+                        <li>Understand neural networks as foundational technology for modern AI</li>
+                        <li>Effectively communicate with Large Language Models using structured prompting</li>
+                        <li>Apply information literacy skills in AI-enhanced search environments</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 3: Section I Introduction -->
+            <div class="slide">
+                <div class="section-header">
+                    <div class="section-number">I</div>
+                    <div class="section-info">
+                        <h2>Introduction to Artificial Intelligence</h2>
+                        <p>20-25 minutes • Top-down approach: Broad AI landscape to focused applications</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="font-size: 1.4em; color: #2c3e50; margin-bottom: 30px;">
+                        Understanding AI Through Two Primary Categories
+                    </div>
+                    <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; border-left: 5px solid #3498db;">
+                        <p style="font-size: 1.2em; color: #666;">
+                            We'll start with the big picture of AI, then focus on specific types and applications
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Two Categories of AI -->
+            <div class="slide">
+                <div class="slide-title">Two Primary Categories of AI</div>
+                <div class="ai-types">
+                    <div class="ai-type">
+                        <h3>Analytic AI</h3>
+                        <p><strong>Definition:&nbsp;</strong> AI systems designed to identify patterns, trends, and apply rules or access knowledge systems without dynamic generative ability</p>
+                        <p><strong>Core Function:&nbsp;</strong> Analysis, classification, prediction based on existing data</p>
+                        <ul>
+                            <li>Recommendation systems (Netflix, Spotify)</li>
+                            <li>Fraud detection algorithms</li>
+                            <li>Medical diagnostic tools</li>
+                            <li>Traditional search engines</li>
+                        </ul>
+                    </div>
+                    <div class="ai-type">
+                        <h3>Generative AI</h3>
+                        <p><strong>Definition:&nbsp;</strong> AI systems designed for creation and content generation</p>
+                        <p><strong>Core Function:&nbsp;</strong> Producing new content, text, images, code, etc.</p>
+                        <ul>
+                            <li>ChatGPT, Claude (text generation)</li>
+                            <li>DALL-E, Midjourney (image generation)</li>
+                            <li>GitHub Copilot (code generation)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Applications Across Domains -->
+            <div class="slide">
+                <div class="slide-title">Applications Across Domains</div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 40px;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; border-left: 4px solid #e74c3c;">
+                        <h3 style="color: #e74c3c; margin-bottom: 15px;">Healthcare</h3>
+                        <p><strong>Analytic:&nbsp;</strong> Diagnostic AI for pattern recognition in medical imaging</p>
+                        <p><strong>Generative:&nbsp;</strong> Medical report generation and treatment plan creation</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; border-left: 4px solid #f39c12;">
+                        <h3 style="color: #f39c12; margin-bottom: 15px;">Education</h3>
+                        <p><strong>Analytic:&nbsp;</strong> Learning analytics and performance tracking</p>
+                        <p><strong>Generative:&nbsp;</strong> Personalized content creation and adaptive learning materials</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; border-left: 4px solid #28a745;">
+                        <h3 style="color: #28a745; margin-bottom: 15px;">Business</h3>
+                        <p><strong>Analytic:&nbsp;</strong> Market analysis and trend prediction</p>
+                        <p><strong>Generative:&nbsp;</strong> Marketing copy generation and product descriptions</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Section II Introduction -->
+            <div class="slide">
+                <div class="section-header">
+                    <div class="section-number">II</div>
+                    <div class="section-info">
+                        <h2>Machine Learning as Analytic AI</h2>
+                        <p>25-30 minutes • Bottom-up approach: Building understanding from fundamentals</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="background: #e8f5e8; padding: 30px; border-radius: 15px; border: 2px solid #28a745;">
+                        <h3 style="color: #28a745; margin-bottom: 15px;">Positioning ML within AI Framework</h3>
+                        <p style="font-size: 1.2em; color: #666;">
+                            Machine Learning as a <strong>subset of Analytic AI</strong><br>
+                            Focus on pattern recognition and prediction from data
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Three-Step ML Process -->
+            <div class="slide">
+                <div class="slide-title">The Three-Step ML Process</div>
+                <div class="link-preview">
+                    <div class="preview-container">
+                        <iframe scrolling="no" class="preview-iframe" src="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/machine_learning/ml_three_step_process.html"></iframe>
+                        <div class="gradient-overlay"></div>
+                        <a target="_blank" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/machine_learning/ml_three_step_process.html" class="view-link">View Document ↗️</a>
+                    </div>
+                </div>
+                    
+                <div class="ml-process">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3>Data Collection</h3>
+                        <p>Gathering relevant, representative datasets</p>
+                        <p>Quality considerations: completeness, accuracy, relevance</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3>Training</h3>
+                        <p><strong>Study Analogy:&nbsp;</strong> "Like studying for a test using practice problems"</p>
+                        <p>Algorithm learns patterns from training data through iterative improvement</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3>Prediction</h3>
+                        <p><strong>Study Analogy:&nbsp;</strong> "Applying what you learned to solve new problems"</p>
+                        <p>Making predictions on new, unseen data with performance evaluation</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 8: ML Examples -->
+            <div class="slide">
+                <div class="slide-title">ML in Action: Real Examples</div>
+                <div class="visual-placeholder">
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="slide-subtitle" style="color: #ca503d;">Netflix Movie Recommendations</div>
+                            <div class="link-preview">
+                                <div class="preview-container">
+                                    <iframe scrolling="no" class="preview-iframe" src="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/machine_learning/netflix_recommendation.html"></iframe>
+                                    <div class="gradient-overlay"></div>
+                                    <a target="_blank" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/machine_learning/netflix_recommendation.html" class="view-link">View Document ↗️</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="slide-subtitle" style="color: #ca503d;">Email Spam Detection</div>
+                            <div class="link-preview">
+                                <div class="preview-container">
+                                    <iframe scrolling="no" class="preview-iframe" src="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/machine_learning/email_spam_detection.html"></iframe>
+                                    <div class="gradient-overlay"></div>
+                                    <a target="_blank" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/machine_learning/email_spam_detection.html" class="view-link">View Document ↗️</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; text-align: center;">
+                    <p style="font-size: 1.2em; color: #666; font-style: italic;">
+                        These examples demonstrate how the three-step process applies to different domains
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 9: Common Pitfalls -->
+            <div class="slide">
+                <div class="slide-title">Common ML Pitfalls</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px;">
+                    <div class="warning-box">
+                        <h4>Overfitting</h4>
+                        <p><strong>Cram Study Analogy:&nbsp;</strong> "Memorizing specific practice problems instead of understanding concepts"</p>
+                        <p>Model performs well on training data but fails on new data</p>
+                        <p><strong>Real-world impact:&nbsp;</strong> Poor generalization to novel situations</p>
+                    </div>
+                    <div class="warning-box">
+                        <h4>Bias in Training Data</h4>
+                        <p><strong>Biased Study Material Analogy:&nbsp;</strong> "Studying from materials that only cover certain perspectives"</p>
+                        <p>Models inherit and amplify biases present in training data</p>
+                        <p><strong>Real-world impact:&nbsp;</strong> Discriminatory outcomes in hiring, lending, criminal justice</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 10: Section III Introduction -->
+            <div class="slide">
+                <div class="section-header">
+                    <div class="section-number">III</div>
+                    <div class="section-info">
+                        <h2>Neural Networks: Foundation for Modern AI</h2>
+                        <p>15-20 minutes • From simple concepts to complex applications</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="background: #f0f8ff; padding: 30px; border-radius: 15px; border: 2px solid #3498db;">
+                        <h3 style="color: #2c3e50; margin-bottom: 15px;">Conceptual Overview</h3>
+                        <p style="font-size: 1.2em; color: #666;">
+                            Inspired by biological neural networks<br>
+                            Interconnected nodes (neurons) processing information<br>
+                            Pattern recognition through layered processing
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 11: Committee Analogy -->
+            <div class="slide">
+                <div class="slide-title">Neural Networks: The Committee Analogy</div>
+                <div class="highlight-box">
+                    <h4>Neural nets are analogous to committees that vote</h4>
+                    <p>Their weights determine how much their votes count in the final decision</p>
+                </div>
+                <div class="link-preview">
+                    <div class="preview-container">
+                        <iframe scrolling="no" class="preview-iframe" src="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/neural_networks/neural_network_committee.html"></iframe>
+                        <div class="gradient-overlay"></div>
+                        <a target="_blank" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/neural_networks/neural_network_committee.html" class="view-link">View Document ↗️</a>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <ul class="bullet-points">
+                        <li><strong>Input layer:&nbsp;</strong> Junior members with equal votes analyzing key features (edges, corners, lines, curves)</li>
+                        <li><strong>Hidden layer 1:&nbsp;</strong> Specialists focusing on specific aspects (shape, texture, size)</li>
+                        <li><strong>Hidden layer 2:&nbsp;</strong> Senior analysts with broader insights for complex pattern recognition</li>
+                        <li><strong>Output layer:&nbsp;</strong> Decision makers announcing final weighted decision (Dog 85%, Cat 12%, Bird 3%)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 12: From Simple to Complex -->
+            <div class="slide">
+                <div class="slide-title">From Simple to Complex</div>
+                <div style="text-align: center; margin: 40px 0;">
+                    <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; border-left: 5px solid #3498db;">
+                        <h3 style="color: #2c3e50; margin-bottom: 20px;">Bottom-up Progression</h3>
+                        <div style="display: flex; justify-content: space-around; align-items: center; font-size: 1.2em;">
+                            <span style="background: #3498db; color: white; padding: 10px 20px; border-radius: 10px;">Single Neuron</span>
+                            <span style="font-size: 2em; color: #3498db;">→</span>
+                            <span style="background: #3498db; color: white; padding: 10px 20px; border-radius: 10px;">Networks</span>
+                            <span style="font-size: 2em; color: #3498db;">→</span>
+                            <span style="background: #3498db; color: white; padding: 10px 20px; border-radius: 10px;">Deep Networks</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <h4>Bridge to Generative AI</h4>
+                    <p>Neural networks serve as the foundation for Large Language Models</p>
+                    <p>Transition from Analytic AI applications to Generative AI capabilities</p>
+                </div>
+            </div>
+
+            <!-- Slide 13: Hands-On Activity -->
+            <div class="slide">
+                <div class="slide-title">Activity: Training a Neural Net</div>
+                <div class="activity-box">
+                    <h3>Train Your Pet Recognition System!</h3>
+                    <p>Using Google's Teachable Machine, we'll create a basic pet classifier</p>
+                </div>
+                <div style="margin-top: 30px;">
+                    <ol style="font-size: 1.2em; line-height: 1.8;">
+                        <li>Create basic pet classes (dogs, cats) and populate with images</li>
+                        <li>Test with sparse training using students' shared pet images</li>
+                        <li>Add more training data on specific dogs and cats</li>
+                        <li>Observe improved predictions on students' images</li>
+                        <li>Demonstrate bias: unknown objects predicted as the class with more training data</li>
+                    </ol>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h4>Learning Objective</h4>
+                    <p>Experience firsthand how training data quality and quantity affects model performance</p>
+                </div>
+            </div>
+
+            <!-- Slide 14: Section IV Introduction -->
+            <div class="slide">
+                <div class="section-header">
+                    <div class="section-number">IV</div>
+                    <div class="section-info">
+                        <h2>Large Language Models and GPTs</h2>
+                        <p>30-35 minutes • Understanding and effectively using generative AI</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 30px; border-radius: 15px;">
+                        <h3 style="margin-bottom: 15px;">Understanding LLMs as Generative AI</h3>
+                        <ul style="list-style: none; font-size: 1.2em; text-align: left; max-width: 600px; margin: 0 auto;">
+                            <li style="padding: 5px 0;">• High-throughput creative capacity</li>
+                            <li style="padding: 5px 0;">• Token-based prediction mechanisms</li>
+                            <li style="padding: 5px 0;">• Emergent abilities from scale</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 15: The Prediction Reality -->
+            <div class="slide">
+                <div class="slide-title">The Prediction Reality</div>
+                <div class="warning-box" style="margin-top: 40px;">
+                    <h4>Critical Understanding</h4>
+                    <p style="font-size: 1.3em;">When LLMs cite sources or provide information, they are making <strong>predictions</strong> based on training data, not accessing real-time databases</p>
+                </div>
+                <div style="margin-top: 40px;">
+                    <h3 style="color: #2c3e50; margin-bottom: 20px;">Implications:</h3>
+                    <ul class="bullet-points" style="font-size: 1.2em;">
+                        <li>Accuracy varies and requires verification</li>
+                        <li>Sources may be hallucinated or misattributed</li>
+                        <li>Fact-checking remains essential</li>
+                        <li>Models can sound confident while being incorrect</li>
+                    </ul>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h4>Natural Language Interface Advantage</h4>
+                    <p>Communicate in natural language rather than specific code/syntax</p>
+                    <p>Democratizes access to AI capabilities and enables rapid prototyping</p>
+                </div>
+            </div>
+
+            <!-- Slide 16: CLEAR Framework Introduction -->
+            <div class="slide">
+                <div class="slide-title">Effective Prompting with CLEAR</div>
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <p style="font-size: 1.3em; color: #2c3e50;">A structured approach to communicating with AI</p>
+                </div>
+                <div class="clear-framework">
+                    <div class="clear-item">
+                        <div class="clear-letter">C</div>
+                        <h3>Clarity</h3>
+                        <p>Specific, well-defined goals</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">L</div>
+                        <h3>Logistics</h3>
+                        <p>Practical details, input types, steps, desired output</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">E</div>
+                        <h3>Examples</h3>
+                        <p>Demonstrate intended output, specify what you DON'T want</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">A</div>
+                        <h3>Audience</h3>
+                        <p>Target population characteristics and needs</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">R</div>
+                        <h3>Refinement</h3>
+                        <p>Iterative improvement through feedback</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 17: CLEAR Activity Phase 1 -->
+            <div class="slide">
+                <div class="slide-title">CLEAR Activity: Phase 1</div>
+                <div class="activity-box">
+                    <h3>Basic Prompt (5 minutes)</h3>
+                    <p>Students create a simple prompt and observe the results</p>
+                </div>
+                <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; margin: 30px 0; border-left: 5px solid #e74c3c;">
+                    <h4 style="color: #e74c3c; margin-bottom: 15px;">Example Basic Prompt:</h4>
+                    <div style="background: #2c3e50; color: white; padding: 20px; border-radius: 10px; font-family: monospace;">
+                        "Tell me about Python basics"
+                    </div>
+                </div>
+                <div class="warning-box">
+                    <h4>Expected Result</h4>
+                    <p>Generic, broad responses that may not meet specific needs</p>
+                    <p>Observe how vague prompts lead to vague responses</p>
+                </div>
+            </div>
+
+            <!-- Slide 18: CLEAR Activity Phase 2 -->
+            <div class="slide">
+                <div class="slide-title">CLEAR Activity: Phase 2</div>
+                <div class="activity-box">
+                    <h3>CLEAR-Enhanced Prompt (7 minutes)</h3>
+                    <p>Apply the CLEAR framework to transform the basic prompt</p>
+                </div>
+                <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 25px 0;">
+                    <ul class="bullet-points" style="font-size: 1.1em;">
+                        <li><strong>Clarity:&nbsp;</strong> "Create a comprehensive Python reference guide"</li>
+                        <li><strong>Logistics:&nbsp;</strong> "Include fundamental data types, methods, keywords, and control structures with example usage"</li>
+                        <li><strong>Examples:&nbsp;</strong> "Format as a glossary with code snippets for each concept"</li>
+                        <li><strong>Audience:&nbsp;</strong> "For computer science students familiar with basic programming concepts"</li>
+                        <li><strong>Refinement:&nbsp;</strong> "Output as structured markdown with clear sections and subsections"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 19: CLEAR Activity Phase 3 -->
+            <div class="slide">
+                <div class="slide-title">CLEAR Activity: Phase 3</div>
+                <div class="activity-box">
+                    <h3>Iteration (3 minutes)</h3>
+                    <p>Refine prompts based on initial outputs</p>
+                </div>
+                <div style="margin-top: 30px;">
+                    <h4 style="color: #2c3e50; margin-bottom: 15px;">Refinement Strategies:</h4>
+                    <ul class="bullet-points" style="font-size: 1.2em;">
+                        <li>Add specific formatting constraints (tables, bullet points)</li>
+                        <li>Request different output lengths or detail levels</li>
+                        <li>Specify tone or writing style</li>
+                        <li>Include counter-examples of what NOT to include</li>
+                        <li>Add context about intended use case</li>
+                    </ul>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h4>Key Insight</h4>
+                    <p>Iteration is crucial - first attempts rarely produce optimal results</p>
+                    <p>Each refinement teaches you more about effective prompting</p>
+                </div>
+            </div>
+
+            <!-- Slide 20: Information Literacy Introduction -->
+            <div class="slide">
+                <div class="slide-title">Information Literacy in the AI Era</div>
+                <div style="margin-top: 40px;">
+                    <h3 style="color: #2c3e50; margin-bottom: 20px;">How Search Has Changed with RAG</h3>
+                    <div class="highlight-box">
+                        <h4>Retrieval-Augmented Generation (RAG)</h4>
+                        <p>LLMs accessing and synthesizing information from databases</p>
+                        <p>Integration with search engines (Google's AI Overviews, Bing Chat)</p>
+                    </div>
+                </div>
+                <div style="margin-top: 30px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                        <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; border: 2px solid #28a745;">
+                            <h4 style="color: #28a745;">Traditional Search</h4>
+                            <p>Returns list of links to relevant pages</p>
+                            <p>User evaluates and synthesizes information</p>
+                        </div>
+                        <div style="background: #fff3cd; padding: 20px; border-radius: 10px; border: 2px solid #ffc107;">
+                            <h4 style="color: #856404;">AI-Enhanced Search</h4>
+                            <p>Provides synthesized answers from multiple sources</p>
+                            <p>AI pre-processes and summarizes information</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 21: Critical Information Literacy Skills -->
+            <div class="slide">
+                <div class="slide-title">Critical Information Literacy Skills</div>
+                <div class="warning-box" style="margin-top: 30px;">
+                    <h4>Why It Matters</h4>
+                    <p>AI systems can perpetuate misinformation and present confident-sounding but incorrect information</p>
+                </div>
+                <div style="margin-top: 30px;">
+                    <h3 style="color: #2c3e50; margin-bottom: 20px;">Verification Strategies:</h3>
+                    <ul class="bullet-points" style="font-size: 1.2em;">
+                        <li><strong>Cross-reference sources:&nbsp;</strong> Don't rely on a single AI response</li>
+                        <li><strong>Check primary sources:&nbsp;</strong> Verify original research and data</li>
+                        <li><strong>Understand AI limitations:&nbsp;</strong> Knowledge cutoffs and training biases</li>
+                        <li><strong>Question confident claims:&nbsp;</strong> Higher confidence ≠ higher accuracy</li>
+                        <li><strong>Use traditional search:&nbsp;</strong> Compare AI summaries with original sources</li>
+                    </ul>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h4>Example: Google's AI Overviews</h4>
+                    <p>Synthesized information appears at top of search results - looks authoritative but may contain errors</p>
+                    <p>Always scroll down to check original sources</p>
+                </div>
+            </div>
+
+            <!-- Slide 22: Assessment Opportunities -->
+            <div class="slide">
+                <div class="slide-title">Assessment Opportunities</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px;">
+                    <div style="background: #e8f5e8; padding: 25px; border-radius: 15px; border-left: 4px solid #28a745;">
+                        <h3 style="color: #28a745; margin-bottom: 15px;">Formative Assessment</h3>
+                        <ul class="bullet-points">
+                            <li>CLEAR framework prompting exercise</li>
+                            <li>Classification of AI examples as Analytic vs. Generative</li>
+                            <li>ML process step identification</li>
+                            <li>Neural network committee analogy explanation</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f0f8ff; padding: 25px; border-radius: 15px; border-left: 4px solid #3498db;">
+                        <h3 style="color: #3498db; margin-bottom: 15px;">Summative Assessment Options</h3>
+                        <ul class="bullet-points">
+                            <li>Design a prompting strategy for a specific domain problem</li>
+                            <li>Analyze potential biases in a given ML scenario</li>
+                            <li>Compare traditional search vs. AI-enhanced search for research tasks</li>
+                            <li>Create an information literacy checklist for AI-generated content</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 23: Resources and Tools -->
+            <div class="slide">
+                <div class="slide-title">Resources and Extensions</div>
+                <div style="margin-top: 40px;">
+                    <h3 style="color: #2c3e50; margin-bottom: 20px;">Recommended Tools for Hands-On Practice:</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px;">
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                            <h4 style="color: #e74c3c;">Generative AI</h4>
+                            <p>ChatGPT, Claude for prompting exercises</p>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 4px solid #f39c12;">
+                            <h4 style="color: #f39c12;">ML Demos</h4>
+                            <p>Google's Teachable Machine, simple ML demonstration tools</p>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 4px solid #28a745;">
+                            <h4 style="color: #28a745;">Literacy Tools</h4>
+                            <p>AI detection tools, fact-checking resources</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 30px;">
+                    <h3 style="color: #2c3e50; margin-bottom: 15px;">Further Reading:</h3>
+                    <ul class="bullet-points">
+                        <li>Academic papers on AI categorization frameworks</li>
+                        <li>Case studies of ML bias in real-world applications</li>
+                        <li>Information literacy in digital age resources</li>
+                        <li>Ethics guidelines for AI development and deployment</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 24: Summary and Next Steps -->
+            <div class="slide">
+                <div class="slide-title">Summary & Next Steps</div>
+                <div style="margin-top: 40px;">
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                        <h3 style="margin-bottom: 20px; text-align: center;">Key Takeaways</h3>
+                        <ul style="list-style: none; font-size: 1.1em; text-align: left;">
+                            <li style="padding: 8px 0;">✓ AI encompasses both Analytic and Generative capabilities</li>
+                            <li style="padding: 8px 0;">✓ ML follows a three-step process with common pitfalls to avoid</li>
+                            <li style="padding: 8px 0;">✓ Neural networks power modern AI through layered pattern recognition</li>
+                            <li style="padding: 8px 0;">✓ CLEAR framework improves AI communication effectiveness</li>
+                            <li style="padding: 8px 0;">✓ Information literacy remains critical in AI-enhanced environments</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="activity-box">
+                    <h3>Ready for AI Ethics</h3>
+                    <p>You now have the foundational understanding of AI systems</p>
+                    <p>Next: Examining bias, fairness, privacy, and responsible AI development practices</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" id="prev-btn" onclick="previousSlide()">
+                ← Previous
+            </button>
+            <div class="timer-display" id="timer">
+                00:00
+            </div>
+            <button class="nav-button" id="next-btn" onclick="nextSlide()">
+                Next →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let startTime = Date.now();
+        let timerInterval;
+
+        // Initialize
+        document.getElementById('total-slides').textContent = totalSlides;
+        updateSlideDisplay();
+        startTimer();
+
+        function updateSlideDisplay() {
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Show current slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update counter
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlideDisplay();
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlideDisplay();
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                previousSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                currentSlide = 0;
+                updateSlideDisplay();
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                currentSlide = totalSlides - 1;
+                updateSlideDisplay();
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                nextSlide(); // Swipe left
+            } else if (touchEndX - touchStartX > 50) {
+                previousSlide(); // Swipe right
+            }
+        });
+
+        // Auto-advance for sections (optional - uncomment if desired)
+        /*
+        const sectionTimes = {
+            0: 2,   // Title slide
+            2: 25,  // Section I
+            5: 30,  // Section II  
+            9: 20,  // Section III
+            13: 35  // Section IV
+        };
+
+        function autoAdvance() {
+            if (sectionTimes[currentSlide]) {
+                setTimeout(() => {
+                    if (currentSlide < totalSlides - 1) {
+                        nextSlide();
+                    }
+                }, sectionTimes[currentSlide] * 60 * 1000);
+            }
+        }
+        */
+    </script>
+</body>
+</html>
