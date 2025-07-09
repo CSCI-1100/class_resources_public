@@ -118,7 +118,7 @@ Neural networks progress from single neurons → networks → deep networks, ena
 
 ## 5. Effective AI Prompting: The CLEAR Framework
 
-💡 [**CLEAR AI Prompting Tips**](https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/ai_kiosk_dev_lab/clear_ai_prompting_tips.html)
+💡 [**CLEAR AI Prompting Tips**](https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/clear_ai_prompting_tips.html)
 
 ### CLEAR Components:
 - **C - Clarity:** Specific, well-defined goals

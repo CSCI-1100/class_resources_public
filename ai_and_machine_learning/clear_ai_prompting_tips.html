@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompting with CLEAR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/css/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .col-md {
+            background-color: #eef0f5!important;
+            border-radius: 15px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-primary h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .section-secondary h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #26a0b6;
+            padding-bottom: 5px;
+        }
+        
+        .checklist-investigate {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section, .checklist li, .checlist-investigate li {
+            display: block!important;
+            align-items: left!important;
+        }
+
+        .checklist li {
+            margin-left: 10px;
+            background: white;
+            display: block;
+            align-items: center;
+            padding: 5px 1.6em 5px 1.6em;
+            text-indent: -1.5em;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .checklist-investigate li {
+            margin-left: 10px;
+            background: white;
+            display: block;
+            align-items: center;
+            padding: 5px 1.6em 5px 1.6em;
+            text-indent: -1.5em;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #26a0b6;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .checklist li::before {
+            content: "✓";
+            margin-right: 10px;
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .checklist-investigate li::before {
+            content: "🔎";
+            margin-right: 10px;
+            color: #26a0b6;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="roadmap-container">
+        <div class="header">
+            <h1>🚀 AI Prompting with CLEAR</h1>
+            <p>Using AI as an effective copilot for powerful projects requires an effective, iterative prompting strategy!</p>
+        </div>
+
+        <div class="page-content">
+            <div class="page" style="display: block;">
+                <div class="row">
+                    <div class="col-md m-2" style="border: 2px dashed #E55442;">
+                        <div class="phase-header mt-2">
+                            <div class="phase-number">📋</div>
+                            <div class="phase-info">
+                                <h2>The CLEAR Framework</h2>
+                                <p>Your roadmap for effective AI prompting</p>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>🧠 Understanding AI: The Token Prediction Machine</h4>
+                            <p>
+                                AI chatbots like ChatGPT and Gemini use work by predicting the next token (word or word piece) based on patterns in their training data.
+                                This means that <strong>everything an AI generates—including citations, links, and sources—are predictions</strong> of what would
+                                likely come next, not retrieved facts*. Always verify that cited sources actually exist and contain the claims being made!
+                            </p>
+                            <p style="font-size: 11px; color:#666; line-height: 1.1rem;">
+                                * many large language models have the capability to use tools, so technically, they can search the web and retrieve information from sources in limited contexts.
+                                But at my time of writing in July 2025, they seem to use their tools inconsistently at best, so it's hard to tell when they are accurately retrieving information
+                                from a web search and when they are hallucinating information and sources. Furthermore, even when an LLM does retrieve information from a live Internet resource,
+                                there's no way to guarantee that it will accurately paraphrase or contextualize the information retrieved. - Professor Haas
+                            </p>
+                        </div>
+
+                        <div class="clear-framework">
+                            <div class="clear-item">
+                                <div class="clear-letter">C</div>
+                                <div>
+                                    <h3>Clarity</h3>
+                                    <p>Ensure that the prompt is clear and specific, with a clearly defined goal in mind.</p>
+                                </div>
+                            </div>
+                            <div class="clear-item">
+                                <div class="clear-letter">L</div>
+                                <div>
+                                    <h3>Logistics</h3>
+                                    <p>Include practical considerations and details including types of input, steps to take, and desired output format.</p>
+                                </div>
+                            </div>
+                            <div class="clear-item">
+                                <div class="clear-letter">E</div>
+                                <div>
+                                    <h3>Examples</h3>
+                                    <p>Provide examples to better describe your intended output. Also helpful to say what you do NOT want.</p>
+                                </div>
+                            </div>
+                            <div class="clear-item">
+                                <div class="clear-letter">A</div>
+                                <div>
+                                    <h3>Audience</h3>
+                                    <p>Identify your target population and include their characteristics, needs, existing knowledge and expectations.</p>
+                                </div>
+                            </div>
+                            <div class="clear-item">
+                                <div class="clear-letter">R</div>
+                                <div>
+                                    <h3>Refinement</h3>
+                                    <p>Refine the prompt by providing constructive feedback and output specifications to optimize results.</p>
+                                </div>`
+                            </div>
+                        </div>
+
+                        <div class="section-primary">
+                            <h3>Why CLEAR Works with AI</h3>
+                            <ul class="checklist">
+                                <li>Provides specific context AI needs to generate relevant responses</li>
+                                <li>Reduces back-and-forth iterations and clarification requests</li>
+                                <li>Ensures generated content matches your actual requirements</li>
+                                <li>Helps AI understand both technical and audience needs</li>
+                                <li>Creates more consistent and reliable outputs</li>
+                            </ul>
+                        </div>
+
+                        <div class="prompt-snippet"><div class="snippet-title">Sample CLEAR Prompt Structure:</div>
+"I need to create [SPECIFIC GOAL] for [AUDIENCE].
+The output should include [LOGISTICS/CONSTRAINTS].
+Here's an example of what I'm looking for: [EXAMPLE].
+Please [SPECIFIC REQUIREMENTS AND REFINEMENTS]."</div>
+                        <div class="warning-box">
+                            <h4>🚨 When Things Go Wrong</h4>
+                            <ul class="checklist">
+                                <li><strong>Be Specific About Problems:</strong> "The tone is too formal for my audience" vs. "This isn't right"</li>
+                                <li><strong>Ask for Alternatives:</strong> "Can you provide a different approach?" or "What other options exist?"</li>
+                                <li><strong>Request Step-by-Step:</strong> Break complex tasks into smaller, manageable pieces</li>
+                                <li><strong>Clarify Constraints:</strong> Add missing requirements or limitations you forgot to mention</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md m-2" style="border: 2px dashed #f39c12;">
+                        <div class="phase-header mt-2">
+                            <div class="phase-number">💡</div>
+                            <div class="phase-info">
+                                <h2>CLEAR in Action</h2>
+                                <p>See how the CLEAR framework transforms a basic prompt into a powerful one</p>
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📚 Prompt Comparison</h4>
+                            <div class="prompt-comparison">
+                                <div class="prompt-box prompt-basic">
+                                    <strong>❌ Basic Prompt:</strong>
+                                    "Give me 3 examples of legal precedents from the late Modern English period that influence the United States legal system"
+                                </div>
+                                <div class="prompt-box prompt-clear">
+                                    <strong>✅ CLEAR Prompt:</strong>
+                                    "As a legal scholar who demonstrates exacting, concise, and direct language, provide 3 examples of legal precedents from the late modern English period that influence the United States legal system. Please format your responses into a concise table which features the columns: Precedent, Influence on U.S. Law, Example, Source"
+                                </div>
+                            </div>
+                            <p><strong>🔍 Silly sources:</strong> Scrutinize the sources! Are they real? Were they ever real? Remember: generative AI is a prediction machine! Even when they search the web, verify that claims actually appear in the cited sources.</p>
+                            <p class="tip-container">
+                                Because of AI's 'truthiness', use it as a tool to help you get started!
+                                The results from this prompt can serve as starting points that we can confirm, contradict, or clarify using our own online
+                                research and SIFT analysis skills! DON'T outsource your critical thinking to a machine that's not as bright as you.
+                            </p>
+                        </div>
+
+                        <div class="section-primary">
+                            <h3>General Prompting Best Practices</h3>
+                            <ul class="checklist">
+                                <li><strong>Be Specific:</strong> Instead of "write a summary," say "write a 300-word executive summary for busy professionals"</li>
+                                <li><strong>Set the Role:</strong> "As a marketing expert..." or "As a patient teacher..." gives AI helpful context</li>
+                                <li><strong>Specify Format:</strong> Ask for bullet points, tables, step-by-step guides, or specific structures</li>
+                                <li><strong>Give Examples:</strong> Show the AI what good output looks like</li>
+                                <li><strong>Ask for Explanations:</strong> "Explain your reasoning" or "Show your work" for transparency</li>
+                                <li><strong>Iterate Thoughtfully:</strong> Build on responses with specific feedback and refinements</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-secondary">
+                            <h3>Evaluating AI Responses</h3>
+                            <ul class="checklist-investigate">
+                                <li><strong>Check Sources:</strong> Verify that cited sources actually exist and support the claims</li>
+                                <li><strong>Cross-Reference:</strong> Use multiple sources to confirm important information</li>
+                                <li><strong>Look for Bias:</strong> Consider whether the response reflects balanced perspectives</li>
+                                <li><strong>Assess Relevance:</strong> Does the output actually address your specific needs?</li>
+                                <li><strong>Test Logic:</strong> Do the arguments and connections make sense?</li>
+                            </ul>
+                        </div>
+
+                        <div class="prompt-snippet"><div class="snippet-title">Example Refinement Prompt:</div>
+"The response you provided is helpful, but [SPECIFIC ISSUE].
+Could you revise it to [SPECIFIC CHANGE NEEDED]?
+I particularly need [SPECIFIC REQUIREMENT] for [AUDIENCE/PURPOSE]."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin: 15px 0 15px 0;">
+            <button class="export-button" onclick="exportToPDF()">📄 Export to PDF</button>
+        </div>
+    </div>
+
+    <script>
+        async function exportToPDF() {
+            try {
+                // Show loading state
+                const exportButton = document.querySelector('.export-button');
+                const originalText = exportButton.textContent;
+                exportButton.textContent = '📄 Generating PDF...';
+                exportButton.disabled = true;
+
+                // Get the main elements
+                const header = document.querySelector('.header');
+                const columns = document.querySelectorAll('.col-md');
+                
+                if (columns.length !== 2) {
+                    throw new Error('Expected exactly 2 columns for PDF export');
+                }
+
+                // Store original styles
+                const originalHeaderStyle = header.style.cssText;
+                const originalColumn1Style = columns[0].style.cssText;
+                const originalColumn2Style = columns[1].style.cssText;
+                const originalBodyStyle = document.body.style.cssText;
+                const originalHtmlStyle = document.documentElement.style.cssText;
+                
+                // Hide the export button
+                exportButton.style.display = 'none';
+
+                // Create PDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'pt',
+                    format: 'letter'
+                });
+
+                // Letter size dimensions with margins
+                const pdfWidth = 612;
+                const pdfHeight = 792;
+                const margin = 36; // 0.5 inch margins
+                const contentWidth = pdfWidth - (margin * 2);
+                const contentHeight = pdfHeight - (margin * 2);
+
+                // PAGE 1: Header + First Column
+                // Set up styles for page 1
+                document.documentElement.style.overflow = 'visible';
+                document.documentElement.style.height = 'auto';
+                document.body.style.height = 'auto';
+                document.body.style.overflow = 'visible';
+                document.body.style.margin = '0';
+                document.body.style.padding = '10px';
+                document.body.style.backgroundColor = '#ffffff';
+
+                // Create a temporary container for page 1
+                const page1Container = document.createElement('div');
+                page1Container.style.cssText = `
+                    width: 100vw;
+                    height: 100vh;
+                    margin: 0 auto;
+                    background: white;
+                    display: block;
+                    position: relative;
+                `;
+
+                // Clone and style header for page 1
+                const headerClone = header.cloneNode(true);
+                headerClone.style.cssText = `
+                    background: linear-gradient(135deg, #2c3e50, #3498db);
+                    color: white;
+                    padding: 20px;
+                    text-align: center;
+                    border-radius: 15px 15px 0 0;
+                    margin-bottom: 0;
+                `;
+
+                // Clone and style first column
+                const column1Clone = columns[0].cloneNode(true);
+                column1Clone.style.cssText = `
+                    background-color: #eef0f5;
+                    border-radius: 0 0 15px 15px;
+                    padding: 20px;
+                    margin: 0;
+                    width: 100%;
+                    box-sizing: border-box;
+                `;
+
+                page1Container.appendChild(headerClone);
+                page1Container.appendChild(column1Clone);
+                document.body.appendChild(page1Container);
+
+                // Wait for layout
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // Capture page 1
+                const canvas1 = await html2canvas(page1Container, {
+                    scale: 2.0,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    width: page1Container.offsetWidth,
+                    height: page1Container.offsetHeight,
+                    x: 0,
+                    y: 0,
+                    logging: false
+                });
+
+                // Calculate scaling for page 1
+                const scale1 = Math.min(contentWidth / canvas1.width, contentHeight / canvas1.height);
+                const scaledWidth1 = canvas1.width * scale1;
+                const scaledHeight1 = canvas1.height * scale1;
+                const xOffset1 = margin + (contentWidth - scaledWidth1) / 2;
+                const yOffset1 = margin + (contentHeight - scaledHeight1) / 2;
+
+                // Add page 1 to PDF
+                const imgData1 = canvas1.toDataURL('image/png');
+                pdf.addImage(imgData1, 'PNG', xOffset1, yOffset1, scaledWidth1, scaledHeight1);
+
+                // PAGE 2: First part of second column
+                // Remove page 1 container
+                document.body.removeChild(page1Container);
+
+                // Create container for page 2 (first part of second column)
+                const page2Container = document.createElement('div');
+                page2Container.style.cssText = `
+                    width: 82vw;
+                    margin: 0 auto;
+                    background: white;
+                    display: block;
+                    position: relative;
+                `;
+
+                // Add header for page 2
+                const page2Header = document.createElement('div');
+                page2Header.style.cssText = `
+                    background: linear-gradient(135deg, #2c3e50, #3498db);
+                    color: white;
+                    padding: 15px;
+                    text-align: center;
+                    border-radius: 15px 15px 0 0;
+                    margin-bottom: 0;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-size: 18px;
+                    font-weight: 600;
+                `;
+                page2Header.textContent = '🚀 CLEAR in Action & Best Practices';
+
+                // Create content container for page 2
+                const page2Content = document.createElement('div');
+                page2Content.style.cssText = `
+                    background-color: #eef0f5;
+                    border-radius: 0 0 15px 15px;
+                    padding: 20px;
+                    margin: 0;
+                    width: 100%;
+                    box-sizing: border-box;
+                `;
+
+                // Clone and add the first two sections (phase-header and example-box)
+                const column2Clone = columns[1].cloneNode(true);
+                const phaseHeader = column2Clone.querySelector('.phase-header');
+                const exampleBox = column2Clone.querySelector('.example-box');
+                
+                if (phaseHeader) page2Content.appendChild(phaseHeader);
+                if (exampleBox) page2Content.appendChild(exampleBox);
+
+                page2Container.appendChild(page2Header);
+                page2Container.appendChild(page2Content);
+                document.body.appendChild(page2Container);
+
+                // Wait for layout
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // Capture page 2
+                const canvas2 = await html2canvas(page2Container, {
+                    scale: 2.0,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    width: page2Container.offsetWidth,
+                    height: page2Container.offsetHeight,
+                    x: 0,
+                    y: 0,
+                    logging: false
+                });
+
+                // Add page 2 to PDF
+                pdf.addPage();
+                
+                // Use better scaling for readability
+                const scale2 = Math.min(contentWidth / canvas2.width, contentHeight / canvas2.height, 0.75);
+                const scaledWidth2 = canvas2.width * scale2;
+                const scaledHeight2 = canvas2.height * scale2;
+                const xOffset2 = margin + (contentWidth - scaledWidth2) / 2;
+                const yOffset2 = margin;
+
+                const imgData2 = canvas2.toDataURL('image/png');
+                pdf.addImage(imgData2, 'PNG', xOffset2, yOffset2, scaledWidth2, scaledHeight2);
+
+                // Clean up page 2
+                document.body.removeChild(page2Container);
+
+                // PAGE 3: Second part of second column (remaining sections)
+                const page3Container = document.createElement('div');
+                page3Container.style.cssText = `
+                    width: 82vw;
+                    margin: 0 auto;
+                    background: white;
+                    display: block;
+                    position: relative;
+                `;
+
+                // Add header for page 3
+                const page3Header = document.createElement('div');
+                page3Header.style.cssText = `
+                    background: linear-gradient(135deg, #2c3e50, #3498db);
+                    color: white;
+                    padding: 15px;
+                    text-align: center;
+                    border-radius: 15px 15px 0 0;
+                    margin-bottom: 0;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-size: 18px;
+                    font-weight: 600;
+                `;
+                page3Header.textContent = '🚀 CLEAR Best Practices & Evaluation';
+
+                // Create content container for page 3
+                const page3Content = document.createElement('div');
+                page3Content.style.cssText = `
+                    background-color: #eef0f5;
+                    border-radius: 0 0 15px 15px;
+                    padding: 20px;
+                    margin: 0;
+                    width: 100%;
+                    box-sizing: border-box;
+                `;
+
+                // Add remaining sections to page 3
+                const remainingSections = column2Clone.querySelectorAll('.section-primary, .section-secondary, .prompt-snippet');
+                remainingSections.forEach(section => {
+                    page3Content.appendChild(section);
+                });
+
+                page3Container.appendChild(page3Header);
+                page3Container.appendChild(page3Content);
+                document.body.appendChild(page3Container);
+
+                // Wait for layout
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // Capture page 3
+                const canvas3 = await html2canvas(page3Container, {
+                    scale: 2.0,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    width: page3Container.offsetWidth,
+                    height: page3Container.offsetHeight,
+                    x: 0,
+                    y: 0,
+                    logging: false
+                });
+
+                // Add page 3 to PDF
+                pdf.addPage();
+
+                // Use better scaling for readability
+                const scale3 = Math.min(contentWidth / canvas3.width, contentHeight / canvas3.height, 0.75);
+                const scaledWidth3 = canvas3.width * scale3;
+                const scaledHeight3 = canvas3.height * scale3;
+                const xOffset3 = margin + (contentWidth - scaledWidth3) / 2;
+                const yOffset3 = margin;
+
+                const imgData3 = canvas3.toDataURL('image/png');
+                pdf.addImage(imgData3, 'PNG', xOffset3, yOffset3, scaledWidth3, scaledHeight3);
+
+                // Clean up page 3
+                document.body.removeChild(page3Container);
+
+                // Restore original styles
+                header.style.cssText = originalHeaderStyle;
+                columns[0].style.cssText = originalColumn1Style;
+                columns[1].style.cssText = originalColumn2Style;
+                document.body.style.cssText = originalBodyStyle;
+                document.documentElement.style.cssText = originalHtmlStyle;
+                exportButton.style.display = '';
+
+                // Generate filename with current date
+                const now = new Date();
+                const dateStr = now.toISOString().split('T')[0];
+                const filename = `AI_Prompting_CLEAR_Framework_${dateStr}.pdf`;
+
+                // Save the PDF
+                pdf.save(filename);
+
+                // Reset button
+                exportButton.textContent = originalText;
+                exportButton.disabled = false;
+
+                console.log('Two-page PDF exported successfully!');
+
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                
+                // Reset button on error
+                const exportButton = document.querySelector('.export-button');
+                exportButton.textContent = '📄 Export to PDF';
+                exportButton.disabled = false;
+                
+                alert('Error generating PDF. Please try again or check the console for details.');
+            }
+        }
+    </script>
+</body>
+</html>
