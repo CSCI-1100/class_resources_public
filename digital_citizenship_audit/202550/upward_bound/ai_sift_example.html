@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thursday Night Checklist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.4;
+            padding: 20px;
+        }
+
+        .poster {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .important-badge {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-top: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section.digital-literacy { border-left-color: #3498db; }
+        .section.web-literacy { border-left-color: #2ecc71; }
+        .section.data-literacy { border-left-color: #f39c12; }
+        .section.ai-literacy { border-left-color: #9b59b6; }
+        .section.cybersecurity { border-left-color: #e74c3c; }
+        .section.office { border-left-color: #1abc9c; }
+        .section.submission { border-left-color: #34495e; }
+        .section.quizzes { border-left-color: #e67e22; }
+
+        .section-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .task {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e9ecef;
+        }
+
+        .task-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .task-description {
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .task-notes {
+            background: #f1f3f4;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.9em;
+            color: #666;
+            border-left: 3px solid #3498db;
+        }
+
+        .task-notes pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin: 8px 0;
+            overflow-x: auto;
+        }
+
+        .reflection-note {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border: none;
+            color: #2d3436;
+            font-weight: 500;
+        }
+
+        .time-estimate {
+            display: inline-block;
+            background: #e9ecef;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #3498db;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            background: white;
+        }
+
+        .checkbox::after {
+            content: "✓";
+            color: #3498db;
+            font-weight: bold;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .checkbox:hover::after {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster">
+        <div class="content">
+            <!-- AI Literacy Section -->
+            <div class="section ai-literacy">
+                <div class="section-title">
+                    <div class="section-icon" style="background: #9b59b6;">🤖</div>
+                    AI Literacy
+                </div>
+                <div class="task">
+                    <div class="task-title">Generate content (1-2 prompts) and evaluate accuracy and relevance</div>
+                    <div class="task-notes">
+                        <strong>💡 Consider how CLEAR changes a prompt:</strong><br><br>
+                        <strong>Basic:</strong> "Give me 3 examples of legal precedents from the Late Modern English period that influence the United States legal system"<br><br>
+                        <strong>CLEAR:</strong> "As a legal scholar who champions exacting, concise, and direct language, provide 3 examples of legal precedents from the Late Modern English period that influence the United States legal system. Please format your responses into a concise table which features the columns: Precedent, Influence on U.S. Law, Example, Source"<br><br>
+                        <strong>🔍 Scrutinize the sources!</strong> Are they real? Were they ever real? Remember: generative AI is a prediction machine! Even when they search the web, verify that claims actually appear in the cited sources.
+                    </div>
+                </div>
+            </div>
+            <!-- Quizzes & Labs -->
+            <div class="section quizzes">
+                <div class="section-title">
+                    <div class="section-icon" style="background: #e67e22;">📝</div>
+                    Quizzes & Labs
+                </div>
+                <div class="grid">
+                    <div class="task">
+                        <div class="task-title">Quizzes</div>
+                        <div class="checklist-item">
+                            <div class="checkbox"></div>
+                            <div>Web Literacy <span class="time-estimate">10 min</span></div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checkbox"></div>
+                            <div>AI & Machine Learning <span class="time-estimate">10 min</span></div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checkbox"></div>
+                            <div>Cybersecurity & Privacy <span class="time-estimate">10 min</span></div>
+                        </div>
+                    </div>
+                    <div class="task">
+                        <div class="task-title">Labs</div>
+                        <div class="checklist-item">
+                            <div class="checkbox"></div>
+                            <div>MS PowerPoint Lab <span class="time-estimate">20-45 min</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="task-title">Exit Tickets (Digital)</div>
+                    <div class="checklist-item">
+                        <div class="checkbox"></div>
+                        <div>PowerPoint <span class="time-estimate">2 min</span></div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox"></div>
+                        <div>Cybersecurity & Privacy <span class="time-estimate">2 min</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
