@@ -28,6 +28,17 @@
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
+
+        <style>
+            .sort.asc::after {
+                content: "\002B06";
+                padding-left: 3px;
+            }
+            .sort.desc::after {
+                content: "\002B07";
+                padding-left: 3px
+            }
+        </style>
     </head>
     
     <body class="body-bg-img-light">
@@ -111,8 +122,12 @@
                         <div class="title-container-primary-blue">
                             <h2 class="text-putty-yellow">Available Syllabi</h2>
                         </div>
+                        <div class="d-flex p-2">
+                            <button class="bttn-putty-yellow-sm sort mt-2 mr-3 mb-2 d-inline" data-sort="semester">Sort by Semester</button>
+                            <input class="fuzzy-search br-8" type="search" placeholder="Search syllabus name" style="width: 205px;">
+                        </div>
                         <div class="scrollbox-wrapper bg-white fs-400">
-                            <div id="syllabi-container">
+                            <div class="list" id="syllabi-container">
                                 <!-- Syllabi dynamically generated here -->
                             </div>
                         </div>
@@ -160,7 +175,7 @@
                 </div>
             </div>
         </div>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
         <script>
             function scrollToSection(ID) {
                 document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
@@ -220,6 +235,7 @@
 
                     html += `
                         <div class="border-dotted-primary-blue br-8 p-3 bg-light">
+                            <span class="semester "style="display:none;">${semester}</span>
                             <h3 class="text-primary-blue text-left">${semesterName}</h3>
                             <div class="text-left">
                                     
@@ -231,6 +247,7 @@
                         
                         html += `
                                 <a target="_blank" href="${filePath}" title="Download ${semesterName} ${cleanName}">
+                                    <span class="syllabusname" style="display:none;">${cleanName}</span>
                                     <div class="mb-2">
                                         ${cleanName} &ensp;<i class="bi bi-download"></i>
                                     </div>
@@ -309,6 +326,15 @@
                 return result;
             }
 
+            function loadList() {
+                console.log('Loading syllabi list for filtering...');
+                let listOptions = {
+                    valueNames: [ 'semester', 'syllabusname' ],
+                    searchClass: 'syllabusname'
+                }
+                var syllabiList = new List('syllabi-list', listOptions);
+            }
+
             console.log('Starting syllabi archive scraping...');
 
             scrapeSyllabiArchiveAPI().then(result => {
@@ -316,6 +342,7 @@
                 console.log('JSON output:', JSON.stringify(result, null, 2));
 
                 generateSyllabiHTML(result);
+                loadList();
             });
         </script>
     </body>

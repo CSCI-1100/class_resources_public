@@ -124,7 +124,7 @@ textarea {
 }
 
 input[type='text'], input[type='password'], input[type='tel'] {
-    height: 2.8em;
+    height: 2em;
     border-radius: 10px;
     background-color: hsl( var(--clr-light-gray) );
     color: hsl( var(--clr-dark) );
