@@ -388,7 +388,7 @@ and (max-width: 440px) {
 }
 
 /* Style the buttons that are used to open the tab content */
-.tab, .tab-purple button {
+.tab button, .tab-purple button {
     background-color: inherit;
 }
 
@@ -658,17 +658,6 @@ input:checked + .slider:before {
     color: hsl( var(--clr-white) )!important;
 }
 
-.bttn-light-purple, .bttn-light-purple-sm {
-    border: 1px solid hsl( var(--clr-light-purple-hover) );
-    background-color: hsl( var(--clr-light-purple) );
-    color: hsl( var(--clr-white) );
-}
-
-.bttn-light-purple:hover, .bttn-light-purple-sm:hover {
-    background-color: hsl( var(--clr-light-purple-hover) );
-    color: hsl( var(--clr-white) )!important;
-}
-
 .bttn-putty-yellow, .bttn-putty-yellow-sm {
     border: 1px solid hsl( var(--clr-putty-yellow) );
     background-color: hsl( var(--clr-putty-yellow) );
@@ -726,7 +715,6 @@ input:checked + .slider:before {
 /* Rules common accross all normal-sized buttons */
 .bttn-primary,
 .bttn-outline-primary,
-.bttn-light-purple,
 .bttn-putty-yellow,
 .bttn-danger,
 .bttn-outline-danger,
@@ -739,7 +727,6 @@ input:checked + .slider:before {
 
 /* Rules common accross all small buttons */
 .bttn-primary-sm,
-.bttn-light-purple-sm,
 .bttn-putty-yellow-sm,
 .bttn-outline-primary-sm,
 .bttn-danger-sm,
@@ -754,8 +741,6 @@ input:checked + .slider:before {
 /* Rules common accross all the buttons */
 .bttn-primary,
 .bttn-primary-sm,
-.bttn-light-purple,
-.bttn-light-purple-sm,
 .bttn-putty-yellow,
 .bttn-putty-yellow-sm,
 .bttn-outline-primary,
@@ -773,8 +758,6 @@ input:checked + .slider:before {
 
 .bttn-primary:hover,
 .bttn-primary-sm:hover,
-.bttn-light-purple:hover,
-.bttn-light-purple-sm:hover,
 .bttn-putty-yellow:hover,
 .bttn-putty-yellow-sm:hover,
 .bttn-outline-primary:hover,
