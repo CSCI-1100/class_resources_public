@@ -112,9 +112,6 @@
                             <h2 class="text-putty-yellow">Available Syllabi</h2>
                         </div>
                         <div class="scrollbox-wrapper bg-white fs-400">
-                            <p class="text-center mb-4">
-                                Click on any semester to download the corresponding syllabus.
-                            </p>
                             <div id="syllabi-container">
                                 <!-- Syllabi dynamically generated here -->
                             </div>
@@ -187,7 +184,10 @@
 
             // Function to clean filename for display
             function cleanFileName(filename) {
-                return filename.replace('.docx', '');
+                if (filename.startsWith('CSCI 1100')) {
+                    filename = filename.replace('CSCI 1100', '');
+                }
+                return filename.replace('.docx', '').trim();
             }
 
             // Function to generate syllabi HTML
@@ -221,7 +221,7 @@
                         const filePath = `./${semester}/${file}`;
                         
                         html += `
-                                <a target="_blank" href="${filePath}">
+                                <a target="_blank" href="${filePath}" title="Download ${semesterName} ${cleanName}">
                                     <div class="mb-2">
                                         ${cleanName} &ensp;<i class="bi bi-download"></i>
                                     </div>
