@@ -15,10 +15,12 @@
     --clr-secondary-blue-hover: 241, 66%, 36%;
     --clr-primary-blue: 232, 40%, 44%;
     --clr-primary-blue-hover: 232, 40%, 35%;
-    --clr-putty-yellow: 48  62%  71%;
-    --clr-putty-yellow-hover: 48  62%  62%;
+    --clr-putty-yellow: 48, 62%, 71%;
+    --clr-putty-yellow-hover: 48, 62%, 62%;
     --clr-red: 354, 70%, 53%;
     --clr-red-hover: 354, 70%, 44%;
+    --clr-light-purple: 258, 34%, 64%;
+    --clr-light-purple-hover: 258, 52%, 65%;
 
     --clr-icon-red: #f86e6e;
     --clr-icon-green: #30a76a;
@@ -277,6 +279,21 @@ footer {
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
+.title-container-light-purple {
+    /* bg-primary-blue text-center ff-sans-condensed text-white p-1 br-8 shadow */
+    position: relative;
+    background-color: hsl( var(--clr-light-purple-hover) );
+    text-align: center;
+    color: white;
+    margin: 0 0 -1px 0;
+    padding: .25rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
 .scrollbox-wrapper {
     border: 1px solid hsl( var(--clr-primary-blue) );
     border-bottom-left-radius: 8px;
@@ -359,7 +376,11 @@ and (max-width: 440px) {
     background-color: hsl( var(--clr-primary-blue-hover) );
 }
 
-.tab, .tab-no-bg {
+.tab-purple {
+    background-color: hsl( var(--clr-light-purple-hover) );
+}
+
+.tab, .tab-purple {
     padding: 0.5rem;
     margin-bottom: none;
     overflow: hidden;
@@ -367,11 +388,11 @@ and (max-width: 440px) {
 }
 
 /* Style the buttons that are used to open the tab content */
-.tab button {
+.tab, .tab-purple button {
     background-color: inherit;
 }
 
-.tab button, .tab-no-bg button {
+.tab button, .tab-purple button {
     color: hsl( var(--clr-white) );
     margin-left: 4px;
     margin-right: 4px;
@@ -386,14 +407,20 @@ and (max-width: 440px) {
 }
 
 /* Change background color of buttons on hover */
-.tab button:hover, .tab-no-bg button:hover {
+.tab button:hover {
     color: hsl( var(--clr-putty-yellow-hover) );
     background-color: hsl( var(--clr-primary-blue) );
     border: 1px solid hsl( var(--clr-light) );
 }
 
+.tab-purple button:hover {
+    color: #aaeef7;
+    background-color: hsl( var(--clr-light-purple) );
+    border: 1px solid hsl( var(--clr-light) );
+}
+
 /* Create an active/current tablink class */
-.tab button.active, .tab-no-bg button.active {
+.tab button.active, .tab-purple button.active {
     background-color: hsl( var(--clr-primary-blue) );
     border: 1px solid hsl( var(--clr-light) );
 }
@@ -631,6 +658,17 @@ input:checked + .slider:before {
     color: hsl( var(--clr-white) )!important;
 }
 
+.bttn-light-purple, .bttn-light-purple-sm {
+    border: 1px solid hsl( var(--clr-light-purple-hover) );
+    background-color: hsl( var(--clr-light-purple) );
+    color: hsl( var(--clr-white) );
+}
+
+.bttn-light-purple:hover, .bttn-light-purple-sm:hover {
+    background-color: hsl( var(--clr-light-purple-hover) );
+    color: hsl( var(--clr-white) )!important;
+}
+
 .bttn-putty-yellow, .bttn-putty-yellow-sm {
     border: 1px solid hsl( var(--clr-putty-yellow) );
     background-color: hsl( var(--clr-putty-yellow) );
@@ -688,6 +726,7 @@ input:checked + .slider:before {
 /* Rules common accross all normal-sized buttons */
 .bttn-primary,
 .bttn-outline-primary,
+.bttn-light-purple,
 .bttn-putty-yellow,
 .bttn-danger,
 .bttn-outline-danger,
@@ -700,6 +739,7 @@ input:checked + .slider:before {
 
 /* Rules common accross all small buttons */
 .bttn-primary-sm,
+.bttn-light-purple-sm,
 .bttn-putty-yellow-sm,
 .bttn-outline-primary-sm,
 .bttn-danger-sm,
@@ -714,6 +754,8 @@ input:checked + .slider:before {
 /* Rules common accross all the buttons */
 .bttn-primary,
 .bttn-primary-sm,
+.bttn-light-purple,
+.bttn-light-purple-sm,
 .bttn-putty-yellow,
 .bttn-putty-yellow-sm,
 .bttn-outline-primary,
@@ -731,6 +773,8 @@ input:checked + .slider:before {
 
 .bttn-primary:hover,
 .bttn-primary-sm:hover,
+.bttn-light-purple:hover,
+.bttn-light-purple-sm:hover,
 .bttn-putty-yellow:hover,
 .bttn-putty-yellow-sm:hover,
 .bttn-outline-primary:hover,
@@ -1065,6 +1109,7 @@ input:checked + .slider:before {
 .bg-secondary-blue { background-color: hsl( var(--clr-secondary-blue) ); }
 .bg-primary-blue { background-color: hsl( var(--clr-primary-blue) ); }
 .bg-primary-blue-hover { background-color: hsl( var(--clr-primary-blue-hover) ); }
+.bg-light-purple { background-color: hsl( var(--clr-light-purple) ); }
 .bg-accent-light { background-color: hsl( var(--clr-accent-light) ); }
 .bg-putty-yellow { background-color: hsl( var(--clr-putty-yellow) ); }
 .bg-primary-blue-translucent { background-color: rgba(66, 109, 174, 0.7); }
