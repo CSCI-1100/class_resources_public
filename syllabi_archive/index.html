@@ -119,16 +119,18 @@
             <div class="bg-light mb-4 br-8">
                 <div class="row card-row pt-3" id="syllabi-list">
                     <div class="col-xl br-8">
-                        <div class="title-container-primary-blue">
-                            <h2 class="text-putty-yellow">Available Syllabi</h2>
-                        </div>
-                        <div class="d-flex p-2">
-                            <button class="bttn-putty-yellow-sm sort mt-2 mr-3 mb-2 d-inline" data-sort="semester">Sort by Semester</button>
-                            <input class="fuzzy-search br-8" type="search" placeholder="Search syllabus name" style="width: 205px;">
-                        </div>
-                        <div class="scrollbox-wrapper bg-white fs-400">
-                            <div class="list" id="syllabi-container">
-                                <!-- Syllabi dynamically generated here -->
+                        <div class="scrollbox-wrapper bg-white">
+                            <div class="title-container-primary-blue">
+                                <h2 class="text-putty-yellow">Available Syllabi</h2>
+                            </div>
+                            <div class="d-flex p-2">
+                                <button class="bttn-putty-yellow-sm sort mt-2 mr-3 mb-2 d-inline" data-sort="semester">Sort by Semester</button>
+                                <input name="Syllabus name search" id="syllabus-name-search" class="fuzzy-search br-8" type="search" placeholder="Search syllabus name" style="width: 205px;">
+                            </div>
+                            <div class="scrollbox-wrapper bg-white fs-400" style="border: none;">
+                                <div class="list" id="syllabi-container">
+                                    <!-- Syllabi dynamically generated here -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -327,12 +329,20 @@
             }
 
             function loadList() {
-                console.log('Loading syllabi list for filtering...');
+                console.log('Loading syllabi list for sorting and filtering...');
                 let listOptions = {
                     valueNames: [ 'semester', 'syllabusname' ],
                     searchClass: 'syllabusname'
                 }
                 var syllabiList = new List('syllabi-list', listOptions);
+
+                document.getElementById('syllabus-name-search').addEventListener('focusout', (ev) => {
+                    syllabiList.search('');
+                });
+
+                document.getElementById('syllabus-name-search').addEventListener('focusin', (ev) => {
+                    syllabiList.search('');
+                });
             }
 
             console.log('Starting syllabi archive scraping...');
