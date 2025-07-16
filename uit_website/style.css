@@ -179,6 +179,13 @@ footer {
     background-size: cover;
 }
 
+.body-bg-img-light {
+    background: linear-gradient(rgba(162, 189, 230, 0.5), rgba(140, 183, 247, 0.5)),
+    url("img/abstract-mountain-path_background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .row {
     border-radius: 8px;
 }
