@@ -183,11 +183,20 @@
             }
 
             // Function to clean filename for display
-            function cleanFileName(filename) {
-                if (filename.startsWith('CSCI 1100')) {
-                    filename = filename.replace('CSCI 1100', '');
-                }
-                return filename.replace('.docx', '').trim();
+            function cleanFileName(fileName) {
+                // Replace underscores with spaces
+                let cleaned = fileName.replace(/_/g, ' ');
+
+                // Strip away "CSCI 1100" or "CSCI_1100" (case-insensitive)
+                cleaned = cleaned.replace(/CSCI[_\s]1100/, '').trim();
+
+                // Strip away the semester date (6 digits starting with "20")
+                cleaned = cleaned.replace(/\s20\d{4}/, '').trim();
+
+                // Remove file extension (if exists)
+                cleaned = cleaned.replace(/\.\w+$/, '').trim();
+
+                return cleaned;
             }
 
             // Function to generate syllabi HTML
