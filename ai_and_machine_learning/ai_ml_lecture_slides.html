@@ -724,11 +724,102 @@
                     <h4>Neural nets are analogous to committees that vote</h4>
                     <p>Their weights determine how much their votes count in the final decision</p>
                 </div>
-                <div class="link-preview">
-                    <div class="preview-container">
-                        <iframe scrolling="no" class="preview-iframe" src="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/neural_networks/neural_network_committee.html"></iframe>
-                        <div class="gradient-overlay"></div>
-                        <a target="_blank" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/neural_networks/neural_network_committee.html" class="view-link">View Document ↗️</a>
+                
+                <div class="row">
+                    <div class="col-md">
+                        <div class="slide-subtitle" style="color: #4FC4BB;">Voting Committee</div>
+                        <div class="link-preview">
+                            <div class="preview-container">
+                                <iframe scrolling="no" class="preview-iframe" src="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/neural_networks/neural_network_committee.html"></iframe>
+                                <div class="gradient-overlay"></div>
+                                <a target="_blank" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/neural_networks/neural_network_committee.html" class="view-link">View Document ↗️</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="slide-subtitle" style="color: #4FC4BB; margin-left: 30px;">Layers</div>
+                        <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background rectangles for layers -->
+                            <rect x="25" y="25" width="50" height="150" fill="#ffcccc" stroke="#ff9999" stroke-width="1" rx="5"/>
+                            <rect x="100" y="25" width="50" height="150" fill="#ccccff" stroke="#9999ff" stroke-width="1" rx="5"/>
+                            <rect x="175" y="25" width="50" height="150" fill="#ccccff" stroke="#9999ff" stroke-width="1" rx="5"/>
+                            <rect x="250" y="25" width="50" height="150" fill="#ccffcc" stroke="#99ff99" stroke-width="1" rx="5"/>
+                            
+                            <!-- Input Layer Nodes -->
+                            <circle cx="50" cy="60" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            <circle cx="50" cy="90" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            <circle cx="50" cy="120" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            <circle cx="50" cy="150" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            
+                            <!-- Hidden Layer 1 Nodes -->
+                            <circle cx="125" cy="50" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            <circle cx="125" cy="80" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            <circle cx="125" cy="110" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            <circle cx="125" cy="140" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            
+                            <!-- Hidden Layer 2 Nodes -->
+                            <circle cx="200" cy="50" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            <circle cx="200" cy="80" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            <circle cx="200" cy="110" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            <circle cx="200" cy="140" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            
+                            <!-- Output Layer Node -->
+                            <circle cx="275" cy="100" r="10" fill="white" stroke="#333" stroke-width="1"/>
+                            
+                            <!-- Connections from Input to Hidden Layer 1 -->
+                            <line x1="60" y1="60" x2="115" y2="50" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="60" x2="115" y2="80" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="60" x2="115" y2="110" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="60" x2="115" y2="140" stroke="#666" stroke-width="0.8"/>
+                            
+                            <line x1="60" y1="90" x2="115" y2="50" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="90" x2="115" y2="80" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="90" x2="115" y2="110" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="90" x2="115" y2="140" stroke="#666" stroke-width="0.8"/>
+                            
+                            <line x1="60" y1="120" x2="115" y2="50" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="120" x2="115" y2="80" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="120" x2="115" y2="110" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="120" x2="115" y2="140" stroke="#666" stroke-width="0.8"/>
+                            
+                            <line x1="60" y1="150" x2="115" y2="50" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="150" x2="115" y2="80" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="150" x2="115" y2="110" stroke="#666" stroke-width="0.8"/>
+                            <line x1="60" y1="150" x2="115" y2="140" stroke="#666" stroke-width="0.8"/>
+                            
+                            <!-- Connections from Hidden Layer 1 to Hidden Layer 2 -->
+                            <line x1="135" y1="50" x2="190" y2="50" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="50" x2="190" y2="80" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="50" x2="190" y2="110" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="50" x2="190" y2="140" stroke="#666" stroke-width="0.8"/>
+                            
+                            <line x1="135" y1="80" x2="190" y2="50" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="80" x2="190" y2="80" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="80" x2="190" y2="110" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="80" x2="190" y2="140" stroke="#666" stroke-width="0.8"/>
+                            
+                            <line x1="135" y1="110" x2="190" y2="50" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="110" x2="190" y2="80" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="110" x2="190" y2="110" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="110" x2="190" y2="140" stroke="#666" stroke-width="0.8"/>
+                            
+                            <line x1="135" y1="140" x2="190" y2="50" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="140" x2="190" y2="80" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="140" x2="190" y2="110" stroke="#666" stroke-width="0.8"/>
+                            <line x1="135" y1="140" x2="190" y2="140" stroke="#666" stroke-width="0.8"/>
+                            
+                            <!-- Connections from Hidden Layer 2 to Output -->
+                            <line x1="210" y1="50" x2="265" y2="100" stroke="#666" stroke-width="0.8"/>
+                            <line x1="210" y1="80" x2="265" y2="100" stroke="#666" stroke-width="0.8"/>
+                            <line x1="210" y1="110" x2="265" y2="100" stroke="#666" stroke-width="0.8"/>
+                            <line x1="210" y1="140" x2="265" y2="100" stroke="#666" stroke-width="0.8"/>
+                            
+                            <!-- Labels -->
+                            <text x="50" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#d63384">input layer</text>
+                            <text x="125" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#0d6efd">hidden layer 1</text>
+                            <text x="200" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#0d6efd">hidden layer 2</text>
+                            <text x="275" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#198754">output layer</text>
+                        </svg>
                     </div>
                 </div>
                 <div style="margin-top: 20px;">
