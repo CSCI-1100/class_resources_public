@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Literacy Lab - Interactive</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/css/style.css">
+
+    <style>
+        input[type=checkbox] {
+            width: 1em;
+            height: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="roadmap-container">
+        <div class="header">
+            <h1>🧠 AI Literacy Lab</h1>
+            <p>Prompt Engineering with the CLEAR Framework</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <!-- Page 1: Overview & Setup -->
+            <div class="page active" id="page1">
+                <div class="phase-header">
+                    <div class="phase-number">🎯</div>
+                    <div class="phase-info">
+                        <h2>Lab Overview & Introduction</h2>
+                        <p>Learn effective AI prompting through hands-on practice with the CLEAR framework</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentName">Your Name:</label>
+                    <input type="text" id="studentName" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="aiPlatform">Selected AI Platform:</label>
+                    <select id="aiPlatform">
+                        <option value="">Select your AI platform</option>
+                        <option value="ChatGPT">ChatGPT (OpenAI)</option>
+                        <option value="Gemini">Gemini (Google AI)</option>
+                        <option value="Claude">Claude (Anthropic)</option>
+                        <option value="Copilot">Copilot (Microsoft)</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectedTopic">Selected Topic:</label>
+                    <select id="selectedTopic">
+                        <option value="">Choose your topic</option>
+                        <option value="Cooking">Option A - Cooking: Request a dinner recipe</option>
+                        <option value="Health & Fitness">Option B - Health & Fitness: Ask for an exercise routine</option>
+                        <option value="Academic Research">Option C - Academic Research: Research on a specific topic in your field</option>
+                        <option value="Creative Writing">Option D - Creative Writing: Help with a creative writing project</option>
+                        <option value="Career Development">Option E - Career Development: Advice on professional skills</option>
+                        <option value="Technology">Option F - Technology: Explanation of a technical concept</option>
+                        <option value="Personal Interest">Option G - Personal Interest: Any topic you're curious about</option>
+                    </select>
+                </div>
+
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h3>🎯 Your Goal</h3>
+                        <p>Learn to create increasingly effective AI prompts using the CLEAR framework through a three-stage refinement process.</p>
+                    </div>
+                    <div class="overview-card">
+                        <h3>⏱️ Time Frame</h3>
+                        <p>Complete the lab at your own pace. Your work is automatically saved as you progress.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>What is AI?</h3>
+                    <p>Artificial Intelligence (AI) refers to the ability of machines to perform tasks that typically require human intelligence, such as understanding natural language, recognizing patterns, solving problems, and making decisions.</p>
+                    
+                    <h4 style="margin-top: 15px;">Examples in Everyday Life:</h4>
+                    <ul class="checklist">
+                        <li>Voice Assistants: Siri, Alexa, and Google Assistant</li>
+                        <li>Recommendation Systems: Netflix, Spotify, Amazon suggestions</li>
+                        <li>Smart Home Devices: Learning thermostats and security systems</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>What is Machine Learning?</h3>
+                    <p>Machine Learning (ML) is a subset of AI that involves training computer systems to learn from data and improve their performance over time without being explicitly programmed for each task.</p>
+                    
+                    <h4 style="margin-top: 15px;">How it Works:</h4>
+                    <ul class="checklist">
+                        <li>Data Input: Large amounts of data are fed into the system</li>
+                        <li>Training: The ML model learns to recognize patterns</li>
+                        <li>Prediction: The model makes decisions based on new, unseen data</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page 2: CLEAR Framework -->
+            <div class="page" id="page2">
+                <div class="phase-header">
+                    <div class="phase-number">📋</div>
+                    <div class="phase-info">
+                        <h2>The CLEAR Framework</h2>
+                        <p>Your roadmap for effective AI prompting throughout this lab</p>
+                    </div>
+                </div>
+
+                <div class="clear-framework">
+                    <div class="clear-item">
+                        <div class="clear-letter">C</div>
+                        <h3>Clarity</h3>
+                        <p>Ensure that the prompt is clear and specific, with a clearly defined goal in mind.</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">L</div>
+                        <h3>Logistics</h3>
+                        <p>Include practical considerations and details including types of input, steps to take, and desired output format.</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">E</div>
+                        <h3>Examples</h3>
+                        <p>Provide examples to better describe your intended output. Also helpful to say what you do NOT want.</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">A</div>
+                        <h3>Audience</h3>
+                        <p>Identify your target population and include their characteristics, needs, existing knowledge and expectations.</p>
+                    </div>
+                    <div class="clear-item">
+                        <div class="clear-letter">R</div>
+                        <h3>Refinement</h3>
+                        <p>Refine the prompt by providing constructive feedback and output specifications to optimize results.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Why CLEAR Works for AI Prompting</h3>
+                    <ul class="checklist">
+                        <li>Provides specific context AI needs to generate relevant responses</li>
+                        <li>Reduces back-and-forth iterations and clarification requests</li>
+                        <li>Ensures generated content matches your actual requirements</li>
+                        <li>Helps AI understand both technical and contextual needs</li>
+                    </ul>
+                </div>
+
+                <div class="code-snippet">
+Sample CLEAR Prompt Structure:
+"I need [SPECIFIC GOAL] for [CONTEXT].
+The output should [LOGISTICS/CONSTRAINTS].
+Here's an example of what I want: [EXAMPLE].
+This is for [AUDIENCE DESCRIPTION].
+Please [SPECIFIC REQUIREMENTS AND REFINEMENTS]."
+                </div>
+            </div>
+
+            <!-- Page 3: Stage 1 - Basic Prompt -->
+            <div class="page" id="page3">
+                <div class="phase-header">
+                    <div class="phase-number">1</div>
+                    <div class="phase-info">
+                        <h2>Stage 1: Basic Prompt</h2>
+                        <p>Create a simple, broad prompt related to your chosen topic</p>
+                    </div>
+                </div>
+
+                <div class="clear-focus">
+                    <h4>Stage 1 Focus</h4>
+                    <p><strong>Basic, broad request</strong> - Keep it simple and general</p>
+                </div>
+
+                <div class="section">
+                    <h3>Instructions</h3>
+                    <p>Create a very simple, broad prompt related to your chosen topic. This should be the kind of basic request you might naturally make without much thought about structure or specificity.</p>
+                    
+                    <h4 style="margin-top: 15px;">Examples by Topic:</h4>
+                    <ul class="checklist">
+                        <li><strong>Cooking:</strong> "Give me a dinner recipe"</li>
+                        <li><strong>Research:</strong> "Tell me about climate change"</li>
+                        <li><strong>Fitness:</strong> "Create an exercise routine"</li>
+                        <li><strong>Technology:</strong> "Explain machine learning"</li>
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage1Prompt">Your Stage 1 Prompt:</label>
+                    <textarea rows="3" cols="90" id="stage1Prompt" placeholder="Enter your basic, broad prompt here..."></textarea>
+                </div>
+
+                <div class="tip-container">
+                    <h3>Now test your prompt!</h3>
+                    <p>Copy your Stage 1 prompt and test it with your chosen AI platform. Then return here to record the output and your analysis.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage1Output">AI Output from Stage 1:</label>
+                    <textarea rows="8" cols="90" id="stage1Output" placeholder="Paste the AI's response to your Stage 1 prompt here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage1Analysis">Your Analysis (1-2 sentences):</label>
+                    <p style="margin: 5px 0 10px 0; color: #666; font-style: italic;">Consider: How helpful was the response? What important information was missing or was there an issue with relevance to your desired output?</p>
+                    <textarea rows="3" cols="90" id="stage1Analysis" placeholder="Enter your analysis here..."></textarea>
+                </div>
+            </div>
+
+            <!-- Page 4: Stage 2 - Moderately Refined -->
+            <div class="page" id="page4">
+                <div class="phase-header">
+                    <div class="phase-number">2</div>
+                    <div class="phase-info">
+                        <h2>Stage 2: Moderately Refined Prompt</h2>
+                        <p>Add 2-3 elements from the CLEAR framework to improve your prompt</p>
+                    </div>
+                </div>
+
+                <div class="clear-focus">
+                    <h4>Stage 2 Focus</h4>
+                    <p><strong>Add 2-3 CLEAR elements</strong> - Make it more specific and targeted</p>
+                </div>
+
+                <div class="section">
+                    <h3>Instructions</h3>
+                    <p>Refine your Stage 1 prompt by adding 2-3 elements from the CLEAR framework. Consider adding specificity about your audience, desired format, constraints, or examples.</p>
+                    
+                    <h4 style="margin-top: 15px;">Examples of Refined Prompts:</h4>
+                    <ul class="checklist">
+                        <li><strong>Cooking:</strong> "Give me a healthy dinner recipe for two people that takes under 30 minutes to prepare"</li>
+                        <li><strong>Research:</strong> "Explain climate change impacts on agriculture in simple terms for a college student"</li>
+                        <li><strong>Fitness:</strong> "Create a 20-minute home workout routine for beginners with no equipment"</li>
+                        <li><strong>Technology:</strong> "Explain machine learning algorithms in simple terms for someone new to programming"</li>
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage2Elements">Which CLEAR elements are you adding? (Check all that apply)</label>
+                    <div style="margin: 10px 0;">
+                        <label style="display: block; margin: 5px 0;"><input type="checkbox" id="clarity2" style="margin-right: 8px;">Clarity - More specific goal</label>
+                        <label style="display: block; margin: 5px 0;"><input type="checkbox" id="logistics2" style="margin-right: 8px;">Logistics - Practical constraints or format</label>
+                        <label style="display: block; margin: 5px 0;"><input type="checkbox" id="examples2" style="margin-right: 8px;">Examples - What you want or don't want</label>
+                        <label style="display: block; margin: 5px 0;"><input type="checkbox" id="audience2" style="margin-right: 8px;">Audience - Target user characteristics</label>
+                        <label style="display: block; margin: 5px 0;"><input type="checkbox" id="refinement2" style="margin-right: 8px;">Refinement - Specific requirements</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage2Prompt">Your Stage 2 Prompt:</label>
+                    <textarea rows="4" cols="90" id="stage2Prompt" placeholder="Enter your moderately refined prompt here..."></textarea>
+                </div>
+
+                <div class="tip-container">
+                    <h3>Test your refined prompt!</h3>
+                    <p>Copy your Stage 2 prompt and test it with your AI platform. Compare the results to Stage 1.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage2Output">AI Output from Stage 2:</label>
+                    <textarea rows="8" cols="90" id="stage2Output" placeholder="Paste the AI's response to your Stage 2 prompt here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage2Analysis">Your Analysis (1-2 sentences):</label>
+                    <p style="margin: 5px 0 10px 0; color: #666; font-style: italic;">Consider: Comparing to Stage 1, do you notice improvements? Is the output more or less desirable?</p>
+                    <textarea rows="3" cols="90" id="stage2Analysis" placeholder="Enter your analysis here..."></textarea>
+                </div>
+            </div>
+
+            <!-- Page 5: Stage 3 - Highly Refined -->
+            <div class="page" id="page5">
+                <div class="phase-header">
+                    <div class="phase-number">3</div>
+                    <div class="phase-info">
+                        <h2>Stage 3: Highly Refined Prompt</h2>
+                        <p>Implement all elements of the CLEAR framework for maximum effectiveness</p>
+                    </div>
+                </div>
+
+                <div class="clear-focus">
+                    <h4>Stage 3 Focus</h4>
+                    <p><strong>Full CLEAR Implementation</strong> - Comprehensive, well-structured prompt</p>
+                </div>
+
+                <div class="section">
+                    <h3>Instructions</h3>
+                    <p>Create a comprehensive prompt incorporating ALL elements of the CLEAR framework. This should be a detailed, well-structured request that leaves little room for ambiguity.</p>
+                    
+                    <h4 style="margin-top: 15px;">Example of Highly Refined Prompt (Cooking):</h4>
+                    <div class="code-snippet">
+"As a nutritionist, provide a heart-healthy dinner recipe for two busy professionals that takes 25 minutes or less to prepare. Include prep time, cooking time, and nutritional information. Format as: ingredients list, step-by-step instructions, and nutrition facts. The meal should be under 600 calories per serving and include at least one vegetable. Avoid recipes requiring special equipment like food processors."
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage3Elements">Confirm you're including ALL CLEAR elements:</label>
+                    <div style="margin: 10px 0;">
+                        <label style="display: block; margin: 5px 0;"><input type="checkbox" id="clarity3" style="margin-right: 8px;">Clarity - Crystal clear, specific goal</label>
+                        <label style="display: block; margin: 5px 0;"><input type="checkbox" id="logistics3" style="margin-right: 8px;">Logistics - Detailed constraints, format, steps</label>
+                        <label style="display: block; margin: 5px 0;"><input type="checkbox" id="examples3" style="margin-right: 8px;">Examples - Specific examples or exclusions</label>
+                        <label style="display: block; margin: 5px 0;"><input type="checkbox" id="audience3" style="margin-right: 8px;">Audience - Detailed target user description</label>
+                        <label style="display: block; margin: 5px 0;"><input type="checkbox" id="refinement3" style="margin-right: 8px;">Refinement - Precise specifications and requirements</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage3Prompt">Your Stage 3 Prompt:</label>
+                    <textarea rows="6" cols="90" id="stage3Prompt" placeholder="Enter your comprehensive, highly refined prompt here..."></textarea>
+                </div>
+
+                <div class="tip-container">
+                    <h3>Test your final prompt!</h3>
+                    <p>Copy your Stage 3 prompt and test it with your AI platform. This should produce the most targeted, useful response.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage3Output">AI Output from Stage 3:</label>
+                    <textarea rows="8" cols="90" id="stage3Output" placeholder="Paste the AI's response to your Stage 3 prompt here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="stage3Analysis">Your Analysis (1-2 sentences):</label>
+                    <p style="margin: 5px 0 10px 0; color: #666; font-style: italic;">Consider: Did the usefulness, format, tone, or any other qualities improve? How so?</p>
+                    <textarea rows="3" cols="90" id="stage3Analysis" placeholder="Enter your analysis here..."></textarea>
+                </div>
+            </div>
+
+            <!-- Page 6: Reflection -->
+            <div class="page" id="page6">
+                <div class="phase-header">
+                    <div class="phase-number">🤔</div>
+                    <div class="phase-info">
+                        <h2>Reflection Questions</h2>
+                        <p>Analyze your experience with the CLEAR framework and AI prompting</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Reflection Questions</h3>
+                    <p>Please thoughtfully answer each of these questions based on your experience with the three-stage prompting process:</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="reflection1">1. Responsibility: How does the way you phrase a prompt impact the AI's output, and what responsibilities do you have when crafting prompts?</label>
+                    <p style="margin: 5px 0 10px 0; color: #666; font-style: italic;">Consider how prompt phrasing affects AI responses and your role in responsible prompting.</p>
+                    <textarea rows="4" cols="90" id="reflection1" placeholder="Enter your response here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="reflection2">2. Bias: How might AI platforms produce biased outputs based on the wording of a prompt? Did you notice any potential biases in your outputs?</label>
+                    <p style="margin: 5px 0 10px 0; color: #666; font-style: italic;">Reflect on potential biases in AI responses and whether you observed any in your experiments.</p>
+                    <textarea rows="4" cols="90" id="reflection2" placeholder="Enter your response here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="reflection3">3. CLEAR Framework: In your opinion, does using the CLEAR framework help create more effective conversational AI interactions?</label>
+                    <p style="margin: 5px 0 10px 0; color: #666; font-style: italic;">Share your opinion on the effectiveness of the CLEAR framework based on your experience.</p>
+                    <textarea rows="4" cols="90" id="reflection3" placeholder="Enter your response here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="reflection4">4. Most Important Element: If you believe CLEAR creates more effective interactions, which element of the framework do you think was the most important for your prompts? If not, what approach would you propose?</label>
+                    <p style="margin: 5px 0 10px 0; color: #666; font-style: italic;">Identify the most valuable CLEAR element or propose an alternative approach if you think CLEAR isn't effective.</p>
+                    <textarea rows="4" cols="90" id="reflection4" placeholder="Enter your response here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="reflection5">5. Overall Experience: Briefly reflect on your experience with this lab overall.</label>
+                    <p style="margin: 5px 0 10px 0; color: #666; font-style: italic;">Share your thoughts on the lab experience, any surprises, future applications, or concerns.</p>
+                    <textarea rows="4" cols="90" id="reflection5" placeholder="Enter your response here..."></textarea>
+                </div>
+
+                <div class="tip-container">
+                    <h3>Suggested considerations for question 5:</h3>
+                    <ul style="margin-left: 20px;">
+                        <li>Did anything about your interaction with the AI platform surprise you?</li>
+                        <li>Did this activity give you ideas about how you might use AI in the future?</li>
+                        <li>Did this activity raise concerns about the overuse or misuse of this technology?</li>
+                    </ul>
+                </div>
+
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h3>🎉 Congratulations!</h3>
+                        <p>You've completed the AI Literacy Lab and learned to use the CLEAR framework for effective AI prompting. This skill will serve you well in your future interactions with AI systems.</p>
+                    </div>
+                    <div class="overview-card" style="border: 5px solid orange;">
+                        <h3 style="font-weight: bold;">📤 D2L Submission</h3>
+                        <p>Click the button below to export your lab report as a PDF for submission to D2L. Make sure all your responses are complete before exporting!</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="export-button" onclick="exportToPDF()" style="background: #28a745; color: white; border: none; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 1.1em; font-weight: 600;">📄 Export Lab Report as PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" id="prevBtn" onclick="changePage(-1)" disabled>
+                ← Previous
+            </button>
+            <div class="page-indicator">
+                <span id="currentPage">1</span> of <span id="totalPages">6</span>
+            </div>
+            <button class="nav-button" id="nextBtn" onclick="changePage(1)">
+                Next →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 6;
+
+        // Auto-save functionality using localStorage (same as kiosk lab)
+        function saveToStorage(key, value) {
+            localStorage.setItem(`aiLiteracyLab_${key}`, value);
+        }
+
+        function loadFromStorage(key) {
+            return localStorage.getItem(`aiLiteracyLab_${key}`) || '';
+        }
+
+        function initializeForm() {
+            // Load saved data
+            document.getElementById('studentName').value = loadFromStorage('studentName');
+            document.getElementById('aiPlatform').value = loadFromStorage('aiPlatform');
+            document.getElementById('selectedTopic').value = loadFromStorage('selectedTopic');
+            document.getElementById('stage1Prompt').value = loadFromStorage('stage1Prompt');
+            document.getElementById('stage1Output').value = loadFromStorage('stage1Output');
+            document.getElementById('stage1Analysis').value = loadFromStorage('stage1Analysis');
+            document.getElementById('stage2Prompt').value = loadFromStorage('stage2Prompt');
+            document.getElementById('stage2Output').value = loadFromStorage('stage2Output');
+            document.getElementById('stage2Analysis').value = loadFromStorage('stage2Analysis');
+            document.getElementById('stage3Prompt').value = loadFromStorage('stage3Prompt');
+            document.getElementById('stage3Output').value = loadFromStorage('stage3Output');
+            document.getElementById('stage3Analysis').value = loadFromStorage('stage3Analysis');
+            document.getElementById('reflection1').value = loadFromStorage('reflection1');
+            document.getElementById('reflection2').value = loadFromStorage('reflection2');
+            document.getElementById('reflection3').value = loadFromStorage('reflection3');
+            document.getElementById('reflection4').value = loadFromStorage('reflection4');
+            document.getElementById('reflection5').value = loadFromStorage('reflection5');
+
+            // Load checkboxes
+            document.getElementById('clarity2').checked = loadFromStorage('clarity2') === 'true';
+            document.getElementById('logistics2').checked = loadFromStorage('logistics2') === 'true';
+            document.getElementById('examples2').checked = loadFromStorage('examples2') === 'true';
+            document.getElementById('audience2').checked = loadFromStorage('audience2') === 'true';
+            document.getElementById('refinement2').checked = loadFromStorage('refinement2') === 'true';
+            document.getElementById('clarity3').checked = loadFromStorage('clarity3') === 'true';
+            document.getElementById('logistics3').checked = loadFromStorage('logistics3') === 'true';
+            document.getElementById('examples3').checked = loadFromStorage('examples3') === 'true';
+            document.getElementById('audience3').checked = loadFromStorage('audience3') === 'true';
+            document.getElementById('refinement3').checked = loadFromStorage('refinement3') === 'true';
+
+            // Add event listeners for auto-saving
+            const fields = ['studentName', 'aiPlatform', 'selectedTopic', 'stage1Prompt', 'stage1Output', 'stage1Analysis', 'stage2Prompt', 'stage2Output', 'stage2Analysis', 'stage3Prompt', 'stage3Output', 'stage3Analysis', 'reflection1', 'reflection2', 'reflection3', 'reflection4', 'reflection5'];
+            fields.forEach(fieldId => {
+                const element = document.getElementById(fieldId);
+                element.addEventListener('input', () => saveToStorage(fieldId, element.value));
+                element.addEventListener('change', () => saveToStorage(fieldId, element.value));
+            });
+
+            // Add event listeners for checkboxes
+            const checkboxes = ['clarity2', 'logistics2', 'examples2', 'audience2', 'refinement2', 'clarity3', 'logistics3', 'examples3', 'audience3', 'refinement3'];
+            checkboxes.forEach(checkboxId => {
+                const element = document.getElementById(checkboxId);
+                element.addEventListener('change', () => saveToStorage(checkboxId, element.checked));
+            });
+        }
+
+        function updateProgress() {
+            const progress = (currentPage / totalPages) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function changePage(direction) {
+            const newPage = currentPage + direction;
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                // Hide current page
+                document.getElementById(`page${currentPage}`).classList.remove('active');
+                
+                // Show new page
+                currentPage = newPage;
+                document.getElementById(`page${currentPage}`).classList.add('active');
+                
+                // Update navigation
+                document.getElementById('currentPage').textContent = currentPage;
+                document.getElementById('prevBtn').disabled = currentPage === 1;
+                document.getElementById('nextBtn').disabled = currentPage === totalPages;
+                
+                // Update progress bar
+                updateProgress();
+            }
+        }
+
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Get form data
+            const formData = {
+                studentName: document.getElementById('studentName').value,
+                aiPlatform: document.getElementById('aiPlatform').value,
+                selectedTopic: document.getElementById('selectedTopic').value,
+                stage1Prompt: document.getElementById('stage1Prompt').value,
+                stage1Output: document.getElementById('stage1Output').value,
+                stage1Analysis: document.getElementById('stage1Analysis').value,
+                stage2Prompt: document.getElementById('stage2Prompt').value,
+                stage2Output: document.getElementById('stage2Output').value,
+                stage2Analysis: document.getElementById('stage2Analysis').value,
+                stage3Prompt: document.getElementById('stage3Prompt').value,
+                stage3Output: document.getElementById('stage3Output').value,
+                stage3Analysis: document.getElementById('stage3Analysis').value,
+                reflection1: document.getElementById('reflection1').value,
+                reflection2: document.getElementById('reflection2').value,
+                reflection3: document.getElementById('reflection3').value,
+                reflection4: document.getElementById('reflection4').value,
+                reflection5: document.getElementById('reflection5').value
+            };
+
+            let yPosition = 20;
+            const lineHeight = 7;
+            const maxWidth = 180;
+
+            // Title
+            doc.setFontSize(18);
+            doc.setFont(undefined, 'bold');
+            doc.text('AI Literacy Lab Report', 20, yPosition);
+            yPosition += 15;
+
+            // Student Information
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text('Student Information', 20, yPosition);
+            yPosition += 10;
+
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'normal');
+            doc.text(`Name: ${formData.studentName}`, 20, yPosition);
+            yPosition += lineHeight;
+            doc.text(`AI Platform: ${formData.aiPlatform}`, 20, yPosition);
+            yPosition += lineHeight;
+            doc.text(`Selected Topic: ${formData.selectedTopic}`, 20, yPosition);
+            yPosition += 15;
+
+            // Three-Stage Prompting Process
+            const stages = [
+                {
+                    title: 'Stage 1: Basic Prompt',
+                    prompt: formData.stage1Prompt,
+                    output: formData.stage1Output,
+                    analysis: formData.stage1Analysis
+                },
+                {
+                    title: 'Stage 2: Moderately Refined Prompt',
+                    prompt: formData.stage2Prompt,
+                    output: formData.stage2Output,
+                    analysis: formData.stage2Analysis
+                },
+                {
+                    title: 'Stage 3: Highly Refined Prompt (Full CLEAR)',
+                    prompt: formData.stage3Prompt,
+                    output: formData.stage3Output,
+                    analysis: formData.stage3Analysis
+                }
+            ];
+
+            stages.forEach(stage => {
+                if (yPosition > 250) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text(stage.title, 20, yPosition);
+                yPosition += 10;
+
+                // Prompt
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.text('Your Prompt:', 20, yPosition);
+                yPosition += 6;
+                doc.setFont(undefined, 'normal');
+                if (stage.prompt.trim()) {
+                    const promptLines = doc.splitTextToSize(stage.prompt, maxWidth);
+                    promptLines.forEach(line => {
+                        if (yPosition > 280) {
+                            doc.addPage();
+                            yPosition = 20;
+                        }
+                        doc.text(line, 20, yPosition);
+                        yPosition += lineHeight;
+                    });
+                } else {
+                    doc.text('(No prompt provided)', 20, yPosition);
+                    yPosition += lineHeight;
+                }
+                yPosition += 3;
+
+                // Output (truncated for space)
+                doc.setFont(undefined, 'bold');
+                doc.text('AI Output (first 200 characters):', 20, yPosition);
+                yPosition += 6;
+                doc.setFont(undefined, 'normal');
+                if (stage.output.trim()) {
+                    const truncatedOutput = stage.output.substring(0, 200) + (stage.output.length > 200 ? '...' : '');
+                    const outputLines = doc.splitTextToSize(truncatedOutput, maxWidth);
+                    outputLines.forEach(line => {
+                        if (yPosition > 280) {
+                            doc.addPage();
+                            yPosition = 20;
+                        }
+                        doc.text(line, 20, yPosition);
+                        yPosition += lineHeight;
+                    });
+                } else {
+                    doc.text('(No output provided)', 20, yPosition);
+                    yPosition += lineHeight;
+                }
+                yPosition += 3;
+
+                // Analysis
+                doc.setFont(undefined, 'bold');
+                doc.text('Your Analysis:', 20, yPosition);
+                yPosition += 6;
+                doc.setFont(undefined, 'normal');
+                if (stage.analysis.trim()) {
+                    const analysisLines = doc.splitTextToSize(stage.analysis, maxWidth);
+                    analysisLines.forEach(line => {
+                        if (yPosition > 280) {
+                            doc.addPage();
+                            yPosition = 20;
+                        }
+                        doc.text(line, 20, yPosition);
+                        yPosition += lineHeight;
+                    });
+                } else {
+                    doc.text('(No analysis provided)', 20, yPosition);
+                    yPosition += lineHeight;
+                }
+                yPosition += 10;
+            });
+
+            // Reflection Questions
+            if (yPosition > 200) {
+                doc.addPage();
+                yPosition = 20;
+            }
+
+            doc.setFontSize(16);
+            doc.setFont(undefined, 'bold');
+            doc.text('Reflection Questions', 20, yPosition);
+            yPosition += 15;
+
+            const reflections = [
+                { 
+                    question: '1. Responsibility: How does the way you phrase a prompt impact the AI\'s output, and what responsibilities do you have when crafting prompts?', 
+                    answer: formData.reflection1 
+                },
+                { 
+                    question: '2. Bias: How might AI platforms produce biased outputs based on the wording of a prompt? Did you notice any potential biases in your outputs?', 
+                    answer: formData.reflection2 
+                },
+                { 
+                    question: '3. CLEAR Framework: In your opinion, does using the CLEAR framework help create more effective conversational AI interactions?', 
+                    answer: formData.reflection3 
+                },
+                { 
+                    question: '4. Most Important Element: If you believe CLEAR creates more effective interactions, which element was most important? If not, what approach would you propose?', 
+                    answer: formData.reflection4 
+                },
+                { 
+                    question: '5. Overall Experience: Briefly reflect on your experience with this lab overall.', 
+                    answer: formData.reflection5 
+                }
+            ];
+
+            reflections.forEach((reflection, index) => {
+                if (yPosition > 240) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                const questionLines = doc.splitTextToSize(reflection.question, maxWidth);
+                questionLines.forEach(line => {
+                    if (yPosition > 280) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                    doc.text(line, 20, yPosition);
+                    yPosition += lineHeight;
+                });
+                yPosition += 3;
+
+                doc.setFont(undefined, 'normal');
+                if (reflection.answer.trim()) {
+                    const answerLines = doc.splitTextToSize(reflection.answer, maxWidth);
+                    answerLines.forEach(line => {
+                        if (yPosition > 280) {
+                            doc.addPage();
+                            yPosition = 20;
+                        }
+                        doc.text(line, 20, yPosition);
+                        yPosition += lineHeight;
+                    });
+                } else {
+                    doc.text('(No response provided)', 20, yPosition);
+                    yPosition += lineHeight;
+                }
+                yPosition += 8;
+            });
+
+            // Generate filename with date
+            const d = new Date();
+            let year = d.getFullYear();
+            let month = d.getMonth();
+            let date = d.getDate();
+            let semester = '';
+
+            if (month < 5) semester = '10'; 					// Spring
+            else if (month > 7 && date < 15) semester = '80';   // Fall 
+            else semester = '50';							    // Summer
+            let fullDate = `${year}${semester}`;
+
+            const studentNameClean = formData.studentName.replace(/[^a-z0-9]/gi, '_') || 'student';
+            const fileName = `csci1100_${fullDate}_${studentNameClean}_ai_literacy_lab.pdf`;
+            
+            // Save the PDF
+            doc.save(fileName);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changePage(-1);
+            if (e.key === 'ArrowRight') changePage(1);
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeForm();
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
