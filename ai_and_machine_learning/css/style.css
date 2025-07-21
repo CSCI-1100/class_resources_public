@@ -20,7 +20,7 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     width: 95%;
     max-width: 1300px;
-    height: 92vh;
+    height: 94vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
