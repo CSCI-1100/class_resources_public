@@ -189,7 +189,7 @@ Neural networks progress from single neurons → networks → deep networks, ena
 
 ## Additional Resources
 - 📖 [Complete Module Slides](https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/ai_ml_lecture_slides.html)
-- 🛠️ [AI-Assisted App Development Lab](https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/ai_kiosk_dev_lab/)
+- 🛠️ [AI Literacy Lab](https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/ai_literacy_lab/)
 
 ---
 
