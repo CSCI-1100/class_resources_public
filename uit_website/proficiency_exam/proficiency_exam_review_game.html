@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSCI 1100 Review Game</title>
+    <link rel="stylesheet" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/css/style.css">
+    <style>
+        /* Additional styles specific to the quiz game */
+        .answer-option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-size: 1em;
+        }
+
+        .answer-option:hover {
+            background: #e9ecef;
+            border-color: #3498db;
+        }
+
+        .answer-option.selected {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+
+        .answer-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .answer-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .question-card {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-number {
+            background: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            border: 1px solid #28a745;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            border: 1px solid #dc3545;
+            color: #721c24;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .topic-card {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-card:hover {
+            background: #f8f9fa;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .topic-card.mixed {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .topic-card.mixed:hover {
+            background: linear-gradient(135deg, #2980b9, #1f618d);
+            color: white;
+        }
+
+        .topic-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .topic-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #2c3e50;
+        }
+
+        .topic-card.mixed .topic-title {
+            color: white;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 1.3em;
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+        }
+
+        .control-buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .topic-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .control-buttons .btn {
+                display: block;
+                margin: 10px auto;
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="roadmap-container">
+        <div class="header">
+            <h1>🎓 CSCI 1100 Proficiency Exam Review Game</h1>
+            <p>Test your knowledge across all course topics</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <!-- Topic Selection Screen -->
+            <div id="topicSelection" class="page active">
+                <div class="phase-header">
+                    <div class="phase-number">🎯</div>
+                    <div class="phase-info">
+                        <h2>Choose a Topic to Study</h2>
+                        <p>Select a topic area to practice questions from your comprehensive study guide.</p>
+                    </div>
+                </div>
+
+                <div class="topic-grid">
+                    <div class="topic-card" onclick="startQuiz('information-literacy')">
+                        <span class="topic-icon">📚</span>
+                        <div class="topic-title">Information Literacy</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('tech-product-literacy')">
+                        <span class="topic-icon">💻</span>
+                        <div class="topic-title">Tech Product Literacy</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('programming')">
+                        <span class="topic-icon">👨‍💻</span>
+                        <div class="topic-title">Introduction to Programming</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('web-literacy')">
+                        <span class="topic-icon">🌐</span>
+                        <div class="topic-title">Web Literacy</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('connected-world')">
+                        <span class="topic-icon">🔗</span>
+                        <div class="topic-title">The Connected World</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('data-literacy')">
+                        <span class="topic-icon">📊</span>
+                        <div class="topic-title">Data Literacy</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('content-creation')">
+                        <span class="topic-icon">🎨</span>
+                        <div class="topic-title">Digital Content Creation</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('ai-ml')">
+                        <span class="topic-icon">🤖</span>
+                        <div class="topic-title">AI & Machine Learning</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('cybersecurity')">
+                        <span class="topic-icon">🔒</span>
+                        <div class="topic-title">Cybersecurity & Privacy</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('emerging-tech')">
+                        <span class="topic-icon">🚀</span>
+                        <div class="topic-title">Emerging Technologies</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('digital-citizenship')">
+                        <span class="topic-icon">👥</span>
+                        <div class="topic-title">Digital Citizenship</div>
+                    </div>
+                    <div class="topic-card" onclick="startQuiz('microsoft-office')">
+                        <span class="topic-icon">📝</span>
+                        <div class="topic-title">Microsoft Office Suite</div>
+                    </div>
+                    <div class="topic-card mixed" onclick="startQuiz('mixed')">
+                        <span class="topic-icon">🎯</span>
+                        <div class="topic-title">Mixed Practice (All Topics)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div id="quizScreen" class="page hidden">
+                <div class="phase-header">
+                    <div class="phase-number">📋</div>
+                    <div class="phase-info">
+                        <h2 id="currentTopic"></h2>
+                        <p>Answer each question to the best of your ability</p>
+                    </div>
+                </div>
+
+                <div class="score-display">
+                    <span id="scoreDisplay">Score: 0/0</span>
+                </div>
+
+                <div id="questionContainer"></div>
+
+                <div class="control-buttons">
+                    <button class="btn" id="submitBtn" onclick="submitAnswer()" disabled>Submit Answer</button>
+                    <button class="btn" id="nextBtn" onclick="nextQuestion()" style="display: none;">Next Question</button>
+                    <button class="btn btn-secondary" onclick="backToTopics()">Back to Topics</button>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div id="resultsScreen" class="page hidden">
+                <div class="phase-header">
+                    <div class="phase-number">🎉</div>
+                    <div class="phase-info">
+                        <h2>Quiz Complete!</h2>
+                        <p>Here's how you performed</p>
+                    </div>
+                </div>
+
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h3>📊 Your Score</h3>
+                        <div id="finalScore"></div>
+                    </div>
+                    <div class="overview-card">
+                        <h3>📈 Performance</h3>
+                        <div id="performanceMessage"></div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>💡 Study Tip</h3>
+                    <div id="studyTip"></div>
+                </div>
+
+                <div class="control-buttons">
+                    <button class="btn" onclick="retakeQuiz()">Retake This Topic</button>
+                    <button class="btn btn-secondary" onclick="backToTopics()">Choose New Topic</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Question database organized by topic
+        const questionDatabase = {
+            'information-literacy': [
+                {
+                    question: "What is the term for the ability to identify false or misleading information online?",
+                    options: ["Digital detective", "Information literacy", "Cyber skepticism", "Web wisdom"],
+                    correct: 1,
+                    explanation: "Information literacy is the ability to find, evaluate, and use information effectively, including identifying false or misleading content."
+                },
+                {
+                    question: "According to the SIFT method, what should you do first when encountering potentially questionable information?",
+                    options: ["Immediately investigate the source", "Stop and check your emotional response", "Find better coverage from other sources", "Trace the information back to its origin"],
+                    correct: 1,
+                    explanation: "The first step in SIFT is to 'Stop' and check your emotional response before proceeding with evaluation."
+                },
+                {
+                    question: "According to research on social media, which type of information spreads faster?",
+                    options: ["Factual, well-researched content", "Content from verified accounts only", "Emotional content, regardless of accuracy", "Content with multiple sources cited"],
+                    correct: 2,
+                    explanation: "Studies show that emotional content, whether accurate or not, tends to spread faster on social media platforms."
+                },
+                {
+                    question: "Which SIFT step involves opening new tabs to search for information about the source?",
+                    options: ["Stop", "Investigate the source", "Find better coverage", "Trace claims to original context"],
+                    correct: 1,
+                    explanation: "The 'Investigate the source' step involves researching the credibility and background of the information source."
+                },
+                {
+                    question: "When applying the 'Trace' step of SIFT, what are you primarily trying to do?",
+                    options: ["Follow the author's social media accounts", "Find the original source of claims, quotes, or media", "Track how many times the information has been shared", "Trace the IP address of the website"],
+                    correct: 1,
+                    explanation: "The 'Trace' step focuses on finding the original source of claims, quotes, or media to verify authenticity."
+                }
+            ],
+            'tech-product-literacy': [
+                {
+                    question: "What is RAM in a computer?",
+                    options: ["Random Access Memory", "Read-Only Memory", "Rapid Application Management", "Remote Access Module"],
+                    correct: 0,
+                    explanation: "RAM stands for Random Access Memory, which provides temporary storage for data the CPU is actively using."
+                },
+                {
+                    question: "What does CPU stand for?",
+                    options: ["Computer Processing Unit", "Central Processing Unit", "Control Processing Unit", "Core Processing Unit"],
+                    correct: 1,
+                    explanation: "CPU stands for Central Processing Unit, often called the 'brain' of the computer."
+                },
+                {
+                    question: "Which of these is an input device?",
+                    options: ["Monitor", "Printer", "Mouse", "Speakers"],
+                    correct: 2,
+                    explanation: "A mouse is an input device that allows users to interact with the computer interface."
+                },
+                {
+                    question: "What is the function of a GPU?",
+                    options: ["To process and render graphics", "To store data long-term", "To connect to the internet", "To run the operating system"],
+                    correct: 0,
+                    explanation: "A GPU (Graphics Processing Unit) is specialized hardware designed to process and render graphics efficiently."
+                },
+                {
+                    question: "What is the purpose of a heat sink in a computer?",
+                    options: ["To generate heat", "To store data", "To dissipate heat from components", "To boost processing speed"],
+                    correct: 2,
+                    explanation: "A heat sink helps dissipate heat from computer components to prevent overheating and maintain performance."
+                }
+            ],
+            'programming': [
+                {
+                    question: "What will be the value of y after executing this Python code?\nx = 10\ny = x + 5\nx = 20",
+                    options: ["10", "15", "20", "25"],
+                    correct: 1,
+                    explanation: "y is assigned the value of x + 5 when x is 10, so y = 15. Changing x later doesn't affect y."
+                },
+                {
+                    question: "What data type will 'result' be after this operation?\nresult = \"Hello\" + \" \" + \"World\"",
+                    options: ["int", "float", "str", "bool"],
+                    correct: 2,
+                    explanation: "String concatenation in Python results in a string (str) data type."
+                },
+                {
+                    question: "What will this Python code output?\nnumbers = [1, 2, 3, 4, 5]\nprint(numbers[2])",
+                    options: ["1", "2", "3", "4"],
+                    correct: 2,
+                    explanation: "Python uses zero-based indexing, so numbers[2] refers to the third element, which is 3."
+                },
+                {
+                    question: "You need to find the largest number in a list of numbers. Which approach demonstrates good problem decomposition?",
+                    options: ["Write one complex function that does everything at once", "Break it down: start with the first number, then compare each remaining number one by one", "Randomly guess which number might be largest", "Sort the entire list first, then take the last element"],
+                    correct: 1,
+                    explanation: "Good problem decomposition involves breaking complex problems into simpler, manageable steps."
+                },
+                {
+                    question: "When designing the core data structure for a student registration system, which attributes best represent an abstract model of a student?",
+                    options: ["Student's social media handles and music playlist", "Student's travel history and recent purchases", "Student ID, full name, academic program, and registered courses", "Student's handwriting sample and locker number"],
+                    correct: 2,
+                    explanation: "A good abstract model includes only the essential attributes relevant to the system's purpose."
+                }
+            ],
+            'web-literacy': [
+                {
+                    question: "What does HTML stand for?",
+                    options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyper Transfer Markup Language", "Home Tool Markup Language"],
+                    correct: 0,
+                    explanation: "HTML stands for Hyper Text Markup Language, which provides the structure for web pages."
+                },
+                {
+                    question: "Which language is primarily used for styling web pages?",
+                    options: ["JavaScript", "Python", "CSS", "PHP"],
+                    correct: 2,
+                    explanation: "CSS (Cascading Style Sheets) is the language used to style and format web pages."
+                },
+                {
+                    question: "What's the purpose of the <body> tag in HTML?",
+                    options: ["To define the document's head section", "To create a hyperlink", "To contain all the visible contents of a web page", "To define a paragraph"],
+                    correct: 2,
+                    explanation: "The <body> tag contains all the visible content that appears on a web page."
+                },
+                {
+                    question: "Which tool in web browsers allows developers to inspect and modify HTML and CSS in real-time?",
+                    options: ["Task Manager", "Developer Tools", "Plugin Manager", "Network Monitor"],
+                    correct: 1,
+                    explanation: "Developer Tools (DevTools) allow developers to inspect, debug, and modify web pages in real-time."
+                },
+                {
+                    question: "What does CSS stand for?",
+                    options: ["Computer Style Sheets", "Creative Style Sheets", "Cascading Style Sheets", "Colorful Style Sheets"],
+                    correct: 2,
+                    explanation: "CSS stands for Cascading Style Sheets, referring to how styles cascade and inherit from parent elements."
+                }
+            ],
+            'connected-world': [
+                {
+                    question: "What does IP stand for in networking?",
+                    options: ["Internet Protocol", "Internal Processing", "Information Package", "Integrated Platform"],
+                    correct: 0,
+                    explanation: "IP stands for Internet Protocol, which governs how data is sent across networks."
+                },
+                {
+                    question: "Which device is primarily used to connect multiple devices within a local network?",
+                    options: ["Modem", "Switch", "Gateway", "Firewall"],
+                    correct: 1,
+                    explanation: "A switch connects multiple devices within a local network and manages data traffic between them."
+                },
+                {
+                    question: "Which of the following factors can help improve a slow internet connection at home?",
+                    options: ["Moving closer to your wireless router", "Upgrading your computer's hard drive", "Installing more RAM in your device", "Changing your computer's wallpaper"],
+                    correct: 0,
+                    explanation: "Moving closer to the wireless router can improve signal strength and connection speed."
+                },
+                {
+                    question: "What is a key advantage of streaming video content compared to downloading entire files?",
+                    options: ["Streaming uses more storage space on your device", "Streaming allows you to start watching content immediately", "Streaming requires faster internet speeds", "Streaming provides better video quality"],
+                    correct: 1,
+                    explanation: "Streaming allows immediate playback without waiting for the entire file to download."
+                },
+                {
+                    question: "What does LAN stand for in networking terminology?",
+                    options: ["Large Area Network", "Local Area Network", "Linked Access Network", "Limited Access Node"],
+                    correct: 1,
+                    explanation: "LAN stands for Local Area Network, which connects devices in a limited geographical area."
+                }
+            ],
+            'data-literacy': [
+                {
+                    question: "Which of the following best describes the difference between quantitative and qualitative data?",
+                    options: ["Quantitative data is numerical, qualitative data is descriptive", "Quantitative data is always more reliable than qualitative data", "Qualitative data can be easily counted, quantitative data cannot", "There is no significant difference between the two"],
+                    correct: 0,
+                    explanation: "Quantitative data consists of numbers and measurements, while qualitative data consists of descriptions and observations."
+                },
+                {
+                    question: "In the DIKW model, what does the 'W' stand for?",
+                    options: ["Work", "Wisdom", "Writing", "Workflow"],
+                    correct: 1,
+                    explanation: "The DIKW model represents Data, Information, Knowledge, and Wisdom - the progression of understanding."
+                },
+                {
+                    question: "When interpreting a trend in data, which of the following is most important to consider?",
+                    options: ["The aesthetic appeal of the chart", "The source and context of the data", "The opinions of colleagues", "The most recent data point only"],
+                    correct: 1,
+                    explanation: "Understanding the source and context of data is crucial for accurate interpretation and avoiding misleading conclusions."
+                },
+                {
+                    question: "Which chart type is most appropriate for showing the composition of a whole?",
+                    options: ["Line chart", "Scatter plot", "Pie chart", "Bar graph"],
+                    correct: 2,
+                    explanation: "Pie charts are specifically designed to show how parts relate to a whole, with each slice representing a proportion."
+                },
+                {
+                    question: "What is a common way that charts can be manipulated to mislead?",
+                    options: ["Using appropriate scales on axes", "Including all relevant data points", "Truncating the y-axis to exaggerate differences", "Using colors consistently"],
+                    correct: 2,
+                    explanation: "Truncating the y-axis can make small differences appear dramatically larger than they actually are."
+                }
+            ],
+            'content-creation': [
+                {
+                    question: "Which of these is NOT a common type of digital content?",
+                    options: ["Blog posts", "Infographics", "Podcasts", "Faxes"],
+                    correct: 3,
+                    explanation: "Faxes are legacy analog technology, not modern digital content."
+                },
+                {
+                    question: "What does SEO stand for in content creation?",
+                    options: ["Social Engagement Opportunity", "Search Engine Optimization", "Secure Editing Option", "Standard Editorial Outline"],
+                    correct: 1,
+                    explanation: "SEO stands for Search Engine Optimization, which helps content rank higher in search results."
+                },
+                {
+                    question: "What is a content management system (CMS)?",
+                    options: ["A tool for organizing physical documents", "A software for creating and managing digital content", "A type of digital camera", "A method of content distribution"],
+                    correct: 1,
+                    explanation: "A CMS is software that allows users to create, edit, and manage digital content on websites."
+                },
+                {
+                    question: "Which file format is commonly used for lossless image compression?",
+                    options: ["JPEG", "PNG", "GIF", "BMP"],
+                    correct: 1,
+                    explanation: "PNG (Portable Network Graphics) provides lossless compression, preserving image quality."
+                },
+                {
+                    question: "What is a call-to-action (CTA) in digital content?",
+                    options: ["A phone call to discuss content", "An instruction to the audience to take a specific action", "A type of video content", "A method of content encryption"],
+                    correct: 1,
+                    explanation: "A CTA is an instruction designed to prompt the audience to take a specific action, like clicking a link or making a purchase."
+                }
+            ],
+            'ai-ml': [
+                {
+                    question: "What is a key difference between artificial intelligence and human intelligence?",
+                    options: ["AI can process information much faster than humans", "AI has emotions while humans do not", "AI can only work with numbers while humans work with words", "AI is always more accurate than human intelligence"],
+                    correct: 0,
+                    explanation: "AI can process vast amounts of information much faster than humans, though it lacks human qualities like emotion and creativity."
+                },
+                {
+                    question: "In machine learning, what happens if the training data contains biased information?",
+                    options: ["The model will automatically correct the bias", "The model may learn and perpetuate those biases", "The model will refuse to train", "The bias will be eliminated during the prediction phase"],
+                    correct: 1,
+                    explanation: "Machine learning models learn from their training data, so biased training data often leads to biased models."
+                },
+                {
+                    question: "Which statement best describes the difference between supervised and unsupervised learning?",
+                    options: ["Supervised learning uses labeled data; unsupervised learning finds patterns in unlabeled data", "Supervised learning is faster than unsupervised learning", "Supervised learning uses more data than unsupervised learning", "Supervised learning is more accurate than unsupervised learning"],
+                    correct: 0,
+                    explanation: "Supervised learning uses labeled examples to train, while unsupervised learning discovers patterns in data without labels."
+                },
+                {
+                    question: "Why is 'explainable AI' important in healthcare applications?",
+                    options: ["It makes the AI run faster", "It reduces the cost of the AI system", "It allows doctors to understand how the AI reached its conclusions", "It prevents the AI from making mistakes"],
+                    correct: 2,
+                    explanation: "In critical applications like healthcare, it's important for professionals to understand and trust AI decision-making processes."
+                },
+                {
+                    question: "Which of the following is an example of Natural Language Processing (NLP)?",
+                    options: ["A robot navigating through a room", "A computer recognizing faces in photos", "A chatbot understanding and responding to customer questions", "A program calculating mathematical equations"],
+                    correct: 2,
+                    explanation: "NLP involves computers understanding and processing human language, like chatbots interpreting and responding to text."
+                }
+            ],
+            'cybersecurity': [
+                {
+                    question: "What is phishing?",
+                    options: ["A type of fishing sport", "An attempt to obtain sensitive information by disguising as a trustworthy entity", "A method of encrypting data", "A type of computer virus"],
+                    correct: 1,
+                    explanation: "Phishing is a social engineering attack where attackers pose as trustworthy entities to steal sensitive information."
+                },
+                {
+                    question: "What does two-factor authentication provide?",
+                    options: ["Faster internet speed", "Better graphics quality", "An extra layer of security", "Automatic software updates"],
+                    correct: 2,
+                    explanation: "Two-factor authentication adds an extra security layer by requiring two different forms of verification."
+                },
+                {
+                    question: "What is a firewall?",
+                    options: ["A physical wall to protect against fire", "A security system that monitors and controls network traffic", "A type of computer virus", "A backup power system"],
+                    correct: 1,
+                    explanation: "A firewall is a security system that monitors and controls incoming and outgoing network traffic based on security rules."
+                },
+                {
+                    question: "What does HTTPS stand for?",
+                    options: ["Hyper Text Transfer Protocol Secure", "High Tech Transfer Protocol System", "Hyper Text Transmission Protocol Service", "Home Transfer Protocol Secure"],
+                    correct: 0,
+                    explanation: "HTTPS stands for Hyper Text Transfer Protocol Secure, which encrypts data between browsers and websites."
+                },
+                {
+                    question: "What is a VPN used for?",
+                    options: ["Video Processing Network", "Virtual Private Network", "Visual Programming Navigation", "Vital Program Notification"],
+                    correct: 1,
+                    explanation: "VPN stands for Virtual Private Network, which creates a secure connection over the internet."
+                }
+            ],
+            'emerging-tech': [
+                {
+                    question: "What is the Internet of Things (IoT)?",
+                    options: ["A new version of the internet", "A network of physical objects embedded with sensors and software", "A type of social media platform", "A cloud storage service"],
+                    correct: 1,
+                    explanation: "IoT refers to everyday physical objects that are connected to the internet and can collect and share data."
+                },
+                {
+                    question: "What is blockchain primarily known for?",
+                    options: ["A type of computer hardware", "A social media platform", "A distributed ledger technology", "A programming language"],
+                    correct: 2,
+                    explanation: "Blockchain is a distributed ledger technology that maintains a secure, transparent record of transactions."
+                },
+                {
+                    question: "What does VR stand for in technology?",
+                    options: ["Very Rapid", "Virtual Reality", "Visual Rendering", "Variable Resolution"],
+                    correct: 1,
+                    explanation: "VR stands for Virtual Reality, which creates immersive, computer-generated environments."
+                },
+                {
+                    question: "What is edge computing?",
+                    options: ["A type of computer monitor", "Processing data near the source of data generation", "A method of sharpening digital images", "A type of internet connection"],
+                    correct: 1,
+                    explanation: "Edge computing processes data closer to where it's generated, reducing latency and bandwidth usage."
+                },
+                {
+                    question: "What is quantum computing?",
+                    options: ["Very fast traditional computing", "Computing using quantum-mechanical phenomena", "A type of cloud computing", "A method of cooling computer processors"],
+                    correct: 1,
+                    explanation: "Quantum computing uses quantum-mechanical phenomena like superposition and entanglement to process information."
+                }
+            ],
+            'digital-citizenship': [
+                {
+                    question: "What is a digital footprint?",
+                    options: ["A measure of computer processing power", "The trail of data you leave online", "A type of computer virus", "A digital signature"],
+                    correct: 1,
+                    explanation: "A digital footprint is the trail of data and information you leave behind when using digital services and platforms."
+                },
+                {
+                    question: "What does Creative Commons provide?",
+                    options: ["A platform for creating digital art", "A set of licenses for sharing and using creative work", "A social media network for artists", "A software for editing videos"],
+                    correct: 1,
+                    explanation: "Creative Commons provides standardized licenses that allow creators to share their work with specific permissions."
+                },
+                {
+                    question: "What is cyberbullying?",
+                    options: ["A type of computer virus", "The use of digital technologies to deliberately upset someone", "An online gaming strategy", "A method of digital marketing"],
+                    correct: 1,
+                    explanation: "Cyberbullying involves using digital platforms to harass, threaten, or intimidate others."
+                },
+                {
+                    question: "What is netiquette?",
+                    options: ["A type of internet connection", "Rules for polite behavior online", "A website building tool", "An antivirus software"],
+                    correct: 1,
+                    explanation: "Netiquette refers to the proper etiquette and manners for communicating online."
+                },
+                {
+                    question: "What does it mean to be a good digital citizen?",
+                    options: ["Spending all your time online", "Having the fastest internet connection", "Using technology responsibly and respectfully", "Owning the latest gadgets"],
+                    correct: 2,
+                    explanation: "Digital citizenship involves using technology in a responsible, ethical, and respectful manner."
+                }
+            ],
+            'microsoft-office': [
+                {
+                    question: "Which tab would you use to change the page orientation in Microsoft Word?",
+                    options: ["Home", "Insert", "Layout", "Review"],
+                    correct: 2,
+                    explanation: "The Layout tab contains page setup options including orientation, margins, and size."
+                },
+                {
+                    question: "What is the default file extension for Microsoft Word documents?",
+                    options: [".doc", ".docx", ".txt", ".rtf"],
+                    correct: 1,
+                    explanation: ".docx is the default format for Word documents since Office 2007."
+                },
+                {
+                    question: "Where can you find the 'Find and Replace' feature in Microsoft Word?",
+                    options: ["Home tab", "Insert tab", "Review tab", "View tab"],
+                    correct: 0,
+                    explanation: "Find and Replace is located in the Editing group on the Home tab."
+                },
+                {
+                    question: "Which view in PowerPoint allows you to see all your slides at once in thumbnail form?",
+                    options: ["Normal view", "Slide Sorter view", "Reading view", "Slide Show view"],
+                    correct: 1,
+                    explanation: "Slide Sorter view displays all slides as thumbnails, making it easy to reorder and manage slides."
+                },
+                {
+                    question: "What's the correct way to start a formula in Excel?",
+                    options: ["=", "+", "-", "*"],
+                    correct: 0,
+                    explanation: "All formulas in Excel must begin with an equals sign (=)."
+                },
+                {
+                    question: "Which function would you use to find the highest value in a range of Excel cells?",
+                    options: ["AVERAGE", "SUM", "MAX", "COUNT"],
+                    correct: 2,
+                    explanation: "The MAX function returns the largest value in a range of cells."
+                },
+                {
+                    question: "What does the ' symbol do when used in an Excel cell reference?",
+                    options: ["Adds a currency format", "Makes the reference absolute", "Indicates a percentage", "Allows text entry"],
+                    correct: 1,
+                    explanation: "The $ symbol creates an absolute reference that won't change when copied to other cells."
+                },
+                {
+                    question: "Which chart type is best for showing parts of a whole in Excel?",
+                    options: ["Line chart", "Bar chart", "Pie chart", "Scatter plot"],
+                    correct: 2,
+                    explanation: "Pie charts are ideal for showing how individual parts contribute to a whole."
+                }
+            ]
+        };
+
+        // Game state variables
+        let currentTopic = '';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let answered = false;
+
+        // Topic display names
+        const topicNames = {
+            'information-literacy': 'Information Literacy',
+            'tech-product-literacy': 'Tech Product Literacy',
+            'programming': 'Introduction to Programming',
+            'web-literacy': 'Web Literacy',
+            'connected-world': 'The Connected World',
+            'data-literacy': 'Data Literacy',
+            'content-creation': 'Digital Content Creation',
+            'ai-ml': 'AI & Machine Learning',
+            'cybersecurity': 'Cybersecurity & Privacy',
+            'emerging-tech': 'Emerging Technologies',
+            'digital-citizenship': 'Digital Citizenship',
+            'microsoft-office': 'Microsoft Office Suite',
+            'mixed': 'Mixed Practice (All Topics)'
+        };
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function startQuiz(topic) {
+            currentTopic = topic;
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            // Prepare questions
+            if (topic === 'mixed') {
+                currentQuestions = [];
+                // Take 2 questions from each topic
+                Object.keys(questionDatabase).forEach(topicKey => {
+                    const shuffled = [...questionDatabase[topicKey]].sort(() => 0.5 - Math.random());
+                    currentQuestions.push(...shuffled.slice(0, 2));
+                });
+                currentQuestions = currentQuestions.sort(() => 0.5 - Math.random());
+            } else {
+                currentQuestions = [...questionDatabase[topic]].sort(() => 0.5 - Math.random());
+            }
+            
+            // Show quiz screen
+            document.getElementById('topicSelection').classList.remove('active');
+            document.getElementById('topicSelection').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            document.getElementById('quizScreen').classList.add('active');
+            document.getElementById('resultsScreen').classList.add('hidden');
+            
+            // Update topic header
+            document.getElementById('currentTopic').textContent = topicNames[topic];
+            
+            // Show first question
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            selectedAnswer = null;
+            answered = false;
+            
+            // Update progress
+            updateProgress();
+            
+            // Update score display
+            document.getElementById('scoreDisplay').textContent = `Score: ${score}/${currentQuestionIndex}`;
+            
+            // Create question HTML
+            const questionHTML = `
+                <div class="question-card">
+                    <div class="question-number">Question ${currentQuestionIndex + 1} of ${currentQuestions.length}</div>
+                    <div class="question-text">${question.question}</div>
+                    ${question.options.map((option, index) => `
+                        <button class="answer-option" onclick="selectAnswer(${index})" id="option-${index}">
+                            ${String.fromCharCode(97 + index)}) ${option}
+                        </button>
+                    `).join('')}
+                    <div class="feedback" id="feedback"></div>
+                </div>
+            `;
+            
+            document.getElementById('questionContainer').innerHTML = questionHTML;
+            
+            // Reset buttons
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').style.display = 'inline-block';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function selectAnswer(index) {
+            if (answered) return;
+            
+            // Clear previous selections
+            document.querySelectorAll('.answer-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Select current answer
+            document.getElementById(`option-${index}`).classList.add('selected');
+            selectedAnswer = index;
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function submitAnswer() {
+            if (selectedAnswer === null || answered) return;
+            
+            answered = true;
+            const question = currentQuestions[currentQuestionIndex];
+            const isCorrect = selectedAnswer === question.correct;
+            
+            if (isCorrect) {
+                score++;
+            }
+            
+            // Show feedback for all options
+            document.querySelectorAll('.answer-option').forEach((btn, index) => {
+                btn.style.cursor = 'default';
+                if (index === question.correct) {
+                    btn.classList.add('correct');
+                } else if (index === selectedAnswer && !isCorrect) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            // Show explanation
+            const feedback = document.getElementById('feedback');
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect'}</strong><br>
+                ${question.explanation}
+            `;
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.style.display = 'block';
+            
+            // Update score display
+            document.getElementById('scoreDisplay').textContent = `Score: ${score}/${currentQuestionIndex + 1}`;
+            
+            // Show appropriate button
+            document.getElementById('submitBtn').style.display = 'none';
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                document.getElementById('nextBtn').textContent = 'Next Question';
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('nextBtn').textContent = 'View Results';
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < currentQuestions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quizScreen').classList.remove('active');
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.remove('hidden');
+            document.getElementById('resultsScreen').classList.add('active');
+            
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            
+            document.getElementById('finalScore').innerHTML = `
+                <div style="font-size: 1.5em; margin: 15px 0;">
+                    ${score} out of ${currentQuestions.length} correct
+                </div>
+                <div style="font-size: 1.2em; font-weight: bold; color: #2c3e50;">
+                    ${percentage}%
+                </div>
+            `;
+            
+            let performanceMessage = '';
+            let studyTip = '';
+            
+            if (percentage >= 90) {
+                performanceMessage = '🌟 Excellent! You have a strong understanding of this topic.';
+                studyTip = 'You\'re well-prepared for this section of the exam. Consider reviewing other topics or taking the mixed practice quiz.';
+            } else if (percentage >= 80) {
+                performanceMessage = '👍 Good job! You have a solid grasp of the material.';
+                studyTip = 'Review the questions you missed and consider studying the related concepts in more detail.';
+            } else if (percentage >= 70) {
+                performanceMessage = '📖 Fair performance. You understand the basics but could benefit from more study.';
+                studyTip = 'Focus on the areas where you made mistakes. Review your course materials and try the quiz again.';
+            } else {
+                performanceMessage = '📚 More study needed. Don\'t worry - practice makes perfect!';
+                studyTip = 'Review the comprehensive study guide thoroughly, focusing on this topic area. Consider seeking additional help from your instructor.';
+            }
+            
+            document.getElementById('performanceMessage').innerHTML = `<p style="font-size: 1.1em; margin-top: 15px;">${performanceMessage}</p>`;
+            document.getElementById('studyTip').innerHTML = studyTip;
+            
+            // Reset progress bar
+            document.getElementById('progressFill').style.width = '100%';
+        }
+
+        function retakeQuiz() {
+            startQuiz(currentTopic);
+        }
+
+        function backToTopics() {
+            document.getElementById('topicSelection').classList.remove('hidden');
+            document.getElementById('topicSelection').classList.add('active');
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('active');
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.remove('active');
+            
+            // Reset progress bar
+            document.getElementById('progressFill').style.width = '0%';
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Reset to initial state
+            document.getElementById('progressFill').style.width = '0%';
+            
+            // Ensure topic selection is visible on load
+            document.getElementById('topicSelection').classList.add('active');
+            document.getElementById('topicSelection').classList.remove('hidden');
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.add('hidden');
+        });
+    </script>
