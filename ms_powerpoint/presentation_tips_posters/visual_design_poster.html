@@ -22,37 +22,34 @@
         }
         
         .poster-container {
-            width: 24in;
-            height: 36in;
-            margin: 0 auto;
+            width: 100vw;
+            min-height: 100vh;
             position: relative;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            padding: 2in;
-            transform: scale(0.2);
-            transform-origin: top center;
+            padding: 4rem;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 1.5in;
+            margin-bottom: 5rem;
             position: relative;
         }
         
         .main-title {
             font-family: 'Playfair Display', serif;
-            font-size: 72pt;
+            font-size: clamp(3rem, 8vw, 7rem);
             font-weight: 700;
             background: linear-gradient(45deg, #ffd700, #ffed4e, #f9ca24);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1.1;
-            margin-bottom: 0.3in;
+            margin-bottom: 1.5rem;
             text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
         
         .subtitle {
-            font-size: 28pt;
+            font-size: clamp(1.2rem, 3vw, 2.2rem);
             color: #e1b12c;
             font-weight: 400;
             letter-spacing: 2px;
@@ -60,18 +57,18 @@
         }
         
         .decorative-line {
-            width: 6in;
+            width: min(400px, 60vw);
             height: 4px;
             background: linear-gradient(90deg, #ffd700, #e1b12c);
-            margin: 0.5in auto;
+            margin: 2rem auto;
             border-radius: 2px;
         }
         
         .content-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1in;
-            margin-bottom: 1in;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
         
         .principle-card {
@@ -79,7 +76,7 @@
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 215, 0, 0.2);
             border-radius: 20px;
-            padding: 0.8in;
+            padding: 2.5rem;
             position: relative;
             transition: all 0.3s ease;
         }
@@ -98,21 +95,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 0.3in;
-            font-size: 24pt;
+            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 3vw, 2rem);
         }
         
         .card-title {
             font-family: 'Playfair Display', serif;
-            font-size: 32pt;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 600;
             color: #ffd700;
-            margin-bottom: 0.2in;
+            margin-bottom: 1rem;
             line-height: 1.2;
         }
         
         .card-content {
-            font-size: 18pt;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
             line-height: 1.4;
             color: rgba(255, 255, 255, 0.9);
         }
@@ -125,29 +122,29 @@
         .highlight-section {
             background: rgba(255, 215, 0, 0.1);
             border-left: 6px solid #ffd700;
-            padding: 0.6in;
-            margin: 1in 0;
+            padding: 3rem;
+            margin: 3rem 0;
             border-radius: 0 15px 15px 0;
         }
         
         .highlight-title {
             font-family: 'Playfair Display', serif;
-            font-size: 36pt;
+            font-size: clamp(2rem, 4vw, 3rem);
             color: #ffd700;
-            margin-bottom: 0.3in;
+            margin-bottom: 2rem;
             font-weight: 600;
         }
         
         .highlight-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5in;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
         
         .highlight-item {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 0.3in;
+            margin-bottom: 1.5rem;
         }
         
         .highlight-bullet {
@@ -155,27 +152,27 @@
             height: 12px;
             background: #ffd700;
             border-radius: 50%;
-            margin-right: 0.2in;
-            margin-top: 0.1in;
+            margin-right: 1rem;
+            margin-top: 0.5rem;
             flex-shrink: 0;
         }
         
         .highlight-text {
-            font-size: 16pt;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
             line-height: 1.5;
             color: rgba(255, 255, 255, 0.9);
         }
         
         .bottom-banner {
             background: linear-gradient(90deg, #ffd700, #e1b12c, #ffd700);
-            padding: 0.4in;
+            padding: 2rem;
             text-align: center;
             border-radius: 15px;
-            margin-top: 1in;
+            margin-top: 3rem;
         }
         
         .banner-text {
-            font-size: 24pt;
+            font-size: clamp(1.2rem, 4vw, 2rem);
             color: #1a1a2e;
             font-weight: 700;
             text-transform: uppercase;
@@ -232,6 +229,20 @@
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             33% { transform: translateY(-20px) rotate(5deg); }
             66% { transform: translateY(10px) rotate(-5deg); }
+        }
+
+        @media (max-width: 768px) {
+            .poster-container {
+                padding: 2rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .highlight-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>

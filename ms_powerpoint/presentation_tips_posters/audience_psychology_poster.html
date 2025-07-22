@@ -22,37 +22,34 @@
         }
         
         .poster-container {
-            width: 24in;
-            height: 36in;
-            margin: 0 auto;
+            width: 100vw;
+            min-height: 100vh;
             position: relative;
             background: linear-gradient(135deg, #2d1b69 0%, #11998e 50%, #38ef7d 100%);
-            padding: 2in;
-            transform: scale(0.2);
-            transform-origin: top center;
+            padding: 4rem;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 1.2in;
+            margin-bottom: 4rem;
             position: relative;
         }
         
         .main-title {
             font-family: 'Playfair Display', serif;
-            font-size: 64pt;
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 700;
             background: linear-gradient(45deg, #38ef7d, #11998e, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1.1;
-            margin-bottom: 0.2in;
+            margin-bottom: 1rem;
             text-shadow: 0 0 30px rgba(56, 239, 125, 0.3);
         }
         
         .subtitle {
-            font-size: 26pt;
+            font-size: clamp(1.2rem, 3vw, 2rem);
             color: #38ef7d;
             font-weight: 400;
             letter-spacing: 2px;
@@ -60,10 +57,10 @@
         }
         
         .decorative-line {
-            width: 6in;
+            width: min(400px, 60vw);
             height: 4px;
             background: linear-gradient(90deg, #38ef7d, #11998e);
-            margin: 0.4in auto;
+            margin: 2rem auto;
             border-radius: 2px;
         }
         
@@ -72,39 +69,40 @@
             backdrop-filter: blur(15px);
             border: 2px solid rgba(56, 239, 125, 0.3);
             border-radius: 25px;
-            padding: 1in;
-            margin-bottom: 1in;
+            padding: 3rem;
+            margin-bottom: 3rem;
             position: relative;
         }
         
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 40pt;
+            font-size: clamp(2rem, 5vw, 3.5rem);
             color: #38ef7d;
-            margin-bottom: 0.4in;
+            margin-bottom: 2rem;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.3in;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
         
         .brain-icon {
-            font-size: 48pt;
+            font-size: clamp(2rem, 4vw, 3rem);
         }
         
         .cognitive-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 0.6in;
-            margin-bottom: 0.8in;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
         
         .cognitive-card {
             background: rgba(17, 153, 142, 0.2);
             border: 1px solid rgba(56, 239, 125, 0.4);
             border-radius: 15px;
-            padding: 0.5in;
+            padding: 2rem;
             text-align: center;
             transition: all 0.3s ease;
         }
@@ -116,22 +114,22 @@
         }
         
         .card-number {
-            font-size: 48pt;
+            font-size: clamp(2.5rem, 6vw, 4rem);
             font-weight: 700;
             color: #38ef7d;
-            margin-bottom: 0.1in;
+            margin-bottom: 0.5rem;
             text-shadow: 0 0 10px rgba(56, 239, 125, 0.5);
         }
         
         .card-label {
-            font-size: 20pt;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
             font-weight: 600;
             color: #ffffff;
-            margin-bottom: 0.2in;
+            margin-bottom: 1rem;
         }
         
         .card-description {
-            font-size: 14pt;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
             color: rgba(255, 255, 255, 0.8);
             line-height: 1.4;
         }
@@ -139,50 +137,50 @@
         .language-techniques {
             background: rgba(45, 27, 105, 0.3);
             border-left: 6px solid #38ef7d;
-            padding: 0.8in;
+            padding: 3rem;
             border-radius: 0 20px 20px 0;
-            margin-bottom: 1in;
+            margin-bottom: 3rem;
         }
         
         .technique-title {
             font-family: 'Playfair Display', serif;
-            font-size: 36pt;
+            font-size: clamp(2rem, 4vw, 3rem);
             color: #38ef7d;
-            margin-bottom: 0.5in;
+            margin-bottom: 2rem;
             text-align: center;
         }
         
         .techniques-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.6in;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
         }
         
         .technique-group {
             background: rgba(255, 255, 255, 0.05);
-            padding: 0.4in;
+            padding: 1.5rem;
             border-radius: 12px;
             border: 1px solid rgba(56, 239, 125, 0.2);
         }
         
         .technique-group-title {
-            font-size: 22pt;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
             color: #38ef7d;
             font-weight: 600;
-            margin-bottom: 0.3in;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 0.15in;
+            gap: 0.5rem;
         }
         
         .technique-icon {
-            font-size: 20pt;
+            font-size: clamp(1rem, 2vw, 1.5rem);
         }
         
         .technique-item {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 0.25in;
+            margin-bottom: 1rem;
         }
         
         .technique-bullet {
@@ -190,13 +188,13 @@
             height: 8px;
             background: #38ef7d;
             border-radius: 50%;
-            margin-right: 0.15in;
-            margin-top: 0.08in;
+            margin-right: 0.75rem;
+            margin-top: 0.4rem;
             flex-shrink: 0;
         }
         
         .technique-text {
-            font-size: 15pt;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
             line-height: 1.4;
             color: rgba(255, 255, 255, 0.9);
         }
@@ -208,59 +206,60 @@
         .attention-management {
             background: linear-gradient(135deg, rgba(17, 153, 142, 0.2), rgba(56, 239, 125, 0.1));
             border-radius: 20px;
-            padding: 0.8in;
-            margin-bottom: 0.8in;
+            padding: 3rem;
+            margin-bottom: 3rem;
         }
         
         .attention-title {
             font-family: 'Playfair Display', serif;
-            font-size: 36pt;
+            font-size: clamp(2rem, 4vw, 3rem);
             color: #38ef7d;
             text-align: center;
-            margin-bottom: 0.5in;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.2in;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
         
         .attention-strategies {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5in;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
         }
         
         .strategy-card {
             background: rgba(255, 255, 255, 0.08);
-            padding: 0.4in;
+            padding: 1.5rem;
             border-radius: 15px;
             border: 1px solid rgba(56, 239, 125, 0.3);
         }
         
         .strategy-title {
-            font-size: 20pt;
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
             color: #38ef7d;
             font-weight: 600;
-            margin-bottom: 0.2in;
+            margin-bottom: 1rem;
         }
         
         .strategy-text {
-            font-size: 14pt;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
             line-height: 1.5;
             color: rgba(255, 255, 255, 0.9);
         }
         
         .bottom-quote {
             background: linear-gradient(90deg, #38ef7d, #11998e, #38ef7d);
-            padding: 0.5in;
+            padding: 2rem;
             text-align: center;
             border-radius: 15px;
-            margin-top: 0.6in;
+            margin-top: 2rem;
         }
         
         .quote-text {
             font-family: 'Playfair Display', serif;
-            font-size: 28pt;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
             color: #2d1b69;
             font-weight: 600;
             font-style: italic;
@@ -344,6 +343,24 @@
         @keyframes pulse {
             0%, 100% { opacity: 0.1; transform: scale(1); }
             50% { opacity: 0.3; transform: scale(1.1); }
+        }
+
+        @media (max-width: 768px) {
+            .poster-container {
+                padding: 2rem;
+            }
+            
+            .techniques-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .attention-strategies {
+                grid-template-columns: 1fr;
+            }
+            
+            .cognitive-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
