@@ -100,6 +100,12 @@
             transition: all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
             transform-origin: left center;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        
+        .page.current {
+            z-index: 100;
+            visibility: visible;
         }
         
         .page.turning {
@@ -110,6 +116,7 @@
         .page.turned {
             transform: rotateY(-180deg);
             visibility: hidden;
+            z-index: 0;
         }
         
         .page iframe {
@@ -446,7 +453,28 @@
             
             init() {
                 this.bindEvents();
+                this.initializePages();
                 this.updateUI();
+            }
+            
+            initializePages() {
+                // Set up initial page states
+                const pages = document.querySelectorAll('.page');
+                pages.forEach((page, index) => {
+                    page.classList.remove('current', 'turning', 'turned');
+                    if (index === this.currentPage) {
+                        page.classList.add('current');
+                        page.style.zIndex = 100;
+                        page.style.visibility = 'visible';
+                    } else if (index < this.currentPage) {
+                        page.classList.add('turned');
+                        page.style.zIndex = 0;
+                        page.style.visibility = 'hidden';
+                    } else {
+                        page.style.zIndex = 90 - index;
+                        page.style.visibility = 'visible';
+                    }
+                });
             }
             
             bindEvents() {
@@ -534,17 +562,22 @@
                 const pages = document.querySelectorAll('.page');
                 
                 pages.forEach((page, index) => {
-                    page.classList.remove('turning', 'turned');
+                    page.classList.remove('turning', 'turned', 'current');
                     
                     if (index < targetPage) {
                         // Pages before current should be turned
                         page.classList.add('turned');
+                        page.style.zIndex = 0;
+                        page.style.visibility = 'hidden';
                     } else if (index === targetPage) {
-                        // Current page should be visible
+                        // Current page should be visible and on top
+                        page.classList.add('current');
                         page.style.zIndex = 100;
+                        page.style.visibility = 'visible';
                     } else {
                         // Pages after current should be ready to turn
                         page.style.zIndex = 90 - index;
+                        page.style.visibility = 'visible';
                     }
                 });
             }
