@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerPoint Introduction Lesson</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-left: 5px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .demo-box {
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-style: italic;
+            color: #666;
+        }
+
+        .tip {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 5px solid #e17055;
+        }
+
+        .warning {
+            background: linear-gradient(135deg, #fab1a0, #e17055);
+            color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #667eea;
+            z-index: 1000;
+        }
+
+        .keyboard-hint {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: #666;
+            z-index: 1000;
+        }
+
+        .code {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Introduction to Microsoft PowerPoint</h1>
+            <div style="text-align: center; margin: 40px 0;">
+                <h2 style="border: none; margin-bottom: 30px;">Creating Engaging Presentations</h2>
+                <p style="font-size: 1.3em; color: #666; margin-bottom: 20px;">A versatile presentation software for business, education, and conferences</p>
+                <div class="highlight">
+                    <p><strong>Learning Objectives:</strong></p>
+                    <ul style="text-align: left; margin-top: 15px;">
+                        <li>Master essential PowerPoint features and functionality</li>
+                        <li>Create engaging slideshows with multimedia content</li>
+                        <li>Understand slide layouts, themes, and design principles</li>
+                        <li>Learn presentation delivery and accessibility best practices</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Getting Started -->
+        <div class="slide">
+            <h1>Getting Started with PowerPoint</h1>
+            
+            <h2>File Management & Auto-Save</h2>
+            <div class="two-column">
+                <div>
+                    <h3>Creating a New Presentation</h3>
+                    <ol>
+                        <li>Go to <strong>File → New</strong></li>
+                        <li>Choose "Blank Presentation" or select a template</li>
+                        <li>Save immediately to enable auto-save</li>
+                    </ol>
+                    
+                    <div class="tip">
+                        <strong>Pro Tip:</strong> Save to OneDrive or cloud storage to enable auto-save (look for the circular arrow icon)
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>File Formats</h3>
+                    <ul>
+                        <li><span class="code">.pptx</span> - Standard PowerPoint format</li>
+                        <li>Compatible with Google Slides</li>
+                        <li>Open format for cross-platform use</li>
+                    </ul>
+                    
+                    <div class="demo-box">
+                        <strong>Demo:</strong> Create new presentation and show auto-save feature
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Templates and Themes -->
+        <div class="slide">
+            <h1>Templates and Themes</h1>
+            
+            <h2>Choosing the Right Starting Point</h2>
+            
+            <div class="two-column">
+                <div>
+                    <h3>Built-in Templates</h3>
+                    <ul>
+                        <li>Home tab: Basic template gallery</li>
+                        <li><strong>File → New:</strong> Extensive template collection</li>
+                        <li>Categories: Business, Education, Design, etc.</li>
+                        <li>Professional, time-saving starting points</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Benefits of Using Templates</h3>
+                    <ul>
+                        <li>Consistent design throughout presentation</li>
+                        <li>Professional appearance</li>
+                        <li>Pre-designed layouts for different content types</li>
+                        <li>Built-in color schemes and fonts</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <strong>Demonstration:</strong> Browse template gallery and select a professional theme
+            </div>
+        </div>
+
+        <!-- Slide 4: Understanding Slides and Layouts -->
+        <div class="slide">
+            <h1>Slides and Layouts</h1>
+            
+            <h2>Building Blocks of Your Presentation</h2>
+            
+            <h3>The Slide Interface</h3>
+            <ul>
+                <li><strong>Thumbnail Pane:</strong> Left side - shows all slides</li>
+                <li><strong>Main Editing Area:</strong> Center - edit current slide</li>
+                <li><strong>Notes Section:</strong> Bottom - presenter notes</li>
+            </ul>
+            
+            <h3>Working with Slides</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Adding Slides</h4>
+                    <ul>
+                        <li><strong>New Slide button:</strong> Uses current layout</li>
+                        <li><strong>New Slide dropdown:</strong> Choose specific layout</li>
+                        <li><strong>Keyboard shortcut:</strong> <span class="code">Ctrl + M</span></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Essential Keyboard Shortcuts</h4>
+                    <ul>
+                        <li><span class="code">Ctrl + D</span> - Duplicate slide</li>
+                        <li><span class="code">Ctrl + M</span> - New slide</li>
+                        <li><span class="code">Delete</span> - Remove selected slide</li>
+                        <li><span class="code">F5</span> - Start slideshow from beginning</li>
+                        <li><span class="code">Shift + F5</span> - Start from current slide</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Common Layout Types -->
+        <div class="slide">
+            <h1>Common Slide Layouts</h1>
+            
+            <h2>Choosing the Right Layout for Your Content</h2>
+            
+            <div class="two-column">
+                <div>
+                    <h3>Standard Layouts</h3>
+                    <ul>
+                        <li><strong>Title Slide:</strong> Presentation title and subtitle</li>
+                        <li><strong>Title and Content:</strong> Most versatile layout</li>
+                        <li><strong>Two Content:</strong> Side-by-side comparisons</li>
+                        <li><strong>Comparison:</strong> Structured comparisons</li>
+                        <li><strong>Section Header:</strong> Dividing presentation sections</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Layout Features</h3>
+                    <ul>
+                        <li><strong>Placeholders:</strong> Pre-positioned content areas</li>
+                        <li><strong>Content icons:</strong> Quick access to media insertion</li>
+                        <li><strong>Consistent formatting:</strong> Automatic theme application</li>
+                    </ul>
+                    
+                    <div class="tip">
+                        <strong>Right-click any slide → Layout</strong> to change the layout type
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <strong>Practice:</strong> Create slides with different layouts and explore their uses
+            </div>
+        </div>
+
+        <!-- Slide 6: Adding Content -->
+        <div class="slide">
+            <h1>Adding Content to Slides</h1>
+            
+            <h2>Text, Images, and Media</h2>
+            
+            <h3>Text Content</h3>
+            <ul>
+                <li>Click in placeholder to add text</li>
+                <li>Use <strong>Insert → Text Box</strong> for custom placement</li>
+                <li>Format using the ribbon tools</li>
+            </ul>
+            
+            <h3>Images</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Inserting Images</h4>
+                    <ul>
+                        <li>Click image icon in content placeholder</li>
+                        <li><strong>Insert → Pictures</strong> from file or online</li>
+                        <li>Stock images available through PowerPoint</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Image Editing</h4>
+                    <ul>
+                        <li><strong>Crop tool:</strong> Focus on specific areas</li>
+                        <li><strong>Picture Format:</strong> Styles, effects, colors</li>
+                        <li><strong>Alternative text:</strong> Accessibility requirement</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <strong>Accessibility Note:</strong> Always add alternative text descriptions for images (Right-click → Edit Alt Text)
+            </div>
+        </div>
+
+        <!-- Slide 7: Working with Video -->
+        <div class="slide">
+            <h1>Adding Videos and Media</h1>
+            
+            <h2>Enhancing Presentations with Multimedia</h2>
+            
+            <h3>Video Integration</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Inserting Videos</h4>
+                    <ul>
+                        <li><strong>Insert → Media → Video</strong></li>
+                        <li>Options: Stock videos, online videos, or files</li>
+                        <li>Resize by dragging corners</li>
+                        <li>Crop videos like images</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Video Formatting</h4>
+                    <ul>
+                        <li><strong>Video Format tab:</strong> Shapes, effects, styles</li>
+                        <li><strong>Playback settings:</strong> Auto-play options</li>
+                        <li>Custom shapes (hold <span class="code">Ctrl</span> for circles)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <strong>Shape Tip:</strong> Hold Ctrl while selecting shapes to create perfect circles, squares, or equilateral triangles
+            </div>
+            
+            <div class="demo-box">
+                <strong>Demo:</strong> Insert a video, resize it, crop it, and change it to a circular shape
+            </div>
+        </div>
+
+        <!-- Slide 8: Slide Management Views -->
+        <div class="slide">
+            <h1>Slide Management and Views</h1>
+            
+            <h2>Different Ways to Work with Your Presentation</h2>
+            
+            <h3>View Options</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Normal View</h4>
+                    <ul>
+                        <li>Default editing view</li>
+                        <li>Thumbnail pane + main editing area</li>
+                        <li>Notes section at bottom</li>
+                        <li>Best for detailed slide editing</li>
+                    </ul>
+                    
+                    <h4>Slide Sorter View</h4>
+                    <ul>
+                        <li>View all slides as thumbnails</li>
+                        <li>Perfect for reordering slides</li>
+                        <li>Bulk operations (delete, duplicate multiple slides)</li>
+                        <li>Overview of entire presentation flow</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Helpful Features</h4>
+                    <ul>
+                        <li><strong>Grid lines:</strong> View → Grid lines (alignment help)</li>
+                        <li><strong>Ruler:</strong> View → Ruler (precise positioning)</li>
+                        <li><strong>Zoom controls:</strong> Bottom right corner</li>
+                    </ul>
+                    
+                    <div class="tip">
+                        <strong>Bulk Selection:</strong> In Slide Sorter, click and drag to select multiple slides, then use Ctrl+D to duplicate them all
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Slide Master -->
+        <div class="slide">
+            <h1>Slide Master - Theme Customization</h1>
+            
+            <h2>Creating Consistent, Professional Designs</h2>
+            
+            <h3>What is Slide Master?</h3>
+            <ul>
+                <li>Controls the overall theme and layout templates</li>
+                <li>Make changes that apply to all slides</li>
+                <li>Access via <strong>View → Slide Master</strong></li>
+            </ul>
+            
+            <h3>Slide Master Capabilities</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Global Changes</h4>
+                    <ul>
+                        <li>Font styles and sizes</li>
+                        <li>Color schemes</li>
+                        <li>Background elements</li>
+                        <li>Logo placement</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Custom Layouts</h4>
+                    <ul>
+                        <li><strong>Insert Layout:</strong> Create new slide types</li>
+                        <li><strong>Placeholders:</strong> Content, text, media areas</li>
+                        <li><strong>Shapes and graphics:</strong> Background elements</li>
+                        <li><strong>Rename layouts:</strong> Right-click → Rename</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="warning">
+                <strong>Important:</strong> Always click "Close Master View" when finished to return to normal editing
+            </div>
+        </div>
+
+        <!-- Slide 10: Animations -->
+        <div class="slide">
+            <h1>Animations and Transitions</h1>
+            
+            <h2>Adding Motion to Engage Your Audience</h2>
+            
+            <div class="two-column">
+                <div>
+                    <h3>Animations</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> Control when content appears</li>
+                        <li><strong>Appear:</strong> Simple, professional effect</li>
+                        <li><strong>Animation Pane:</strong> Manage timing and order</li>
+                        <li><strong>Start options:</strong> On click, after previous, with previous</li>
+                    </ul>
+                    
+                    <div class="tip">
+                        <strong>Best Practice:</strong> "Appear" animation is professional and rarely distracting
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Transitions</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> Control how slides change</li>
+                        <li><strong>Timing options:</strong> On mouse click or automatic</li>
+                        <li><strong>Duration:</strong> Match to audio or content needs</li>
+                        <li><strong>Consistency:</strong> Use same transition throughout</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Creating Progressive Reveals</h3>
+            <ol>
+                <li>Select multiple objects (hold Shift)</li>
+                <li>Apply "Appear" animation</li>
+                <li>Adjust timing in Animation Pane</li>
+                <li>Test in slideshow mode</li>
+            </ol>
+        </div>
+
+        <!-- Slide 11: Presenter View -->
+        <div class="slide">
+            <h1>Presenter View and Delivery</h1>
+            
+            <h2>Professional Presentation Delivery</h2>
+            
+            <h3>Understanding Presenter View</h3>
+            <ul>
+                <li><strong>Dual-screen setup:</strong> Audience sees slides, you see presenter view</li>
+                <li><strong>Your view includes:</strong> Current slide, next slide, notes, timer</li>
+                <li><strong>Access:</strong> Slideshow → Present from Beginning/Current Slide</li>
+            </ul>
+            
+            <div class="two-column">
+                <div>
+                    <h4>Presenter Notes</h4>
+                    <ul>
+                        <li>Add notes in Normal view (bottom section)</li>
+                        <li>Visible only to you during presentation</li>
+                        <li>Include key points, transitions, timing cues</li>
+                        <li>Use bullet points for easy reading</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Display Settings</h4>
+                    <ul>
+                        <li><strong>Swap displays:</strong> If screens are reversed</li>
+                        <li><strong>Monitor selection:</strong> Choose primary display</li>
+                        <li><strong>Slideshow settings:</strong> Advanced options</li>
+                    </ul>
+                    
+                    <div class="tip">
+                        <strong>Test First:</strong> Always preview in presenter view before your actual presentation
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Audio and Automated Presentations -->
+        <div class="slide">
+            <h1>Audio Integration and Automation</h1>
+            
+            <h2>Creating Self-Running Presentations</h2>
+            
+            <h3>Adding Audio</h3>
+            <ul>
+                <li><strong>Insert → Audio → Record Audio</strong> for narration</li>
+                <li><strong>Playback settings:</strong> Set to "Automatically"</li>
+                <li><strong>Timing coordination:</strong> Match slide transition timing to audio length</li>
+            </ul>
+            
+            <h3>Automated Presentations</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Setting Up Auto-Advance</h4>
+                    <ol>
+                        <li><strong>Transitions tab</strong></li>
+                        <li>Uncheck "On Mouse Click"</li>
+                        <li>Check "After" and set time duration</li>
+                        <li>Apply to all relevant slides</li>
+                    </ol>
+                </div>
+                
+                <div>
+                    <h4>Export as Video</h4>
+                    <ol>
+                        <li><strong>File → Export → Create a Video</strong></li>
+                        <li>Choose resolution quality</li>
+                        <li>Select timing options</li>
+                        <li>Save as MP4 file</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <strong>Use Cases:</strong> Kiosks, online learning, recorded presentations, social media content
+            </div>
+        </div>
+
+        <!-- Slide 13: Accessibility -->
+        <div class="slide">
+            <h1>Accessibility Best Practices</h1>
+            
+            <h2>Making Presentations Inclusive for All</h2>
+            
+            <h3>Accessibility Checker</h3>
+            <ul>
+                <li><strong>File → Info → Check for Issues → Check Accessibility</strong></li>
+                <li>Identifies missing alt text, low contrast, reading order issues</li>
+                <li>Provides specific recommendations for fixes</li>
+            </ul>
+            
+            <div class="two-column">
+                <div>
+                    <h4>Essential Requirements</h4>
+                    <ul>
+                        <li><strong>Alt text:</strong> Describe all images meaningfully</li>
+                        <li><strong>High contrast:</strong> Dark text on light backgrounds</li>
+                        <li><strong>Reading order:</strong> Logical content flow</li>
+                        <li><strong>Title slides:</strong> Mark for screen readers</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Writing Good Alt Text</h4>
+                    <ul>
+                        <li>Be concise but descriptive</li>
+                        <li>Focus on the image's purpose in context</li>
+                        <li>Avoid "image of" or "picture of"</li>
+                        <li>Don't auto-generate - write your own</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="warning">
+                <strong>Legal Note:</strong> Many institutions require accessible presentations for compliance with disability laws
+            </div>
+        </div>
+
+        <!-- Slide 14: Design Best Practices -->
+        <div class="slide">
+            <h1>Design Best Practices</h1>
+            
+            <h2>Creating Professional, Engaging Presentations</h2>
+            
+            <div class="two-column">
+                <div>
+                    <h3>Visual Design Principles</h3>
+                    <ul>
+                        <li><strong>Consistency:</strong> Use templates and master slides</li>
+                        <li><strong>Color palette:</strong> 1 primary + 1 accent color</li>
+                        <li><strong>High contrast:</strong> Ensure readability</li>
+                        <li><strong>White space:</strong> Don't overcrowd slides</li>
+                        <li><strong>Font hierarchy:</strong> Clear heading/body distinction</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Content Guidelines</h3>
+                    <ul>
+                        <li><strong>6x6 rule:</strong> Max 6 bullet points, 6 words each</li>
+                        <li><strong>One concept per slide</strong></li>
+                        <li><strong>Progressive disclosure:</strong> Use animations thoughtfully</li>
+                        <li><strong>Quality images:</strong> High resolution, relevant</li>
+                        <li><strong>Backup plan:</strong> Test multimedia beforehand</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Professional Tips</h3>
+            <div class="tip">
+                <ul>
+                    <li>Save work regularly (Ctrl+S) or use auto-save via cloud storage</li>
+                    <li>Preview in presenter view before delivery</li>
+                    <li>Test all multimedia elements and timing</li>
+                    <li>Have a backup plan for technical issues</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 15: Learning Resources -->
+        <div class="slide">
+            <h1>Continuing Your PowerPoint Journey</h1>
+            
+            <h2>Resources for Mastery</h2>
+            
+            <h3>Learning Approach</h3>
+            <ul>
+                <li><strong>Practice regularly:</strong> PowerPoint proficiency comes with experience</li>
+                <li><strong>Start simple:</strong> Master basic features before advanced techniques</li>
+                <li><strong>Experiment:</strong> Try new layouts, animations, and design elements</li>
+                <li><strong>Seek feedback:</strong> Test presentations with colleagues or students</li>
+            </ul>
+            
+            <div class="two-column">
+                <div>
+                    <h4>Recommended Learning Path</h4>
+                    <ol>
+                        <li>Master basic slide creation and layouts</li>
+                        <li>Learn effective design principles</li>
+                        <li>Practice multimedia integration</li>
+                        <li>Explore advanced features (Master slides, automation)</li>
+                        <li>Focus on accessibility and inclusive design</li>
+                    </ol>
+                </div>
+                
+                <div>
+                    <h4>Additional Resources</h4>
+                    <ul>
+                        <li>YouTube tutorials for specific techniques</li>
+                        <li>Microsoft's official PowerPoint training</li>
+                        <li>Design inspiration from SlideShare</li>
+                        <li>Accessibility guidelines from your institution</li>
+                        <li>Template collections for consistent branding</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <strong>Remember:</strong> Great presentations combine strong content with thoughtful design and confident delivery. PowerPoint is the tool, but your message is what matters most.
+            </div>
+        </div>
+
+        <!-- Slide 16: Q&A and Wrap-up -->
+        <div class="slide">
+            <h1>Questions & Next Steps</h1>
+            
+            <div style="text-align: center; margin: 40px 0;">
+                <h2 style="border: none; color: #667eea;">Thank you for learning about PowerPoint!</h2>
+            </div>
+            
+            <div class="two-column">
+                <div>
+                    <h3>Key Takeaways</h3>
+                    <ul>
+                        <li>PowerPoint is a powerful tool for visual storytelling</li>
+                        <li>Templates and master slides ensure consistency</li>
+                        <li>Accessibility should be built in from the start</li>
+                        <li>Practice and experimentation lead to mastery</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Practice Assignment</h3>
+                    <ol>
+                        <li>Create a 5-slide presentation on a topic of your choice</li>
+                        <li>Use at least 3 different slide layouts</li>
+                        <li>Include one image with proper alt text</li>
+                        <li>Add presenter notes to each slide</li>
+                        <li>Test your presentation in presenter view</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="demo-box">
+                <h3>Questions & Discussion</h3>
+                <p>What presentation challenges would you like to discuss?</p>
+                <p>What features are you most excited to try?</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <!-- Slide Counter -->
+    <div class="slide-counter">
+        <span id="slideCounter">1 / 16</span>
+    </div>
+
+    <!-- Keyboard Hint -->
+    <div class="keyboard-hint">
+        Use ← → arrow keys or buttons to navigate
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            // Update slide counter
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(n) {
+            if (n > 0 && currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            } else if (n < 0 && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight') {
+                changeSlide(1);
+            } else if (event.key === 'Home') {
+                showSlide(0);
+            } else if (event.key === 'End') {
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+
+        // Add some presentation-style keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            // F5 to start from beginning
+            if (event.key === 'F5') {
+                event.preventDefault();
+                showSlide(0);
+            }
+            // Escape to go to first slide
+            if (event.key === 'Escape') {
+                showSlide(0);
+            }
+            // Space bar to advance
+            if (event.key === ' ') {
+                event.preventDefault();
+                changeSlide(1);
+            }
+        });
+
+        // Click anywhere on slide to advance (like PowerPoint)
+        document.addEventListener('click', function(event) {
+            // Don't advance if clicking on navigation buttons
+            if (!event.target.classList.contains('nav-btn')) {
+                changeSlide(1);
+            }
+        });
+
+        // Prevent context menu for cleaner presentation feel
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+        // Add fullscreen capability (F11 equivalent)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F11') {
+                event.preventDefault();
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

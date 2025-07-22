@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Design Mastery</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .poster-container {
+            width: 100vw;
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 4rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+        
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 700;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #f9ca24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 2.2rem);
+            color: #e1b12c;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .decorative-line {
+            width: min(400px, 60vw);
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #e1b12c);
+            margin: 2rem auto;
+            border-radius: 2px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .principle-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .principle-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.1);
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ffd700, #e1b12c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+        
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 600;
+            color: #ffd700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .card-content {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .card-content strong {
+            color: #ffd700;
+            font-weight: 600;
+        }
+        
+        .highlight-section {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 6px solid #ffd700;
+            padding: 3rem;
+            margin: 3rem 0;
+            border-radius: 0 15px 15px 0;
+        }
+        
+        .highlight-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #ffd700;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .highlight-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .highlight-bullet {
+            width: 12px;
+            height: 12px;
+            background: #ffd700;
+            border-radius: 50%;
+            margin-right: 1rem;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+        
+        .highlight-text {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .bottom-banner {
+            background: linear-gradient(90deg, #ffd700, #e1b12c, #ffd700);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 15px;
+            margin-top: 3rem;
+        }
+        
+        .banner-text {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: #1a1a2e;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .floating-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .shape-1 {
+            top: 10%;
+            right: 5%;
+            width: 100px;
+            height: 100px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation-delay: -2s;
+        }
+        
+        .shape-2 {
+            bottom: 15%;
+            left: 3%;
+            width: 80px;
+            height: 80px;
+            background: #e1b12c;
+            transform: rotate(45deg);
+            animation-delay: -4s;
+        }
+        
+        .shape-3 {
+            top: 60%;
+            right: 10%;
+            width: 60px;
+            height: 120px;
+            background: #ffd700;
+            border-radius: 30px;
+            animation-delay: -6s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(10px) rotate(-5deg); }
+        }
+
+        @media (max-width: 768px) {
+            .poster-container {
+                padding: 2rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .highlight-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster-container">
+        <div class="floating-elements">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+        </div>
+        
+        <div class="header">
+            <h1 class="main-title">Visual Design</h1>
+            <div class="decorative-line"></div>
+            <p class="subtitle">Master Your Message</p>
+        </div>
+        
+        <div class="content-grid">
+            <div class="principle-card">
+                <div class="card-icon">🎯</div>
+                <h3 class="card-title">Hierarchy & Layout</h3>
+                <div class="card-content">
+                    <strong>Rule of Thirds:</strong> Place key elements along grid lines for natural eye flow<br><br>
+                    <strong>Visual Weight:</strong> Use size, color, and position to guide attention to your most important content
+                </div>
+            </div>
+            
+            <div class="principle-card">
+                <div class="card-icon">✨</div>
+                <h3 class="card-title">Typography Power</h3>
+                <div class="card-content">
+                    <strong>Font Pairing:</strong> Maximum 2 fonts - one for headers, one for body<br><br>
+                    <strong>Size Hierarchy:</strong> Headers 36-44pt, subheads 24-32pt, body 18-24pt
+                </div>
+            </div>
+            
+            <div class="principle-card">
+                <div class="card-icon">🎨</div>
+                <h3 class="card-title">Color Psychology</h3>
+                <div class="card-content">
+                    <strong>60-30-10 Rule:</strong> 60% dominant, 30% secondary, 10% accent<br><br>
+                    <strong>Cultural Awareness:</strong> Colors mean different things across cultures
+                </div>
+            </div>
+            
+            <div class="principle-card">
+                <div class="card-icon">⚡</div>
+                <h3 class="card-title">White Space Strategy</h3>
+                <div class="card-content">
+                    <strong>Breathing Room:</strong> Every element needs space around it<br><br>
+                    <strong>Professional Feel:</strong> Sparse slides feel premium, crowded feels amateur
+                </div>
+            </div>
+        </div>
+        
+        <div class="highlight-section">
+            <h3 class="highlight-title">Quick Design Rules</h3>
+            <div class="highlight-grid">
+                <div>
+                    <div class="highlight-item">
+                        <div class="highlight-bullet"></div>
+                        <div class="highlight-text"><strong>Alignment:</strong> Pick one style and stick with it</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-bullet"></div>
+                        <div class="highlight-text"><strong>Contrast:</strong> Minimum 4.5:1 ratio for readability</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-bullet"></div>
+                        <div class="highlight-text"><strong>Images:</strong> High-res (150+ DPI) and purposeful</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-item">
+                        <div class="highlight-bullet"></div>
+                        <div class="highlight-text"><strong>Proximity:</strong> Group related items together</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-bullet"></div>
+                        <div class="highlight-text"><strong>Line Length:</strong> 40-75 characters for optimal reading</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-bullet"></div>
+                        <div class="highlight-text"><strong>Accessibility:</strong> Don't rely on color alone</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bottom-banner">
+            <div class="banner-text">Excellence in Every Detail</div>
+        </div>
+    </div>
+</body>
+</html>
