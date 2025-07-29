@@ -70,11 +70,16 @@
                 </div>
             </div>
 
+            <!-- Small Screen Navigation (show-when-small) -->
             <nav class="tab show-when-small fs-300 br-8 mb-2 shadow" style="z-index: 10;">
                 <div class="d-flex justify-content-center">
                     <button class="hide-on-phone" onclick="scrollToSection('topics')">
                         <i class="bi bi-bookmarks-fill fs-450"></i>
                         Course Topics
+                    </button>
+                    <button onclick="scrollToSection('lesson-materials')">
+                        <i class="bi bi-collection-fill fs-450"></i>
+                        Free Materials
                     </button>
                     <button onclick="scrollToSection('requirement')">
                         <i class="bi bi-mortarboard-fill fs-450"></i>
@@ -97,7 +102,8 @@
         </div>
 
         <div class="container-lg br-8 mb-3 pt-3 bg-primary-blue border-dotted-putty-yellow" style="clear: both;" id="main" role="main">
-            <div class="tab hide-when-small fs-300 br-8 mb-2 shadow" style="z-index: 10; margin-top: -210px; margin-left: -260px; position: fixed;">
+            <!-- Desktop Navigation (hide-when-small) -->
+            <div class="tab hide-when-small fs-300 br-8 mb-2 shadow" style="z-index: 10; margin-top: -260px; margin-left: -260px; position: fixed;">
                 <div class="text-center">
                     <span class="text-putty-yellow fs-450 ff-sans-bold text-center">Navigation<hr color="#9A97D4"></span>
                 </div>
@@ -109,6 +115,11 @@
                 <button onclick="scrollToSection('topics')">
                     <i class="bi bi-bookmarks-fill fs-450"></i>
                     &ensp;Course Topics
+                </button>
+                <br>
+                <button onclick="scrollToSection('lesson-materials')">
+                    <i class="bi bi-collection-fill fs-450"></i>
+                    &ensp;Free Materials
                 </button>
                 <br>
                 <button onclick="scrollToSection('requirement')">
@@ -404,6 +415,39 @@
                     </div>
                 </div>
     
+                <div class="row card-row br-8 pt-3">
+                    <div class="col-xl br-8">
+                        <div class="title-container-primary-blue" id="lesson-materials">
+                            <h2 class="text-putty-yellow">Free Lesson Materials</h2>
+                        </div>
+                        <div class="scrollbox-wrapper bg-white fs-400">
+                            <p>
+                                Access <span class="ff-sans-bold">high-quality learning resources</span> available to everyone, whether you're enrolled in our course or simply interested in learning about information technology topics.
+                            </p>
+                            <div class="border-dotted-primary-blue br-8 p-4 bg-accent-light mt-3">
+                                <div class="gridbox-icon-left">
+                                    <div class="text-center">
+                                        <i class="bi bi-book fs-750 text-primary-blue"></i>   
+                                    </div>
+                                    <div>
+                                        <h4 class="text-primary-blue">Comprehensive Module Resources</h4>
+                                        <p class="mb-3">
+                                            Explore our growing collection of free educational materials including interactive slides, study guides, 
+                                            hands-on activities, and video tutorials. Currently featuring modules on <span class="ff-sans-bolder">Introductions to Programming with Python</span>
+                                            and <span class="ff-sans-bolder">Artificial Intelligence & Machine Learning</span>, with more topics planned to release in the coming months!
+                                        </p>
+                                        <a target="_blank" href="https://csci-1100.github.io/class_resources_public/">
+                                            <button class="bttn-putty-yellow-sm">
+                                                <i class="bi bi-collection-fill"></i>&ensp;Browse All Materials&ensp;<i class="bi bi-box-arrow-up-right"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row card-row br-8 pt-3">
                     <div class="col-xl br-8">
                         <div class="title-container-primary-blue" id="requirement">
