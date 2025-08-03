@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft 365 Shortcuts Cheat Sheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2B579A, #185ABD);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .app-section {
+            margin-bottom: 50px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 6px solid #2B579A;
+        }
+        
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .app-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .word-icon { background: #2B579A; }
+        .excel-icon { background: #217346; }
+        .powerpoint-icon { background: #B7472A; }
+        
+        .app-title {
+            font-size: 2rem;
+            color: #333;
+            margin: 0;
+        }
+        
+        .category {
+            margin-bottom: 30px;
+        }
+        
+        .category-title {
+            font-size: 1.3rem;
+            color: #495057;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #dee2e6;
+            font-weight: 600;
+        }
+        
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 12px;
+        }
+        
+        .shortcut-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .shortcut-item:hover {
+            background: #e3f2fd;
+            border-color: #2B579A;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(43,87,154,0.15);
+        }
+        
+        .shortcut-key {
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .shortcut-desc {
+            flex: 1;
+            margin-left: 12px;
+            font-weight: 500;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+        
+        .tips-section {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .tips-title {
+            font-size: 1.6rem;
+            color: #d84315;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .tip-item {
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ff5722;
+        }
+        
+        .tip-item strong {
+            color: #d84315;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .shortcuts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .app-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Microsoft 365 Shortcuts</h1>
+            <p>Essential shortcuts for Word, Excel, and PowerPoint</p>
+        </div>
+        
+        <div class="content">
+            <!-- MICROSOFT WORD -->
+            <div class="app-section">
+                <div class="app-header">
+                    <div class="app-icon word-icon">W</div>
+                    <h2 class="app-title">Microsoft Word</h2>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Navigation & Selection</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Home</div>
+                            <div class="shortcut-desc">Go to Beginning of Document</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + End</div>
+                            <div class="shortcut-desc">Go to End of Document</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + G</div>
+                            <div class="shortcut-desc">Go To (specific page, line)</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Triple-click</div>
+                            <div class="shortcut-desc">Select Entire Paragraph</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Formatting</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + B/I/U</div>
+                            <div class="shortcut-desc">Bold / Italic / Underline</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + ]</div>
+                            <div class="shortcut-desc">Increase Font Size</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + [</div>
+                            <div class="shortcut-desc">Decrease Font Size</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + E</div>
+                            <div class="shortcut-desc">Center Text</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + L</div>
+                            <div class="shortcut-desc">Left Align Text</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + R</div>
+                            <div class="shortcut-desc">Right Align Text</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + J</div>
+                            <div class="shortcut-desc">Justify Text</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + L</div>
+                            <div class="shortcut-desc">Apply Bullet Points</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Document Structure</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Alt + 1</div>
+                            <div class="shortcut-desc">Apply Heading 1 Style</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Alt + 2</div>
+                            <div class="shortcut-desc">Apply Heading 2 Style</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Enter</div>
+                            <div class="shortcut-desc">Insert Page Break</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Alt + F</div>
+                            <div class="shortcut-desc">Insert Footnote</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Review & References</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">F7</div>
+                            <div class="shortcut-desc">Spell Check</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Shift + F7</div>
+                            <div class="shortcut-desc">Thesaurus</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + C</div>
+                            <div class="shortcut-desc">Copy Formatting</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + V</div>
+                            <div class="shortcut-desc">Paste Formatting</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MICROSOFT EXCEL -->
+            <div class="app-section">
+                <div class="app-header">
+                    <div class="app-icon excel-icon">E</div>
+                    <h2 class="app-title">Microsoft Excel</h2>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Navigation</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Home</div>
+                            <div class="shortcut-desc">Go to Cell A1</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + End</div>
+                            <div class="shortcut-desc">Go to Last Used Cell</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Arrows</div>
+                            <div class="shortcut-desc">Jump to Edge of Data</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Page ↑/↓</div>
+                            <div class="shortcut-desc">Switch Between Worksheets</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Selection</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Space</div>
+                            <div class="shortcut-desc">Select Entire Column</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Shift + Space</div>
+                            <div class="shortcut-desc">Select Entire Row</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + A</div>
+                            <div class="shortcut-desc">Select All Cells</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + End</div>
+                            <div class="shortcut-desc">Select to Last Used Cell</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Data Entry & Editing</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">F2</div>
+                            <div class="shortcut-desc">Edit Active Cell</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Enter</div>
+                            <div class="shortcut-desc">Fill Selected Cells</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + D</div>
+                            <div class="shortcut-desc">Fill Down</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + R</div>
+                            <div class="shortcut-desc">Fill Right</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + ;</div>
+                            <div class="shortcut-desc">Insert Current Date</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Alt + Enter</div>
+                            <div class="shortcut-desc">New Line in Cell</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Formulas & Functions</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">F4</div>
+                            <div class="shortcut-desc">Toggle Absolute/Relative References</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + `</div>
+                            <div class="shortcut-desc">Show/Hide Formulas</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Alt + =</div>
+                            <div class="shortcut-desc">AutoSum</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + Enter</div>
+                            <div class="shortcut-desc">Array Formula</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Formatting</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + 1</div>
+                            <div class="shortcut-desc">Format Cells Dialog</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + $</div>
+                            <div class="shortcut-desc">Currency Format</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + %</div>
+                            <div class="shortcut-desc">Percentage Format</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + #</div>
+                            <div class="shortcut-desc">Date Format</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MICROSOFT POWERPOINT -->
+            <div class="app-section">
+                <div class="app-header">
+                    <div class="app-icon powerpoint-icon">P</div>
+                    <h2 class="app-title">Microsoft PowerPoint</h2>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Slide Management</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + M</div>
+                            <div class="shortcut-desc">New Slide</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + D</div>
+                            <div class="shortcut-desc">Duplicate Slide</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + D</div>
+                            <div class="shortcut-desc">Duplicate Selected Objects</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Delete</div>
+                            <div class="shortcut-desc">Delete Selected Slide</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Presentation Mode</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">F5</div>
+                            <div class="shortcut-desc">Start Slideshow from Beginning</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Shift + F5</div>
+                            <div class="shortcut-desc">Start from Current Slide</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Esc</div>
+                            <div class="shortcut-desc">End Slideshow</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">N or Space</div>
+                            <div class="shortcut-desc">Next Slide</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">P or Backspace</div>
+                            <div class="shortcut-desc">Previous Slide</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">B</div>
+                            <div class="shortcut-desc">Black Screen Toggle</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">W</div>
+                            <div class="shortcut-desc">White Screen Toggle</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + P</div>
+                            <div class="shortcut-desc">Use Pen Tool</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Formatting & Objects</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + G</div>
+                            <div class="shortcut-desc">Group Objects</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + G</div>
+                            <div class="shortcut-desc">Ungroup Objects</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + F</div>
+                            <div class="shortcut-desc">Send to Front</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Ctrl + Shift + B</div>
+                            <div class="shortcut-desc">Send to Back</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-section">
+                <h3 class="tips-title">💡 Academic Productivity Tips</h3>
+                <div class="tips-grid">
+                    <div class="tip-item">
+                        <strong>Word: Document Structure</strong>
+                        Use Ctrl + Alt + 1/2/3 for headings, then generate automatic table of contents for research papers.
+                    </div>
+                    <div class="tip-item">
+                        <strong>Excel: Data Analysis</strong>
+                        Master Ctrl + Shift + L for AutoFilter to quickly analyze datasets for coursework.
+                    </div>
+                    <div class="tip-item">
+                        <strong>PowerPoint: Presentation Flow</strong>
+                        Use F5 to start presentations and B/W keys to manage audience attention during presentations.
+                    </div>
+                    <div class="tip-item">
+                        <strong>Universal: Copy Formatting</strong>
+                        Ctrl + Shift + C and Ctrl + Shift + V work across all Office apps for consistent formatting.
+                    </div>
+                    <div class="tip-item">
+                        <strong>Excel: Quick Calculations</strong>
+                        Select cells and look at the status bar for instant sum, average, and count without formulas.
+                    </div>
+                    <div class="tip-item">
+                        <strong>Word: Navigation Pane</strong>
+                        Use headings with Ctrl + Alt + 1/2/3, then open Navigation Pane to jump between sections instantly.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

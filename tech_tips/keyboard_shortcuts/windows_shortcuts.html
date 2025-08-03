@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Keyboard Shortcuts Cheat Sheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0078d4, #106ebe);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #0078d4;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e3f2fd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            width: 32px;
+            height: 32px;
+            display: inline-block;
+        }
+        
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .shortcut-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .shortcut-item:hover {
+            background: #e3f2fd;
+            border-color: #0078d4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,120,212,0.15);
+        }
+        
+        .shortcut-key {
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .shortcut-desc {
+            flex: 1;
+            margin-left: 15px;
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .tips-section {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .tips-title {
+            font-size: 1.6rem;
+            color: #d84315;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .tip-item {
+            background: rgba(255,255,255,0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ff5722;
+        }
+        
+        .tip-item strong {
+            color: #d84315;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .shortcuts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🪟 Windows Keyboard Shortcuts</h1>
+            <p>Essential shortcuts for Windows 10/11 productivity</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🖥️</span>
+                    Desktop Control
+                </h2>
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win</div>
+                        <div class="shortcut-desc">Open Start Menu</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + V</div>
+                        <div class="shortcut-desc">Open Clipboard History</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + L</div>
+                        <div class="shortcut-desc">Lock Computer</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + D</div>
+                        <div class="shortcut-desc">Show/Hide Desktop</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + M</div>
+                        <div class="shortcut-desc">Minimize All Windows</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + R</div>
+                        <div class="shortcut-desc">Open Run Dialog</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + I</div>
+                        <div class="shortcut-desc">Open Settings</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + X</div>
+                        <div class="shortcut-desc">Quick Admin Menu</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🪟</span>
+                    Window Management
+                </h2>
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + ←</div>
+                        <div class="shortcut-desc">Snap Window Left</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + →</div>
+                        <div class="shortcut-desc">Snap Window Right</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + ↑</div>
+                        <div class="shortcut-desc">Maximize Window</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + ↓</div>
+                        <div class="shortcut-desc">Minimize/Restore Window</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Alt + Tab</div>
+                        <div class="shortcut-desc">Switch Between Applications</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Alt + F4</div>
+                        <div class="shortcut-desc">Close Current Application</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🗂️</span>
+                    File Explorer
+                </h2>
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + E</div>
+                        <div class="shortcut-desc">Open File Explorer</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Ctrl + N</div>
+                        <div class="shortcut-desc">New Explorer Window</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Ctrl + Shift + N</div>
+                        <div class="shortcut-desc">Create New Folder</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">F2</div>
+                        <div class="shortcut-desc">Rename Selected Item</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Delete</div>
+                        <div class="shortcut-desc">Move to Recycle Bin</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Shift + Delete</div>
+                        <div class="shortcut-desc">Permanently Delete</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Alt + ↑</div>
+                        <div class="shortcut-desc">Go Up One Level</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Alt + ← / →</div>
+                        <div class="shortcut-desc">Navigate Back/Forward</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🌐</span>
+                    Web Browser
+                </h2>
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Ctrl + T</div>
+                        <div class="shortcut-desc">New Tab</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Ctrl + Shift + T</div>
+                        <div class="shortcut-desc">Reopen Closed Tab</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Ctrl + W</div>
+                        <div class="shortcut-desc">Close Current Tab</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Ctrl + Tab</div>
+                        <div class="shortcut-desc">Next Tab</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Ctrl + L</div>
+                        <div class="shortcut-desc">Focus Address Bar</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Ctrl + R</div>
+                        <div class="shortcut-desc">Refresh Page</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Ctrl + D</div>
+                        <div class="shortcut-desc">Bookmark Page</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">F12</div>
+                        <div class="shortcut-desc">Developer Tools</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">📸</span>
+                    Screenshots & System
+                </h2>
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + PrtScn</div>
+                        <div class="shortcut-desc">Full Screen Screenshot</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Win + Shift + S</div>
+                        <div class="shortcut-desc">Snipping Tool</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Alt + PrtScn</div>
+                        <div class="shortcut-desc">Active Window Screenshot</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-key">Ctrl + Shift + Esc</div>
+                        <div class="shortcut-desc">Task Manager</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-section">
+                <h3 class="tips-title">💡 Pro Tips for Students</h3>
+                <div class="tips-grid">
+                    <div class="tip-item">
+                        <strong>Master Window Snapping</strong>
+                        Use Win + Arrow keys to quickly organize multiple documents side by side for research and writing.
+                    </div>
+                    <div class="tip-item">
+                        <strong>Clipboard History</strong>
+                        Win + V gives you access to your last 25 copied items - perfect for research projects.
+                    </div>
+                    <div class="tip-item">
+                        <strong>Quick File Access</strong>
+                        Win + E followed by typing starts searching immediately in File Explorer.
+                    </div>
+                    <div class="tip-item">
+                        <strong>Virtual Desktops</strong>
+                        Win + Tab to create separate workspaces for different subjects or projects.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
