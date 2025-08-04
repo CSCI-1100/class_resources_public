@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Management & OneDrive - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2E8B57 0%, #4682B4 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-size: 1.2em;
+        }
+
+        .presentation-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 95%;
+            max-width: 1400px;
+            height: 95vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #27ae60);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .slide-counter {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            width: 100%;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #f39c12;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+            height: 100%;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-title {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #27ae60;
+            padding-bottom: 15px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border-left: 5px solid #27ae60;
+        }
+
+        .section-number {
+            background: #27ae60;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .section-info h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .section-info p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .file-structure {
+            background: #f8f9fa;
+            border: 2px dashed #27ae60;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        .file-structure .folder {
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .file-structure .file {
+            color: #e74c3c;
+        }
+
+        .file-tree {
+            font-family: 'Courier New', monospace;
+            font-size: 1.0em;
+            line-height: 1.6;
+            background: #f8f9fa;
+            border: 2px dashed #27ae60;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .file-tree div {
+            margin: 2px 0;
+        }
+
+        .file-tree .level-0 { margin-left: 0px; }
+        .file-tree .level-1 { margin-left: 20px; }
+        .file-tree .level-1::before { content: "└──"; transform: translateY(-20px); color: #fbdc90; }
+        .file-tree .level-2 { margin-left: 60px; }
+        .file-tree .level-2::before { content: "└──"; transform: translateY(-20px); color: #fbdc90;; }
+        .file-tree .level-3 { margin-left: 100px; }
+        .file-tree .level-3::before { content: "└──"; transform: translateY(-20px); color: #fbdc90; }
+        .file-tree .level-4 { margin-left: 120px; }
+        .file-tree .level-4::before { content: "└──"; transform: translateY(-20px); color: #fbdc90; }
+
+        .file-tree .folder {
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .file-tree .file {
+            color: #e74c3c;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .comparison-item {
+            background: white;
+            border: 2px solid #27ae60;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-item.bad {
+            border-color: #e74c3c;
+        }
+
+        .comparison-item h3 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .comparison-item.good h3 {
+            color: #27ae60;
+        }
+
+        .comparison-item.bad h3 {
+            color: #e74c3c;
+        }
+
+        .tip-box {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .tip-box h3 {
+            color: #27ae60;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tip-box h3::before {
+            content: "💡";
+            margin-right: 10px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .warning-box h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning-box h3::before {
+            content: "⚠️";
+            margin-right: 10px;
+        }
+
+        .activity-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .activity-box h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .activity-box h3::before {
+            content: "🎯";
+            margin-right: 10px;
+        }
+
+        .bullet-points {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bullet-points li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .bullet-points li::before {
+            content: "▶";
+            color: #27ae60;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .icon-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #dee2e6;
+        }
+
+        .icon-item .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .nav-button {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-button:hover {
+            background: #2ecc71;
+            transform: translateY(-2px);
+        }
+
+        .nav-button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .timer-display {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .step-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .step-item {
+            background: #f8f9fa;
+            border: 2px solid #27ae60;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-item-small {
+            background: #f8f9fa;
+            border: 2px solid #27ae60;
+            border-radius: 15px;
+            padding: 12px;
+            text-align: center;
+            position: relative;
+            font-size: 0.9em;
+        }
+
+        .step-number {
+            background: #27ae60;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+
+        .naming-examples {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .naming-good {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .naming-bad {
+            background: #ffebee;
+            border: 2px solid #e74c3c;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .naming-good h3 {
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+
+        .naming-bad h3 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        .code-example {
+            font-size: 1.1em;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            margin: 20px 0;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.09rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="header">
+            <h1>File Management & OneDrive</h1>
+            <div class="slide-counter">
+                <span id="current-slide">1</span> / <span id="total-slides">18</span>
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="slide-content">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide active">
+                <div class="slide-title">File Management & OneDrive</div>
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="font-size: 1.5em; color: #2c3e50; margin-bottom: 30px;">
+                        Building Your Digital Filing Cabinet
+                    </div>
+                    <div style="background: linear-gradient(135deg, #2E8B57, #4682B4); color: white; padding: 30px; border-radius: 15px; max-width: 600px; margin: 0 auto;">
+                        <p style="font-size: 1.1em; margin-bottom: 15px;"><strong>Duration:</strong> 20-25 minutes</p>
+                        <p style="font-size: 1.1em;"><strong>Goal:</strong> Set up organized file systems that will serve you throughout your academic career</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Learning Objectives -->
+            <div class="slide">
+                <div class="slide-title">What You'll Learn Today</div>
+                <div style="margin-top: 40px;">
+                    <p style="font-size: 1.3em; color: #2c3e50; margin-bottom: 30px; text-align: center;">
+                        By the end of this lesson, you'll be able to:
+                    </p>
+                    <ul class="bullet-points" style="font-size: 1.2em; max-width: 900px; margin: 0 auto;">
+                        <li>Understand the digital filing cabinet analogy for organizing files</li>
+                        <li>Set up OneDrive and integrate it with your file system</li>
+                        <li>Create a logical folder structure for academic work</li>
+                        <li>Follow best practices for file naming</li>
+                        <li>Use Office apps effectively with OneDrive integration</li>
+                        <li>Troubleshoot common file management issues</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 3: The Problem -->
+            <div class="slide">
+                <div class="slide-title">Why File Management Matters</div>
+                <div class="warning-box">
+                    <h3>Common Student Disasters</h3>
+                    <ul class="bullet-points">
+                        <li>"I can't find my assignment that's due in 10 minutes!"</li>
+                        <li>"My computer crashed and I lost everything!"</li>
+                        <li>"Which version is the final one?"</li>
+                        <li>"I accidentally deleted my project folder!"</li>
+                    </ul>
+                </div>
+                <div class="tip-box">
+                    <h3>Good Organization Saves</h3>
+                    <ul class="bullet-points">
+                        <li><strong>Time:</strong> Find files instantly</li>
+                        <li><strong>Stress:</strong> Know where everything is</li>
+                        <li><strong>Grades:</strong> Never lose assignments</li>
+                        <li><strong>Collaboration:</strong> Easy sharing with classmates</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 4: Digital Filing Cabinet Analogy -->
+            <div class="slide">
+                <div class="slide-title">The Digital Filing Cabinet</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;">
+                    <div style="text-align: center;">
+                        <h3 style="color: #2c3e50; margin-bottom: 20px;">Physical Office</h3>
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; border: 2px solid #dee2e6;">
+                            <div style="font-size: 3em; margin-bottom: 15px;">🗄️</div>
+                            <ul class="bullet-points" style="text-align: left;">
+                                <li><strong>Filing Cabinet:</strong> Your computer</li>
+                                <li><strong>Drawers:</strong> Major categories</li>
+                                <li><strong>Manila Folders:</strong> Course folders</li>
+                                <li><strong>Papers:</strong> Individual files</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="color: #2c3e50; margin-bottom: 20px;">Digital System</h3>
+                        <div style="background: #e8f5e8; padding: 25px; border-radius: 15px; border: 2px solid #27ae60;">
+                            <div style="font-size: 3em; margin-bottom: 15px;">💻</div>
+                            <ul class="bullet-points" style="text-align: left;">
+                                <li><strong>OneDrive:</strong> Your digital cabinet</li>
+                                <li><strong>Main Folders:</strong> Semester/Year</li>
+                                <li><strong>Subfolders:</strong> Courses</li>
+                                <li><strong>Files:</strong> Documents, images, etc.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: What is OneDrive? -->
+            <div class="slide">
+                <div class="slide-title">What is OneDrive?</div>
+                <div style="text-align: center; margin: 40px 0;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">☁️</div>
+                    <h3 style="color: #2c3e50; margin-bottom: 30px;">Microsoft's Cloud Storage Service</h3>
+                </div>
+                <div class="step-grid">
+                    <div class="step-item">
+                        <div style="font-size: 2em; margin-bottom: 15px;">🔄</div>
+                        <h4>Automatic Sync</h4>
+                        <p>Files sync across all your devices automatically</p>
+                    </div>
+                    <div class="step-item">
+                        <div style="font-size: 2em; margin-bottom: 15px;">👥</div>
+                        <h4>Easy Collaboration</h4>
+                        <p>Share and work on documents together in real-time</p>
+                    </div>
+                    <div class="step-item">
+                        <div style="font-size: 2em; margin-bottom: 15px;">🛡️</div>
+                        <h4>Automatic Backup</h4>
+                        <p>Your files are safe even if your computer dies</p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <h3>University Integration</h3>
+                    <p>
+                        ETSU provides OneDrive access with your student account, but you will need to install the Microsoft 365 desktop apps (available for Windows & MacOS).
+                    </p>
+                    <div class="step-grid">
+                        <div class="step-item-small">
+                            <div style="font-size: 1.2em; margin-bottom: 10px; text-align: left;">1️⃣</div>
+                            Visit <span>office.com/apps</span> and sign into your ETSU student account. If you are automatically signed into another Microsoft account, try using an Incognito/Private browser window.
+                        </div>
+                        <div class="step-item-small">
+                            <div style="font-size: 1.2em; margin-bottom: 10px; text-align: left;">2️⃣</div>
+                            Click the "Install apps" dropdown menu button and select the first option: "Microsoft 365 apps".
+                        </div>
+                        <div class="step-item-small">
+                            <div style="font-size: 1.2em; margin-bottom: 10px; text-align: left;">3️⃣</div>
+                            When the download is complete, launch the executable and follow the installation instructions.
+                        </div>
+                        <div class="step-item-small">
+                            <div style="font-size: 1.2em; margin-bottom: 10px; text-align: left;">4️⃣</div>
+                            Once installed, you may have to open one of the Office apps (such as OneDrive) and sign into it with your student account to license the apps.
+                        </div>
+                        <div class="step-item-small">
+                            <div style="font-size: 1.2em; margin-bottom: 10px; text-align: left;">5️⃣</div>
+                            Finally, if on a Mac, got to System Preferences, then Extensions, and toggle on "OneDrive Finder Integration".
+                        </div>
+                    </div>
+                    <p class="text-muted">
+                        <span>ⓘ For further assistance with Microsoft 365 and OneDrive, contact the <a target="_blank" href="https://www.etsu.edu/helpdesk/contact-us.php">ITS Help Desk</a></span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 6: OneDrive Status Icons -->
+            <div class="slide">
+                <div class="slide-title">Understanding OneDrive Icons</div>
+                <div class="icon-grid">
+                    <div class="icon-item">
+                        <div class="icon" style="color: #27ae60;">✅</div>
+                        <h4>Green Checkmark</h4>
+                        <p>File is synced and available offline</p>
+                    </div>
+                    <div class="icon-item">
+                        <div class="icon" style="color: #3498db;">🔄</div>
+                        <h4>Blue Arrows</h4>
+                        <p>File is currently syncing</p>
+                    </div>
+                    <div class="icon-item">
+                        <div class="icon" style="color: #95a5a6;">☁️</div>
+                        <h4>Cloud Icon</h4>
+                        <p>File is online-only (saves space)</p>
+                    </div>
+                    <div class="icon-item">
+                        <div class="icon" style="color: #e74c3c;">❌</div>
+                        <h4>Red X</h4>
+                        <p>Sync error occurred</p>
+                    </div>
+                    <div class="icon-item">
+                        <div class="icon" style="color: #f39c12;">🔒</div>
+                        <h4>Lock Icon</h4>
+                        <p>File is checked out by someone else</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Activity - Setting Up Your Structure -->
+            <div class="slide">
+                <div class="slide-title">Activity: Plan Your File Structure</div>
+                <div class="activity-box">
+                    <h3>Let's Design Your Academic Filing System (5 minutes)</h3>
+                    <p>Work with a partner to plan your ideal folder structure for this semester</p>
+                </div>
+                <div style="margin-top: 30px;">
+                    <h4 style="color: #2c3e50; margin-bottom: 20px;">Think About:</h4>
+                    <ul class="bullet-points" style="font-size: 1.2em;">
+                        <li>How many courses are you taking?</li>
+                        <li>What types of materials do you have for each course?</li>
+                        <li>Do you have group projects?</li>
+                        <li>How do you want to organize by time (weekly, by assignment type)?</li>
+                    </ul>
+                </div>
+                <div class="tip-box" style="margin-top: 30px;">
+                    <h3>Pro Tip</h3>
+                    <p>Start simple and add complexity as needed. You can always reorganize later!</p>
+                </div>
+            </div>
+
+            <!-- Slide 8: Recommended Folder Structure -->
+            <div class="slide">
+                <div class="slide-title">Recommended Academic Structure</div>
+                <div class="file-tree">
+                    <div class="level-0 folder">📁 Fall_2025_Semester/</div>
+                    <div class="level-1 folder">📁 CSCI_1100_1150_Using_Info_Tech/</div>
+                    <div class="level-2 folder">📁 01_Syllabus_and_Course_Info/</div>
+                    <div class="level-3 file">📄 CSCI_1100_On-Site_Syllabus_202580.pdf</div>
+                    <div class="level-3 file">📄 csci11001150_schedule_202580.xlsx</div>
+                    <div class="level-2 folder">📁 02_Lecture_Notes/</div>
+                    <div class="level-3 folder">📁 Week_01_Introduction_Tech_Tips/</div>
+                    <div class="level-3 folder">📁 Week_02_Information_Literacy//</div>
+                    <div class="level-2 folder">📁 03_Labs/</div>
+                    <div class="level-3 folder">📁 1_Information_Literacy_Lab/</div>
+                    <div class="level-3 folder">📁 2_Tech_Product_Literacy_Lab/</div>
+                    <div class="level-2 folder">📁 04_Resources_and_References/</div>
+                    <div class="level-1 folder">📁 MATH_1910_Calculus_I/</div>
+                    <div class="level-1 folder">📁 ENGL_1020_Composition_II/</div>
+                </div>
+                <div class="tip-box">
+                    <h3>Why This Works</h3>
+                    <p>Numbers ensure folders sort in logical order, and consistent naming makes everything predictable</p>
+                </div>
+            </div>
+
+            <!-- Slide 9: File Naming Best Practices -->
+            <div class="slide">
+                <div class="slide-title">File Naming: Do's and Don'ts</div>
+                <div class="naming-examples">
+                    <div class="naming-good">
+                        <h3>✅ Good File Names</h3>
+                        <div class="code-example">
+CSCI_1100_Lab_02_PCPartPicker_Chelsie_Dubay.docx<br>
+MATH_1910_Week_03_Lecture_Notes_Derivatives.pdf<br>
+ENGL_1020_Essay_01_Draft_02_2025-09-15.docx<br>
+HIST_2010_Research_Project_Bibliography.docx
+                        </div>
+                        <p><strong>Why these work:</strong></p>
+                        <ul class="bullet-points">
+                            <li>Course identifier first</li>
+                            <li>Content type specified</li>
+                            <li>Version/date included</li>
+                            <li>Your name for submissions</li>
+                        </ul>
+                    </div>
+                    <div class="naming-bad">
+                        <h3>❌ Bad File Names</h3>
+                        <div class="code-example">
+Document1.docx<br>
+Essay.docx<br>
+Homework.docx<br>
+Notes.docx<br>
+Assignment (1).docx
+                        </div>
+                        <p><strong>Problems:</strong></p>
+                        <ul class="bullet-points">
+                            <li>Meaningless names</li>
+                            <li>No course identification</li>
+                            <li>No version control</li>
+                            <li>Impossible to search</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 10: Activity - Rename Files -->
+            <div class="slide">
+                <div class="slide-title">Activity: File Naming Practice</div>
+                <div class="activity-box">
+                    <h3>Fix These File Names (3 minutes)</h3>
+                    <p>Work individually to improve these terrible file names:</p>
+                </div>
+                <div style="margin-top: 30px;">
+                    <h4 style="color: #e74c3c; margin-bottom: 20px;">Before (Bad):</h4>
+                    <div class="code-example">
+Document1.docx            (Biology lab report)<br>
+Essay.docx                (English argumentative essay, first draft)<br>
+Homework.docx             (Calculus problem set #3)<br>
+Presentation.pptx         (History presentation on WWII)<br>
+Incomplete GBI Data.xlsx  (UIT lab Excel file)
+                    </div>
+                    <div class="tip-box" style="margin-top: 20px;">
+                        <h3>Challenge</h3>
+                        <p>Create descriptive names that follow our naming convention. We'll share answers on the next slide!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 11: File Naming Solutions -->
+            <div class="slide">
+                <div class="slide-title">File Naming Solutions</div>
+                <div style="margin-top: 30px;">
+                    <h4 style="color: #27ae60; margin-bottom: 20px;">After (Good):</h4>
+                    <div class="code-example">
+BIOL_1110_Lab_Report_03_Cell_Division_Chelsie_Dubay.docx<br>
+ENGL_1020_Argumentative_Essay_Draft_01_Chelsie_Dubay.docx<br>
+MATH_1910_Problem_Set_03_Derivatives_Chelsie_Dubay.docx<br>
+HIST_1120_WWII_Presentation_Final_Chelsie_Dubay.pptx<br>
+CSCI_1150_GBI_Data_Chelsie_Dubay.xlsx
+                    </div>
+                </div>
+                <div class="tip-box" style="margin-top: 30px;">
+                    <h3>Key Principles Applied</h3>
+                    <ul class="bullet-points">
+                        <li><strong>Course code first:</strong> Easy sorting and identification</li>
+                        <li><strong>Assignment type:</strong> Know what it is at a glance</li>
+                        <li><strong>Specific topic:</strong> Distinguish from other assignments</li>
+                        <li><strong>Version/status:</strong> Track drafts and finals</li>
+                        <li><strong>Your name:</strong> Essential for submissions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 12: Working with Office Apps -->
+            <div class="slide">
+                <div class="slide-title">Office Apps + OneDrive = Magic</div>
+                <div class="step-grid">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <h4>Save to OneDrive</h4>
+                        <p>Press Ctrl+S and navigate to your OneDrive folder structure</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <h4>AutoSave Enabled</h4>
+                        <p>Toggle turns solid - your work saves automatically every few seconds</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <h4>Access Anywhere</h4>
+                        <p>Continue working on any device with your Microsoft account</p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <h3>Version History is Your Friend</h3>
+                    <p>Click the document name at the top → Version History → See all previous versions with timestamps</p>
+                    <p><strong>Use case:</strong> Accidentally deleted a paragraph? Restore from an earlier version!</p>
+                </div>
+            </div>
+
+            <!-- Slide 13: Collaboration Features -->
+            <div class="slide">
+                <div class="slide-title">Sharing and Collaboration</div>
+                <div style="margin-top: 40px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <div style="background: #e8f5e8; padding: 25px; border-radius: 15px; border: 2px solid #27ae60;">
+                            <h4 style="color: #27ae60; margin-bottom: 15px;">Share Individual Files</h4>
+                            <ul class="bullet-points">
+                                <li>Click "Share" button in top-right</li>
+                                <li>Enter email addresses</li>
+                                <li>Choose "Can edit" or "Can view"</li>
+                                <li>Add a message explaining the share</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f0f8ff; padding: 25px; border-radius: 15px; border: 2px solid #3498db;">
+                            <h4 style="color: #3498db; margin-bottom: 15px;">Share Entire Folders</h4>
+                            <ul class="bullet-points">
+                                <li>Right-click folder in File Explorer</li>
+                                <li>Select "Share" from context menu</li>
+                                <li>Perfect for group projects</li>
+                                <li>Everyone sees the same organization</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="warning-box">
+                    <h3>Group Project Pro Tip</h3>
+                    <p>Create a shared folder structure like: <code>Group_Project_Team_A/01_Planning/02_Research/03_Writing/04_Archive/</code></p>
+                    <p>Establish naming conventions with your team!</p>
+                </div>
+            </div>
+
+            <!-- Slide 14: Common Problems & Solutions -->
+            <div class="slide">
+                <div class="slide-title">Troubleshooting Common Issues</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 30px;">
+                    <div class="warning-box">
+                        <h3>OneDrive Not Syncing</h3>
+                        <ul class="bullet-points">
+                            <li>Check internet connection</li>
+                            <li>Right-click OneDrive icon → Settings</li>
+                            <li>Click "Reset OneDrive" if problems persist</li>
+                            <li>Sign out and sign back in</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h3>File Conflicts</h3>
+                        <ul class="bullet-points">
+                            <li>Look for "Conflicted Copy" in filename</li>
+                            <li>Compare versions manually</li>
+                            <li>Merge changes if needed</li>
+                            <li>Delete conflicted copy after merging</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h3>Can't Find Files</h3>
+                        <ul class="bullet-points">
+                            <li>Use OneDrive web interface (onedrive.com)</li>
+                            <li>Check Recycle Bin (both local and OneDrive)</li>
+                            <li>Search by filename in File Explorer</li>
+                            <li>Check Version History for content changes</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h3>Running Out of Space</h3>
+                        <ul class="bullet-points">
+                            <li>Delete old/unnecessary files</li>
+                            <li>Use "Files On-Demand" (cloud-only storage)</li>
+                            <li>Empty OneDrive Recycle Bin</li>
+                            <li>Check university storage limits</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 15: Activity - Set Up Your System -->
+            <div class="slide">
+                <div class="slide-title">Hands-On: Build Your System</div>
+                <div class="activity-box">
+                    <h3>Let's Set Up Your Academic File System (8 minutes)</h3>
+                    <p>Follow along as we create your semester folder structure</p>
+                </div>
+                <div style="margin-top: 30px;">
+                    <h4 style="color: #2c3e50; margin-bottom: 20px;">Step-by-Step:</h4>
+                    <ol style="font-size: 1.1em; line-height: 1.8;">
+                        <li><strong>Open OneDrive folder</strong> (Windows: File Explorer → OneDrive; Mac: Finder → OneDrive)</li>
+                        <li><strong>Create semester folder:</strong> "Fall_2025_Semester" (or your current semester)</li>
+                        <li><strong>Create course folders</strong> for each of your classes</li>
+                        <li><strong>Add standard subfolders</strong> to one course (we'll do others later)</li>
+                        <li><strong>Test saving a document</strong> to your new structure</li>
+                        <li><strong>Check sync status</strong> - look for the green checkmarks!</li>
+                    </ol>
+                </div>
+                <div class="tip-box" style="margin-top: 20px;">
+                    <h3>Don't Worry About Perfection</h3>
+                    <p>This is your starting point. You can always adjust and improve as the semester progresses!</p>
+                </div>
+            </div>
+
+            <!-- Slide 16: Daily Workflow -->
+            <div class="slide">
+                <div class="slide-title">Your New File Workflow</div>
+                <div class="step-grid">
+                    <div class="step-item">
+                        <div style="font-size: 2em; margin-bottom: 15px;">📚</div>
+                        <h4>Before/After Class</h4>
+                        <p>Store resources (e.g., slides, handouts) in organized folders</p>
+                    </div>
+                    <div class="step-item">
+                        <div style="font-size: 2em; margin-bottom: 15px;">🥼</div>
+                        <h4>Lab</h4>
+                        <p>Start assignments in proper folders</p>
+                        <p>Submit assignments with confidence (this IS the right version!)</p>
+                    </div>
+                </div>
+                <div style="margin-top: 40px;">
+                    <h4 style="color: #2c3e50; margin-bottom: 20px;">Assignment Submission Workflow:</h4>
+                    <ol style="font-size: 1.1em; line-height: 1.8;">
+                        <li>Work on assignment in proper course folder</li>
+                        <li>Use descriptive filename with your name</li>
+                        <li>Save final version as "..._FINAL.docx"</li>
+                        <li>Download backup copy to local Downloads</li>
+                        <li>Submit through D2L</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Slide 17: Best Practices Summary -->
+            <div class="slide">
+                <div class="slide-title">Best Practices Checklist</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px;">
+                    <div style="background: #e8f5e8; padding: 25px; border-radius: 15px; border-left: 4px solid #27ae60;">
+                        <h3 style="color: #27ae60; margin-bottom: 15px;">Organization</h3>
+                        <ul class="bullet-points">
+                            <li>Create consistent folder structures</li>
+                            <li>Use descriptive, standardized file names</li>
+                            <li>Organize by course, then content type</li>
+                            <li>Keep active and archived materials separate</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f0f8ff; padding: 25px; border-radius: 15px; border-left: 4px solid #3498db;">
+                        <h3 style="color: #3498db; margin-bottom: 15px;">Collaboration</h3>
+                        <ul class="bullet-points">
+                            <li>Share folders, not individual files when possible</li>
+                            <li>Establish naming conventions with team members</li>
+                            <li>Use comments and suggestions for feedback</li>
+                            <li>Regularly sync to avoid conflicts</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="margin-top: 30px;">
+                    <div style="background: #fff3cd; padding: 25px; border-radius: 15px; border-left: 4px solid #ffc107;">
+                        <h3 style="color: #856404; margin-bottom: 15px;">Backup and Security</h3>
+                        <ul class="bullet-points">
+                            <li>Don't rely solely on OneDrive - keep local backups of critical files</li>
+                            <li>Download final versions of important assignments</li>
+                            <li>Be cautious with sharing permissions</li>
+                            <li>Regularly review and clean up shared folders</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 18: Summary and Next Steps -->
+            <div class="slide">
+                <div class="slide-title">You're Now a File Management Pro!</div>
+                <div style="margin-top: 40px;">
+                    <div style="background: linear-gradient(135deg, #2E8B57, #4682B4); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                        <h3 style="margin-bottom: 20px; text-align: center;">What You've Accomplished</h3>
+                        <ul style="list-style: none; font-size: 1.1em; text-align: left;">
+                            <li style="padding: 8px 0;">✓ Understanding of digital filing cabinet concept</li>
+                            <li style="padding: 8px 0;">✓ OneDrive setup and integration knowledge</li>
+                            <li style="padding: 8px 0;">✓ Logical academic folder structure</li>
+                            <li style="padding: 8px 0;">✓ File naming best practices</li>
+                            <li style="padding: 8px 0;">✓ Office apps integration skills</li>
+                            <li style="padding: 8px 0;">✓ Troubleshooting common problems</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <h3>Your Next Steps</h3>
+                    <ul class="bullet-points">
+                        <li><strong>This week:</strong> Complete your folder structure for all courses</li>
+                        <li><strong>Moving forward:</strong> Stick to your naming conventions</li>
+                        <li><strong>Monthly:</strong> Review and clean up old files</li>
+                        <li><strong>Help others:</strong> Share these practices with classmates!</li>
+                    </ul>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <p style="font-size: 1.3em; color: #2c3e50; font-weight: bold;">
+                        Questions? Let's troubleshoot together!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" id="prev-btn" onclick="previousSlide()">
+                ← Previous
+            </button>
+            <div class="timer-display" id="timer">
+                00:00
+            </div>
+            <button class="nav-button" id="next-btn" onclick="nextSlide()">
+                Next →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let startTime = Date.now();
+        let timerInterval;
+
+        // Initialize
+        document.getElementById('total-slides').textContent = totalSlides;
+        updateSlideDisplay();
+        startTimer();
+
+        function updateSlideDisplay() {
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Show current slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update counter
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlideDisplay();
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlideDisplay();
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                previousSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                currentSlide = 0;
+                updateSlideDisplay();
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                currentSlide = totalSlides - 1;
+                updateSlideDisplay();
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                nextSlide(); // Swipe left
+            } else if (touchEndX - touchStartX > 50) {
+                previousSlide(); // Swipe right
+            }
+        });
+    </script>
+</body>
+</html>
