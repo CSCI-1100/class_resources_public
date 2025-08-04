@@ -1427,7 +1427,7 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                 progressText.textContent = '💾 Saving PDF...';
                 await new Promise(resolve => setTimeout(resolve, 500));
                 
-                const fileName = `File-Management-OneDrive-Slides-${new Date().toISOString().split('T')[0]}.pdf`;
+                const fileName = `CSCI-1100_File-Management-OneDrive-Slides_${new Date().toISOString().split('T')[0]}.pdf`;
                 pdf.save(fileName);
                 
                 // 🎊 Success!
