@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Keyboard Shortcuts Guide</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+        }
+        
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .search:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .clear-btn {
+            padding: 0.5rem 1rem;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .clear-btn:hover {
+            background: #c82333;
+        }
+        
+        .results-info {
+            padding: 0.5rem 1.5rem;
+            background: #e3f2fd;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 0.9rem;
+            color: #1976d2;
+        }
+        
+        .shortcuts-container {
+            padding: 1.5rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .shortcut-item {
+            display: grid;
+            grid-template-columns: 200px 1fr 100px;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        
+        .shortcut-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .shortcut-item:last-child {
+            border-bottom: none;
+        }
+        
+        .shortcut-keys {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-weight: bold;
+            background: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        .shortcut-description {
+            font-size: 1rem;
+            color: #333;
+        }
+        
+        .shortcut-platform {
+            text-align: center;
+        }
+        
+        .platform-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .platform-windows {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .platform-macos {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .platform-universal {
+            background: #e8f5e8;
+            color: #388e3c;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        .no-results h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .controls-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .filter-buttons {
+                justify-content: center;
+            }
+            
+            .shortcut-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
+            .shortcut-keys {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⌨️ Keyboard Shortcuts Guide</h1>
+            <p>Search and filter hundreds of shortcuts to boost your productivity</p>
+        </div>
+        
+        <div class="controls">
+            <div class="controls-grid">
+                <div class="search-box">
+                    <input class="search" placeholder="Search shortcuts... (e.g., 'toggle apps', 'copy paste', 'new tab')" />
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="Windows">Windows</button>
+                    <button class="filter-btn" data-filter="macOS">macOS</button>
+                    <button class="filter-btn" data-filter="Universal">Universal</button>
+                </div>
+                <button class="clear-btn" onclick="clearSearch()">Clear</button>
+            </div>
+        </div>
+        
+        <div class="results-info">
+            Showing <span class="results-count">0</span> shortcuts
+        </div>
+        
+        <div id="shortcuts-list">
+            <div class="shortcuts-container">
+                <ul class="list">
+                    <!-- Shortcuts will be populated here -->
+                </ul>
+                <div class="no-results" style="display: none;">
+                    <h3>No shortcuts found</h3>
+                    <p>Try adjusting your search terms or filters</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+    <script>
+        // Shortcuts data
+        const shortcutsData = [
+            // Desktop Control - Windows
+            { keys: "Win", description: "Open Start Menu", platform: "Windows", category: "Desktop Control", searchTerms: "start menu windows key" },
+            { keys: "Win + V", description: "Open Clipboard History", platform: "Windows", category: "Desktop Control", searchTerms: "clipboard history paste" },
+            { keys: "Win + L", description: "Lock Computer", platform: "Windows", category: "Desktop Control", searchTerms: "lock screen security" },
+            { keys: "Win + D", description: "Show/Hide Desktop", platform: "Windows", category: "Desktop Control", searchTerms: "desktop minimize all windows" },
+            { keys: "Win + M", description: "Minimize All Windows", platform: "Windows", category: "Desktop Control", searchTerms: "minimize all windows desktop" },
+            { keys: "Win + R", description: "Open Run Dialog", platform: "Windows", category: "Desktop Control", searchTerms: "run dialog command" },
+            { keys: "Win + I", description: "Open Settings", platform: "Windows", category: "Desktop Control", searchTerms: "settings preferences" },
+            { keys: "Win + X", description: "Open Quick Admin Menu", platform: "Windows", category: "Desktop Control", searchTerms: "admin menu power user" },
+            { keys: "Win + Tab", description: "Task View (Virtual Desktops)", platform: "Windows", category: "Desktop Control", searchTerms: "task view virtual desktop" },
+            { keys: "Win + Ctrl + D", description: "Create New Virtual Desktop", platform: "Windows", category: "Desktop Control", searchTerms: "new virtual desktop" },
+            { keys: "Win + Ctrl + F4", description: "Close Current Virtual Desktop", platform: "Windows", category: "Desktop Control", searchTerms: "close virtual desktop" },
+            { keys: "Win + Ctrl + Left/Right", description: "Switch Between Virtual Desktops", platform: "Windows", category: "Desktop Control", searchTerms: "switch virtual desktop" },
+            
+            // Window Management - Windows
+            { keys: "Win + Left Arrow", description: "Snap Window Left", platform: "Windows", category: "Window Management", searchTerms: "snap window left side" },
+            { keys: "Win + Right Arrow", description: "Snap Window Right", platform: "Windows", category: "Window Management", searchTerms: "snap window right side" },
+            { keys: "Win + Up Arrow", description: "Maximize Window", platform: "Windows", category: "Window Management", searchTerms: "maximize window full screen" },
+            { keys: "Win + Down Arrow", description: "Minimize/Restore Window", platform: "Windows", category: "Window Management", searchTerms: "minimize restore window" },
+            { keys: "Alt + Tab", description: "Switch Between Open Applications", platform: "Windows", category: "Window Management", searchTerms: "switch apps toggle applications alt tab" },
+            { keys: "Alt + F4", description: "Close Current Application", platform: "Windows", category: "Window Management", searchTerms: "close app quit application" },
+            { keys: "Win + Shift + Left/Right", description: "Move Window to Another Monitor", platform: "Windows", category: "Window Management", searchTerms: "move window monitor display" },
+            
+            // macOS Desktop Control
+            { keys: "Cmd + Space", description: "Spotlight Search", platform: "macOS", category: "Desktop Control", searchTerms: "spotlight search find" },
+            { keys: "Cmd + Tab", description: "Switch Between Applications", platform: "macOS", category: "Desktop Control", searchTerms: "switch apps toggle applications cmd tab" },
+            { keys: "Cmd + `", description: "Switch Between Windows of Same App", platform: "macOS", category: "Desktop Control", searchTerms: "switch windows same app" },
+            { keys: "Cmd + Q", description: "Quit Application", platform: "macOS", category: "Desktop Control", searchTerms: "quit app close application" },
+            { keys: "Cmd + W", description: "Close Window", platform: "macOS", category: "Desktop Control", searchTerms: "close window" },
+            { keys: "Cmd + M", description: "Minimize Window", platform: "macOS", category: "Desktop Control", searchTerms: "minimize window" },
+            { keys: "Cmd + H", description: "Hide Application", platform: "macOS", category: "Desktop Control", searchTerms: "hide app application" },
+            { keys: "Cmd + Option + H", description: "Hide All Other Applications", platform: "macOS", category: "Desktop Control", searchTerms: "hide all other apps" },
+            { keys: "Control + Up Arrow", description: "Mission Control", platform: "macOS", category: "Desktop Control", searchTerms: "mission control overview" },
+            { keys: "Control + Down Arrow", description: "Application Windows", platform: "macOS", category: "Desktop Control", searchTerms: "app windows expose" },
+            { keys: "Control + Left/Right Arrow", description: "Switch Between Spaces", platform: "macOS", category: "Desktop Control", searchTerms: "switch spaces virtual desktop" },
+            { keys: "Cmd + Control + F", description: "Enter/Exit Full Screen", platform: "macOS", category: "Desktop Control", searchTerms: "full screen toggle" },
+            
+            // File Management - Windows
+            { keys: "Win + E", description: "Open File Explorer", platform: "Windows", category: "File Management", searchTerms: "file explorer open files" },
+            { keys: "Ctrl + N", description: "New File Explorer Window", platform: "Windows", category: "File Management", searchTerms: "new window file explorer" },
+            { keys: "Ctrl + Shift + N", description: "Create New Folder", platform: "Windows", category: "File Management", searchTerms: "new folder create" },
+            { keys: "Alt + Up Arrow", description: "Go Up One Level", platform: "Windows", category: "File Management", searchTerms: "up level parent folder" },
+            { keys: "Alt + Left/Right Arrow", description: "Navigate Back/Forward", platform: "Windows", category: "File Management", searchTerms: "back forward navigate" },
+            { keys: "F2", description: "Rename Selected Item", platform: "Windows", category: "File Management", searchTerms: "rename file folder" },
+            { keys: "Delete", description: "Move to Recycle Bin", platform: "Windows", category: "File Management", searchTerms: "delete recycle bin trash" },
+            { keys: "Shift + Delete", description: "Permanently Delete", platform: "Windows", category: "File Management", searchTerms: "permanent delete remove" },
+            { keys: "Ctrl + A", description: "Select All", platform: "Windows", category: "File Management", searchTerms: "select all files" },
+            
+            // File Management - macOS
+            { keys: "Cmd + N", description: "New Finder Window", platform: "macOS", category: "File Management", searchTerms: "new finder window" },
+            { keys: "Cmd + Shift + N", description: "New Folder", platform: "macOS", category: "File Management", searchTerms: "new folder create" },
+            { keys: "Cmd + Delete", description: "Move to Trash", platform: "macOS", category: "File Management", searchTerms: "delete trash move" },
+            { keys: "Cmd + Shift + Delete", description: "Empty Trash", platform: "macOS", category: "File Management", searchTerms: "empty trash delete" },
+            { keys: "Cmd + D", description: "Duplicate", platform: "macOS", category: "File Management", searchTerms: "duplicate copy file" },
+            { keys: "Cmd + I", description: "Get Info", platform: "macOS", category: "File Management", searchTerms: "info properties details" },
+            { keys: "Cmd + Option + V", description: "Move (Cut and Paste)", platform: "macOS", category: "File Management", searchTerms: "move cut paste" },
+            { keys: "Cmd + Up Arrow", description: "Go to Parent Folder", platform: "macOS", category: "File Management", searchTerms: "parent folder up level" },
+            { keys: "Cmd + [", description: "Back", platform: "macOS", category: "File Management", searchTerms: "back navigate" },
+            { keys: "Cmd + ]", description: "Forward", platform: "macOS", category: "File Management", searchTerms: "forward navigate" },
+            
+            // Browser Shortcuts - Universal
+            { keys: "Ctrl/Cmd + T", description: "New Tab", platform: "Universal", category: "Web Browser", searchTerms: "new tab browser" },
+            { keys: "Ctrl/Cmd + Shift + T", description: "Reopen Closed Tab", platform: "Universal", category: "Web Browser", searchTerms: "reopen closed tab restore" },
+            { keys: "Ctrl/Cmd + W", description: "Close Current Tab", platform: "Universal", category: "Web Browser", searchTerms: "close tab browser" },
+            { keys: "Ctrl/Cmd + Shift + W", description: "Close Window", platform: "Universal", category: "Web Browser", searchTerms: "close browser window" },
+            { keys: "Ctrl/Cmd + Tab", description: "Next Tab", platform: "Universal", category: "Web Browser", searchTerms: "next tab switch" },
+            { keys: "Ctrl/Cmd + Shift + Tab", description: "Previous Tab", platform: "Universal", category: "Web Browser", searchTerms: "previous tab switch" },
+            { keys: "Ctrl/Cmd + 1-9", description: "Switch to Tab by Number", platform: "Universal", category: "Web Browser", searchTerms: "switch tab number" },
+            { keys: "Ctrl/Cmd + L", description: "Focus Address Bar", platform: "Universal", category: "Web Browser", searchTerms: "address bar url focus" },
+            { keys: "Ctrl/Cmd + R", description: "Refresh Page", platform: "Universal", category: "Web Browser", searchTerms: "refresh reload page" },
+            { keys: "Ctrl/Cmd + Shift + R", description: "Hard Refresh (Clear Cache)", platform: "Universal", category: "Web Browser", searchTerms: "hard refresh cache clear" },
+            { keys: "Ctrl/Cmd + D", description: "Bookmark Current Page", platform: "Universal", category: "Web Browser", searchTerms: "bookmark save page" },
+            { keys: "Ctrl/Cmd + H", description: "History", platform: "Universal", category: "Web Browser", searchTerms: "history browse" },
+            { keys: "Ctrl/Cmd + J", description: "Downloads", platform: "Universal", category: "Web Browser", searchTerms: "downloads files" },
+            { keys: "Ctrl/Cmd + N", description: "New Window", platform: "Universal", category: "Web Browser", searchTerms: "new browser window" },
+            { keys: "Ctrl/Cmd + Shift + N", description: "New Incognito/Private Window", platform: "Universal", category: "Web Browser", searchTerms: "incognito private window" },
+            { keys: "F12", description: "Developer Tools", platform: "Universal", category: "Web Browser", searchTerms: "developer tools inspect" },
+            
+            // Text Editing - Universal
+            { keys: "Ctrl/Cmd + C", description: "Copy", platform: "Universal", category: "Text Editing", searchTerms: "copy text" },
+            { keys: "Ctrl/Cmd + V", description: "Paste", platform: "Universal", category: "Text Editing", searchTerms: "paste text" },
+            { keys: "Ctrl/Cmd + X", description: "Cut", platform: "Universal", category: "Text Editing", searchTerms: "cut text" },
+            { keys: "Ctrl/Cmd + Z", description: "Undo", platform: "Universal", category: "Text Editing", searchTerms: "undo revert" },
+            { keys: "Ctrl/Cmd + Y", description: "Redo", platform: "Universal", category: "Text Editing", searchTerms: "redo repeat" },
+            { keys: "Ctrl/Cmd + A", description: "Select All", platform: "Universal", category: "Text Editing", searchTerms: "select all text" },
+            { keys: "Ctrl/Cmd + S", description: "Save", platform: "Universal", category: "Text Editing", searchTerms: "save document file" },
+            { keys: "Ctrl/Cmd + P", description: "Print", platform: "Universal", category: "Text Editing", searchTerms: "print document" },
+            { keys: "Ctrl/Cmd + F", description: "Find", platform: "Universal", category: "Text Editing", searchTerms: "find search text" },
+            { keys: "Ctrl/Cmd + H", description: "Find and Replace", platform: "Universal", category: "Text Editing", searchTerms: "find replace text" },
+            { keys: "Ctrl/Cmd + B", description: "Bold", platform: "Universal", category: "Text Editing", searchTerms: "bold text formatting" },
+            { keys: "Ctrl/Cmd + I", description: "Italic", platform: "Universal", category: "Text Editing", searchTerms: "italic text formatting" },
+            { keys: "Ctrl/Cmd + U", description: "Underline", platform: "Universal", category: "Text Editing", searchTerms: "underline text formatting" },
+            
+            // Microsoft Word
+            { keys: "Ctrl + G", description: "Go To (specific page, line, etc.)", platform: "Windows", category: "Microsoft Word", searchTerms: "go to page line word" },
+            { keys: "Ctrl + Shift + F", description: "Change Font", platform: "Windows", category: "Microsoft Word", searchTerms: "change font word" },
+            { keys: "Ctrl + ]", description: "Increase Font Size", platform: "Windows", category: "Microsoft Word", searchTerms: "increase font size word" },
+            { keys: "Ctrl + [", description: "Decrease Font Size", platform: "Windows", category: "Microsoft Word", searchTerms: "decrease font size word" },
+            { keys: "Ctrl + E", description: "Center Text", platform: "Windows", category: "Microsoft Word", searchTerms: "center text align word" },
+            { keys: "Ctrl + L", description: "Left Align Text", platform: "Windows", category: "Microsoft Word", searchTerms: "left align text word" },
+            { keys: "Ctrl + R", description: "Right Align Text", platform: "Windows", category: "Microsoft Word", searchTerms: "right align text word" },
+            { keys: "Ctrl + J", description: "Justify Text", platform: "Windows", category: "Microsoft Word", searchTerms: "justify text align word" },
+            { keys: "Ctrl + Shift + L", description: "Apply Bullet Points", platform: "Windows", category: "Microsoft Word", searchTerms: "bullet points list word" },
+            { keys: "Ctrl + Alt + 1/2/3", description: "Apply Heading Styles", platform: "Windows", category: "Microsoft Word", searchTerms: "heading styles word" },
+            { keys: "Ctrl + Enter", description: "Insert Page Break", platform: "Windows", category: "Microsoft Word", searchTerms: "page break word" },
+            { keys: "F7", description: "Spell Check", platform: "Windows", category: "Microsoft Word", searchTerms: "spell check word grammar" },
+            { keys: "Ctrl + Alt + F", description: "Insert Footnote", platform: "Windows", category: "Microsoft Word", searchTerms: "footnote word citation" },
+            
+            // Microsoft PowerPoint
+            { keys: "Ctrl + M", description: "New Slide", platform: "Windows", category: "Microsoft PowerPoint", searchTerms: "new slide powerpoint" },
+            { keys: "Ctrl + D", description: "Duplicate Slide", platform: "Windows", category: "Microsoft PowerPoint", searchTerms: "duplicate slide powerpoint" },
+            { keys: "F5", description: "Start Slideshow from Beginning", platform: "Windows", category: "Microsoft PowerPoint", searchTerms: "start slideshow presentation powerpoint" },
+            { keys: "Shift + F5", description: "Start Slideshow from Current Slide", platform: "Windows", category: "Microsoft PowerPoint", searchTerms: "start slideshow current powerpoint" },
+            { keys: "Esc", description: "End Slideshow", platform: "Windows", category: "Microsoft PowerPoint", searchTerms: "end slideshow presentation powerpoint" },
+            { keys: "B", description: "Black Screen Toggle", platform: "Windows", category: "Microsoft PowerPoint", searchTerms: "black screen slideshow powerpoint" },
+            { keys: "W", description: "White Screen Toggle", platform: "Windows", category: "Microsoft PowerPoint", searchTerms: "white screen slideshow powerpoint" },
+            
+            // Microsoft Excel
+            { keys: "Ctrl + Home", description: "Go to Cell A1", platform: "Windows", category: "Microsoft Excel", searchTerms: "go to cell a1 excel" },
+            { keys: "Ctrl + End", description: "Go to Last Used Cell", platform: "Windows", category: "Microsoft Excel", searchTerms: "last used cell excel" },
+            { keys: "Ctrl + Arrow Keys", description: "Jump to Edge of Data Region", platform: "Windows", category: "Microsoft Excel", searchTerms: "jump edge data excel" },
+            { keys: "Ctrl + Page Up/Down", description: "Switch Between Worksheets", platform: "Windows", category: "Microsoft Excel", searchTerms: "switch worksheet excel sheet" },
+            { keys: "F2", description: "Edit Active Cell", platform: "Windows", category: "Microsoft Excel", searchTerms: "edit cell excel" },
+            { keys: "Ctrl + D", description: "Fill Down", platform: "Windows", category: "Microsoft Excel", searchTerms: "fill down excel" },
+            { keys: "Ctrl + R", description: "Fill Right", platform: "Windows", category: "Microsoft Excel", searchTerms: "fill right excel" },
+            { keys: "=", description: "Start Formula", platform: "Windows", category: "Microsoft Excel", searchTerms: "start formula excel calculate" },
+            { keys: "F4", description: "Toggle Absolute/Relative References", platform: "Windows", category: "Microsoft Excel", searchTerms: "absolute relative reference excel formula" },
+            { keys: "Alt + =", description: "AutoSum", platform: "Windows", category: "Microsoft Excel", searchTerms: "autosum excel sum" },
+            { keys: "Ctrl + 1", description: "Format Cells Dialog", platform: "Windows", category: "Microsoft Excel", searchTerms: "format cells excel" },
+            { keys: "Ctrl + Shift + L", description: "Apply/Remove AutoFilter", platform: "Windows", category: "Microsoft Excel", searchTerms: "autofilter excel filter" },
+            
+            // Screenshots
+            { keys: "Win + Print Screen", description: "Full Screen Screenshot (Saved to Pictures)", platform: "Windows", category: "Screenshots", searchTerms: "screenshot full screen windows" },
+            { keys: "Win + Shift + S", description: "Snipping Tool", platform: "Windows", category: "Screenshots", searchTerms: "snipping tool screenshot windows" },
+            { keys: "Alt + Print Screen", description: "Active Window Screenshot", platform: "Windows", category: "Screenshots", searchTerms: "screenshot window active windows" },
+            { keys: "Cmd + Shift + 3", description: "Full Screen Screenshot", platform: "macOS", category: "Screenshots", searchTerms: "screenshot full screen mac" },
+            { keys: "Cmd + Shift + 4", description: "Selection Screenshot", platform: "macOS", category: "Screenshots", searchTerms: "screenshot selection mac" },
+            { keys: "Cmd + Shift + 5", description: "Advanced Screenshot Options", platform: "macOS", category: "Screenshots", searchTerms: "screenshot options mac advanced" },
+            
+            // System Utilities
+            { keys: "Ctrl + Shift + Esc", description: "Task Manager", platform: "Windows", category: "System Utilities", searchTerms: "task manager windows processes" },
+            { keys: "Cmd + Option + Esc", description: "Force Quit Applications", platform: "macOS", category: "System Utilities", searchTerms: "force quit mac applications" }
+        ];
+
+        // Initialize List.js
+        const options = {
+            valueNames: ['keys', 'description', 'platform', 'category', 'searchTerms'],
+            item: `<li class="shortcut-item">
+                        <div class="shortcut-keys keys"></div>
+                        <div class="shortcut-description description"></div>
+                        <div class="shortcut-platform">
+                            <span class="platform-badge platform"></span>
+                        </div>
+                   </li>`,
+            searchClass: 'search'
+        };
+
+        const shortcutsList = new List('shortcuts-list', options, shortcutsData);
+
+        // Update results count
+        function updateResultsCount() {
+            const count = shortcutsList.visibleItems.length;
+            document.querySelector('.results-count').textContent = count;
+            
+            const noResults = document.querySelector('.no-results');
+            if (count === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+
+        // Add platform badge classes
+        function updatePlatformBadges() {
+            const badges = document.querySelectorAll('.platform-badge');
+            badges.forEach(badge => {
+                const platform = badge.textContent;
+                badge.classList.remove('platform-windows', 'platform-macos', 'platform-universal');
+                if (platform === 'Windows') {
+                    badge.classList.add('platform-windows');
+                } else if (platform === 'macOS') {
+                    badge.classList.add('platform-macos');
+                } else if (platform === 'Universal') {
+                    badge.classList.add('platform-universal');
+                }
+            });
+        }
+
+        // Filter functionality
+        let currentFilter = 'all';
+        
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                currentFilter = filter;
+                
+                if (filter === 'all') {
+                    shortcutsList.filter();
+                } else {
+                    shortcutsList.filter(function(item) {
+                        return item.values().platform === filter;
+                    });
+                }
+                
+                updateResultsCount();
+                updatePlatformBadges();
+            });
+        });
+
+        // Clear search function
+        function clearSearch() {
+            document.querySelector('.search').value = '';
+            shortcutsList.search();
+            currentFilter = 'all';
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-filter="all"]').classList.add('active');
+            shortcutsList.filter();
+            updateResultsCount();
+            updatePlatformBadges();
+        }
+
+        // Search event listener with debugging
+        document.querySelector('.search').addEventListener('input', function(e) {
+            const searchTerm = e.target.value;
+            console.log('Searching for:', searchTerm); // Debug log
+
+            shortcutsList.search(searchTerm);
+
+            setTimeout(() => {
+                updateResultsCount();
+                updatePlatformBadges();
+            }, 10);
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial active filter
+            document.querySelector('[data-filter="all"]').classList.add('active');
+            
+            // Initial update
+            updateResultsCount();
+            updatePlatformBadges();
+            
+            // Update badges when list is updated
+            shortcutsList.on('updated', function() {
+                updatePlatformBadges();
+            });
+
+            // Debug: Log the shortcutsList object
+            console.log('ShortcutsList initialized:', shortcutsList);
+            console.log('Items count:', shortcutsList.items.length);
+        });
+    </script>
+</body>
+</html>
