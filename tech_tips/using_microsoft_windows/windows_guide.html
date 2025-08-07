@@ -1,0 +1,881 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Microsoft Windows - Interactive Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid #9dd3fc;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46a3);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .section-content.expanded {
+            max-height: 2000px;
+            padding: 2rem;
+        }
+
+        .subsection {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .subsection h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .diagram-placeholder {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .diagram-placeholder:hover {
+            background: linear-gradient(45deg, #e9ecef, #dee2e6);
+            transform: scale(1.02);
+        }
+
+        .how-to {
+            background: rgba(118, 75, 162, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #764ba2;
+        }
+
+        .how-to h4 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .how-to ol {
+            margin-left: 1.5rem;
+        }
+
+        .how-to li {
+            margin-bottom: 0.5rem;
+        }
+
+        .note {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .note::before {
+            content: "💡";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .note strong {
+            color: #856404;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .keyboard-shortcut {
+            background: #2d3748;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 0 0.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-content.expanded {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Using Microsoft Windows</h1>
+            <p>A comprehensive guide to Windows 10 & 11 features and functionality</p>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🖥️ Windows Overview & Microsoft 365</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>What is Windows?</h3>
+                    <p>Windows is an <strong>operating system</strong> that controls computer functions and provides a working environment through the familiar Windows desktop, Taskbar, and Start menu.</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>Microsoft 365 Integration</h3>
+                    <p><strong>Microsoft 365</strong> includes Office apps, Windows, and other Microsoft services like OneDrive, OneNote, Forms, and To Do. Your <strong>Microsoft account</strong> provides seamless access across all these services.</p>
+                    
+                    <div class="note">
+                        <strong>Student Tip:</strong> Create a free education Microsoft account at <a href="https://www.microsoft.com/en-us/education/products/office" target="_blank">microsoft.com/education</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🏠 Desktop & Taskbar</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Windows Desktop</h3>
+                    <p>The desktop is your primary working area in Windows. The <strong>Taskbar</strong> appears horizontally at the bottom, providing quick access to apps and system functions.</p>
+                    
+                    <div style="background: white; border-radius: 10px; padding: 1rem; margin: 1rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+                            <defs>
+                                <linearGradient id="desktopGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+                                </linearGradient>
+                                <filter id="dropshadow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+                                </filter>
+                                <filter id="taskbarShadow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feDropShadow dx="0" dy="-2" stdDeviation="4" flood-color="#000000" flood-opacity="0.4"/>
+                                </filter>
+                            </defs>
+                            <rect x="0" y="0" width="800" height="540" fill="url(#desktopGradient)"/>
+                            <g transform="translate(50, 50)">
+                                <rect x="0" y="0" width="48" height="48" rx="4" fill="#6C757D" filter="url(#dropshadow)"/>
+                                <rect x="8" y="12" width="32" height="24" rx="2" fill="#ADB5BD"/>
+                                <rect x="12" y="16" width="8" height="16" fill="#6C757D"/>
+                                <rect x="20" y="16" width="8" height="16" fill="#6C757D"/>
+                                <text x="24" y="70" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="11" font-weight="500">Recycle Bin</text>
+                            </g>
+                            <g transform="translate(50, 140)">
+                                <rect x="0" y="0" width="48" height="48" rx="4" fill="#FFC107" filter="url(#dropshadow)"/>
+                                <rect x="8" y="12" width="32" height="24" rx="2" fill="#FFD54F"/>
+                                <rect x="12" y="20" width="24" height="2" fill="#FF8F00"/>
+                                <rect x="12" y="24" width="20" height="2" fill="#FF8F00"/>
+                                <rect x="12" y="28" width="16" height="2" fill="#FF8F00"/>
+                                <text x="24" y="70" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="11" font-weight="500">File Explorer</text>
+                            </g>
+                            <rect x="0" y="540" width="800" height="60" fill="#2C3E50" filter="url(#taskbarShadow)"/>
+                            <g transform="translate(10, 550)">
+                                <rect x="0" y="0" width="40" height="40" rx="4" fill="#3498DB"/>
+                                <rect x="8" y="8" width="8" height="8" fill="white"/>
+                                <rect x="8" y="18" width="8" height="8" fill="white"/>
+                                <rect x="18" y="8" width="8" height="8" fill="white"/>
+                                <rect x="18" y="18" width="8" height="8" fill="white"/>
+                            </g>
+                            <rect x="60" y="555" width="200" height="30" rx="15" fill="#34495E" stroke="#5A6C7D" stroke-width="1"/>
+                            <circle cx="75" cy="570" r="6" fill="none" stroke="#BDC3C7" stroke-width="1.5"/>
+                            <line x1="80" y1="575" x2="85" y2="580" stroke="#BDC3C7" stroke-width="1.5"/>
+                            <text x="95" y="573" fill="#BDC3C7" font-family="Segoe UI" font-size="12">Type here to search</text>
+                            <g transform="translate(400, 100)">
+                                <rect x="-35" y="-15" width="70" height="30" rx="15" fill="rgba(255,255,255,0.9)" stroke="#3498DB" stroke-width="2"/>
+                                <text x="0" y="5" text-anchor="middle" fill="#2C3E50" font-family="Segoe UI" font-size="14" font-weight="600">Desktop</text>
+                                <line x1="0" y1="15" x2="0" y2="60" stroke="#3498DB" stroke-width="2"/>
+                            </g>
+                            <g transform="translate(400, 480)">
+                                <rect x="-28" y="-15" width="56" height="30" rx="15" fill="rgba(255,255,255,0.9)" stroke="#E74C3C" stroke-width="2"/>
+                                <text x="0" y="5" text-anchor="middle" fill="#2C3E50" font-family="Segoe UI" font-size="14" font-weight="600">Taskbar</text>
+                                <line x1="0" y1="15" x2="0" y2="40" stroke="#E74C3C" stroke-width="2"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="how-to">
+                    <h4>How to Customize the Taskbar</h4>
+                    <ol>
+                        <li><strong>Pin an app:</strong> Right-click an app in Start menu → "Pin to taskbar"</li>
+                        <li><strong>Unpin an app:</strong> Right-click app icon on Taskbar → "Unpin from taskbar"</li>
+                        <li><strong>Rearrange apps:</strong> Click and drag apps to desired positions</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🚀 Start Menu & Apps</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Start Menu Layout</h3>
+                    <p>The Start menu displays <strong>Pinned</strong> apps on the top half and <strong>Recommended</strong> apps and files on the bottom half.</p>
+                    
+                    <div style="background: white; border-radius: 10px; padding: 1rem; margin: 1rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <svg viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-height: 500px;">
+                            <defs>
+                                <linearGradient id="menuGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:0.98" />
+                                    <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:0.98" />
+                                </linearGradient>
+                                <filter id="menuShadow2" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feDropShadow dx="4" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.3"/>
+                                </filter>
+                            </defs>
+                            <rect x="50" y="50" width="400" height="550" rx="12" fill="url(#menuGradient2)" stroke="#dee2e6" stroke-width="1" filter="url(#menuShadow2)"/>
+                            <rect x="70" y="70" width="360" height="40" rx="20" fill="white" stroke="#ced4da" stroke-width="1"/>
+                            <circle cx="90" cy="90" r="8" fill="none" stroke="#6c757d" stroke-width="1.5"/>
+                            <text x="115" y="95" fill="#6c757d" font-family="Segoe UI" font-size="14">Type here to search</text>
+                            <text x="70" y="140" fill="#495057" font-family="Segoe UI" font-size="16" font-weight="600">Pinned</text>
+                            <g transform="translate(70, 155)">
+                                <rect x="0" y="0" width="48" height="48" rx="4" fill="#2B579A"/>
+                                <text x="24" y="32" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="20" font-weight="bold">W</text>
+                                <text x="24" y="65" text-anchor="middle" fill="#495057" font-family="Segoe UI" font-size="11">Word</text>
+                                <rect x="70" y="0" width="48" height="48" rx="4" fill="#217346"/>
+                                <text x="94" y="32" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="20" font-weight="bold">X</text>
+                                <text x="94" y="65" text-anchor="middle" fill="#495057" font-family="Segoe UI" font-size="11">Excel</text>
+                                <rect x="140" y="0" width="48" height="48" rx="4" fill="#FFC107"/>
+                                <text x="164" y="32" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="18">📁</text>
+                                <text x="164" y="65" text-anchor="middle" fill="#495057" font-family="Segoe UI" font-size="11">File Explorer</text>
+                            </g>
+                            <text x="70" y="450" fill="#495057" font-family="Segoe UI" font-size="16" font-weight="600">Recommended</text>
+                            <g transform="translate(70, 470)">
+                                <rect x="0" y="0" width="32" height="32" rx="4" fill="#2B579A"/>
+                                <text x="16" y="22" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="12" font-weight="bold">W</text>
+                                <text x="45" y="12" fill="#495057" font-family="Segoe UI" font-size="12" font-weight="500">Recent Document</text>
+                                <text x="45" y="26" fill="#6c757d" font-family="Segoe UI" font-size="10">45m ago</text>
+                            </g>
+                            <g transform="translate(480, 90)">
+                                <rect x="-45" y="-12" width="90" height="24" rx="12" fill="rgba(255,255,255,0.95)" stroke="#17a2b8" stroke-width="2"/>
+                                <text x="0" y="4" text-anchor="middle" fill="#2C3E50" font-family="Segoe UI" font-size="14" font-weight="600">Search Box</text>
+                                <line x1="-45" y1="0" x2="-75" y2="0" stroke="#17a2b8" stroke-width="2"/>
+                            </g>
+                            <g transform="translate(500, 180)">
+                                <rect x="-55" y="-12" width="110" height="24" rx="12" fill="rgba(255,255,255,0.95)" stroke="#28a745" stroke-width="2"/>
+                                <text x="0" y="4" text-anchor="middle" fill="#2C3E50" font-family="Segoe UI" font-size="14" font-weight="600">Pinned Apps</text>
+                                <line x1="-55" y1="0" x2="-115" y2="0" stroke="#28a745" stroke-width="2"/>
+                            </g>
+                            <g transform="translate(500, 450)">
+                                <rect x="-65" y="-12" width="130" height="24" rx="12" fill="rgba(255,255,255,0.95)" stroke="#dc3545" stroke-width="2"/>
+                                <text x="0" y="4" text-anchor="middle" fill="#2C3E50" font-family="Segoe UI" font-size="14" font-weight="600">Recommended</text>
+                                <line x1="-65" y1="0" x2="-115" y2="0" stroke="#dc3545" stroke-width="2"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>🔍 Search</h4>
+                            <p>Click the search box at the top to find apps, files, and settings</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>📋 All Apps</h4>
+                            <p>Click "All apps" button for alphabetical listing of installed applications</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>⚡ Power Options</h4>
+                            <p>Access Sleep, Shut down, and Restart from the Power button</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>App Types</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>🖥️ Desktop Apps</h4>
+                            <p>Traditional applications like Office 2021, Adobe Acrobat - downloaded from websites</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>📱 Modern Apps</h4>
+                            <p>Store apps like Netflix, Spotify - installed from Microsoft Store, similar to smartphone apps</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="how-to">
+                    <h4>How to Add Apps from Microsoft Store</h4>
+                    <ol>
+                        <li>Click <strong>Start</strong> → <strong>Microsoft Store</strong></li>
+                        <li>Click <strong>Apps</strong> button on the left</li>
+                        <li>Search for apps using the search box</li>
+                        <li>Click <strong>Install</strong> button for desired app</li>
+                        <li>Click <strong>Open</strong> to launch the installed app</li>
+                    </ol>
+                </div>
+
+                <div class="how-to">
+                    <h4>How to Customize the Start Menu</h4>
+                    <ol>
+                        <li><strong>Move pinned apps:</strong> Click and drag to new position</li>
+                        <li><strong>Unpin apps:</strong> Right-click app → "Unpin from Start"</li>
+                        <li><strong>Pin new apps:</strong> Right-click app in All apps → "Pin to Start"</li>
+                        <li><strong>Uninstall apps:</strong> Right-click app → "Uninstall"</li>
+                        <li><strong>Remove from Recommended:</strong> Right-click item → "Remove from list"</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📁 File Explorer</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>File Explorer Components</h3>
+                    <p>File Explorer is your gateway to browsing folders and files stored on your computer.</p>
+                    
+                    <div style="background: white; border-radius: 10px; padding: 1rem; margin: 1rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-height: 400px;">
+                            <defs>
+                                <filter id="windowShadow3" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feDropShadow dx="3" dy="3" stdDeviation="6" flood-color="#000000" flood-opacity="0.2"/>
+                                </filter>
+                            </defs>
+                            <rect x="50" y="50" width="700" height="500" rx="8" fill="white" stroke="#ced4da" stroke-width="1" filter="url(#windowShadow3)"/>
+                            <rect x="50" y="50" width="700" height="30" rx="8" fill="#0078D4"/>
+                            <text x="70" y="71" fill="white" font-family="Segoe UI" font-size="14">📁 File Explorer</text>
+                            <rect x="50" y="80" width="700" height="40" fill="#e9ecef"/>
+                            <g transform="translate(60, 87)">
+                                <rect x="0" y="0" width="24" height="24" rx="4" fill="white" stroke="#adb5bd"/>
+                                <text x="12" y="38" text-anchor="middle" fill="#495057" font-family="Segoe UI" font-size="9">Cut</text>
+                                <rect x="35" y="0" width="24" height="24" rx="4" fill="white" stroke="#adb5bd"/>
+                                <text x="47" y="38" text-anchor="middle" fill="#495057" font-family="Segoe UI" font-size="9">Copy</text>
+                                <rect x="70" y="0" width="24" height="24" rx="4" fill="white" stroke="#adb5bd"/>
+                                <text x="82" y="38" text-anchor="middle" fill="#495057" font-family="Segoe UI" font-size="9">Paste</text>
+                            </g>
+                            <g transform="translate(60, 135)">
+                                <circle cx="12" cy="12" r="12" fill="white" stroke="#adb5bd"/>
+                                <path d="M16,8 L8,12 L16,16" fill="none" stroke="#6c757d" stroke-width="2"/>
+                                <circle cx="36" cy="12" r="12" fill="white" stroke="#adb5bd"/>
+                                <path d="M32,8 L40,12 L32,16" fill="none" stroke="#6c757d" stroke-width="2"/>
+                            </g>
+                            <rect x="60" y="208" width="180" height="330" fill="#f8f9fa" stroke="#dee2e6"/>
+                            <text x="70" y="225" fill="#495057" font-family="Segoe UI" font-size="12" font-weight="600">⭐ Quick access</text>
+                            <g transform="translate(70, 235)">
+                                <rect x="0" y="0" width="16" height="16" fill="#4A90E2"/>
+                                <text x="22" y="12" fill="#495057" font-family="Segoe UI" font-size="11">Desktop</text>
+                                <rect x="0" y="20" width="16" height="16" fill="#FFC107"/>
+                                <text x="22" y="32" fill="#495057" font-family="Segoe UI" font-size="11">Documents</text>
+                            </g>
+                            <rect x="250" y="208" width="490" height="330" fill="white" stroke="#dee2e6"/>
+                            <g transform="translate(270, 228)">
+                                <rect x="0" y="0" width="48" height="48" fill="#FFC107"/>
+                                <text x="24" y="65" text-anchor="middle" fill="#495057" font-family="Segoe UI" font-size="10">Folder</text>
+                                <rect x="80" y="0" width="48" height="48" fill="#2B579A"/>
+                                <text x="104" y="32" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="16">W</text>
+                                <text x="104" y="65" text-anchor="middle" fill="#495057" font-family="Segoe UI" font-size="9">Document</text>
+                            </g>
+                            <g transform="translate(20, 100)">
+                                <rect x="-28" y="-10" width="56" height="20" rx="10" fill="rgba(255,255,255,0.95)" stroke="#007bff" stroke-width="2"/>
+                                <text x="0" y="4" text-anchor="middle" fill="#2C3E50" font-family="Segoe UI" font-size="14" font-weight="600">Toolbar</text>
+                                <line x1="28" y1="0" x2="40" y2="0" stroke="#007bff" stroke-width="2"/>
+                            </g>
+                            <g transform="translate(20, 280)">
+                                <rect x="-58" y="-10" width="116" height="20" rx="10" fill="rgba(255,255,255,0.95)" stroke="#dc3545" stroke-width="2"/>
+                                <text x="0" y="4" text-anchor="middle" fill="#2C3E50" font-family="Segoe UI" font-size="14" font-weight="600">Navigation Pane</text>
+                                <line x1="58" y1="0" x2="60" y2="0" stroke="#dc3545" stroke-width="2"/>
+                            </g>
+                            <g transform="translate(780, 350)">
+                                <rect x="-48" y="-10" width="96" height="20" rx="10" fill="rgba(255,255,255,0.95)" stroke="#6f42c1" stroke-width="2"/>
+                                <text x="0" y="4" text-anchor="middle" fill="#2C3E50" font-family="Segoe UI" font-size="14" font-weight="600">Folder Pane</text>
+                                <line x1="-48" y1="0" x2="-70" y2="0" stroke="#6f42c1" stroke-width="2"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>🛠️ Toolbar</h4>
+                            <p>Common commands: Cut, Copy, Paste, Rename, Delete, Sort, View options</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🧭 Navigation Buttons</h4>
+                            <p>Back, Forward, Recent locations, Up - for easy folder navigation</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>📂 Navigation Pane</h4>
+                            <p>Left sidebar showing folder structure, Quick access shortcuts</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>📄 Folder Pane</h4>
+                            <p>Main area displaying contents of selected folder</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="note">
+                    <strong>Quick Tip:</strong> Right-click any folder or file for a contextual menu with relevant commands and options.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>☁️ OneDrive Cloud Storage</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>OneDrive Overview</h3>
+                    <p>OneDrive is your private, secure cloud storage that's accessible from any computer. Files can be stored cloud-only or synced to your local computer.</p>
+                    
+                    <div style="background: white; border-radius: 10px; padding: 1rem; margin: 1rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-height: 350px;">
+                            <defs>
+                                <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#87CEEB"/>
+                                    <stop offset="100%" style="stop-color:#4169E1"/>
+                                </linearGradient>
+                            </defs>
+                            <text x="400" y="30" text-anchor="middle" fill="#2c3e50" font-family="Segoe UI" font-size="20" font-weight="600">OneDrive Sync Options</text>
+                            <g transform="translate(100, 80)">
+                                <ellipse cx="150" cy="80" rx="140" ry="60" fill="url(#cloudGrad)"/>
+                                <path d="M80,100 Q60,80 80,60 Q90,40 120,50 Q140,30 170,50 Q200,30 230,50 Q250,40 260,60 Q280,80 260,100" fill="white" opacity="0.9"/>
+                                <circle cx="150" cy="80" r="25" fill="#0078D4"/>
+                                <path d="M135,70 Q135,60 150,60 Q165,60 165,70 Q165,80 150,90 Q135,80 135,70" fill="white"/>
+                                <text x="150" y="180" text-anchor="middle" fill="#2c3e50" font-family="Segoe UI" font-size="18" font-weight="600">OneDrive Cloud</text>
+                                <text x="150" y="195" text-anchor="middle" fill="#6c757d" font-family="Segoe UI" font-size="14">Files stored online</text>
+                            </g>
+                            <g transform="translate(500, 80)">
+                                <rect x="50" y="40" width="200" height="120" rx="8" fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
+                                <rect x="60" y="50" width="180" height="100" rx="4" fill="#2c3e50"/>
+                                <rect x="70" y="60" width="160" height="80" rx="2" fill="#34495e"/>
+                                <g transform="translate(90, 80)">
+                                    <rect x="0" y="0" width="20" height="24" rx="2" fill="#2B579A"/>
+                                    <circle cx="18" cy="2" r="4" fill="#28a745"/>
+                                    <rect x="30" y="0" width="20" height="24" rx="2" fill="#FFC107" opacity="0.5"/>
+                                    <circle cx="48" cy="2" r="4" fill="#87CEEB"/>
+                                </g>
+                                <text x="150" y="190" text-anchor="middle" fill="#2c3e50" font-family="Segoe UI" font-size="18" font-weight="600">Local Computer</text>
+                                <text x="150" y="205" text-anchor="middle" fill="#6c757d" font-family="Segoe UI" font-size="14">Synced files</text>
+                            </g>
+                            <g transform="translate(395, 130)">
+                                <path d="M0,20 L150,20" stroke="#28a745" stroke-width="4"/>
+                                <text x="60" y="15" text-anchor="middle" fill="#28a745" font-family="Segoe UI" font-size="10">Upload</text>
+                                <path d="M150,40 L0,40" stroke="#17a2b8" stroke-width="4"/>
+                                <text x="60" y="55" text-anchor="middle" fill="#17a2b8" font-family="Segoe UI" font-size="10">Download</text>
+                            </g>
+                            <g transform="translate(50, 300)">
+                                <rect x="0" y="0" width="700" height="180" rx="8" fill="rgba(248,249,250,0.9)" stroke="#dee2e6"/>
+                                <text x="350" y="32" text-anchor="middle" fill="#2c3e50" font-family="Segoe UI" font-size="18" font-weight="600">Sync Options</text>
+                                <g transform="translate(50, 50)">
+                                    <circle cx="10" cy="25" r="8" fill="#87CEEB"/>
+                                    <text x="30" y="25" fill="#2c3e50" font-family="Segoe UI" font-size="16" font-weight="600">Cloud-Only</text>
+                                    <text x="30" y="45" fill="#6c757d" font-family="Segoe UI" font-size="14">Files stored only online</text>
+                                    <text x="30" y="64" fill="#6c757d" font-family="Segoe UI" font-size="14">Saves local storage space</text>
+                                </g>
+                                <g transform="translate(400, 50)">
+                                    <circle cx="10" cy="25" r="8" fill="#28a745"/>
+                                    <text x="30" y="25" fill="#2c3e50" font-family="Segoe UI" font-size="16" font-weight="600">Synced</text>
+                                    <text x="30" y="45" fill="#6c757d" font-family="Segoe UI" font-size="14">Available offline</text>
+                                    <text x="30" y="64" fill="#6c757d" font-family="Segoe UI" font-size="14">Uses local storage</text>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="how-to">
+                    <h4>How to Customize OneDrive Settings</h4>
+                    <ol>
+                        <li>Open File Explorer</li>
+                        <li>Right-click <strong>OneDrive</strong> folder → "Show more options" → "Settings"</li>
+                        <li>Click <strong>Account</strong> tab → <strong>Choose folders</strong> button</li>
+                        <li>Select which folders to sync locally (saves computer storage space)</li>
+                        <li>Click <strong>OK</strong> to apply changes</li>
+                    </ol>
+                </div>
+
+                <div class="how-to">
+                    <h4>How to Use OneDrive Online</h4>
+                    <ol>
+                        <li>Navigate to <a href="https://www.onedrive.live.com" target="_blank">www.onedrive.live.com</a></li>
+                        <li>Click <strong>Sign in</strong></li>
+                        <li>Enter your Microsoft account credentials</li>
+                        <li>Click <strong>My Files</strong> to access your cloud storage</li>
+                        <li>Use top toolbar to upload, create folders, and manage files</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🔍 Search Features</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Windows Search vs File Explorer Search</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>🔍 Windows Search</h4>
+                            <p>Searches your computer, internet, and Microsoft Store simultaneously</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>📂 File Explorer Search</h4>
+                            <p>Searches only local files and folders on your computer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="how-to">
+                    <h4>How to Use Windows Search</h4>
+                    <ol>
+                        <li>Click <strong>Search</strong> button on Taskbar</li>
+                        <li>Type keywords in "Type here to search" area</li>
+                        <li>Browse categorized results (Best match, Search work and web, Photos)</li>
+                        <li>Use filter buttons: Apps, Documents, Web, More</li>
+                        <li>Click any result to open file, search internet, or view Store apps</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🖼️ Task View & Virtual Desktops</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Task View</h3>
+                    <p>Task View displays all open apps and windows as tiles, making it easy to select, manage, or close applications.</p>
+                    
+                    <div style="background: white; border-radius: 10px; padding: 1rem; margin: 1rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-height: 450px;">
+                            <defs>
+                                <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#2c3e50;stop-opacity:0.9"/>
+                                    <stop offset="100%" style="stop-color:#34495e;stop-opacity:0.9"/>
+                                </linearGradient>
+                                <filter id="wShadow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feDropShadow dx="4" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.4"/>
+                                </filter>
+                            </defs>
+                            <rect x="0" y="0" width="900" height="600" fill="url(#bgGrad)"/>
+                            <text x="450" y="30" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="18" font-weight="600">Task View - Multiple Open Applications</text>
+                            <g transform="translate(50, 60)">
+                                <rect x="0" y="0" width="180" height="120" rx="6" fill="white" stroke="#bdc3c7" filter="url(#wShadow)"/>
+                                <rect x="0" y="0" width="180" height="25" rx="6" fill="#2B579A"/>
+                                <circle cx="165" cy="12" r="6" fill="#e74c3c"/>
+                                <rect x="10" y="35" width="160" height="75" fill="white"/>
+                                <rect x="15" y="40" width="60" height="4" fill="#2B579A"/>
+                                <text x="90" y="195" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="12">Word Document</text>
+                            </g>
+                            <g transform="translate(260, 60)">
+                                <rect x="0" y="0" width="180" height="120" rx="6" fill="white" stroke="#bdc3c7" filter="url(#wShadow)"/>
+                                <rect x="0" y="0" width="180" height="25" rx="6" fill="#217346"/>
+                                <circle cx="165" cy="12" r="6" fill="#e74c3c"/>
+                                <rect x="10" y="35" width="160" height="75" fill="white"/>
+                                <g stroke="#dee2e6" stroke-width="0.5">
+                                    <line x1="10" y1="45" x2="170" y2="45"/>
+                                    <line x1="30" y1="35" x2="30" y2="110"/>
+                                    <line x1="50" y1="35" x2="50" y2="110"/>
+                                </g>
+                                <text x="90" y="195" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="12">Excel Spreadsheet</text>
+                            </g>
+                            <g transform="translate(470, 60)">
+                                <rect x="0" y="0" width="180" height="120" rx="6" fill="white" stroke="#bdc3c7" filter="url(#wShadow)"/>
+                                <rect x="0" y="0" width="180" height="25" rx="6" fill="#4285F4"/>
+                                <circle cx="165" cy="12" r="6" fill="#e74c3c"/>
+                                <rect x="10" y="35" width="160" height="75" fill="white"/>
+                                <rect x="15" y="40" width="150" height="12" rx="6" fill="#f1f3f4"/>
+                                <text x="90" y="195" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="12">Chrome Browser</text>
+                            </g>
+                            <g transform="translate(50, 450)">
+                                <text x="0" y="20" fill="white" font-family="Segoe UI" font-size="14" font-weight="600">Virtual Desktops</text>
+                                <rect x="0" y="30" width="120" height="70" rx="4" fill="#3498DB" stroke="#2980B9" stroke-width="3"/>
+                                <text x="60" y="50" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="10">Desktop 1</text>
+                                <text x="60" y="65" text-anchor="middle" fill="#ecf0f1" font-family="Segoe UI" font-size="9">Active</text>
+                                <rect x="140" y="30" width="120" height="70" rx="4" fill="#7f8c8d" stroke="#95a5a6"/>
+                                <text x="200" y="50" text-anchor="middle" fill="white" font-family="Segoe UI" font-size="10">Desktop 2</text>
+                                <rect x="280" y="30" width="120" height="70" rx="4" fill="rgba(255,255,255,0.1)" stroke="#bdc3c7" stroke-dasharray="5,5"/>
+                                <text x="340" y="60" text-anchor="middle" fill="#bdc3c7" font-family="Segoe UI" font-size="20">+</text>
+                                <text x="340" y="78" text-anchor="middle" fill="#bdc3c7" font-family="Segoe UI" font-size="10">New desktop</text>
+                            </g>
+                            <rect x="0" y="560" width="900" height="40" fill="#2C3E50"/>
+                            <rect x="20" y="570" width="30" height="20" rx="4" fill="#3498DB"/>
+                            <g transform="translate(450, 400)">
+                                <rect x="-75" y="-12" width="150" height="24" rx="12" fill="rgba(255,255,255,0.95)" stroke="#e74c3c" stroke-width="2"/>
+                                <text x="0" y="4" text-anchor="middle" fill="#2C3E50" font-family="Segoe UI" font-size="14" font-weight="600">Open Applications</text>
+                                <line x1="0" y1="-12" x2="0" y2="-150" stroke="#e74c3c" stroke-width="2"/>
+                            </g>
+                            <g transform="translate(450, 500)">
+                                <rect x="-68" y="-12" width="136" height="24" rx="12" fill="rgba(255,255,255,0.95)" stroke="#f39c12" stroke-width="2"/>
+                                <text x="0" y="4" text-anchor="middle" fill="#2C3E50" font-family="Segoe UI" font-size="14" font-weight="600">Virtual Desktops</text>
+                                <line x1="-68" y1="0" x2="-200" y2="0" stroke="#f39c12" stroke-width="2"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Virtual Desktops</h3>
+                    <p>Create separate desktops for different workflows - for example, one for work apps and another for personal applications.</p>
+                </div>
+
+                <div class="how-to">
+                    <h4>How to Use Task View</h4>
+                    <ol>
+                        <li>Click <strong>Task View</strong> button on Taskbar or press <span class="keyboard-shortcut">Win+Tab</span></li>
+                        <li>Click <strong>X</strong> on any app tile to close it</li>
+                        <li>Click any app/window to open it and return to desktop</li>
+                        <li>Right-click app for options like Snap left/right, Move to desktop</li>
+                    </ol>
+                </div>
+
+                <div class="how-to">
+                    <h4>How to Use Virtual Desktops</h4>
+                    <ol>
+                        <li>Open Task View (<span class="keyboard-shortcut">Win+Tab</span>)</li>
+                        <li>Click <strong>New desktop</strong> button</li>
+                        <li>Right-click desktop to rename it</li>
+                        <li>Hover over desktop to preview open apps</li>
+                        <li>Right-click apps to move between desktops</li>
+                        <li>Click desktop to switch to it</li>
+                    </ol>
+                </div>
+
+                <div class="note">
+                    <strong>Keyboard Shortcuts:</strong> 
+                    <span class="keyboard-shortcut">Alt+Tab</span> to cycle through apps |
+                    <span class="keyboard-shortcut">Win+Ctrl+Left/Right</span> to switch virtual desktops |
+                    <span class="keyboard-shortcut">Alt+Shift+Left/Right</span> to reorder virtual desktops
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>⚙️ Windows Settings</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Settings Overview</h3>
+                    <p>Windows Settings is your central hub for customizing the Windows environment, managing devices, and configuring your Microsoft accounts.</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🖥️ System</h4>
+                        <p>Display, sound, notifications, power settings</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📶 Bluetooth & Devices</h4>
+                        <p>Connect and manage Bluetooth devices, printers, phone</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🌐 Network & Internet</h4>
+                        <p>Wi-Fi, VPN, mobile hotspot, airplane mode</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎨 Personalization</h4>
+                        <p>Background, colors, themes, lock screen, Start, Taskbar</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📱 Apps</h4>
+                        <p>Installed apps and features, default apps, optional features</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>👤 Accounts</h4>
+                        <p>Account info, email accounts, sign-in options</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🌍 Time & Language</h4>
+                        <p>Date/time, language, region, typing, speech</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎮 Gaming</h4>
+                        <p>Xbox Game Bar, game captures, Game Mode</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>♿ Accessibility</h4>
+                        <p>Text size, visual effects, magnifier, narrator, contrast</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔒 Privacy & Security</h4>
+                        <p>Windows security, Find My Device, app permissions</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔄 Windows Update</h4>
+                        <p>System updates, update history, advanced options</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '▼';
+                header.style.borderRadius = '15px';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '▲';
+                header.style.borderRadius = '15px 15px 0 0';
+            }
+        }
+
+        // Add smooth scrolling for any internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add some interactive feedback
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 25px rgba(102, 126, 234, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    </script>
+</body>
+</html>
