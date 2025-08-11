@@ -736,7 +736,7 @@ Please [SPECIFIC REQUIREMENTS AND REFINEMENTS]."
             let fullDate = `${year}${semester}`;
 
             const studentNameClean = formData.studentName.replace(/[^a-z0-9]/gi, '_') || 'student';
-            const fileName = `csci1100_${fullDate}_${studentNameClean}_ai_literacy_lab.pdf`;
+            const fileName = `CSCI-1100_${fullDate}_${studentNameClean}_ai_literacy_lab.pdf`;
             
             // Save the PDF
             doc.save(fileName);

@@ -1861,7 +1861,7 @@ async function downloadCertificateAsPDF() {
     
     let fullDate = `${year}${semester}`;
     let playerName = gameState.playerName.replace(/\s+/g, "");
-    let fileName = `csci1100_${fullDate}_programintro_certificate_${playerName}.pdf`;
+    let fileName = `CSCI-1100_${fullDate}_${playerName}_programintro_cert.pdf`;
 
     try {
         // Show loading indicator (optional)
