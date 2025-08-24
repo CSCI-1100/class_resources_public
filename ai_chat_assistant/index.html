@@ -46,7 +46,6 @@
                 align-items: left;
                 border-bottom-left-radius: 8px;
                 border-bottom-right-radius: 8px;
-                min-height: 550px;
                 overflow: hidden;
             }
 
@@ -63,13 +62,7 @@
     
     <body class="body-bg-img">
         <div class="center-xl text-dark border-putty-yellow bg-light fs-400">
-            <div class="text-center text-white p-1 mb-1">
-                <h1 class="fs-450 text-primary-blue" style="margin-bottom: 0;" id="title">CSCI 1100 Chat Assistant</h1>
-            </div>
-            <div class="embed-box br-8">
-                <div id="customgpt_chat" class="br-8 border-dotted-putty-yellow" style="overflow: hidden; min-height: 450px!important;"></div>
-                <script src="https://cdn.customgpt.ai/js/embed.js" defer div_id="customgpt_chat" p_id="58482" p_key="c0000b503245a2d9a49b2bb9e4fc9693"></script>
-            </div>
+            <script defer src="https://cdn.customgpt.ai/js/chat.js"></script> <script defer> (function(){ function init(){ CustomGPT.init({ p_id:'58482', p_key:'c0000b503245a2d9a49b2bb9e4fc9693' }) } document.readyState === 'complete' ? init() : window.addEventListener('load', init); })(); </script>
             <div class="collapse-container border-dotted-primary-blue br-8" style="margin: 0!important; padding: 2px!important; line-height: 1rem;">
                 <div class="gridbox-icon-left-chat">
                     <div>
@@ -88,6 +81,10 @@
                 authority.
                 <span class="text-primary-blue">- Ryan Haas, Assistant Director</span>
             </div>
+        </div>
+
+        <div class="fs-350 p-4 br-8 bg-white text-danger" style="bottom: 0; position: fixed; width: 100%;">
+            Click the chat bubble to start a conversation →
         </div>
 
         <script>
