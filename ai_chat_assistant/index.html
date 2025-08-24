@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>CSCI 1100 - Using Information Technology</title>
+        <meta name="description" content="">
+        <meta name="author" content="Ryan Haas">
+        <meta name="keywords" content="csci, 1100, 1150, chat, chatbot, assistant, course, information, etsu, east, tennessee, computing, university">
+        <meta name="robots" content="noarchive">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        
+        <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link type="text/css" rel="stylesheet" href="https://csci-1100.github.io/class_resources_public/uit_website/style.css">
+
+        <script type="application/javascript"
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script
+            type="application/javascript"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    </head>
+    
+    <body class="body-bg-img">
+        <div class="container-lg br-8 pt-3">
+            <div class="scrollbox-wrapper br-8 bg-white fs-400">
+                <div class="text-center text-white p-1 mb-1">
+                    <h1 class="text-primary-blue" style="margin-bottom: 0;" id="title">CSCI 1100/1150 Chat Assistant</h1>
+                </div>
+                <div id="customgpt_chat" class="scrollbox-md ff-sans-bolder" style="white-space: normal; overflow-x: hidden;">
+                    <script src="https://cdn.customgpt.ai/js/embed.js" defer div_id="customgpt_chat" p_id="58482" p_key="c0000b503245a2d9a49b2bb9e4fc9693"></script>
+                </div>
+                <div class="collapse-container border-dotted-primary-blue">
+                    <div class="gridbox-icon-left-sm">
+                        <div>
+                            <span class="fs-350 ml-4s" title="Expand collapsed content">☰&emsp;</span>
+                        </div>
+                        <div>
+                            <h2 class="fs-450 ff-sans-bolder">⚠️ Disclaimer</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="expand-content">
+                    This chat assistant uses a Generative Pre-trained Transformer (GPT) AI model to provide its responses,
+                    and due to the nature of this architecture, 100 percent accurate information is not guaranteed.
+                    In the event that this chat assistant provides information inconsistent with course policies or
+                    information provided in your course documents (such as the syllabus and schedule), your course
+                    documents will serve as the ultimate authority.
+
+                    <span class="text-primary-blue">- Ryan Haas, Assistant Director</span>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let collapse = document.getElementsByClassName("collapse-container");
+            for (let i = 0; i < collapse.length; i++) {
+                collapse[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    }
+                    else {
+                        content.style.display = "block";
+                    }
+                });
+            }
+
+            function scrollToSection(ID) {
+                document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
+            }
+
+            // Add a flag to track if the user has manually dismissed the modal
+            let modalManuallyDismissed = false;
+            // Add debounce functionality
+            let resizeTimeout;
+
+            function checkNavWidth() {
+                // Clear the timeout if it exists
+                if (resizeTimeout) {
+                    clearTimeout(resizeTimeout);
+                }
+                
+                // Set a timeout to prevent rapid firing of the function
+                resizeTimeout = setTimeout(function() {
+                    // If the modal was manually dismissed, don't show it again
+                    if (modalManuallyDismissed) return;
+                    
+                    const pgTitle = document.getElementById('title');
+                    const modal = document.querySelector('.screen-size-modal');
+                    
+                    if (pgTitle && modal) {
+                        const width = pgTitle.getBoundingClientRect().width;
+                        // Use a slightly smaller threshold to prevent flickering
+                        if (width < 280) {  // Changed from 282 to 280 to add some buffer
+                            modal.style.display = 'block';
+                        } else {
+                            modal.style.display = 'none';
+                        }
+                    }
+                }, 250); // 250ms debounce time
+            }
+
+            // Check on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                checkNavWidth();
+                
+                // Set up close button listener
+                const closeButton = document.querySelector('.close-button');
+                if (closeButton) {
+                    closeButton.addEventListener('click', function() {
+                        const modal = document.querySelector('.screen-size-modal');
+                        if (modal) {
+                            modal.style.display = 'none';
+                            // Set the flag when the user manually closes the modal
+                            modalManuallyDismissed = true;
+                        }
+                    });
+                }
+            });
+
+            // Check on window resize with debounce
+            window.addEventListener('resize', checkNavWidth);
+        </script>
+    </body>
+</html>
