@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSCI-1100/1150 Course Overview - Lecture Slides</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <!-- jsPDF and html2canvas for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #DC2626 0%, #1D4ED8 50%, #EAB308 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-size: 1.2em;
+        }
+
+        .presentation-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 95%;
+            max-width: 1400px;
+            height: 95vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #DC2626, #B91C1C);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slide-counter {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .download-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .download-icon {
+            font-size: 1.1em;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            width: 100%;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #EAB308;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+            height: 100%;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        /* PDF GENERATION STYLES */
+        .pdf-mode .slide {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: static !important;
+            height: auto !important;
+            page-break-after: always;
+            margin-bottom: 50px;
+            border: 2px solid #ddd;
+            background: white;
+            padding: 40px;
+        }
+
+        .pdf-mode .slide-content {
+            overflow: visible !important;
+            height: auto !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-title {
+            color: #1F2937;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #DC2626;
+            padding-bottom: 15px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border-left: 5px solid #DC2626;
+        }
+
+        .section-number {
+            background: #DC2626;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .section-info h2 {
+            color: #1F2937;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .section-info p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .info-grid.three-col {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .info-card {
+            background: white;
+            border: 2px solid #DC2626;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card.blue {
+            border-color: #1D4ED8;
+        }
+
+        .info-card.yellow {
+            border-color: #EAB308;
+        }
+
+        .info-card h3 {
+            margin-bottom: 15px;
+            color: #DC2626;
+        }
+
+        .info-card.blue h3 {
+            color: #1D4ED8;
+        }
+
+        .info-card.yellow h3 {
+            color: #a77f08;
+        }
+
+        .highlight-box {
+            background: #FEE2E2;
+            border: 2px solid #DC2626;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .highlight-box.blue {
+            background: #DBEAFE;
+            border-color: #1D4ED8;
+        }
+
+        .highlight-box.yellow {
+            background: #FEF3C7;
+            border-color: #EAB308;
+        }
+
+        .highlight-box h3 {
+            color: #DC2626;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlight-box.blue h3 {
+            color: #1D4ED8;
+        }
+
+        .highlight-box.yellow h3 {
+            color: #a77f08;
+        }
+
+        .bullet-points {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bullet-points li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .bullet-points li::before {
+            content: "▶";
+            color: #DC2626;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        .grade-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .grade-table th {
+            background: #DC2626;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .grade-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .grade-table tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .instructor-card {
+            background: white;
+            border: 2px solid #DC2626;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .instructor-card.blue {
+            border-color: #1D4ED8;
+        }
+
+        .instructor-card.yellow {
+            border-color: #EAB308;
+        }
+
+        .instructor-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .instructor-avatar {
+            width: 60px;
+            height: 60px;
+            background: #DC2626;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            margin-right: 20px;
+        }
+
+        .instructor-card.blue .instructor-avatar {
+            background: #1D4ED8;
+        }
+
+        .instructor-card.yellow .instructor-avatar {
+            background: #EAB308;
+        }
+
+        .instructor-info h3 {
+            color: #DC2626;
+            margin-bottom: 5px;
+        }
+
+        .instructor-card.blue .instructor-info h3 {
+            color: #1D4ED8;
+        }
+
+        .instructor-card.yellow .instructor-info h3 {
+            color: #c89809;
+        }
+
+        .instructor-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .nav-button {
+            background: #DC2626;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-button:hover {
+            background: #B91C1C;
+            transform: translateY(-2px);
+        }
+
+        .nav-button:disabled {
+            background: #9CA3AF;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .timer-display {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .objective-item {
+            background: #FEE2E2;
+            border: 2px solid #DC2626;
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .objective-item:nth-child(even) {
+            background: #DBEAFE;
+            border-color: #1D4ED8;
+        }
+
+        .objective-number {
+            background: #DC2626;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .objective-item:nth-child(even) .objective-number {
+            background: #1D4ED8;
+        }
+
+        .policy-card {
+            background: white;
+            border-left: 5px solid #DC2626;
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 0 15px 15px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .policy-card h4 {
+            color: #DC2626;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .email-highlight {
+            background: #EAB308;
+            color: #1F2937;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px auto;
+            font-size: 1.3em;
+            max-width: 800px;
+        }
+
+        /* Loading overlay for PDF generation */
+        .pdf-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .pdf-loading.active {
+            display: flex;
+        }
+
+        .loading-content {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #DC2626;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-text {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #DC2626;
+        }
+
+        .slide-progress {
+            background: rgba(255, 255, 255, 0.2);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .slide-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #DC2626, #1D4ED8);
+            transition: width 0.3s ease;
+        }
+
+        .chart-container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+        
+        .chart-title {
+            font-size: 1.8em;
+            color: #1F2937;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .pie-chart {
+            width: 400px;
+            height: 400px;
+            margin: 0 auto 30px;
+        }
+        
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .legend-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #1F2937;
+        }
+        
+        .legend-percentage {
+            font-size: 0.9em;
+            color: #666;
+            margin-left: auto;
+        }
+        
+        /* Colors matching the course theme */
+        .dca-color { background-color: #DC2626; }
+        .labs-color { background-color: #1D4ED8; }
+        .quizzes-color { background-color: #EAB308; }
+        .exit-color { background-color: #059669; }
+    </style>
+</head>
+<body>
+    <!-- Loading overlay for PDF generation -->
+    <div class="pdf-loading" id="pdfLoading">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="progress-text" id="progressText">🎯 Generating PDF...</div>
+            <div style="font-size: 0.9em; margin-bottom: 15px;">
+                <span id="slideCounter">Slide 0 of 18</span>
+            </div>
+            <div class="slide-progress">
+                <div class="slide-progress-fill" id="slideProgressFill" style="width: 0%"></div>
+            </div>
+            <div style="font-size: 0.8em; margin-top: 15px; opacity: 0.8;">
+                This may take a few moments...
+            </div>
+        </div>
+    </div>
+
+    <div class="presentation-container">
+        <div class="header">
+            <h1>CSCI-1100/1150: Using Information Technology</h1>
+            <div class="header-right">
+                <button class="download-btn" id="downloadPDF" onclick="generatePDF()">
+                    <span class="download-icon">📄</span>
+                    <span>Download PDF</span>
+                </button>
+                <div class="slide-counter">
+                    <span id="current-slide">1</span> / <span id="total-slides">18</span>
+                </div>
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="slide-content">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide active">
+                <div class="slide-title">CSCI-1100/1150: Using Information Technology</div>
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="font-size: 1.5em; color: #1F2937; margin-bottom: 30px;">
+                        Navigate the Digital Age with Confidence
+                    </div>
+                    <div style="background: linear-gradient(135deg, #DC2626, #B91C1C); color: white; padding: 30px; border-radius: 15px; max-width: 800px; margin: 0 auto;">
+                        <p style="font-size: 1.2em; margin-bottom: 15px;"><strong>Fall 2025&nbsp;</strong>• Sections 001-006, 201</p>
+                        <p style="font-size: 1.1em; margin-bottom: 15px;">Lecture (CSCI-1100) + Lab (CSCI-1150)</p>
+                        <p style="font-size: 1.1em;">Department of Computing • ETSU</p>
+                    </div>
+                    <div class="email-highlight">
+                        📧 All course communication: csci1100@etsu.edu
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Meet Your Instructional Team -->
+            <div class="slide">
+                <div class="slide-title">Meet Your Instructional Team</div>
+                
+                <div class="instructor-card">
+                    <img style="float: right; border-radius: 25%;" src="./img/headshots/chelsie.png" width="200" alt="Dr. Dubay headshot">
+                    <div class="instructor-header">
+                        <div class="instructor-avatar">CD</div>
+                        <div class="instructor-info">
+                            <h3>Dr. Chelsie Dubay</h3>
+                            <p>Assistant Professor & Director of Instructional Design</p>
+                        </div>
+                    </div>
+                    <ul class="bullet-points">
+                        <li>Passionate about culturally responsive teaching & instructional design</li>
+                        <li>Mentors students completing thesis/doctoral work</li>
+                        <li>Background in Cross-Disciplinary Studies; knows a lot about Appalachian serpent-handling!</li>
+                    </ul>
+                </div>
+
+                <div class="instructor-card blue">
+                    <img style="float: right; border-radius: 25%;" src="./img/headshots/mike.png" width="200" alt="Dr. Lehrfeld headshot">
+                    <div class="instructor-header">
+                        <div class="instructor-avatar">ML</div>
+                        <div class="instructor-info">
+                            <h3>Dr. Michael Lehrfeld</h3>
+                            <p>Associate Professor & Chief Information Security Officer</p>
+                        </div>
+                    </div>
+                    <ul class="bullet-points">
+                        <li>Eastman & FBI Consultant</li>
+                        <li>ETSU's Chief Information Security Officer</li>
+                        <li>Cyber ninja and general fancy man around town</li>
+                    </ul>
+                </div>
+
+                <div class="instructor-card yellow">
+                    <img style="float: right; border-radius: 25%;" src="./img/headshots/ryan.png" width="200" alt="Prof Haas headshot">
+                    <div class="instructor-header">
+                        <div class="instructor-avatar">RH</div>
+                        <div class="instructor-info">
+                            <h3>Professor Ryan Haas</h3>
+                            <p>Assistant Director of CSCI-1100 & Lecturer</p>
+                        </div>
+                    </div>
+                    <ul class="bullet-points">
+                        <li>Likes jazz, coffee, & books on the beach!</li>
+                        <li>Will eventually automate everything</li>
+                        <li>Enjoying the posthuman technocapital singularity as much as one can</li>
+                    </ul>
+                </div>
+
+                <div class="instructor-card">
+                    <img style="float: right; border-radius: 25%;" src="./img/headshots/prinsa.png" width="200" alt="Mrs. Ghimire headshot">
+                    <div class="instructor-header">
+                        <div class="instructor-avatar">PG</div>
+                        <div class="instructor-info">
+                            <h3>Prinsa Ghimire</h3>
+                            <p>Graduate Student - User Experience Engineering</p>
+                        </div>
+                    </div>
+                    <ul class="bullet-points">
+                        <li>Figma & Canva power-user</li>
+                        <li>Grew thirty years older this summer</li>
+                        <li>Ask her about stickers!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 3: Graduate Assistant -->
+            <div class="slide">
+                <div class="highlight-box blue" style="margin-top: 40px;">
+                    <h3>📧 Important Communication Info</h3>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div class="email-highlight">
+                            Contact us at: csci1100@etsu.edu
+                        </div>
+                        <p style="margin-top: 15px;">This routes your email to your lab instructor, who can escalate to your lecture instructor if needed.</p>
+                        <p><strong>Never&nbsp;</strong>email instructor's personal email addresses!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Course Overview -->
+            <div class="slide">
+                <div class="slide-title">What This Course Is All About</div>
+                <div class="highlight-box">
+                    <h3>🌐 Course Mission</h3>
+                    <p style="font-size: 1.2em; line-height: 1.6;">
+                        Navigate the digital age confidently and creatively! This course is designed to arm you with essential tech skills to make you an informed and enlightened digital citizen.
+                    </p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>🎯 What You'll Master</h3>
+                        <ul class="bullet-points">
+                            <li>Participate safely and ethically online</li>
+                            <li>Evaluate information sources critically</li>
+                            <li>Create tech solutions for real problems</li>
+                            <li>Communicate effectively about technology</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>💡 Key Areas</h3>
+                        <ul class="bullet-points">
+                            <li>Information Literacy</li>
+                            <li>Programming Fundamentals</li>
+                            <li>Data Literacy & Analysis</li>
+                            <li>Cybersecurity & Privacy</li>
+                            <li>AI & Machine Learning</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box yellow">
+                    <h3>🚀 Future Ready</h3>
+                    <p>This course offers a broad exploration of today's digital landscape, preparing you for a future where technology is in constant evolution.</p>
+                </div>
+            </div>
+
+            <!-- Slide 5: Learning Outcomes -->
+            <div class="slide">
+                <div class="slide-title">What You'll Achieve</div>
+                <div style="margin-top: 40px;">
+                    <p style="font-size: 1.3em; color: #1F2937; margin-bottom: 30px; text-align: center;">
+                        By the end of this course, you will be able to:
+                    </p>
+                    <div class="objectives-grid">
+                        <div class="objective-item">
+                            <div class="objective-number">1</div>
+                            <h4>Digital Citizenship</h4>
+                            <p>Engage securely and responsibly in digital communities</p>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-number">2</div>
+                            <h4>Critical Evaluation</h4>
+                            <p>Assess information sources critically for credibility and security risks</p>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-number">3</div>
+                            <h4>Solution Design</h4>
+                            <p>Design technology-based solutions to real-world problems</p>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-number">4</div>
+                            <h4>Tech Communication</h4>
+                            <p>Communicate effectively about computing technology</p>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-number">5</div>
+                            <h4>Productivity Tools</h4>
+                            <p>Apply modern software tools to enhance productivity</p>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-number">6</div>
+                            <h4>Emerging Technologies</h4>
+                            <p>Explore AI and contemporary digital technologies</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Major Topics -->
+            <div class="slide">
+                <div class="slide-title">Topics We'll Explore</div>
+                <div style="margin-top: 30px;">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3>📚 Information & Web Literacy</h3>
+                            <ul class="bullet-points">
+                                <li>Information Literacy</li>
+                                <li>Technology Product Literacy</li>
+                                <li>Web Literacy</li>
+                            </ul>
+                        </div>
+                        <div class="info-card blue">
+                            <h3>💻 Programming & Data</h3>
+                            <ul class="bullet-points">
+                                <li>Introduction to Programming</li>
+                                <li>Data Literacy</li>
+                                <li>Digital Content Creation</li>
+                            </ul>
+                        </div>
+                        <div class="info-card yellow">
+                            <h3>🌐 Connected World</h3>
+                            <ul class="bullet-points">
+                                <li>The Connected World (Networking)</li>
+                                <li>Cybersecurity & Privacy</li>
+                                <li>Digital Citizenship</li>
+                            </ul>
+                        </div>
+                        <div class="info-card">
+                            <h3>🤖 Emerging Technologies</h3>
+                            <ul class="bullet-points">
+                                <li>AI and Machine Learning</li>
+                                <li>Contemporary Digital Technologies</li>
+                                <li>Future Tech Trends</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Course Structure -->
+            <div class="slide">
+                <div class="slide-title">How the Course Works</div>
+                <div class="highlight-box">
+                    <h3>📋 Two-Part Structure</h3>
+                    <p style="font-size: 1.1em; text-align: center;">
+                        <strong>CSCI-1100&nbsp;</strong>(Lecture) + <strong>CSCI-1150&nbsp;</strong>(Lab)<br>
+                        Both must be taken together in the same semester
+                    </p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>🎓 CSCI-1100 Lecture</h3>
+                        <ul class="bullet-points">
+                            <li><strong>On-Site:&nbsp;</strong>In-person class meetings</li>
+                            <li><strong>Online:&nbsp;</strong>Pre-recorded videos and materials via D2L</li>
+                            <li>Quizzes and Exit Tickets</li>
+                            <li>Conceptual understanding</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>🥼 CSCI-1150 Lab</h3>
+                        <ul class="bullet-points">
+                            <li><strong>On-Site:&nbsp;</strong>Hands-on lab sessions</li>
+                            <li><strong>Online:&nbsp;</strong>Lab documents and resources via D2L</li>
+                            <li>Personal Learning Labs</li>
+                            <li>Practical application</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box yellow">
+                    <h3>🌐 Course Website</h3>
+                    <p><strong>Check daily:&nbsp;</strong><a href="https://elearn.etsu.edu" target="_blank">elearn.etsu.edu</a></p>
+                    <p>All materials, assignments, and announcements will be posted here!</p>
+                </div>
+            </div>
+
+            <!-- Slide 8: Required Materials -->
+            <div class="slide">
+                <div class="slide-title">What You'll Need</div>
+                <div class="highlight-box">
+                    <h3>💰 Textbooks Suck!</h3>
+                    <p style="font-size: 1.2em; text-align: center;">
+                        <strong>No required textbooks to purchase!</strong><br>
+                        All materials provided through D2L using free, open-source resources.
+                    </p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>💻 Required Hardware</h3>
+                        <ul class="bullet-points">
+                            <li><strong>Windows:&nbsp;</strong>Windows 10 or newer</li>
+                            <li><strong>Mac:&nbsp;</strong>macOS 12 or newer</li>
+                            <li>Consistent, reliable internet access</li>
+                            <li>Ability to install software</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>🔧 Required Software</h3>
+                        <ul class="bullet-points">
+                            <li><strong>Microsoft 365&nbsp;</strong>(desktop version)</li>
+                            <li>Word, Excel, PowerPoint</li>
+                            <li>Free with your ETSU student account</li>
+                            <li>Install via office.com/apps</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="policy-card">
+                    <h4>⚠️ Important Software Note</h4>
+                    <p>Online and mobile versions of Microsoft Office may not be compatible with some lab activities. You need the full desktop version installed through your student account.</p>
+                </div>
+            </div>
+
+            <!-- Slide 9: Microsoft 365 Setup -->
+            <div class="slide">
+                <div class="slide-title">Setting Up Microsoft 365</div>
+                <div class="highlight-box blue">
+                    <h3>📥 Installation Steps</h3>
+                    <div style="font-size: 1.1em;">
+                        <ol style="text-align: left; max-width: 800px; margin-left: 30px;">
+                            <li>Visit <strong>office.com/apps</strong></li>
+                            <li>Login with your ETSU credentials</li>
+                            <li>Click "Install apps" dropdown (top right)</li>
+                            <li>Select "Microsoft 365 apps"</li>
+                            <li>Run the downloaded installer</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card yellow">
+                        <h3>🔧 Need Help?</h3>
+                        <ul class="bullet-points">
+                            <li>Contact ITS Help Desk: (423) 439-4648</li>
+                            <li>Email: itshelp@etsu.edu</li>
+                            <li>Visit: First floor of Sherrod Library</li>
+                            <li>Help with ETSU Microsoft account issues</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>💡 Pro Tips</h3>
+                        <ul class="bullet-points">
+                            <li>Use incognito/private browsing if you have multiple Microsoft accounts</li>
+                            <li>Clear cookies if login issues persist</li>
+                            <li>Uninstall existing Office before installing student version</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 10: Grading Breakdown -->
+            <div class="slide">
+                <div class="slide-title">How You'll Be Evaluated</div>
+                <div style="margin-top: 30px;">
+                    <table class="grade-table">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Weight</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Digital Citizenship Audit</strong></td>
+                                <td style="color: #DC2626; font-weight: bold;">50%</td>
+                                <td>Final portfolio project</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Personal Learning Labs</strong></td>
+                                <td style="color: #1D4ED8; font-weight: bold;">16.7%</td>
+                                <td>Weekly hands-on activities</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quizzes</strong></td>
+                                <td style="color: #1D4ED8; font-weight: bold;">16.7%</td>
+                                <td>Weekly knowledge checks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Exit Tickets</strong></td>
+                                <td style="color: #1D4ED8; font-weight: bold;">16.7%</td>
+                                <td>Post-lesson reflections</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="chart-container">
+                                <div class="chart-title">CSCI-1100/1150 Grade Distribution</div>
+                                
+                                <svg class="pie-chart" viewBox="0 0 200 200">
+                                    <!-- Digital Citizenship Audit - 50% (180 degrees) -->
+                                    <path d="M 100,100 L 100,0 A 100,100 0 0,1 100,200 z" 
+                                          fill="#DC2626" 
+                                          stroke="white" 
+                                          stroke-width="2"/>
+                                    
+                                    <!-- Labs - 16.67% (60 degrees) -->
+                                    <path d="M 100,100 L 100,200 A 100,100 0 0,1 13.4,150 z" 
+                                          fill="#1D4ED8" 
+                                          stroke="white" 
+                                          stroke-width="2"/>
+                                    
+                                    <!-- Quizzes - 16.67% (60 degrees) -->
+                                    <path d="M 100,100 L 13.4,150 A 100,100 0 0,1 13.4,50 z" 
+                                          fill="#EAB308" 
+                                          stroke="white" 
+                                          stroke-width="2"/>
+                                    
+                                    <!-- Exit Tickets - 16.67% (60 degrees) -->
+                                    <path d="M 100,100 L 13.4,50 A 100,100 0 0,1 100,0 z" 
+                                          fill="#059669" 
+                                          stroke="white" 
+                                          stroke-width="2"/>
+                                </svg>
+                                
+                                <div class="legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color labs-color"></div>
+                                        <div class="legend-text">Personal Learning Labs</div>
+                                        <div class="legend-percentage">1/6</div>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color quizzes-color"></div>
+                                        <div class="legend-text">Quizzes</div>
+                                        <div class="legend-percentage">1/6</div>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color exit-color"></div>
+                                        <div class="legend-text">Exit Tickets</div>
+                                        <div class="legend-percentage">1/6</div>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color dca-color"></div>
+                                        <div class="legend-text">Digital Citizenship Audit</div>
+                                        <div class="legend-percentage">3/6</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="highlight-box yellow">
+                                <h3>📊 Grade Calculation Note</h3>
+                                <p>Before the final project, your grade is calculated as: <strong>1/3 Labs + 1/3 Quizzes + 1/3 Exit Tickets</strong></p>
+                                <p>Check your grades often to stay on track!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            <!-- Slide 11: Personal Learning Labs -->
+            <div class="slide">
+                <div class="slide-title">Personal Learning Labs</div>
+                <div class="highlight-box">
+                    <h3>🔬 What Are Personal Learning Labs?</h3>
+                    <p style="font-size: 1.1em;">
+                        Individual projects aligned with your interests and the week's topics. Whether you're exploring online privacy, building a website, investigating AI, or examining global computer connections - these labs let you apply what you've learned!
+                    </p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>📋 Lab Requirements</h3>
+                        <ul class="bullet-points">
+                            <li>Must be completed&nbsp; <strong>individually</strong></li>
+                            <li>No generative AI unless specified</li>
+                            <li>One lab per week (except Word/PowerPoint weeks)</li>
+                            <li>Can use campus resources like Center for Academic Achievement</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>📝 Getting Help Guidelines</h3>
+                        <p style="margin-bottom: 15px;">If you receive assistance, credit must be attributed:</p>
+                        <ul class="bullet-points">
+                            <li><strong>Resource:&nbsp;</strong>Person/website</li>
+                            <li><strong>Assistance Received:&nbsp;</strong>What help you got</li>
+                            <li><strong>Individual Contribution:&nbsp;</strong>What you did with the help</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="policy-card">
+                    <h4>⏰ Lab Deadlines</h4>
+                    <p><strong>On-site labs:&nbsp;</strong>Complete during lab session or submit by the following lab session<br>
+                    <strong>Online labs:&nbsp;</strong>Submit by Sunday 11:59 PM EDT</p>
+                </div>
+            </div>
+
+            <!-- Slide 12: Quizzes and Exit Tickets -->
+            <div class="slide">
+                <div class="slide-title">Quizzes & Exit Tickets</div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>📊 Weekly Quizzes</h3>
+                        <ul class="bullet-points">
+                            <li>Cover weekly lesson materials</li>
+                            <li><strong>Two attempts allowed&nbsp;</strong>(higher score counts)</li>
+                            <li>Multiple choice, true/false, fill-in-blank, matching</li>
+                            <li>Due: Sundays 11:59 PM EDT</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>🎫 Exit Tickets</h3>
+                        <ul class="bullet-points">
+                            <li>Short, completion-based quiz</li>
+                            <li>Gauge your understanding and enjoyment</li>
+                            <li><strong>On-site only:&nbsp;</strong>Given during lecture</li>
+                            <li>Cannot be made up</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box yellow">
+                    <h3>💡 Success Tips</h3>
+                    <ul class="bullet-points">
+                        <li>Review all weekly materials before taking quizzes</li>
+                        <li>Use your first quiz attempt as a learning opportunity</li>
+                        <li>Your feedback on Exit Tickets helps us improve the course</li>
+                        <li><strong>No Quiz or Exit Ticket in Week 1!</strong></li>
+                    </ul>
+                </div>
+                <div class="policy-card">
+                    <h4>🎯 Grade Drops</h4>
+                    <p>We'll drop your <strong>3 lowest Exit Ticket grades&nbsp;</strong>and <strong>1 lowest Quiz grade&nbsp;</strong>from your overall grade.</p>
+                </div>
+            </div>
+
+            <!-- Slide 13: Digital Citizenship Audit -->
+            <div class="slide">
+                <div class="slide-title">Digital Citizenship Audit (Your Final Project)</div>
+                <div class="highlight-box">
+                    <h3>🎯 Project Overview</h3>
+                    <p style="font-size: 1.1em; text-align: center;">
+                        <strong>Worth 50% of your grade!</strong><br>
+                        Portfolio demonstrating literacy competencies in a creative format
+                    </p>
+                </div>
+                <div class="info-grid three-col">
+                    <div class="info-card">
+                        <h3>📚 Information Literacy</h3>
+                        <p>Evaluating online information credibility</p>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>📊 Data Literacy</h3>
+                        <p>Analyzing and visualizing data using Excel</p>
+                    </div>
+                    <div class="info-card yellow">
+                        <h3>🌐 Web Literacy</h3>
+                        <p>Understanding website accessibility principles</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>🤖 AI Literacy</h3>
+                        <p>Critically engaging with AI tools or concepts</p>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>🔒 Cybersecurity Literacy</h3>
+                        <p>Implementing security practices</p>
+                    </div>
+                    <div class="info-card yellow">
+                        <h3>💼 Microsoft 365 Proficiency</h3>
+                        <p>Using Word, Excel, and PowerPoint effectively</p>
+                    </div>
+                </div>
+                <div class="policy-card">
+                    <h4>⚠️ Important Deadline Policy</h4>
+                    <p>The Digital Citizenship Audit cannot be made up or submitted late. Plan accordingly!</p>
+                </div>
+            </div>
+
+            <!-- Slide 14: Course Policies - Late Work -->
+            <div class="slide">
+                <div class="slide-title">Course Policies: Late Work & Extensions</div>
+                <div class="highlight-box">
+                    <h3>⏰ General Policy</h3>
+                    <p style="font-size: 1.1em; text-align: center;">
+                        We expect assignments submitted on time, but we understand life happens!
+                    </p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>✅ Extenuating Circumstances</h3>
+                        <ul class="bullet-points">
+                            <li>Medical emergencies or illness</li>
+                            <li>Family emergencies</li>
+                            <li>Natural disasters</li>
+                            <li>Mental health challenges</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>📞 What To Do</h3>
+                        <ul class="bullet-points">
+                            <li>Contact us ASAP (before deadline if possible)</li>
+                            <li>Provide documentation when needed</li>
+                            <li>Work together on revised timeline</li>
+                            <li>Use BucsCARE services if needed</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="policy-card">
+                    <h4>📋 Make-Up Work Policy</h4>
+                    <p>We provide at least one week for making up one missed lab assignment. Exit Tickets and Quizzes cannot be submitted late, but we drop your lowest grades in these categories.</p>
+                </div>
+            </div>
+
+            <!-- Slide 15: Communication Guidelines -->
+            <div class="slide">
+                <div class="slide-title">Communication Guidelines</div>
+                <div class="email-highlight">
+                    📧 csci1100@etsu.edu - Your ONLY email address for this course!
+                </div>
+                <div class="highlight-box">
+                    <h3>📬 Email Best Practices</h3>
+                    <ul class="bullet-points">
+                        <li><strong>Subject line format:&nbsp;</strong>CSCI-1150-XXX - Brief description</li>
+                        <li>Example: "CSCI-1150-901 - Questions About Lab 3 Grade"</li>
+                        <li>Use your ETSU email address</li>
+                        <li>Allow up to 48 hours for response (weekdays)</li>
+                    </ul>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>🤔 Need Assignment Help?</h3>
+                        <ul class="bullet-points">
+                            <li>Explain the problem you're having</li>
+                            <li>Describe what you've tried</li>
+                            <li>Include screenshots/zipped work</li>
+                            <li>Note where the issue occurs</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>📅 Scheduling Meetings?</h3>
+                        <ul class="bullet-points">
+                            <li>What do you want to cover?</li>
+                            <li>In-person or Zoom preference?</li>
+                            <li>List available dates/times</li>
+                            <li>Request at least 48 hours in advance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 16: Academic Honesty -->
+            <div class="slide">
+                <div class="slide-title">Academic Honesty & AI Use</div>
+                <div class="highlight-box">
+                    <h3>📜 What's Expected</h3>
+                    <p style="font-size: 1.1em;">
+                        Follow ETSU's Honor Code and maintain academic integrity. All submitted work must be your own original effort.
+                    </p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card yellow">
+                        <h3>🚫 What NOT to Do</h3>
+                        <ul class="bullet-points">
+                            <li>Plagiarize from any source</li>
+                            <li>Use generative AI to complete assignments</li>
+                            <li>Submit AI-generated work as your own</li>
+                            <li>Reuse your own work without permission</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>✅ AI Guidelines</h3>
+                        <ul class="bullet-points">
+                            <li>You'll study AI as a course topic</li>
+                            <li>Can use AI as planning aids</li>
+                            <li>Must cite all sources properly</li>
+                            <li>Focus on learning, not shortcuts</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="policy-card">
+                    <h4>⚖️ Consequences</h4>
+                    <p>Academic misconduct can result in reduced grades on assignments, failing the course, and formal misconduct procedures. You have the right to appeal any decisions.</p>
+                </div>
+            </div>
+
+            <!-- Slide 17: Support Resources -->
+            <div class="slide">
+                <div class="slide-title">Getting Support & Help</div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>🏫 Academic Support</h3>
+                        <ul class="bullet-points">
+                            <li><strong>BucsCARE:&nbsp;</strong>Comprehensive student resources</li>
+                            <li><strong>Disability Services:&nbsp;</strong>D.P. Culp Center, Suite 390</li>
+                            <li><strong>Center for Academic Achievement</strong></li>
+                            <li>Mental health services</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>💻 Technical Support</h3>
+                        <ul class="bullet-points">
+                            <li><strong>ITS Help Desk:&nbsp;</strong>(423) 439-4648</li>
+                            <li>Email: itshelp@etsu.edu</li>
+                            <li>Location: First floor, Sherrod Library</li>
+                            <li>D2L and tech resources help</li>
+                        </ul>
+                    </div>
+                    <div class="info-card yellow">
+                        <h3>📚 Library Resources</h3>
+                        <ul class="bullet-points">
+                            <li>Sherrod Library services</li>
+                            <li>Technology lending program</li>
+                            <li>Personal Librarian program</li>
+                            <li>Research and instructional services</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>🔍 Additional Resources</h3>
+                        <ul class="bullet-points">
+                            <li>Turnitin plagiarism detection</li>
+                            <li>Online help resources</li>
+                            <li>ETSU technical resources</li>
+                            <li>Grade appeals process</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 18: Ready to Begin -->
+            <div class="slide">
+                <div class="slide-title">Ready to Navigate the Digital Age?</div>
+                <div style="margin-top: 40px;">
+                    <div style="background: linear-gradient(135deg, #DC2626, #1D4ED8); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                        <h3 style="margin-bottom: 20px; text-align: center;">Your Digital Journey Starts Here!</h3>
+                        <ul style="list-style: none; font-size: 1.1em; text-align: left;">
+                            <li style="padding: 8px 0;">🌐 Become a confident digital citizen</li>
+                            <li style="padding: 8px 0;">🔍 Master information evaluation skills</li>
+                            <li style="padding: 8px 0;">💻 Create technology-based solutions</li>
+                            <li style="padding: 8px 0;">🤖 Explore AI and emerging technologies</li>
+                            <li style="padding: 8px 0;">🔒 Understand cybersecurity and privacy</li>
+                            <li style="padding: 8px 0;">📊 Analyze and visualize data effectively</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>📋 This Week's To-Do</h3>
+                        <ul class="bullet-points">
+                            <li>Attend lab - complete survey</li>
+                            <li>Check both D2L course sites</li>
+                            <li>Review this week's Tech Tips</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <h3>❓ Questions?</h3>
+                        <ul class="bullet-points">
+                            <li>Ask during or after class</li>
+                            <li>Email us at csci1100@etsu.edu</li>
+                            <li>Visit office hours</li>
+                            <li>Don't hesitate to reach out!</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box yellow">
+                    <h3>🎯 Remember</h3>
+                    <p style="text-align: center; font-size: 1.2em;">
+                        We'll help you navigate this digital world with confidence and creativity. You've got this! 🚀
+                    </p>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <p style="font-size: 1.4em; color: #1F2937; font-weight: bold;">
+                        Let's get digital! 💻✨
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" id="prev-btn" onclick="previousSlide()">
+                ← Previous
+            </button>
+            <div class="timer-display" id="timer">
+                00:00
+            </div>
+            <button class="nav-button" id="next-btn" onclick="nextSlide()">
+                Next →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let startTime = Date.now();
+        let timerInterval;
+
+        // Initialize
+        document.getElementById('total-slides').textContent = totalSlides;
+        updateSlideDisplay();
+        startTimer();
+
+        function updateSlideDisplay() {
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Show current slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update counter
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlideDisplay();
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlideDisplay();
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+        // PDF Generation Function
+        async function generatePDF() {
+            console.log('🎯 INITIATING PDF GENERATION...');
+
+            await document.fonts.ready;
+            
+            // Show loading overlay
+            const loadingOverlay = document.getElementById('pdfLoading');
+            const progressText = document.getElementById('progressText');
+            const slideCounter = document.getElementById('slideCounter');
+            const slideProgressFill = document.getElementById('slideProgressFill');
+            const downloadBtn = document.getElementById('downloadPDF');
+            
+            loadingOverlay.classList.add('active');
+            downloadBtn.disabled = true;
+            
+            try {
+                // Initialize jsPDF with Letter size
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'in',
+                    format: 'letter'
+                });
+                
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const margin = 0.5;
+                const contentWidth = pageWidth - (2 * margin);
+                const contentHeight = pageHeight - (2 * margin);
+                
+                console.log(`📏 PDF dimensions: ${pageWidth}" x ${pageHeight}"`);
+                
+                // Get all slides and prepare for generation
+                const slideElements = document.querySelectorAll('.slide');
+                const originalSlideContent = document.querySelector('.slide-content');
+                
+                // Store original styles
+                const originalStyles = {
+                    slideContent: originalSlideContent.style.cssText,
+                    slides: Array.from(slideElements).map(slide => slide.style.cssText)
+                };
+                
+                // Apply PDF-friendly styles
+                originalSlideContent.style.cssText += `
+                    overflow: visible !important;
+                    height: auto !important;
+                    padding: 0 !important;
+                `;
+
+                document.body.classList.add('pdf-mode');
+                
+                slideElements.forEach((slide, index) => {
+                    slide.style.cssText += `
+                        display: block !important;
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                        position: static !important;
+                        height: auto !important;
+                        min-height: 800px !important;
+                        background: white !important;
+                        margin-bottom: 20px !important;
+                        padding: 40px !important;
+                        page-break-after: always;
+                        border: none !important;
+                    `;
+                });
+                
+                // Process each slide individually
+                for (let i = 0; i < slideElements.length; i++) {
+                    const slide = slideElements[i];
+                    
+                    progressText.textContent = `🖼️ Capturing slide ${i + 1}...`;
+                    slideCounter.textContent = `Slide ${i + 1} of ${slideElements.length}`;
+                    slideProgressFill.style.width = `${((i + 1) / slideElements.length) * 100}%`;
+                    
+                    // Hide all slides except current one
+                    slideElements.forEach((s, idx) => {
+                        if (idx !== i) {
+                            s.style.display = 'none';
+                        }
+                    });
+                    
+                    // Force reflow and wait for rendering
+                    slide.offsetHeight;
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    
+                    try {
+                        // Capture the individual slide
+                        const canvas = await html2canvas(slide, {
+                            allowTaint: true,
+                            removeContainer: false,
+                            useCORS: true,
+                            scale: 2,
+                            width: slide.scrollWidth,
+                            height: slide.scrollHeight,
+                            backgroundColor: '#ffffff',
+                            logging: false,
+                            onclone: (clonedDoc) => {
+                                const clonedSlides = clonedDoc.querySelectorAll('.slide');
+                                clonedSlides.forEach(s => {
+                                    s.style.display = 'block';
+                                    s.style.opacity = '1';
+                                    s.style.visibility = 'visible';
+                                });
+                            }
+                        });
+                        
+                        console.log(`📊 Slide ${i + 1} canvas: ${canvas.width}x${canvas.height}`);
+                        
+                        // Calculate scaling to fit page
+                        const canvasAspectRatio = canvas.width / canvas.height;
+                        const pageAspectRatio = contentWidth / contentHeight;
+                        
+                        let finalWidth, finalHeight;
+                        if (canvasAspectRatio > pageAspectRatio) {
+                            finalWidth = contentWidth;
+                            finalHeight = contentWidth / canvasAspectRatio;
+                        } else {
+                            finalHeight = contentHeight;
+                            finalWidth = contentHeight * canvasAspectRatio;
+                        }
+                        
+                        // Center the image on page
+                        const x = (pageWidth - finalWidth) / 2;
+                        const y = (pageHeight - finalHeight) / 2;
+                        
+                        // Add to PDF
+                        if (i > 0) {
+                            pdf.addPage();
+                        }
+                        
+                        progressText.textContent = `📝 Adding slide ${i + 1} to PDF...`;
+                        
+                        pdf.addImage(
+                            canvas.toDataURL('image/jpeg', 0.85),
+                            'JPEG',
+                            x, y,
+                            finalWidth, finalHeight
+                        );
+                        
+                    } catch (slideError) {
+                        console.error(`❌ Error capturing slide ${i + 1}:`, slideError);
+                        
+                        // 🩹 Add error page instead of failing completely
+                        if (i > 0) {
+                            pdf.addPage();
+                        }
+                        
+                        pdf.setFontSize(20);
+                        pdf.setTextColor(220, 53, 69);
+                        pdf.text(`Error capturing slide ${i + 1}`, pageWidth / 2, pageHeight / 2, { align: 'center' });
+                        pdf.setFontSize(12);
+                        pdf.setTextColor(108, 117, 125);
+                        pdf.text('This slide could not be rendered properly', pageWidth / 2, (pageHeight / 2) + 0.5, { align: 'center' });
+                    }
+                }
+
+                document.body.classList.remove('pdf-mode');
+                
+                // Restore all slides visibility
+                slideElements.forEach(slide => {
+                    slide.style.display = 'block';
+                });
+                
+                // Restore original styles
+                progressText.textContent = '🧹 Cleaning up...';
+                originalSlideContent.style.cssText = originalStyles.slideContent;
+                slideElements.forEach((slide, index) => {
+                    slide.style.cssText = originalStyles.slides[index];
+                });
+                
+                // Save the PDF
+                progressText.textContent = '💾 Saving PDF...';
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                const fileName = `CSCI-1100-1150_Course-Overview-Slides_${new Date().toISOString().split('T')[0]}.pdf`;
+                pdf.save(fileName);
+                
+                // Success!
+                progressText.textContent = '🎉 PDF Generated Successfully!';
+                slideCounter.textContent = `✅ All ${slideElements.length} slides exported`;
+                slideProgressFill.style.width = '100%';
+                
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+            } catch (error) {
+                console.error('💀 PDF GENERATION FAILED:', error);
+                
+                progressText.textContent = '❌ PDF Generation Failed';
+                slideCounter.textContent = 'Error occurred - check console';
+                
+                await new Promise(resolve => setTimeout(resolve, 3000));
+            } finally {
+                // Always hide loading and re-enable button
+                loadingOverlay.classList.remove('active');
+                downloadBtn.disabled = false;
+                updateSlideDisplay(); // Restore normal navigation
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                previousSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                currentSlide = 0;
+                updateSlideDisplay();
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                currentSlide = totalSlides - 1;
+                updateSlideDisplay();
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                nextSlide(); // Swipe left
+            } else if (touchEndX - touchStartX > 50) {
+                previousSlide(); // Swipe right
+            }
+        });
+    </script>
+</body>
+</html>
