@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Programming with Python</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slideshow-container {
+            max-width: 1400px;
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 700px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide h1 {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #333;
+            border-bottom: 3px solid #a8e6cf;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            margin: 25px 0 15px 0;
+            color: #555;
+        }
+
+        .slide h4 {
+            font-size: 1.4em;
+            margin: 20px 0 10px 0;
+            color: #666;
+        }
+
+        /* Pastel backgrounds for different slide types */
+        .slide.intro { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .slide.concept { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .slide.code { background: linear-gradient(135deg, #e0c3fc 0%, #9bb5ff 100%); }
+        .slide.activity { background: linear-gradient(135deg, #ffd3a5 0%, #a8e6cf 100%); }
+
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .pillar {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .pillar:hover {
+            transform: translateY(-5px);
+        }
+
+        .pillar h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .data-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .data-type {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid;
+        }
+
+        .data-type.string { border-color: #ff6b6b; }
+        .data-type.integer { border-color: #4ecdc4; }
+        .data-type.float { border-color: #ffe66d; }
+        .data-type.boolean { border-color: #a8e6cf; }
+
+        .navigation {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .team-demo {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px dashed #667eea;
+        }
+
+        .step {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(168, 230, 207, 0.3);
+            border-radius: 8px;
+            border-left: 4px solid #a8e6cf;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #666;
+            font-size: 1.1em;
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+                min-height: 600px;
+            }
+            
+            .slide h1 {
+                font-size: 2.2em;
+            }
+            
+            .slide h2 {
+                font-size: 2em;
+            }
+            
+            .pillars {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active intro">
+            <h1>🐍 Introduction to Programming with Python</h1>
+            <div class="highlight-box" style="text-align: center; margin-top: 80px;">
+                <h3>Department of Computing</h3>
+                <p style="color: #666; font-size: 1.2em; margin: 20px 0;">College of Business & Technology</p>
+                <p style="color: #666; font-size: 1.2em;">East Tennessee State University</p>
+                <div style="margin-top: 60px; font-size: 1.4em; color: #667eea;">
+                    <strong>Professor Ryan Haas</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Course Overview -->
+        <div class="slide concept">
+            <h2>📚 Course Overview</h2>
+            <div class="highlight-box">
+                <p style="font-size: 1.3em; margin-bottom: 25px;">This course introduces students to both <strong>programming fundamentals</strong> and <strong>computational thinking</strong>—the problem-solving skills that make programming powerful.</p>
+                <p style="font-size: 1.2em;">We'll learn Python while developing the mindset that helps us break down complex problems into manageable pieces.</p>
+            </div>
+            <div class="team-demo">
+                <h3>🎯 What We'll Cover Today</h3>
+                <div class="step">💭 Computational thinking through real-world team formation</div>
+                <div class="step">🔢 Python fundamentals: variables, data types, and operations</div>
+                <div class="step">📝 Collections and indexing with lists</div>
+                <div class="step">🤔 Boolean logic and decision making</div>
+                <div class="step">🔄 Automation with loops</div>
+                <div class="step">✨ Professional output with f-strings</div>
+            </div>
+        </div>
+
+        <!-- Slide 3: What is Python? -->
+        <div class="slide intro">
+            <h2>🐍 What is Python?</h2>
+            <div class="highlight-box">
+                <h3><span class="emoji">📖</span>A popular programming language with easy-to-read syntax</h3>
+                <p style="font-size: 1.1em; margin: 15px 0;">This makes it accessible to beginners while remaining powerful for experts.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;">
+                <div class="pillar">
+                    <h4>🔬 Scientists & Analysts</h4>
+                    <p>Use Python for data processing, visualization, machine learning, and AI in fields like bioinformatics and business analytics</p>
+                </div>
+                <div class="pillar">
+                    <h4>🌐 Web Developers</h4>
+                    <p>Create modern, custom web applications with frameworks like Django and Flask</p>
+                </div>
+                <div class="pillar">
+                    <h4>🤖 Hobbyists</h4>
+                    <p>Control robots, create chatbots, voice assistants, and home automation systems</p>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 30px; background: rgba(168, 230, 207, 0.3); border-color: #a8e6cf;">
+                <p style="font-size: 1.1em;"><span class="emoji">💡</span><strong>With modern conversational AI, it's easier than ever to create your own apps!</strong> You should still know how to code because AI makes mistakes!</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: The Recipe Challenge -->
+        <div class="slide activity">
+            <h2>🥪 The Recipe Challenge</h2>
+            <div class="team-demo">
+                <h3>Challenge Question:</h3>
+                <div class="quote">"How would you teach a robot to make a peanut butter sandwich?"</div>
+
+                <div class="step">
+                    <strong>Try it:</strong> Write step-by-step instructions that a robot could follow
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h4>🤔 What you'll quickly discover:</h4>
+                    <ul>
+                        <li>You need to be <strong>incredibly specific</strong></li>
+                        <li>"Pick up the knife" assumes the robot knows what a knife is!</li>
+                        <li>Every step must be broken down further</li>
+                        <li>You can't assume any prior knowledge</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><span class="emoji">🎯</span>This is exactly how programming works - computers need explicit, detailed instructions for everything!</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Team Formation Challenge -->
+        <div class="slide activity">
+            <h2>👥 Team Formation Challenge Activity</h2>
+            <div class="highlight-box">
+                <p style="font-size: 1.2em;">"Before we dive into programming concepts, let's experience computational thinking with a real problem you face in class: <strong>forming teams!</strong>"</p>
+            </div>
+
+            <h3>📝 Phase 1: Manual Problem Solving</h3>
+            <div class="team-demo">
+                <p><strong>Setting:</strong> You have 100+ students who need project teams of equal size. How would you solve this manually?</p>
+                
+                <div class="step">1. <strong>Attendance:</strong> Who's actually here?</div>
+                <div class="step">2. <strong>Calculate:</strong> How many teams? What size?</div>
+                <div class="step">3. <strong>Assign:</strong> Put students into groups fairly</div>
+                <div class="step">4. <strong>Communicate:</strong> Tell everyone their assignments</div>
+                
+                <h4 style="margin-top: 20px; color: #e74c3c;">⚠️ Manual Challenges:</h4>
+                <ul>
+                    <li>Time-consuming roll call</li>
+                    <li>Math errors in team sizing</li>
+                    <li>Assignment bias (friends clustering)</li>
+                    <li>Communication bottlenecks</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Digital Solution Demo -->
+        <div class="slide concept">
+            <h2>💻 Phase 2: Digital Solution Demo</h2>
+            
+            <div class="pillars">
+                <div class="pillar">
+                    <h4>📋 Digital Attendance</h4>
+                    <p>Microsoft Forms collect student information automatically</p>
+                </div>
+                <div class="pillar">
+                    <h4>📊 Data Processing</h4>
+                    <p>Excel responses cleaned and organized (abstraction!)</p>
+                </div>
+                <div class="pillar">
+                    <h4>🎲 Team Generation</h4>
+                    <p>Automated tool randomly assigns equal teams</p>
+                </div>
+            </div>
+
+            <div class="team-demo">
+                <h3>🔗 Demo Links (Use Your Class Form):</h3>
+                <ul>
+                    <li>Dr. Dubay's Monday: https://forms.office.com/r/H64qC6ngKM</li>
+                    <li>Dr. Dubay's Tuesday: https://forms.office.com/r/GBeQPf6BCs</li>
+                    <li>Prof. Haas: https://forms.office.com/r/eeMmgJVNZ0</li>
+                </ul>
+                <p><strong>Team Generator:</strong> https://htmlpreview.github.io/?https://github.com/haasr/student-team-generator/blob/master/index.html</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Four Pillars of Computational Thinking -->
+        <div class="slide concept">
+            <h2>🏛️ The Four Pillars of Computational Thinking</h2>
+            
+            <div class="pillars">
+                <div class="pillar">
+                    <h4>🧩 Decomposition</h4>
+                    <p><strong>Breaking big problems into smaller, manageable pieces</strong></p>
+                    <small>Team formation: broke into attendance → calculation → assignment → communication</small>
+                </div>
+                
+                <div class="pillar">
+                    <h4>🔍 Pattern Recognition</h4>
+                    <p><strong>Finding similarities and trends</strong></p>
+                    <small>Team formation: recognized repeated classroom need</small>
+                </div>
+                
+                <div class="pillar">
+                    <h4>🎭 Abstraction</h4>
+                    <p><strong>Focusing on what's important, ignoring unnecessary details</strong></p>
+                    <small>Team formation: only cared about names, not IDs or timestamps</small>
+                </div>
+                
+                <div class="pillar">
+                    <h4>📋 Algorithm Design</h4>
+                    <p><strong>Creating step-by-step instructions that always work</strong></p>
+                    <small>Team formation: form → clean → generate → display</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Why Python? -->
+        <div class="slide code">
+            <h2>🐍 Why Python?</h2>
+            <div class="highlight-box">
+                <p style="font-size: 1.2em;">Python reads almost like English! Let's see how our team formation logic would look in code:</p>
+            </div>
+
+            <div class="code-block">
+                <pre><code class="language-python"># Our team formation algorithm in Python
+with open('student_names.txt', 'r') as file:
+    students = file.read().splitlines()  # Read names (like our Excel step)
+
+team_size = 4
+teams = []
+for i in range(0, len(students), team_size):  # Pattern recognition!
+    team = students[i:i + team_size]
+    teams.append(team)
+
+for i, team in enumerate(teams, 1):  # Communication step
+    print(f"Team {i}: {', '.join(team)}")</code></pre>
+            </div>
+
+            <div class="highlight-box">
+                <p><span class="emoji">💡</span><strong>Don't worry about understanding every detail yet</strong> — notice how it follows the same logical steps we identified!</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Variables - Digital Containers -->
+        <div class="slide code">
+            <h2>📦 Variables: Digital Containers</h2>
+            
+            <div class="highlight-box">
+                <p>Think of variables as <strong>labeled boxes</strong> that store information—just like how we stored student names in our digital form.</p>
+            </div>
+
+            <div class="code-block">
+                <pre><code class="language-python"># Creating our first variables (like storing form responses)
+name = "Chelsie"
+age = 32
+height = 5.7
+likes_koalas = True
+
+print("Hello! My name is", name)
+print("I am", age, "years old")</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3>🔑 Key Concept:</h3>
+                <p>The <code>=</code> sign doesn't mean "equals"—it means <strong>"store this value in this container."</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Python's Data Types -->
+        <div class="slide code">
+            <h2>🏷️ Python's Data Types</h2>
+            
+            <div class="highlight-box">
+                <p>Just like we organized different information in our team formation (names vs. numbers vs. true/false), Python has different data types:</p>
+            </div>
+
+            <div class="data-types">
+                <div class="data-type string">
+                    <h4>📝 Strings (str)</h4>
+                    <p>Text in quotes</p>
+                    <div class="code-block">
+                        <pre><code class="language-python">student_name = "Taylor Swift"
+class_section = "CSCI-1100-001"</code></pre>
+                    </div>
+                </div>
+                
+                <div class="data-type integer">
+                    <h4>🔢 Integers (int)</h4>
+                    <p>Whole numbers</p>
+                    <div class="code-block">
+                        <pre><code class="language-python">total_students = 127
+team_size = 4</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-types">
+                <div class="data-type float">
+                    <h4>🔢 Floats (float)</h4>
+                    <p>Decimal numbers</p>
+                    <div class="code-block">
+                        <pre><code class="language-python">average_team_size = 4.2
+gpa = 3.85</code></pre>
+                    </div>
+                </div>
+                
+                <div class="data-type boolean">
+                    <h4>✅ Booleans (bool)</h4>
+                    <p>True or False</p>
+                    <div class="code-block">
+                        <pre><code class="language-python">attendance_form_submitted = True
+has_partner_preference = False</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: The Magic of Print -->
+        <div class="slide code">
+            <h2>🖨️ The Magic of the Print Function</h2>
+            
+            <div class="code-block">
+                <pre><code class="language-python">print("This displays on screen!")
+print("We have", 127, "students today!")
+
+# Modern Python way with f-strings (like our team display)
+student_name = "Taylor"
+team_number = 3
+print(f"{student_name} is assigned to Team {team_number}!")</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3>🎯 Hands-on Activity: Personal Profile</h3>
+                <p>Create variables about yourself and use print() to display a personal profile, similar to how our form collected and displayed information.</p>
+                
+                <div class="step">Try creating variables for: name, age, favorite subject, graduation year</div>
+                <div class="step">Use f-strings to create a nicely formatted profile</div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Lists - Organizing Multiple Items -->
+        <div class="slide code">
+            <h2>📋 Lists: Organizing Multiple Items</h2>
+            
+            <div class="highlight-box">
+                <p>Remember our list of student names? Python lists work the same way:</p>
+            </div>
+
+            <div class="code-block">
+                <pre><code class="language-python"># Like our cleaned list from the Excel form
+students_present = ["Anica", "Chelsie", "Doug", "Tahsin", "Mike"]
+team_sizes = [4, 4, 4, 3]  # Different team sizes
+attendance_status = [True, True, False, True, True]
+
+print(students_present)</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3>🔢 The Secret of Indexing: Computers Count from 0!</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">students = ["Anica", "Chelsie", "Doug"]
+
+print(students[0])  # "Anica" - first student
+print(students[1])  # "Chelsie" - second student  
+print(students[2])  # "Doug" - third student</code></pre>
+                </div>
+                
+                <p><strong>Why start from 0?</strong> Think of it as "how many steps from the beginning"</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Boolean Logic -->
+        <div class="slide concept">
+            <h2>⚖️ Making Decisions with Boolean Logic</h2>
+            
+            <div class="highlight-box">
+                <p>Remember when our team formation tool had to decide if we had enough students for even teams? That's Boolean logic!</p>
+            </div>
+
+            <div class="code-block">
+                <pre><code class="language-python"># Team formation logic
+total_students = 127
+desired_team_size = 4
+
+teams_possible = total_students // desired_team_size  # Integer division
+students_remaining = total_students % desired_team_size  # Remainder
+
+print(f"We can make {teams_possible} teams of {desired_team_size}")
+print(f"With {students_remaining} students left over")
+
+# Decision making
+if students_remaining == 0:
+    print("Perfect! All teams are equal size")
+else:
+    print("Some teams will have different sizes")</code></pre>
+            </div>
+        </div>
+
+        <!-- Slide 14: Comparison Operations -->
+        <div class="slide code">
+            <h2>🔍 Comparison Operations</h2>
+            
+            <div class="code-block">
+                <pre><code class="language-python">total_students = 127
+min_team_size = 3
+max_team_size = 5
+
+print(total_students > 100)    # True
+print(min_team_size == max_team_size)  # False
+print(total_students >= 127)   # True
+
+# Boolean variables in action
+form_completed = True
+valid_name_entered = True
+can_assign_to_team = form_completed and valid_name_entered
+
+print(can_assign_to_team)  # True</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3>🎯 Like checking our form responses:</h3>
+                <p>We can combine multiple conditions to make complex decisions, just like our team formation tool checks multiple criteria before assigning students.</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: For Loops -->
+        <div class="slide code">
+            <h2>🔄 For Loops: The Heart of Our Team Generator</h2>
+            
+            <div class="highlight-box">
+                <p>Remember how our team generator automatically assigned all students without us doing it manually? That's the power of loops!</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>😴 Manual way (like calling attendance):</h4>
+                    <div class="code-block">
+                        <pre><code class="language-python">students = ["Maxwell", "Chidi", "Monika"]
+print("Welcome", students[0])
+print("Welcome", students[1])
+print("Welcome", students[2])</code></pre>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4>🚀 Automated way (like our digital solution):</h4>
+                    <div class="code-block">
+                        <pre><code class="language-python">students = ["Maxwell", "Chidi", "Monika"]
+for student in students:
+    print(f"Welcome {student}!")</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Range Function -->
+        <div class="slide code">
+            <h2>🔢 The Range Function - Creating Team Numbers</h2>
+            
+            <div class="code-block">
+                <pre><code class="language-python"># Creating team numbers (like our generator tool)
+num_teams = 5
+for team_num in range(1, num_teams + 1):
+    print(f"Team {team_num} is ready!")
+
+# Range with step (every other number)
+for i in range(0, 10, 2):
+    print(i)  # Prints: 0, 2, 4, 6, 8</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3>🎯 Building Our Own Simple Team Assigner</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">students = ["Preet", "Hassan", "Sharon", "Avas", "Ameerat", "Stanley"]
+team_size = 2
+team_number = 1
+
+for i in range(0, len(students), team_size):
+    team = students[i:i + team_size]
+    print(f"Team {team_number}: {team}")
+    team_number += 1</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: While Loops -->
+        <div class="slide code">
+            <h2>⏳ While Loops: Loops with Conditions</h2>
+            
+            <div class="code-block">
+                <pre><code class="language-python"># Like waiting for all students to submit the form
+students_submitted = 0
+total_students = 127
+
+while students_submitted < total_students:
+    print(f"Waiting for submissions... ({students_submitted}/{total_students})")
+    students_submitted += 10  # Simulate 10 more submissions
+    
+print("All students have submitted! Time to generate teams!")</code></pre>
+            </div>
+
+            <div class="highlight-box">
+                <p><span class="emoji">⚠️</span><strong>Be careful with while loops!</strong> Make sure the condition will eventually become False, or your program will run forever.</p>
+            </div>
+        </div>
+
+        <!-- Slide 18: Operations and Precedence -->
+        <div class="slide active code">
+            <h2>🧮 The Order Matters - Operations and Precedence</h2>
+            
+            <div class="highlight-box">
+                <p>When calculating team sizes, order of operations matters:</p>
+            </div>
+
+            <div class="code-block">
+                <pre><code class="language-python"># Calculating teams with different approaches
+total_students = 127
+base_team_size = 4
+extra_members = 3
+
+# Wrong way (without parentheses)
+result = total_students / base_team_size + extra_members
+print(result)  # 34.75 (not what we want!)
+
+# Right way (with parentheses)
+result = total_students / (base_team_size + extra_members)
+print(result)  # 18.14 (makes more sense!)</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3>Variable Assignment and Updates:</h3>
+                <div class="code-block">
+                    <pre><code class="language-python"># Like updating our attendance count
+students_present = 120
+print(f"Currently: {students_present} students")
+
+# More students arrive
+students_present = students_present + 7
+print(f"Updated: {students_present} students")
+
+# Shorthand way 😎
+students_present += 3  # Same as: students_present = students_present + 3
+print(f"Final: {students_present} students")</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Advanced Output with F-strings -->
+        <div class="slide code">
+            <h2>✨ Advanced Output with F-strings</h2>
+            
+            <div class="highlight-box">
+                <p>Remember how our team generator created nicely formatted team displays? We can do that with f-strings:</p>
+            </div>
+
+            <div class="code-block">
+                <pre><code class="language-python"># Basic team announcement
+student_name = "Mike"
+team_number = 3
+team_size = 4
+
+# Old way
+print("Student " + student_name + " is on Team " + str(team_number))
+
+# Modern f-string way (like our generator tool)
+print(f"Student {student_name} is assigned to Team {team_number}")
+print(f"Team {team_number} now has {team_size} members")
+
+# Advanced formatting
+average_score = 87.6789
+print(f"Team average: {average_score:.1f}%")  # Shows: 87.7%</code></pre>
+            </div>
+        </div>
+
+        <!-- Slide 20: Creating Team Rosters -->
+        <div class="slide code">
+            <h2>📋 Creating Team Rosters</h2>
+            
+            <div class="code-block">
+                <pre><code class="language-python">teams = {
+    1: ["Prinsa", "Segun", "Chidi"],
+    2: ["Shushmita", "Ameerat", "Stanley"],
+    3: ["Monika", "Maxwell", "Segun"]
+}
+
+for team_num, members in teams.items():
+    print(f"\n=== Team {team_num} ===")
+    for i, member in enumerate(members, 1):
+        print(f"  {i}. {member}")
+    print(f"Total members: {len(members)}")</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3>Output would look like:</h3>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-family: monospace;">
+                    === Team 1 ===<br>
+                    &nbsp;&nbsp;1. Prinsa<br>
+                    &nbsp;&nbsp;2. Segun<br>
+                    &nbsp;&nbsp;3. Chidi<br>
+                    Total members: 3
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21: Complete Team Generator Program -->
+        <div class="slide activity">
+            <h2>🛠️ Building Our Own Team Generator</h2>
+            
+            <div class="highlight-box">
+                <p>Let's combine everything we've learned to create a simplified version of the team generator tool we used earlier!</p>
+            </div>
+
+            <div class="code-block">
+                <pre><code class="language-python">import random
+
+def create_teams(student_names, team_size=4):
+    """
+    Create random teams from a list of student names.
+    This is our algorithm design in action!
+    """
+    # Step 1: Make a copy and shuffle (randomization)
+    students = student_names.copy()
+    random.shuffle(students)
+    
+    # Step 2: Create teams (decomposition)
+    teams = []
+    team_number = 1
+    
+    # Step 3: Group students (pattern recognition)
+    for i in range(0, len(students), team_size):
+        team = students[i:i + team_size]
+        teams.append({
+            'number': team_number,
+            'members': team
+        })
+        team_number += 1
+    
+    return teams</code></pre>
+            </div>
+        </div>
+
+        <!-- Slide 22: Display Function -->
+        <div class="slide code">
+            <h2>🎯 Team Display Function</h2>
+            
+            <div class="code-block">
+                <pre><code class="language-python">def display_teams(teams):
+    """
+    Display teams in a nice format (abstraction - hiding complexity)
+    """
+    print("\n" + "="*50)
+    print("🎯 TEAM ASSIGNMENTS")
+    print("="*50)
+    
+    for team in teams:
+        print(f"\n📋 Team {team['number']}:")
+        for i, member in enumerate(team['members'], 1):
+            print(f"   {i}. {member}")
+        print(f"   Total: {len(team['members'])} members")
+    
+    print(f"\n📊 Summary: {len(teams)} teams created!")</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3>🧠 Computational Thinking in Action:</h3>
+                <div class="step">✅ <strong>Decomposition:</strong> Broke problem into shuffle→group→display</div>
+                <div class="step">✅ <strong>Pattern Recognition:</strong> Same grouping process for each team</div>
+                <div class="step">✅ <strong>Abstraction:</strong> Functions hide complex details</div>
+                <div class="step">✅ <strong>Algorithm Design:</strong> Repeatable process that works for any names/size</div>
+            </div>
+        </div>
+
+        <!-- Slide 23: Demo with Sample Data -->
+        <div class="slide activity">
+            <h2>🎲 Running Our Team Generator</h2>
+            
+            <div class="code-block">
+                <pre><code class="language-python"># Demo with sample data (like our cleaned Excel names)
+sample_students = [
+    "Maxwell", "Chidi", "Monika", "Segun", "Sushmita" "Preet",
+    "Hassan", "Sharon", "Avas", "Ameerat", "Prinsa", "Aswad",
+    "Avas", "Chelsie", "Ryan", "Mike", "Anica", "Doug"
+]
+
+print("🎲 Creating random teams...")
+student_teams = create_teams(sample_students, team_size=4)
+display_teams(student_teams)</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3>🎯 Try it yourself!</h3>
+                <p>Modify the code to:</p>
+                <ul>
+                    <li>Change team sizes</li>
+                    <li>Add your classmates' names</li>
+                    <li>Add features like team preferences</li>
+                    <li>Include gender balance or skill distribution</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 24: What We've Accomplished -->
+        <div class="slide concept">
+            <h2>🎉 What We've Accomplished</h2>
+            
+            <div class="pillars">
+                <div class="pillar">
+                    <h4>🔍 Started with a Real Problem</h4>
+                    <p>How to efficiently form teams in a large class</p>
+                </div>
+                
+                <div class="pillar">
+                    <h4>🧠 Applied Computational Thinking</h4>
+                    <p>Decomposition, Pattern Recognition, Abstraction, Algorithm Design</p>
+                </div>
+                
+                <div class="pillar">
+                    <h4>🐍 Learned Python by Solving</h4>
+                    <p>Variables, data types, lists, loops, boolean logic, and functions</p>
+                </div>
+            </div>
+
+            <div class="team-demo">
+                <h3>📚 Python Concepts We Covered:</h3>
+                <div class="step"><strong>Variables</strong> stored our student information (like form responses)</div>
+                <div class="step"><strong>Data types</strong> organized different kinds of information</div>
+                <div class="step"><strong>Lists</strong> held collections of students (like our cleaned Excel data)</div>
+                <div class="step"><strong>Indexing</strong> let us access specific students (starting from 0!)</div>
+                <div class="step"><strong>Loops</strong> automated repetitive tasks (like the team generator)</div>
+                <div class="step"><strong>Boolean logic</strong> helped make decisions</div>
+                <div class="step"><strong>F-strings</strong> created professional output</div>
+            </div>
+        </div>
+
+        <!-- Slide 25: The Big Picture -->
+        <div class="slide concept">
+            <h2>🌟 The Big Picture</h2>
+            
+            <div class="highlight-box">
+                <p style="font-size: 1.2em;">We've seen that programming isn't just about writing code—it's about developing a <strong>systematic way of thinking</strong> that helps you solve problems efficiently.</p>
+            </div>
+
+            <div class="team-demo">
+                <h3>🌍 Real-world Applications:</h3>
+                <ul>
+                    <li><strong>Event planning:</strong> Break down into tasks, recognize patterns, focus on key details</li>
+                    <li><strong>Study optimization:</strong> Identify learning patterns, abstract key concepts</li>
+                    <li><strong>Group projects:</strong> Decompose work, create systematic processes</li>
+                    <li><strong>Problem-solving:</strong> Apply the same thinking process to any challenge</li>
+                </ul>
+            </div>
+
+            <div class="quote">
+                "Whether you're organizing a classroom, planning an event, analyzing data, or building an app, computational thinking gives you a powerful approach."
+            </div>
+        </div>
+
+        <!-- Slide 26: Next Steps -->
+        <div class="slide activity">
+            <h2>🚀 Next Steps</h2>
+            
+            <div class="pillars">
+                <div class="pillar">
+                    <h4>🏃‍♂️ Keep Practicing</h4>
+                    <p>Apply these concepts to personal projects and daily challenges</p>
+                </div>
+                
+                <div class="pillar">
+                    <h4>👀 Look for Opportunities</h4>
+                    <p>Find computational thinking opportunities in your daily life</p>
+                </div>
+                
+                <div class="pillar">
+                    <h4>🔍 Explore Python</h4>
+                    <p>If you want to continue learning Python, check out <a target="_blank" href="https://github.com/CSCI-1100/class_resources_public/blob/main/intro_to_programming_with_python/python-getting-started-guide.md">this resource</a></p>
+                </div>
+                
+                <div class="pillar">
+                    <h4>💪 Remember</h4>
+                    <p>Every expert was once a beginner who kept practicing!</p>
+                </div>
+            </div>
+
+            <div class="team-demo">
+                <h3>🎯 Practice Ideas:</h3>
+                <ul>
+                    <li>Create a grade calculator for your classes</li>
+                    <li>Build a simple quiz game</li>
+                    <li>Make a to-do list organizer</li>
+                    <li>Design a budget tracker</li>
+                    <li>Build a random password generator</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 27: Assessment Alignment -->
+        <div class="slide concept">
+            <h2>📋 What We've Covered for Assessment</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h3>🐍 Programming Concepts:</h3>
+                    <ul style="font-size: 0.9em;">
+                        <li>Variables and Data Types</li>
+                        <li>Python Data Types (str, int, float, bool)</li>
+                        <li>Print Function and F-strings</li>
+                        <li>List Indexing (0-based)</li>
+                        <li>Boolean Logic</li>
+                        <li>For Loop Range</li>
+                        <li>While Loops</li>
+                        <li>Variable Assignment</li>
+                        <li>Order of Operations</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>🧠 Computational Thinking:</h3>
+                    <ul style="font-size: 0.9em;">
+                        <li>Decomposition</li>
+                        <li>Pattern Recognition</li>
+                        <li>Abstraction</li>
+                        <li>Algorithm Design</li>
+                        <li>Real-world Applications</li>
+                    </ul>
+                    <br>
+                    <a target="_blank" href="https://csci-1100.github.io/class_resources_public/intro_to_programming_with_python/#resources"><button class="nav-btn">🔗 Refer to the Glossary & Study Guide for your quiz!</button></a>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 30px;">
+                <p><strong>🎯 Key Achievement:</strong> You now understand both the <em>how</em> (Python syntax) and the <em>why</em> (computational thinking) of programming!</p>
+            </div>
+        </div>
+
+        <!-- Slide 28: Thank You -->
+        <div class="slide intro">
+            <h1>🎉 Thank You!</h1>
+            
+            <div class="highlight-box" style="text-align: center; margin-top: 80px;">
+                <img src="https://media.istockphoto.com/id/669726104/photo/koala.jpg?s=612x612&w=0&k=20&c=VfC_52Cl4TVEQOCxsy3lkC2aVFeB30sKy7r56iIsWkA=" alt="Winking koala with leaf in mouth" style="border-radius: 20px;">
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" onclick="previousSlide()">◀ Previous</button>
+            <div class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">11</span>
+            </div>
+            <button class="nav-btn" onclick="nextSlide()">Next ▶</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = index + 1;
+            
+            // Update navigation buttons
+            const prevBtn = document.querySelector('.nav-btn');
+            const nextBtn = document.querySelectorAll('.nav-btn')[1];
+            
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                showSlide(currentSlideIndex);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                showSlide(currentSlideIndex);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
