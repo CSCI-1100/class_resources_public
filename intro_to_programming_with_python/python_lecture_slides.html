@@ -109,7 +109,7 @@
 
         .pillars {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
             margin: 30px 0;
         }
@@ -370,25 +370,183 @@
                 <div class="pillar">
                     <h4>📋 Digital Attendance</h4>
                     <p>Microsoft Forms collect student information automatically</p>
+                    <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Form container background -->
+                        <rect x="20" y="30" width="160" height="140" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+                        
+                        <!-- Form title -->
+                        <rect x="35" y="45" width="80" height="8" rx="2" fill="#374151"/>
+                        
+                        <!-- First input field -->
+                        <rect x="35" y="65" width="130" height="16" rx="3" fill="#f9fafb" stroke="#d1d5db" stroke-width="1"/>
+                        <rect x="40" y="69" width="60" height="4" rx="1" fill="#9ca3af"/>
+                        
+                        <!-- Second input field -->
+                        <rect x="35" y="90" width="130" height="16" rx="3" fill="#f9fafb" stroke="#d1d5db" stroke-width="1"/>
+                        <rect x="40" y="94" width="80" height="4" rx="1" fill="#9ca3af"/>
+                        
+                        <!-- Third input field (larger - text area) -->
+                        <rect x="35" y="115" width="130" height="32" rx="3" fill="#f9fafb" stroke="#d1d5db" stroke-width="1"/>
+                        <rect x="40" y="120" width="70" height="4" rx="1" fill="#9ca3af"/>
+                        <rect x="40" y="127" width="90" height="4" rx="1" fill="#9ca3af"/>
+                        <rect x="40" y="134" width="50" height="4" rx="1" fill="#9ca3af"/>
+                        
+                        <!-- Submit button -->
+                        <rect x="120" y="155" width="45" height="18" rx="4" fill="#3b82f6"/>
+                        <rect x="128" y="160" width="29" height="4" rx="1" fill="#ffffff"/>
+                        
+                        <!-- Small form icons -->
+                        <circle cx="45" cy="73" r="2" fill="#6b7280"/>
+                        <circle cx="45" cy="98" r="2" fill="#6b7280"/>
+                        <rect x="43" y="123" width="4" height="4" rx="1" fill="#6b7280"/>
+                    </svg>
                 </div>
                 <div class="pillar">
                     <h4>📊 Data Processing</h4>
                     <p>Excel responses cleaned and organized (abstraction!)</p>
+                    <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Excel window background -->
+                        <rect x="20" y="20" width="160" height="160" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+                        
+                        <!-- Excel header bar -->
+                        <rect x="20" y="20" width="160" height="25" rx="4" fill="#217346"/>
+                        <rect x="22" y="42" width="156" height="1" fill="#d1d5db"/>
+                        
+                        <!-- Column header -->
+                        <rect x="20" y="45" width="160" height="20" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1"/>
+                        <text x="100" y="57" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#374151">Name</text>
+                        
+                        <!-- Grid lines - vertical -->
+                        <line x1="20" y1="45" x2="20" y2="180" stroke="#d1d5db" stroke-width="1"/>
+                        <line x1="180" y1="45" x2="180" y2="180" stroke="#d1d5db" stroke-width="1"/>
+                        
+                        <!-- Grid lines - horizontal -->
+                        <line x1="20" y1="65" x2="180" y2="65" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <line x1="20" y1="80" x2="180" y2="80" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <line x1="20" y1="95" x2="180" y2="95" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <line x1="20" y1="110" x2="180" y2="110" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <line x1="20" y1="125" x2="180" y2="125" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <line x1="20" y1="140" x2="180" y2="140" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <line x1="20" y1="155" x2="180" y2="155" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <line x1="20" y1="170" x2="180" y2="170" stroke="#e5e7eb" stroke-width="0.5"/>
+                        
+                        <!-- Row numbers -->
+                        <rect x="5" y="65" width="15" height="15" fill="#f9fafb" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <text x="12.5" y="74" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#6b7280">1</text>
+                        
+                        <rect x="5" y="80" width="15" height="15" fill="#f9fafb" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <text x="12.5" y="89" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#6b7280">2</text>
+                        
+                        <rect x="5" y="95" width="15" height="15" fill="#f9fafb" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <text x="12.5" y="104" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#6b7280">3</text>
+                        
+                        <rect x="5" y="110" width="15" height="15" fill="#f9fafb" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <text x="12.5" y="119" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#6b7280">4</text>
+                        
+                        <rect x="5" y="125" width="15" height="15" fill="#f9fafb" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <text x="12.5" y="134" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#6b7280">5</text>
+                        
+                        <rect x="5" y="140" width="15" height="15" fill="#f9fafb" stroke="#e5e7eb" stroke-width="0.5"/>
+                        <text x="12.5" y="149" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#6b7280">6</text>
+                        
+                        <!-- Names in cells -->
+                        <text x="25" y="74" font-family="Arial, sans-serif" font-size="9" fill="#374151">Maxwell</text>
+                        <text x="25" y="89" font-family="Arial, sans-serif" font-size="9" fill="#374151">Chidi</text>
+                        <text x="25" y="104" font-family="Arial, sans-serif" font-size="9" fill="#374151">Monika</text>
+                        <text x="25" y="119" font-family="Arial, sans-serif" font-size="9" fill="#374151">Segun</text>
+                        <text x="25" y="134" font-family="Arial, sans-serif" font-size="9" fill="#374151">Sushmita</text>
+                        <text x="25" y="149" font-family="Arial, sans-serif" font-size="9" fill="#374151">Preet</text>
+                        
+                        <!-- Excel logo area (simplified) -->
+                        <rect x="25" y="25" width="8" height="8" fill="#ffffff" rx="1"/>
+                        <rect x="26" y="26" width="6" height="3" fill="#217346"/>
+                        <rect x="26" y="30" width="6" height="2" fill="#10b981"/>
+                        
+                        <!-- Window controls -->
+                        <circle cx="165" cy="32" r="3" fill="#ef4444"/>
+                        <circle cx="175" cy="32" r="3" fill="#f59e0b"/>
+                        <circle cx="155" cy="32" r="3" fill="#10b981"/>
+                    </svg>
                 </div>
                 <div class="pillar">
                     <h4>🎲 Team Generation</h4>
                     <p>Automated tool randomly assigns equal teams</p>
+                    <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Background -->
+                        <rect x="10" y="10" width="180" height="180" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+                        
+                        <!-- Title -->
+                        <text x="100" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1e293b">Team Assignments</text>
+                        
+                        <!-- Team Koalas Container -->
+                        <rect x="20" y="45" width="75" height="130" rx="6" fill="#ffffff" stroke="#a855f7" stroke-width="2"/>
+                        
+                        <!-- Team Koalas Header -->
+                        <rect x="20" y="45" width="75" height="25" rx="6" fill="#a855f7"/>
+                        <rect x="20" y="64" width="75" height="6" fill="#a855f7"/>
+                        
+                        <!-- Koala emoji/icon (simplified) -->
+                        <circle cx="30" cy="57" r="4" fill="#6b7280"/>
+                        <circle cx="28" cy="55" r="1.5" fill="#000000"/>
+                        <circle cx="32" cy="55" r="1.5" fill="#000000"/>
+                        <circle cx="30" cy="59" r="0.8" fill="#000000"/>
+                        
+                        <text x="40" y="59" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#ffffff">Team Koalas</text>
+                        
+                        <!-- Team Koalas Members -->
+                        <circle cx="28" cy="85" r="2" fill="#a855f7"/>
+                        <text x="35" y="87" font-family="Arial, sans-serif" font-size="8" fill="#374151">Maxwell</text>
+                        
+                        <circle cx="28" cy="100" r="2" fill="#a855f7"/>
+                        <text x="35" y="102" font-family="Arial, sans-serif" font-size="8" fill="#374151">Chidi</text>
+                        
+                        <circle cx="28" cy="115" r="2" fill="#a855f7"/>
+                        <text x="35" y="117" font-family="Arial, sans-serif" font-size="8" fill="#374151">Monika</text>
+                        
+                        <!-- Team count -->
+                        <text x="57" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="#6b7280">3 members</text>
+                        
+                        <!-- Team Ducks Container -->
+                        <rect x="105" y="45" width="75" height="130" rx="6" fill="#ffffff" stroke="#0ea5e9" stroke-width="2"/>
+                        
+                        <!-- Team Ducks Header -->
+                        <rect x="105" y="45" width="75" height="25" rx="6" fill="#0ea5e9"/>
+                        <rect x="105" y="64" width="75" height="6" fill="#0ea5e9"/>
+                        
+                        <!-- Duck emoji/icon (simplified) -->
+                        <ellipse cx="115" cy="57" rx="4" ry="3" fill="#fbbf24"/>
+                        <circle cx="113" cy="56" r="1" fill="#000000"/>
+                        <polygon points="111,58 109,59 111,60" fill="#f59e0b"/>
+                        
+                        <text x="125" y="59" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#ffffff">Team Ducks</text>
+                        
+                        <!-- Team Ducks Members -->
+                        <circle cx="113" cy="85" r="2" fill="#0ea5e9"/>
+                        <text x="120" y="87" font-family="Arial, sans-serif" font-size="8" fill="#374151">Segun</text>
+                        
+                        <circle cx="113" cy="100" r="2" fill="#0ea5e9"/>
+                        <text x="120" y="102" font-family="Arial, sans-serif" font-size="8" fill="#374151">Sushmita</text>
+                        
+                        <circle cx="113" cy="115" r="2" fill="#0ea5e9"/>
+                        <text x="120" y="117" font-family="Arial, sans-serif" font-size="8" fill="#374151">Preet</text>
+                        
+                        <!-- Team count -->
+                        <text x="142" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="#6b7280">3 members</text>
+                        
+                        <!-- Decorative elements -->
+                        <line x1="97" y1="50" x2="103" y2="50" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="2,2"/>
+                        <line x1="97" y1="110" x2="103" y2="110" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="2,2"/>
+                        <line x1="97" y1="170" x2="103" y2="170" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="2,2"/>
+                    </svg>
                 </div>
             </div>
 
             <div class="team-demo">
-                <h3>🔗 Demo Links (Use Your Class Form):</h3>
+                <h3>🔗 Demo Links (In-person classes):</h3>
                 <ul>
-                    <li>Dr. Dubay's Monday: https://forms.office.com/r/H64qC6ngKM</li>
-                    <li>Dr. Dubay's Tuesday: https://forms.office.com/r/GBeQPf6BCs</li>
-                    <li>Prof. Haas: https://forms.office.com/r/eeMmgJVNZ0</li>
+                    <li>Form link provided in class</li>
+                    <li><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/haasr/student-team-generator/blob/master/index.html" style="font-size: 1.1em"><strong>Team Generator</strong></a></li>
                 </ul>
-                <p><strong>Team Generator:</strong> https://htmlpreview.github.io/?https://github.com/haasr/student-team-generator/blob/master/index.html</p>
             </div>
         </div>
 
@@ -419,6 +577,13 @@
                     <h4>📋 Algorithm Design</h4>
                     <p><strong>Creating step-by-step instructions that always work</strong></p>
                     <small>Team formation: form → clean → generate → display</small>
+                </div>
+                <div class="pillar" style="background: #ffdcf6e6;">
+                    <h4 style="color: #e952c6;">⚠️ Online Student!</h4>
+                    <p>
+                        Before continuing, open an online Python interpreter such as <a target="_blank" href="https://www.programiz.com/python-programming/online-compiler/">this one</a>
+                        so you can copy and paste the code examples. When you click "Run", You'll get to see the results! Try tweaking the code examples and watching the output change!
+                    </p>
                 </div>
             </div>
         </div>
@@ -801,7 +966,7 @@ for team_num, members in teams.items():
 
             <div class="team-demo">
                 <h3>Output would look like:</h3>
-                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-family: monospace;">
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-size: 1.5em; font-family: monospace;">
                     === Team 1 ===<br>
                     &nbsp;&nbsp;1. Prinsa<br>
                     &nbsp;&nbsp;2. Segun<br>
@@ -820,7 +985,7 @@ for team_num, members in teams.items():
             </div>
 
             <div class="code-block">
-                <pre><code class="language-python">import random
+                <pre><code class="language-python">import random ## Part 1
 
 def create_teams(student_names, team_size=4):
     """
@@ -853,7 +1018,7 @@ def create_teams(student_names, team_size=4):
             <h2>🎯 Team Display Function</h2>
             
             <div class="code-block">
-                <pre><code class="language-python">def display_teams(teams):
+                <pre><code class="language-python">def display_teams(teams): ## Part 2 (paste below Part 1)
     """
     Display teams in a nice format (abstraction - hiding complexity)
     """
@@ -884,7 +1049,7 @@ def create_teams(student_names, team_size=4):
             <h2>🎲 Running Our Team Generator</h2>
             
             <div class="code-block">
-                <pre><code class="language-python"># Demo with sample data (like our cleaned Excel names)
+                <pre><code class="language-python"># Demo with sample data (like our cleaned Excel names) ## Part 3 (paste below Part 2)
 sample_students = [
     "Maxwell", "Chidi", "Monika", "Segun", "Sushmita" "Preet",
     "Hassan", "Sharon", "Avas", "Ameerat", "Prinsa", "Aswad",
