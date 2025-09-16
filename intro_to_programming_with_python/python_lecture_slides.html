@@ -578,13 +578,6 @@
                     <p><strong>Creating step-by-step instructions that always work</strong></p>
                     <small>Team formation: form → clean → generate → display</small>
                 </div>
-                <div class="pillar" style="background: #ffdcf6e6;">
-                    <h4 style="color: #e952c6;">⚠️ Online Student!</h4>
-                    <p>
-                        Before continuing, open an online Python interpreter such as <a target="_blank" href="https://www.programiz.com/python-programming/online-compiler/">this one</a>
-                        so you can copy and paste the code examples. When you click "Run", You'll get to see the results! Try tweaking the code examples and watching the output change!
-                    </p>
-                </div>
             </div>
         </div>
 
@@ -615,7 +608,19 @@ for i, team in enumerate(teams, 1):  # Communication step
             </div>
         </div>
 
-        <!-- Slide 9: Variables - Digital Containers -->
+        <!-- Slide 9: Online Student CTA -->
+        <div class="slide concept">
+            <h2>Get Ready to Run Some Python</h2>            
+            <div class="highlight-box">
+                <h4 style="color: #e952c6;">⚠️ Online Student!</h4>
+                <p>
+                    Before continuing, open an online Python interpreter such as <a target="_blank" href="https://www.programiz.com/python-programming/online-compiler/">this one</a>
+                    so you can copy and paste the code examples. When you click "Run", You'll get to see the results! Try tweaking the code examples and watching the output change!
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Variables - Digital Containers -->
         <div class="slide code">
             <h2>📦 Variables: Digital Containers</h2>
             
@@ -626,7 +631,7 @@ for i, team in enumerate(teams, 1):  # Communication step
             <div class="code-block">
                 <pre><code class="language-python"># Creating our first variables (like storing form responses)
 name = "Chelsie"
-age = 32
+age = 42
 height = 5.7
 likes_koalas = True
 
@@ -635,12 +640,111 @@ print("I am", age, "years old")</code></pre>
             </div>
 
             <div class="team-demo">
-                <h3>🔑 Key Concept:</h3>
-                <p>The <code>=</code> sign doesn't mean "equals"—it means <strong>"store this value in this container."</strong></p>
+                <h3>🔑 Key Concept: Think of each variable as a container that holds a value</h3>
+                
+                <svg width="200" height="100" xmlns="http://www.w3.org/2000/svg" style="display: inline;">
+                    <!-- Box outline -->
+                    <rect x="10" y="10" width="180" height="80" 
+                            fill="#f8f9fa" 
+                            stroke="#6c757d" 
+                            stroke-width="2" 
+                            rx="8"/>
+                    
+                    <!-- Variable label -->
+                    <text x="100" y="35" 
+                            text-anchor="middle" 
+                            font-family="Arial, sans-serif" 
+                            font-size="12" 
+                            fill="#6c757d" 
+                            font-weight="bold">name</text>
+                    
+                    <!-- Variable value -->
+                    <text x="100" y="60" 
+                            text-anchor="middle" 
+                            font-family="monospace" 
+                            font-size="16" 
+                            fill="#e952c6" 
+                            font-weight="bold">"Chelsie"</text>
+                </svg>
+                
+                <svg width="200" height="100" xmlns="http://www.w3.org/2000/svg" style="display: inline;">
+                    <!-- Box outline -->
+                    <rect x="10" y="10" width="180" height="80" 
+                            fill="#f8f9fa" 
+                            stroke="#6c757d" 
+                            stroke-width="2" 
+                            rx="8"/>
+                    
+                    <!-- Variable label -->
+                    <text x="100" y="35" 
+                            text-anchor="middle" 
+                            font-family="Arial, sans-serif" 
+                            font-size="12" 
+                            fill="#6c757d" 
+                            font-weight="bold">age</text>
+                    
+                    <!-- Variable value -->
+                    <text x="100" y="60" 
+                            text-anchor="middle" 
+                            font-family="monospace" 
+                            font-size="16" 
+                            fill="#4a9eff" 
+                            font-weight="bold">42</text>
+                </svg>
+             
+                <svg width="200" height="100" xmlns="http://www.w3.org/2000/svg" style="display: inline;">
+                <!-- Box outline -->
+                <rect x="10" y="10" width="180" height="80" 
+                        fill="#f8f9fa" 
+                        stroke="#6c757d" 
+                        stroke-width="2" 
+                        rx="8"/>
+                
+                <!-- Variable label -->
+                <text x="100" y="35" 
+                        text-anchor="middle" 
+                        font-family="Arial, sans-serif" 
+                        font-size="12" 
+                        fill="#6c757d" 
+                        font-weight="bold">height</text>
+                
+                <!-- Variable value -->
+                <text x="100" y="60" 
+                        text-anchor="middle" 
+                        font-family="monospace" 
+                        font-size="16" 
+                        fill="#28a745" 
+                        font-weight="bold">5.7</text>
+                </svg>
+
+                <svg width="200" height="100" xmlns="http://www.w3.org/2000/svg" style="display: inline;">
+                    <!-- Box outline -->
+                    <rect x="10" y="10" width="180" height="80" 
+                            fill="#f8f9fa" 
+                            stroke="#6c757d" 
+                            stroke-width="2" 
+                            rx="8"/>
+                    
+                    <!-- Variable label -->
+                    <text x="100" y="35" 
+                            text-anchor="middle" 
+                            font-family="Arial, sans-serif" 
+                            font-size="12" 
+                            fill="#6c757d" 
+                            font-weight="bold">likes_koalas</text>
+                    
+                    <!-- Variable value -->
+                    <text x="100" y="60" 
+                            text-anchor="middle" 
+                            font-family="monospace" 
+                            font-size="16" 
+                            fill="#ff6b35" 
+                        font-weight="bold">True</text>
+                </svg>
             </div>
         </div>
 
-        <!-- Slide 10: Python's Data Types -->
+        <!-- Slide 11: Python's Data Types -->
         <div class="slide code">
             <h2>🏷️ Python's Data Types</h2>
             
@@ -689,9 +793,9 @@ has_partner_preference = False</code></pre>
             </div>
         </div>
 
-        <!-- Slide 11: The Magic of Print -->
+        <!-- Slide 12: Output - The Magic of Print -->
         <div class="slide code">
-            <h2>🖨️ The Magic of the Print Function</h2>
+            <h2>🖨️ <span style="color: #e952c6;">Output: </span>The Magic of the Print Function</h2>
             
             <div class="code-block">
                 <pre><code class="language-python">print("This displays on screen!")
@@ -700,11 +804,15 @@ print("We have", 127, "students today!")
 # Modern Python way with f-strings (like our team display)
 student_name = "Taylor"
 team_number = 3
-print(f"{student_name} is assigned to Team {team_number}!")</code></pre>
+print(f"{student_name} is assigned to Team {team_number}!")
+
+# Advanced f-string formatting
+average_score = 87.6789
+print(f"Team average: {average_score:.1f}%")  # Shows: 87.7%</code></pre>
             </div>
 
             <div class="team-demo">
-                <h3>🎯 Hands-on Activity: Personal Profile</h3>
+                <h3 style="color: #e952c6;">👉 Your Turn: Personal Profile</h3>
                 <p>Create variables about yourself and use print() to display a personal profile, similar to how our form collected and displayed information.</p>
                 
                 <div class="step">Try creating variables for: name, age, favorite subject, graduation year</div>
@@ -712,7 +820,34 @@ print(f"{student_name} is assigned to Team {team_number}!")</code></pre>
             </div>
         </div>
 
-        <!-- Slide 12: Lists - Organizing Multiple Items -->
+        <!-- Slide 13: Input - Getting Information from Users -->
+        <div class="slide code">
+            <h2>⌨️ <span style="color: #2c8cfa;">Input: </span>Getting Information from Users</h2>
+            
+            <div class="code-block">
+                <pre><code class="language-python">name = input("What's your name?: ") # Won't continue until you press the enter key
+print(f"Nice to meet you, {name}!")
+
+# Getting numbers - int() converts it from string (str) to integer (int)
+age = int(input("How old are you?: "))
+print(f"You'll be {age+10} in 10 years!")
+
+# Building an interactive profile collector
+favorite_subject = input("What's your favorite subject?: ")
+graduation_year = int(input("What year do you graduate?: "))
+print(f"{name} loves {favorite_subject} and graduates in {graduation_year}!")</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3 style="color: #3c94f8;">👉 Your Turn: Interactive Profile Builder</h3>
+                <p>Combine input() and print() to create an interactive program that asks users for their information and displays it back nicely formatted.</p>
+                
+                <div class="step">Ask for: name, favorite hobby, dream job, and hometown</div>
+                <div class="step">Use input() to collect the data, then print() with f-strings to display a bio (e.g. "My name is ___. I'm from ___", etc.)</div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Lists - Organizing Multiple Items -->
         <div class="slide code">
             <h2>📋 Lists: Organizing Multiple Items</h2>
             
@@ -721,29 +856,65 @@ print(f"{student_name} is assigned to Team {team_number}!")</code></pre>
             </div>
 
             <div class="code-block">
-                <pre><code class="language-python"># Like our cleaned list from the Excel form
-students_present = ["Anica", "Chelsie", "Doug", "Tahsin", "Mike"]
-team_sizes = [4, 4, 4, 3]  # Different team sizes
-attendance_status = [True, True, False, True, True]
-
-print(students_present)</code></pre>
+                <pre><code class="language-python">todo_list = ["Clean room", "Do homework", "Work out"]
+# Break a string up into a list with the *split* function!
+shopping_list_string = "apples,bread,eggs"
+shopping_list = shopping_list_string.split(",")
+print(shopping_list) # prints ['apples', 'bread', 'eggs']
+</code></pre>
             </div>
-
             <div class="team-demo">
                 <h3>🔢 The Secret of Indexing: Computers Count from 0!</h3>
                 <div class="code-block">
-                    <pre><code class="language-python">students = ["Anica", "Chelsie", "Doug"]
-
-print(students[0])  # "Anica" - first student
-print(students[1])  # "Chelsie" - second student  
-print(students[2])  # "Doug" - third student</code></pre>
+                    <pre><code class="language-python">todo_list = ["Clean room", "Do homework", "Work out"]
+# Indexing: "Clean room"
+print("The first item in the to-do list is: " + todo_list[0])
+# Indexing: "Do homework"
+print(f"The second item in the to-do list is: {todo_list[1]}") # f-string
+# Indexing: "Work out"
+print(f"The third item in the to-do list is: {todo_list[2]}") # f-string 
+</code></pre>
                 </div>
                 
                 <p><strong>Why start from 0?</strong> Think of it as "how many steps from the beginning"</p>
             </div>
         </div>
 
-        <!-- Slide 13: Boolean Logic -->
+        <!-- Slide 15: Lists Methods: Updating Your Lists -->
+        <div class="slide code">
+            <h2>🔧 List Methods: Updating Your Lists</h2>
+            
+            <div class="highlight-box">
+                <p>Lists aren't just for storing - you can modify them as you complete tasks and get new ones!</p>
+            </div>
+
+            <div class="code-block">
+                <pre><code class="language-python">todo_list = ["Clean room", "Do homework", "Work out"]
+# How many items do we have?
+print(f"I have {len(todo_list)} tasks to complete")
+
+# Completed a task? Remove it!
+todo_list.remove("Clean room")
+print("✅ Cleaned my room!")
+print(f"Tasks remaining: {todo_list}")
+
+# Got a new task? Add it to the end!
+todo_list.append("Call grandma")
+print(f"Updated list: {todo_list}")
+print(f"Now I have {len(todo_list)} tasks")</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3 style="color: #28a745;">👉 Your Turn: Task Manager Simulation</h3>
+                <p>Create your own dynamic to-do list that changes as you work through it!</p>
+                <div class="step">Start with a list of 3-4 tasks</div>
+                <div class="step">Remove a completed task and celebrate with print()</div>
+                <div class="step">Add a new urgent task that just came up</div>
+                <div class="step">Show your final list and count</div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Boolean Logic -->
         <div class="slide concept">
             <h2>⚖️ Making Decisions with Boolean Logic</h2>
             
@@ -752,36 +923,36 @@ print(students[2])  # "Doug" - third student</code></pre>
             </div>
 
             <div class="code-block">
-                <pre><code class="language-python"># Team formation logic
-total_students = 127
-desired_team_size = 4
+                <pre><code class="language-python"># Scenario: Should you take an umbrella?
+is_raining = True
+has_hood = True
+is_windy = True
 
-teams_possible = total_students // desired_team_size  # Integer division
-students_remaining = total_students % desired_team_size  # Remainder
+# Don't need umbrella if it's NOT raining
+# Or if you have a hood and it's NOT windy
+need_umbrella = is_raining and not (has_hood and not is_windy)
 
-print(f"We can make {teams_possible} teams of {desired_team_size}")
-print(f"With {students_remaining} students left over")
-
-# Decision making
-if students_remaining == 0:
-    print("Perfect! All teams are equal size")
+if need_umbrella:
+    print("Take your umbrella! ☔")
 else:
-    print("Some teams will have different sizes")</code></pre>
+    print("No umbrella needed today! 🌞")
+# Fun fact: I made a smart alarm clock with Python in college.
+# It checked wind, humidity, rain to recommend my outfits using if/elif/else decisions! - Prof Haas</code></pre>
             </div>
         </div>
 
-        <!-- Slide 14: Comparison Operations -->
+        <!-- Slide 17: Comparison Operations -->
         <div class="slide code">
             <h2>🔍 Comparison Operations</h2>
             
             <div class="code-block">
-                <pre><code class="language-python">total_students = 127
-min_team_size = 3
-max_team_size = 5
+                <pre><code class="language-python">age = 65
+is_student = False
 
-print(total_students > 100)    # True
-print(min_team_size == max_team_size)  # False
-print(total_students >= 127)   # True
+if age >= 65 or is_student:
+    print("✅ Eligible for discount")
+else:
+    print("❌ Not eligible for discount")
 
 # Boolean variables in action
 form_completed = True
@@ -797,7 +968,7 @@ print(can_assign_to_team)  # True</code></pre>
             </div>
         </div>
 
-        <!-- Slide 15: For Loops -->
+        <!-- Slide 18: For Loops -->
         <div class="slide code">
             <h2>🔄 For Loops: The Heart of Our Team Generator</h2>
             
@@ -827,49 +998,50 @@ for student in students:
             </div>
         </div>
 
-        <!-- Slide 16: Range Function -->
+        <!-- Slide 19: Range Function -->
         <div class="slide code">
             <h2>🔢 The Range Function - Creating Team Numbers</h2>
             
             <div class="code-block">
                 <pre><code class="language-python"># Creating team numbers (like our generator tool)
-num_teams = 5
-for team_num in range(1, num_teams + 1):
-    print(f"Team {team_num} is ready!")
-
-# Range with step (every other number)
-for i in range(0, 10, 2):
-    print(i)  # Prints: 0, 2, 4, 6, 8</code></pre>
+for number in range(1, 6):  # range starts from 1, goes up to (but doesn't include) 6
+    print(f"Counting: {number}")# Prints 1 2 3 4 5 on separate lines</code></pre>
             </div>
 
             <div class="team-demo">
                 <h3>🎯 Building Our Own Simple Team Assigner</h3>
                 <div class="code-block">
-                    <pre><code class="language-python">students = ["Preet", "Hassan", "Sharon", "Avas", "Ameerat", "Stanley"]
-team_size = 2
-team_number = 1
+                    <pre><code class="language-python">students = ["Maxwell", "Chidi", "Monika"]
+students_count = len(students) # The *len* function stores 3 to students_count (students_count = 3)
 
-for i in range(0, len(students), team_size):
-    team = students[i:i + team_size]
-    print(f"Team {team_number}: {team}")
-    team_number += 1</code></pre>
+# Using the range function to print a numbered list!!
+print('Team Koalas:')
+print("-"*20)
+for index in range(students_count):  # Loops through indices of the list (0, 1, 2)
+    count = index + 1 # Human-friendly numbering
+    print(f"{count}. {students[index]}")</code></pre>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 17: While Loops -->
+        <!-- Slide 20: While Loops -->
         <div class="slide code">
             <h2>⏳ While Loops: Loops with Conditions</h2>
             
             <div class="code-block">
                 <pre><code class="language-python"># Like waiting for all students to submit the form
+# Interactive form submission example
 students_submitted = 0
-total_students = 127
+total_students = 6 # Pretend class size is 6
 
-while students_submitted < total_students:
-    print(f"Waiting for submissions... ({students_submitted}/{total_students})")
-    students_submitted += 10  # Simulate 10 more submissions
-    
+print("Please enter your name to submit the form.\n")
+
+while students_submitted < total_students: # Repeat the next 3 lines until students_submitted is 6
+    name = input("Enter your name: ")
+    students_submitted += 1 # Add one to the count
+    print(f"Thanks, {name}! Submission received. ({students_submitted}/{total_students})\n")
+
+# Only prints after the loop stops
 print("All students have submitted! Time to generate teams!")</code></pre>
             </div>
 
@@ -878,7 +1050,7 @@ print("All students have submitted! Time to generate teams!")</code></pre>
             </div>
         </div>
 
-        <!-- Slide 18: Operations and Precedence -->
+        <!-- Slide 21: Operations and Precedence -->
         <div class="slide active code">
             <h2>🧮 The Order Matters - Operations and Precedence</h2>
             
@@ -910,170 +1082,15 @@ print(f"Currently: {students_present} students")
 
 # More students arrive
 students_present = students_present + 7
-print(f"Updated: {students_present} students")
 
-# Shorthand way 😎
+# 😎 Cool way
 students_present += 3  # Same as: students_present = students_present + 3
-print(f"Final: {students_present} students")</code></pre>
+print(f"Updated: {students_present} students")</code></pre>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 19: Advanced Output with F-strings -->
-        <div class="slide code">
-            <h2>✨ Advanced Output with F-strings</h2>
-            
-            <div class="highlight-box">
-                <p>Remember how our team generator created nicely formatted team displays? We can do that with f-strings:</p>
-            </div>
-
-            <div class="code-block">
-                <pre><code class="language-python"># Basic team announcement
-student_name = "Mike"
-team_number = 3
-team_size = 4
-
-# Old way
-print("Student " + student_name + " is on Team " + str(team_number))
-
-# Modern f-string way (like our generator tool)
-print(f"Student {student_name} is assigned to Team {team_number}")
-print(f"Team {team_number} now has {team_size} members")
-
-# Advanced formatting
-average_score = 87.6789
-print(f"Team average: {average_score:.1f}%")  # Shows: 87.7%</code></pre>
-            </div>
-        </div>
-
-        <!-- Slide 20: Creating Team Rosters -->
-        <div class="slide code">
-            <h2>📋 Creating Team Rosters</h2>
-            
-            <div class="code-block">
-                <pre><code class="language-python">teams = {
-    1: ["Prinsa", "Segun", "Chidi"],
-    2: ["Shushmita", "Ameerat", "Stanley"],
-    3: ["Monika", "Maxwell", "Segun"]
-}
-
-for team_num, members in teams.items():
-    print(f"\n=== Team {team_num} ===")
-    for i, member in enumerate(members, 1):
-        print(f"  {i}. {member}")
-    print(f"Total members: {len(members)}")</code></pre>
-            </div>
-
-            <div class="team-demo">
-                <h3>Output would look like:</h3>
-                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-size: 1.5em; font-family: monospace;">
-                    === Team 1 ===<br>
-                    &nbsp;&nbsp;1. Prinsa<br>
-                    &nbsp;&nbsp;2. Segun<br>
-                    &nbsp;&nbsp;3. Chidi<br>
-                    Total members: 3
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 21: Complete Team Generator Program -->
-        <div class="slide activity">
-            <h2>🛠️ Building Our Own Team Generator</h2>
-            
-            <div class="highlight-box">
-                <p>Let's combine everything we've learned to create a simplified version of the team generator tool we used earlier!</p>
-            </div>
-
-            <div class="code-block">
-                <pre><code class="language-python">import random ## Part 1
-
-def create_teams(student_names, team_size=4):
-    """
-    Create random teams from a list of student names.
-    This is our algorithm design in action!
-    """
-    # Step 1: Make a copy and shuffle (randomization)
-    students = student_names.copy()
-    random.shuffle(students)
-    
-    # Step 2: Create teams (decomposition)
-    teams = []
-    team_number = 1
-    
-    # Step 3: Group students (pattern recognition)
-    for i in range(0, len(students), team_size):
-        team = students[i:i + team_size]
-        teams.append({
-            'number': team_number,
-            'members': team
-        })
-        team_number += 1
-    
-    return teams</code></pre>
-            </div>
-        </div>
-
-        <!-- Slide 22: Display Function -->
-        <div class="slide code">
-            <h2>🎯 Team Display Function</h2>
-            
-            <div class="code-block">
-                <pre><code class="language-python">def display_teams(teams): ## Part 2 (paste below Part 1)
-    """
-    Display teams in a nice format (abstraction - hiding complexity)
-    """
-    print("\n" + "="*50)
-    print("🎯 TEAM ASSIGNMENTS")
-    print("="*50)
-    
-    for team in teams:
-        print(f"\n📋 Team {team['number']}:")
-        for i, member in enumerate(team['members'], 1):
-            print(f"   {i}. {member}")
-        print(f"   Total: {len(team['members'])} members")
-    
-    print(f"\n📊 Summary: {len(teams)} teams created!")</code></pre>
-            </div>
-
-            <div class="team-demo">
-                <h3>🧠 Computational Thinking in Action:</h3>
-                <div class="step">✅ <strong>Decomposition:</strong> Broke problem into shuffle→group→display</div>
-                <div class="step">✅ <strong>Pattern Recognition:</strong> Same grouping process for each team</div>
-                <div class="step">✅ <strong>Abstraction:</strong> Functions hide complex details</div>
-                <div class="step">✅ <strong>Algorithm Design:</strong> Repeatable process that works for any names/size</div>
-            </div>
-        </div>
-
-        <!-- Slide 23: Demo with Sample Data -->
-        <div class="slide activity">
-            <h2>🎲 Running Our Team Generator</h2>
-            
-            <div class="code-block">
-                <pre><code class="language-python"># Demo with sample data (like our cleaned Excel names) ## Part 3 (paste below Part 2)
-sample_students = [
-    "Maxwell", "Chidi", "Monika", "Segun", "Sushmita" "Preet",
-    "Hassan", "Sharon", "Avas", "Ameerat", "Prinsa", "Aswad",
-    "Avas", "Chelsie", "Ryan", "Mike", "Anica", "Doug"
-]
-
-print("🎲 Creating random teams...")
-student_teams = create_teams(sample_students, team_size=4)
-display_teams(student_teams)</code></pre>
-            </div>
-
-            <div class="team-demo">
-                <h3>🎯 Try it yourself!</h3>
-                <p>Modify the code to:</p>
-                <ul>
-                    <li>Change team sizes</li>
-                    <li>Add your classmates' names</li>
-                    <li>Add features like team preferences</li>
-                    <li>Include gender balance or skill distribution</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 24: What We've Accomplished -->
+        <!-- Slide 22: What We've Accomplished -->
         <div class="slide concept">
             <h2>🎉 What We've Accomplished</h2>
             
@@ -1106,7 +1123,47 @@ display_teams(student_teams)</code></pre>
             </div>
         </div>
 
-        <!-- Slide 25: The Big Picture -->
+        <!-- Slide 23: Learning Python - Make your own chatbot -->
+        <div class="slide code">
+            <h2>🤖 Learning Python: Make your own chatbot</h2>
+            
+            <div class="highlight-box">
+                <p>Now that you know input(), varables and decisions, you're ready to create a chatbot that responds differently based on what users say!</p>
+            </div>
+
+            <div class="code-block">
+                <pre><code class="language-python"># Simple chatbot template
+bot_name = "Ryan Bot"
+print(f"🤖 Hi! I'm {bot_name}. What's your name?")
+user_name = input("Your name: ")
+print(f"Nice to meet you, {user_name}!")
+
+print("How are you feeling today?")
+mood = input("Your mood: ").lower()  # .lower() makes it not case-sensitive
+
+if mood == "happy" or mood == "good" or mood == "great":
+    print("🎉 That's awesome! I'm happy you're doing well!")
+elif mood == "sad" or mood == "bad" or mood == "tired":
+    print("😟 Sorry to hear that. I hope your day gets better!")
+else:
+    print(f"🤔 Hmm, {mood} is interesting! Thanks for sharing!")
+
+print(f"It was nice chatting with you, {user_name}! 👋")</code></pre>
+            </div>
+
+            <div class="team-demo">
+                <h3 style="color: #28a745;">👉 Your Turn: Build Your Own Chatbot</h3>
+                <p>Create a personalized chatbot that asks questions and responds based on the answers!</p>
+                
+                <div class="step">Start with a greeting and ask for their name</div>
+                <div class="step">Ask a question (favorite color, hobby, food, etc.)</div>
+                <div class="step">Use if/elif/else to give different responses</div>
+                <div class="step">Add <a target="_blank" href="https://emojifinder.com/">emojis</a> and personality to make it fun!</div>
+                <div class="step">End with a personalized goodbye using their name</div>
+            </div>
+        </div>
+
+        <!-- Slide 24: The Big Picture -->
         <div class="slide concept">
             <h2>🌟 The Big Picture</h2>
             
@@ -1125,11 +1182,11 @@ display_teams(student_teams)</code></pre>
             </div>
 
             <div class="quote">
-                "Whether you're organizing a classroom, planning an event, analyzing data, or building an app, computational thinking gives you a powerful approach."
+                Whether you're organizing a classroom, planning an event, analyzing data, or building an app, computational thinking gives you a powerful approach.
             </div>
         </div>
 
-        <!-- Slide 26: Next Steps -->
+        <!-- Slide 25: Next Steps -->
         <div class="slide activity">
             <h2>🚀 Next Steps</h2>
             
@@ -1158,8 +1215,8 @@ display_teams(student_teams)</code></pre>
             <div class="team-demo">
                 <h3>🎯 Practice Ideas:</h3>
                 <ul>
+                    <li>Build a simple quiz game/chatbot</li>
                     <li>Create a grade calculator for your classes</li>
-                    <li>Build a simple quiz game</li>
                     <li>Make a to-do list organizer</li>
                     <li>Design a budget tracker</li>
                     <li>Build a random password generator</li>
@@ -1167,7 +1224,7 @@ display_teams(student_teams)</code></pre>
             </div>
         </div>
 
-        <!-- Slide 27: Assessment Alignment -->
+        <!-- Slide 26: Assessment Alignment -->
         <div class="slide concept">
             <h2>📋 What We've Covered for Assessment</h2>
             
@@ -1206,7 +1263,7 @@ display_teams(student_teams)</code></pre>
             </div>
         </div>
 
-        <!-- Slide 28: Thank You -->
+        <!-- Slide 27: Thank You -->
         <div class="slide intro">
             <h1>🎉 Thank You!</h1>
             
