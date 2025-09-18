@@ -3,6 +3,12 @@
 
 @import "{{ site.theme }}";
 
+// Hide navigation on specific pages
+.no-nav nav,
+.no-nav .navigation {
+  display: none;
+}
+
 // Add left margin to main content
 .container, .wrapper, main, .content {
   margin-left: 2rem; // Adjust as needed
@@ -16,3 +22,5 @@
     padding-left: 0.5rem;
   }
 }
+
+
