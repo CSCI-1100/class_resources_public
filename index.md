@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 title: CSCI 1100/ CSCI 1150 Module Resources
 ---
 
