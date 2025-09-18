@@ -1,4 +1,12 @@
 remote_theme: broccolini/swiss
+theme_color: yellow
+
 plugins:
   - jekyll-remote-theme
-theme_color: yellow
+
+# GitHub Pages settings
+github: [metadata]
+kramdown:
+  input: GFM
+  hard_wrap: false
+highlighter: rouge

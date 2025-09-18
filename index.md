@@ -1,3 +1,8 @@
+---
+layout: default
+title: CSCI 1100/ CSCI 1150 Module Resources
+---
+
 # CSCI 1100 / CSCI 1150 Module Resources
 
 I'm slowly building up a collection of web-based module resources. See the module links below.
