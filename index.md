@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: minimal
 title: CSCI 1100/ CSCI 1150 Module Resources
 ---
 
