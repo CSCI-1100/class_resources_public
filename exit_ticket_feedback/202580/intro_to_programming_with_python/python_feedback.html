@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Programming - Fall 2025 Exit Tickets Feedback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #764ba2;
+        }
+
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .qa-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .qa-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46a3);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .section-content.expanded {
+            max-height: 3000px;
+            padding: 2rem;
+        }
+
+        .qa-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: #555;
+        }
+
+        .answer.show {
+            max-height: 1000px;
+            margin-top: 1rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap!important;
+            overflow-wrap: break-word!important;
+            word-wrap: break-all!important;
+        }
+
+        .highlight {
+            background: rgba(255, 193, 7, 0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .note {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .note::before {
+            content: "ℹ️";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .warning {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .warning::before {
+            content: "⚠️";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .step-list {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-list ol {
+            counter-reset: step-counter;
+            list-style: none;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .resource-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .resource-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-content.expanded {
+                padding: 1rem;
+            }
+            
+            .category-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Python Programming Q&A</h1>
+            <p>Essential Python Programming Concepts and Answers to Common Questions</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search questions... (e.g., 'What is Python', 'install', 'loops')" id="searchBox">
+        </div>
+
+        <div class="category-nav">
+            <button class="category-btn active" data-category="all">All Questions</button>
+            <button class="category-btn" data-category="basics">Python Basics</button>
+            <button class="category-btn" data-category="setup">Setup & Installation</button>
+            <button class="category-btn" data-category="coding">Coding Concepts</button>
+            <button class="category-btn" data-category="practical">Practical Use</button>
+            <button class="category-btn" data-category="resources">Resources</button>
+        </div>
+
+        <div class="qa-section" data-category="basics">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🐍 Understanding Python Basics</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What is Python and why is it called Python?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><span class="highlight">Python</span> is a programming language that lets you write instructions for computers. It's called "Python" because its creator, Guido van Rossum, was a fan of the British comedy group "Monty Python's Flying Circus" - it has nothing to do with snakes!</p>
+                        
+                        <p><strong>Think of Python like learning a new language:</strong></p>
+                        <ul>
+                            <li>Just like Spanish or French, Python has its own vocabulary and grammar rules</li>
+                            <li>Instead of talking to people, you're "talking" to computers</li>
+                            <li>The computer follows your Python instructions exactly</li>
+                        </ul>
+
+                        <p><strong>Why it's named Python</strong></p>
+                        <p>
+                            The Python programming language was named by its creator, Guido van Rossum, after the British comedy television series "Monty Python's Flying Circus".
+                            While developing the language in the late 1980s and early 1990s, van Rossum was reading the published scripts of the show.
+                            He desired a name for his new programming language that was short, distinctive, and somewhat enigmatic, and decided that
+                            "Python" fit these criteria. The name is a direct reference to the comedy troupe. [<a target="_blank" href="https://docs.python.org/3/faq/general.html">python.org</a>]
+                        </p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What makes Python different from other programming languages?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>Python</h4>
+                                <p><strong>Reads like English:</strong> print("Hello World")</p>
+                                <p><strong>Great for:</strong> Beginners, data analysis, web development</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>Java</h4>
+                                <p><strong>More verbose:</strong> System.out.println("Hello World");</p>
+                                <p><strong>Great for:</strong> Large applications, mobile apps</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>C++</h4>
+                                <p><strong>Very technical:</strong> std::cout << "Hello World";</p>
+                                <p><strong>Great for:</strong> Games, system programming</p>
+                            </div>
+                        </div>
+                        <div class="note">
+                            <strong>Bottom line:</strong> Python is designed to be readable and beginner-friendly while still being powerful enough for professional use.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        I'm still confused about what Python is used for. Can you give real examples?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Python is everywhere! Here are real examples:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🌐 Websites You Use</h4>
+                                <p>Instagram, YouTube, Netflix, Spotify - all use Python for their backends</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🤖 Artificial Intelligence</h4>
+                                <p>ChatGPT, image recognition, self-driving cars - Python powers AI</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📊 Data Analysis</h4>
+                                <p>Netflix recommendations, COVID data tracking, sports statistics</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🎮 Games & Apps</h4>
+                                <p>Parts of games like Civilization IV, desktop applications</p>
+                            </div>
+                        </div>
+                        
+                        <p><strong>In your future career, Python might help you:</strong></p>
+                        <ul>
+                            <li><strong>Business:</strong> Automate repetitive tasks, analyze sales data</li>
+                            <li><strong>Education:</strong> Grade assignments automatically, track student progress</li>
+                            <li><strong>Healthcare:</strong> Analyze patient data, manage medical records</li>
+                            <li><strong>Any field:</strong> Turn manual work into automated processes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="setup">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>💻 Setup & Installation</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How can I use Python on a Chromebook?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Chromebooks can absolutely run Python!</strong> Here are your options:</p>
+                        
+                        <div class="step-list">
+                            <h4>Method 1: Enable Linux Development Environment (Recommended)</h4>
+                            <ol>
+                                <li>Go to <strong>Settings</strong> → <strong>Advanced</strong> → <strong>Developers</strong></li>
+                                <li>Click <strong>"Turn On"</strong> next to Linux development environment</li>
+                                <li>Wait for setup to complete (this may take a few minutes)</li>
+                                <li>Open the <strong>Terminal</strong> app that appears</li>
+                                <li>Type: <code>sudo apt update && sudo apt install python3</code></li>
+                                <li>Press Enter and wait for installation</li>
+                                <li>Test by typing: <code>python3 --version</code></li>
+                            </ol>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Method 2: Online Python Editors (No Installation)</h4>
+                            <ol>
+                                <li>Visit <strong>replit.com</strong> or <strong>trinket.io</strong></li>
+                                <li>Create a free account</li>
+                                <li>Create a new Python project</li>
+                                <li>Start coding immediately in your browser</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="note">
+                            <strong>Which method should I use?</strong> If you're comfortable with technical setup, use Method 1. If you want to start coding immediately, use Method 2.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Where do I download Python for Windows/Mac?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <div class="step-list">
+                            <h4>For Windows:</h4>
+                            <ol>
+                                <li>Go to <strong>python.org/downloads</strong></li>
+                                <li>Click the yellow <strong>"Download Python"</strong> button</li>
+                                <li>Run the downloaded installer</li>
+                                <li><strong>IMPORTANT:</strong> Check "Add Python to PATH" during installation</li>
+                                <li>Click "Install Now"</li>
+                            </ol>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>For Mac:</h4>
+                            <ol>
+                                <li>Go to <strong>python.org/downloads</strong></li>
+                                <li>Download the macOS installer</li>
+                                <li>Open the downloaded .pkg file</li>
+                                <li>Follow the installation wizard</li>
+                            </ol>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Testing Your Installation:</strong> Open Terminal (Mac) or Command Prompt (Windows) and type <code>python --version</code> or <code>python3 --version</code>. You should see a version number.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What program do I use to write Python code?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>You have several options, from simple to advanced:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🟢 Beginner-Friendly</h4>
+                                <p><strong>IDLE:</strong> Comes with Python, simple interface</p>
+                                <p><strong>Thonny:</strong> Designed for beginners, shows variables</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🟡 Intermediate</h4>
+                                <p><strong><a target="_blank" href="https://code.visualstudio.com/download">VS Code</a>:</strong> Free, powerful, lots of features. Professor Haas' choice!</p>
+                                <p><strong>PyCharm Community:</strong> Professional-grade, free version</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔵 Online (No Download)</h4>
+                                <p><strong>Replit:</strong> Code in browser, share projects</p>
+                                <p><strong>Trinket:</strong> Simple online Python editor</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="coding">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🔧 Coding Concepts & Syntax</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        I'm confused about when to use quotes vs brackets. Can you explain?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>This is one of the most common confusions! Here's the breakdown:</strong></p>
+                        
+                        <div class="code-block">
+# QUOTES (" or ') - For TEXT/STRINGS
+name = "Alice"          # Text goes in quotes
+message = 'Hello there' # Single or double quotes work
+print("Hello World")    # Text to display
+
+# SQUARE BRACKETS [ ] - For LISTS  
+numbers = [1, 2, 3, 4]     # List of numbers
+names = ["Alice", "Bob"]    # List of text items
+print(names[0])            # Gets first item: "Alice"
+
+# PARENTHESES ( ) - For FUNCTIONS
+print("Hello")          # Calling the print function
+len([1, 2, 3])         # Calling the len function
+                        </div>
+                        
+                        <div class="note">
+                            <strong>Memory trick:</strong> Quotes are for "quoting" text, brackets make [lists], parentheses call functions().
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What are variables and why do we need them?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Think of variables as labeled containers:</strong></p>
+                        
+                        <div class="code-block">
+# Variables are like labeled boxes that store information
+name = "Sarah"        # Box labeled "name" contains "Sarah"
+age = 20             # Box labeled "age" contains 20
+height = 5.6         # Box labeled "height" contains 5.6
+
+# Now you can use these boxes later
+print("Hi, my name is", name)
+print("I am", age, "years old")
+                        </div>
+                        
+                        <p><strong>Why variables matter:</strong></p>
+                        <ul>
+                            <li><strong>Reusability:</strong> Write "name" instead of "Sarah" 50 times</li>
+                            <li><strong>Easy changes:</strong> Change Sarah's name once, updates everywhere</li>
+                            <li><strong>Calculations:</strong> Store results to use later</li>
+                            <li><strong>User input:</strong> Store what users type</li>
+                        </ul>
+                        
+                        <div class="code-block">
+# Real example: Calculate total cost
+price = 15.99
+tax = 0.08
+total = price + (price * tax)
+print("Total cost:", total)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Loops are confusing. Can you explain them simply?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Loops are just ways to repeat things automatically:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>FOR Loop - "Do this X times"</h4>
+                                <div class="code-block">
+# Print numbers 1 through 5
+for i in range(1, 6):
+    print(i)
+
+# Say hello to each friend
+friends = ["Alice", "Bob", "Charlie"]
+for friend in friends:
+    print("Hello", friend)
+                                </div>
+                            </div>
+                            <div class="resource-card">
+                                <h4>WHILE Loop - "Keep doing this until..."</h4>
+                                <div class="code-block">
+# Keep asking until they say yes
+answer = ""
+while answer != "yes":
+    answer = input("Are you ready? ")
+print("Great! Let's go!")
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p><strong>Real-world analogy:</strong></p>
+                        <ul>
+                            <li><strong>FOR loop:</strong> "Wash each dish in the sink" (you know how many dishes)</li>
+                            <li><strong>WHILE loop:</strong> "Keep washing dishes until sink is empty" (you don't know how many)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What does "syntax" mean and why is it so picky?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Syntax is like grammar rules, but for computers:</strong></p>
+                        
+                        <div class="note">
+                            <strong>Think about English:</strong> "I going store" doesn't follow English grammar. Similarly, <code>print "Hello"</code> doesn't follow Python grammar - it needs parentheses: <code>print("Hello")</code>
+                        </div>
+                        
+                        <p><strong>Common Python syntax rules:</strong></p>
+                        <ul>
+                            <li><strong>Indentation matters:</strong> Use 4 spaces (or the tab key) for blocks of code</li>
+                            <li><strong>Case sensitive:</strong> <code>Print</code> ≠ <code>print</code></li>
+                            <li><strong>Colons for blocks:</strong> <code>if condition:</code></li>
+                            <li><strong>Parentheses for functions:</strong> <code>print()</code> not <code>print</code></li>
+                        </ul>
+                        
+                        <div class="code-block">
+# WRONG - Missing parentheses, wrong indentation
+if age > 18:
+print "You can vote"    # Missing parentheses and wrong indentation
+
+# CORRECT - Proper syntax
+if age > 18:
+    print("You can vote")   # Parentheses and 4-space indent
+                        </div>
+                        
+                        <p><strong>Why computers are picky:</strong> Unlike humans, computers can't guess what you mean. They need exact instructions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="practical">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🎯 Practical Applications & Learning</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How much Python will I really need to know?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>It depends on your goals, but even basic Python is valuable:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📊 Basic Level</h4>
+                                <p><strong>You can:</strong> Automate simple tasks, basic data analysis</p>
+                                <p><strong>Time investment:</strong> 1-2 months of learning</p>
+                                <p><strong>Example:</strong> Organize files, calculate grades</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔧 Intermediate Level</h4>
+                                <p><strong>You can:</strong> Build small applications, web scraping</p>
+                                <p><strong>Time investment:</strong> 6 months of practice</p>
+                                <p><strong>Example:</strong> Personal budget tracker, data visualization</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🚀 Advanced Level</h4>
+                                <p><strong>You can:</strong> Professional development, AI/ML</p>
+                                <p><strong>Time investment:</strong> 1-2 years of study</p>
+                                <p><strong>Example:</strong> Full websites, machine learning models</p>
+                            </div>
+                        </div>
+                        
+                        <div class="note">
+                            <strong>For this class:</strong> Focus on understanding basic concepts. Even if you don't become a programmer, computational thinking helps in any career.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        I understand the concepts but don't know how to actually write code. Help!
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>This is completely normal! Here's how to bridge that gap:</strong></p>
+                        
+                        <div class="step-list">
+                            <h4>Practice Strategy:</h4>
+                            <ol>
+                                <li><strong>Start with tiny programs:</strong> Make Python print your name</li>
+                                <li><strong>Copy and modify:</strong> Take example code and change small parts</li>
+                                <li><strong>Read code aloud:</strong> "This line creates a variable called..."</li>
+                                <li><strong>Predict outcomes:</strong> Before running code, guess what will happen</li>
+                                <li><strong>Break problems down:</strong> "I need to ask for input, then calculate, then display"</li>
+                                <li><strong>Use pseudocode first:</strong> Write your plan in plain English, then translate to Python</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="code-block">
+# Example: From idea to code
+# IDEA: "Ask user their age and tell them if they can vote"
+
+# PSEUDOCODE:
+# 1. Ask user for their age
+# 2. If age is 18 or more, say "You can vote"
+# 3. Otherwise, say "You cannot vote yet"
+
+# PYTHON CODE:
+age = int(input("How old are you? "))
+if age >= 18:
+    print("You can vote!")
+else:
+    print("You cannot vote yet.")
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What's the relationship between Python and AI? Can you use AI to code?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Python and AI have a close relationship:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🤖 Python → AI</h4>
+                                <p>Python is the #1 language for AI development</p>
+                                <p><strong>Why:</strong> Simple syntax, powerful libraries, large community</p>
+                                <p><strong>Examples:</strong> TensorFlow, PyTorch for machine learning</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔄 AI → Python</h4>
+                                <p>AI tools can help you write Python code</p>
+                                <p><strong>Tools:</strong> ChatGPT, GitHub Copilot, Replit AI</p>
+                                <p><strong>Best for:</strong> Explaining code, finding bugs, generating examples</p>
+                            </div>
+                        </div>
+                        
+                        <div class="warning">
+                            <strong>Important note:</strong> AI can help explain and generate code, but you still need to understand the fundamentals. AI makes mistakes, and you need knowledge to spot and fix them. AI can be extremely useful in learning to code, if you treat it like a tutor!
+                        </div>
+                        
+                        <p><strong>How to use AI as a learning tool:</strong></p>
+                        <ul>
+                            <li>Ask it to explain code line by line</li>
+                            <li>Request simpler versions of complex examples</li>
+                            <li>Generate practice problems for specific concepts</li>
+                            <li>Debug errors by pasting error messages</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Will we be doing actual programming projects or just learning theory?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Programming is best learned by doing! Here's what you can expect:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🚀 Early Projects</h4>
+                                <p><strong>Simple programs:</strong> Calculator, Mad Libs generator</p>
+                                <p><strong>Goal:</strong> Practice basic syntax and logic</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🎮 Mid-term Projects</h4>
+                                <p><strong>Interactive programs:</strong> Quiz games, simple simulations</p>
+                                <p><strong>Goal:</strong> Combine multiple concepts</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📊 Advanced Projects</h4>
+                                <p><strong>Data projects:</strong> Analyze real datasets, create visualizations</p>
+                                <p><strong>Goal:</strong> Apply Python to real problems</p>
+                            </div>
+                        </div>
+                        
+                        <div class="note">
+                            <strong>Balance:</strong> You'll learn theory to understand WHY things work, then apply it in hands-on projects to see HOW they work in practice.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="resources">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📚 Additional Resources & Study Tips</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Where can I find additional practice and help?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🎯 Practice Coding</h4>
+                                <p><strong>Codecademy:</strong> Interactive Python lessons</p>
+                                <p><strong>Python.org Tutorial:</strong> Official beginner guide</p>
+                                <p><strong>Automate the Boring Stuff:</strong> Free online book</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🎥 Video Learning</h4>
+                                <p><strong>YouTube:</strong> "Python for Everybody" by Chuck Severance</p>
+                                <p><strong>Khan Academy:</strong> Intro to Programming</p>
+                                <p><strong>Coursera:</strong> Python for Everybody specialization</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>❓ Getting Help</h4>
+                                <p><strong>Stack Overflow:</strong> Search programming questions</p>
+                                <p><strong>Reddit r/learnpython:</strong> Beginner-friendly community</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔧 Tools & References</h4>
+                                <p><strong>Python Documentation:</strong> Official reference</p>
+                                <p><strong>Replit:</strong> Code online, share projects</p>
+                                <p><strong>VS Code</strong> Professor Haas' IDE for everything coding</p>
+                                <p><strong>PyCharm Edu:</strong> IDE designed for learning</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How should I study Python effectively?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <div class="step-list">
+                            <h4>Effective Study Strategies:</h4>
+                            <ol>
+                                <li><strong>Practice Daily:</strong> 15-30 minutes every day beats 3-hour weekend sessions</li>
+                                <li><strong>Type Code Yourself:</strong> Don't just read examples - type them out</li>
+                                <li><strong>Experiment:</strong> Change parts of working code to see what happens</li>
+                                <li><strong>Explain to Others:</strong> Teach concepts to friends or family</li>
+                                <li><strong>Build Something:</strong> Create a simple project that interests you (one of mine was a GroupMe bot to give me the weather and such)</li>
+                                <li><strong>Review Regularly:</strong> Go back to earlier concepts periodically</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="note">
+                            <strong>The 80/20 rule:</strong> Focus 80% of your time on practicing and building, 20% on reading theory.
+                        </div>
+                        
+                        <p><strong>When you get stuck:</strong></p>
+                        <ul>
+                            <li>Read error messages carefully - they often tell you exactly what's wrong</li>
+                            <li>Google the exact error message</li>
+                            <li>Break the problem into smaller pieces</li>
+                            <li>Ask for help early - don't struggle alone for hours</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        I'm worried I'm not "techy" enough for programming. Is this normal?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>This feeling is completely normal and very common!</strong></p>
+                        
+                        <div class="note">
+                            <strong>Reality check:</strong> Programming is more about logical thinking (and getting used to the rules of the language) than being "techy." If you can follow a recipe, give directions, or solve puzzles, you can learn to program.
+                        </div>
+                        
+                        <p><strong>Remember:</strong></p>
+                        <ul>
+                            <li><strong>Everyone starts somewhere:</strong> Even expert programmers were beginners once</li>
+                            <li><strong>It's learnable:</strong> Programming is a skill, not a talent you're born with</li>
+                            <li><strong>Different strengths help:</strong> Good writing skills, attention to detail, and patience are more important than technical background</li>
+                            <li><strong>Growth mindset:</strong> Focus on "I can't do this YET" instead of "I can't do this"</li>
+                        </ul>
+                        
+                        <div class="warning">
+                            <strong>Imposter syndrome is real:</strong> Many successful programmers still feel like they don't know enough. The key is to keep learning and practicing despite these feelings.
+                        </div>
+                        
+                        <p><strong>Tips for building confidence:</strong></p>
+                        <ul>
+                            <li>Celebrate small wins - your first working program is a big deal!</li>
+                            <li>Connect with other beginners in your class</li>
+                            <li>Remember that making mistakes is part of learning</li>
+                            <li>Focus on progress, not perfection</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '▼';
+                header.style.borderRadius = '15px';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '▲';
+                header.style.borderRadius = '15px 15px 0 0';
+            }
+        }
+
+        function toggleAnswer(questionElement) {
+            const answer = questionElement.nextElementSibling;
+            const icon = questionElement.querySelector('.toggle-icon');
+            
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                icon.textContent = '▶';
+            } else {
+                answer.classList.add('show');
+                icon.textContent = '▼';
+            }
+        }
+
+        // Category filtering
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                const sections = document.querySelectorAll('.qa-section');
+                
+                sections.forEach(section => {
+                    if (category === 'all' || section.dataset.category === category) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const sections = document.querySelectorAll('.qa-section');
+            const questions = document.querySelectorAll('.qa-item');
+            
+            if (searchTerm === '') {
+                // Show all sections when search is empty
+                sections.forEach(section => {
+                    section.classList.remove('hidden');
+                    const qaItems = section.querySelectorAll('.qa-item');
+                    qaItems.forEach(item => item.style.display = 'block');
+                });
+                return;
+            }
+            
+            sections.forEach(section => {
+                let hasVisibleItems = false;
+                const qaItems = section.querySelectorAll('.qa-item');
+                
+                qaItems.forEach(item => {
+                    const questionText = item.querySelector('.question').textContent.toLowerCase();
+                    const answerText = item.querySelector('.answer').textContent.toLowerCase();
+                    
+                    if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        hasVisibleItems = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // Show section if it has visible items, hide if not
+                if (hasVisibleItems) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+        });
+
+        // Add hover effects to resource cards
+        document.querySelectorAll('.resource-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 25px rgba(102, 126, 234, 0.2)';
+                this.style.borderLeftColor = '#764ba2';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                this.style.borderLeftColor = '#667eea';
+            });
+        });
+
+        // Auto-expand sections when searched items are found
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm !== '') {
+                document.querySelectorAll('.qa-section:not(.hidden)').forEach(section => {
+                    const content = section.querySelector('.section-content');
+                    const header = section.querySelector('.section-header');
+                    const icon = header.querySelector('.toggle-icon');
+                    
+                    if (!content.classList.contains('expanded')) {
+                        content.classList.add('expanded');
+                        icon.textContent = '▲';
+                        header.style.borderRadius = '15px 15px 0 0';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

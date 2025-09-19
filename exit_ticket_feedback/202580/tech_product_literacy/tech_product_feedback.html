@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Product Literacy - Fall 2025 Exit Tickets Feedback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid #9dd3fc;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46a3);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .section-content.expanded {
+            max-height: 2000px;
+            padding: 2rem;
+        }
+
+        .subsection {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .subsection h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .subsection h4 {
+            color: #764ba2;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .comparison-card {
+            background: rgba(118, 75, 162, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid #764ba2;
+        }
+
+        .comparison-card h4 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .note {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .note::before {
+            content: "💡";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .note strong {
+            color: #856404;
+        }
+
+        .pro-tip {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .pro-tip::before {
+            content: "⭐";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .pro-tip strong {
+            color: #155724;
+        }
+
+        .spec-list {
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .spec-list ul {
+            margin-left: 1.5rem;
+        }
+
+        .spec-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .hierarchy {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hierarchy-item {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 5px;
+        }
+
+        .hierarchy-item strong {
+            min-width: 100px;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-content.expanded {
+                padding: 1rem;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head><body><div class="container">
+<div class="header">
+<h1>Tech Product Literacy</h1>
+<p>Essential Computer Hardware and Technology Concepts Explained</p>
+</div>
+<div class="section">
+<div class="section-header" onclick="toggleSection(this)">
+<h2>🧠 CPU vs GPU: What's the Difference?</h2>
+<span class="toggle-icon">▼</span></div>
+<div class="section-content">
+<div class="comparison-grid">
+<div class="comparison-card">
+<h4>💻 CPU (Central Processing Unit)</h4>
+<p>The "brain" of your computer that handles general computing tasks like running programs, managing files, and coordinating all computer operations. Think of it as a smart manager that can handle many different types of work.</p>
+</div>
+<div class="comparison-card">
+<h4>🎮 GPU (Graphics Processing Unit)</h4>
+<p>Specialized for visual processing and parallel calculations. Originally designed for graphics, but now also used for gaming, video editing, and AI tasks. Think of it as thousands of simple workers that excel at doing the same task simultaneously.</p>
+</div>
+</div>
+<div class="note"><strong>Key difference:</strong> CPU is versatile but handles fewer tasks at once; GPU is specialized but can handle thousands of simple calculations simultaneously.</div>
+</div>
+</div>
+<div class="section">
+<div class="section-header" onclick="toggleSection(this)">
+<h2>💾 Storage and Memory: Understanding the Hierarchy</h2>
+<span class="toggle-icon">▼</span></div>
+<div class="section-content">
+<div class="comparison-grid">
+<div class="comparison-card">
+<h4>⚡ RAM (Memory)</h4>
+<p>Temporary, fast storage that your computer uses while running programs. Measured in GB (gigabytes) - typical range: 8GB to 32GB. Think of it as your desk workspace - more space means you can work on more things at once.</p>
+</div>
+<div class="comparison-card">
+<h4>💿 Storage (Hard Drive/SSD)</h4>
+<p>Permanent storage for your files, programs, and operating system. Measured in GB or TB (terabytes) - typical range: 256GB to 2TB+. Think of it as your filing cabinet - holds everything even when the computer is off.</p>
+</div>
+</div>
+<div class="subsection">
+<h3>The Relationship</h3>
+<p>Programs load from storage into memory to run. More memory = smoother multitasking.</p>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="section-header" onclick="toggleSection(this)">
+<h2>📏 Memory Measurements Made Simple</h2>
+<span class="toggle-icon">▼</span></div>
+<div class="section-content">
+<div class="subsection">
+<h3>Byte Hierarchy</h3>
+<p>Each unit is 1,024x larger than the previous:</p>
+<div class="hierarchy">
+<div class="hierarchy-item"><strong>Byte (B):</strong> <span>Basic unit (one character of text)</span></div>
+<div class="hierarchy-item"><strong>Kilobyte (KB):</strong> <span>~1,000 bytes (a short email)</span></div>
+<div class="hierarchy-item"><strong>Megabyte (MB):</strong> <span>~1 million bytes (a photo)</span></div>
+<div class="hierarchy-item"><strong>Gigabyte (GB):</strong> <span>~1 billion bytes (a movie)</span></div>
+<div class="hierarchy-item"><strong>Terabyte (TB):</strong> <span>~1 trillion bytes (1,000 movies)</span></div>
+</div>
+</div>
+<div class="note"><strong>Rule of thumb:</strong> For most users, 16GB RAM and 512GB-1TB storage covers typical needs.</div>
+</div>
+</div>
+<div class="section">
+<div class="section-header" onclick="toggleSection(this)">
+<h2>🔌 Computer Cables and Connectors</h2>
+<span class="toggle-icon">▼</span></div>
+<div class="section-content">
+<div class="feature-grid">
+<div class="feature-card">
+<h4>⚡ Power Cables</h4>
+<p>Deliver electricity to components. Different shapes ensure you can't plug things in wrong places.</p>
+</div>
+<div class="feature-card">
+<h4>📊 Data Cables</h4>
+<p>Transfer information between components. Include SATA (storage drives), PCIe (graphics cards), and USB (external devices).</p>
+</div>
+</div>
+<div class="subsection">
+<h3>Common Data Cable Types</h3>
+<div class="spec-list">
+<ul>
+<li><strong>SATA:</strong> Connects storage drives to motherboard</li>
+<li><strong>PCIe:</strong> Connects graphics cards and expansion cards</li>
+<li><strong>USB:</strong> External devices (mouse, keyboard, external drives)</li>
+</ul>
+</div>
+</div>
+<div class="note"><strong>Why so many types?</strong> Different components need different amounts of power and data transfer speeds. The connector shape prevents mistakes and ensures optimal performance.</div>
+</div>
+</div>
+<div class="section">
+<div class="section-header" onclick="toggleSection(this)">
+<h2>⚡ How Computers Work So Fast</h2>
+<span class="toggle-icon">▼</span></div>
+<div class="section-content">
+<div class="feature-grid">
+<div class="feature-card">
+<h4>🔄 Parallel Processing</h4>
+<p>Modern computers do many things simultaneously rather than one at a time</p>
+</div>
+<div class="feature-card">
+<h4>🕐 Clock Speed</h4>
+<p>Measured in GHz (gigahertz) - how many operations per second. 3GHz = 3 billion operations per second</p>
+</div>
+<div class="feature-card">
+<h4>🎯 Optimization</h4>
+<p>Frequently used data stays in fast memory, multiple cores handle different tasks, specialized components handle specific tasks efficiently</p>
+</div>
+</div>
+<div class="note"><strong>Analogy:</strong> Like a well-organized kitchen with multiple chefs, each specializing in different dishes, all working simultaneously.</div>
+</div>
+</div>
+<div class="section">
+<div class="section-header" onclick="toggleSection(this)">
+<h2>🎮 Gaming Hardware: What You Need</h2>
+<span class="toggle-icon">▼</span></div>
+<div class="section-content">
+<div class="subsection">
+<h3>For 1080p Gaming</h3>
+<div class="spec-list">
+<ul>
+<li><strong>GPU (Most Important):</strong> RTX 3060/4060 or RX 6600 for good 1080p performance. RTX 3080ti is overkill for 1080p but great for 1440p</li>
+<li><strong>CPU:</strong> Modern 6-8 core processor (Intel i5/i7 or AMD Ryzen 5/7)</li>
+<li><strong>RAM:</strong> 16GB is the sweet spot</li>
+<li><strong>Storage:</strong> SSD for faster game loading</li>
+</ul>
+</div>
+</div>
+<div class="pro-tip"><strong>Pro tip:</strong> Check game system requirements on Steam or the developer's website. Most modern games list minimum and recommended specs.</div>
+</div>
+</div>
+<div class="section">
+<div class="section-header" onclick="toggleSection(this)">
+<h2>🏷️ Brand Differences in Components</h2>
+<span class="toggle-icon">▼</span></div>
+<div class="section-content">
+<div class="comparison-grid">
+<div class="comparison-card">
+<h4>💻 CPUs: Intel vs AMD</h4>
+<p>Both make excellent processors. Intel traditionally better for gaming, AMD better price/performance. Current generation from both companies performs very similarly.</p>
+</div>
+<div class="comparison-card">
+<h4>🎮 GPUs: NVIDIA vs AMD</h4>
+<p><strong>NVIDIA (RTX series):</strong> Better ray tracing, DLSS technology<br><strong>AMD (RX series):</strong> Often better price/performance, good for traditional gaming</p>
+</div>
+</div>
+<div class="note"><strong>The truth:</strong> Brand matters less than the specific model and your budget. Research the exact model you're considering rather than choosing by brand alone.</div>
+</div>
+</div>
+<div class="section">
+<div class="section-header" onclick="toggleSection(this)">
+<h2>🔧 Building a PC: What to Look For</h2>
+<span class="toggle-icon">▼</span></div>
+<div class="section-content">
+<div class="subsection">
+<h3>Essential Compatibility Checks</h3>
+<div class="feature-grid">
+<div class="feature-card">
+<h4>🔌 CPU and Motherboard</h4>
+<p>Must match socket type (LGA1700, AM5, etc.)</p>
+</div>
+<div class="feature-card">
+<h4>💾 RAM</h4>
+<p>Check motherboard's supported memory type (DDR4 vs DDR5)</p>
+</div>
+<div class="feature-card">
+<h4>⚡ Power Supply</h4>
+<p>Ensure sufficient wattage for your components</p>
+</div>
+<div class="feature-card">
+<h4>📦 Case</h4>
+<p>Verify GPU length and motherboard size fit</p>
+</div>
+</div>
+</div>
+<div class="subsection">
+<h3>Getting Started</h3>
+<p><strong>Start with your purpose:</strong> Gaming? Content creation? General use? This determines which component to prioritize in your budget.</p>
+</div>
+<div class="pro-tip"><strong>Beginner tip:</strong> Consider pre-built systems first - they ensure compatibility and often include warranty support.</div>
+</div>
+</div>
+</div>
+<p><script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '▼';
+                header.style.borderRadius = '15px';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '▲';
+                header.style.borderRadius = '15px 15px 0 0';
+            }
+        }
+
+        // Add smooth scrolling for any internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add interactive feedback
+        document.querySelectorAll('.feature-card, .comparison-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 25px rgba(102, 126, 234, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    </script></p></body></html>
