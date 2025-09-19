@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: home
 title: CSCI 1100/ CSCI 1150 Module Resources
 body_class: no-nav
 theme_color: yellow
