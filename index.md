@@ -1,4 +1,5 @@
 ---
+layout: default
 title: CSCI 1100/ CSCI 1150 Module Resources
 body_class: no-nav
 ---
