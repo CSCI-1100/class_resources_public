@@ -146,11 +146,20 @@
 - **Definition**: Executes different code depending on conditions.
 - **Example**:
   ```python
-  age = 20
-  if age < 18:
-      print("Minor")
-  elif age == 18:
-      print("Just became adult")
-  else:
-      print("Adult")
+temperature_f = 100  # Temperature in Fahrenheit
+
+if temperature_f == 32:    # Equal to
+    print("Freezing point")
+elif temperature_f >= 100: # Greater than or equal to
+    print("Extremely hot")
+
+elif temperature_f < 32:
+    print("Below freezing")
+elif temperature_f < 50:
+    print("Cold")
+elif temperature_f < 70:
+    print("Warm")
+else: # If all previously checked conditions were false
+    print("Hot")
+
   ```
