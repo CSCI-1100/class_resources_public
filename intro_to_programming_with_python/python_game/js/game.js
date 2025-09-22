@@ -425,7 +425,7 @@ function checkFstringChallenge() {
     if (input.includes('{') && input.includes('}') && input.toLowerCase().includes('student_name')) {
         feedback.innerHTML = '<div class="feedback correct">🎉 Correct! F-strings use {variable_name} to include variables!</div>';
     } else {
-        feedback.innerHTML = '<div class="feedback incorrect">❌ Try again! Use {name} to include the variable in the f-string.</div>';
+        feedback.innerHTML = '<div class="feedback incorrect">❌ Try again! Use {variable_name} to include the variable in the f-string.</div>';
     }
 }
 
