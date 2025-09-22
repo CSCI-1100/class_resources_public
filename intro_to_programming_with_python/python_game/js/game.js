@@ -430,9 +430,8 @@ function checkFstringChallenge() {
 }
 
 function checkSplitChallenge() {
-    const input = document.getElementById('split-challenge').value.trim();
+    const input = document.getElementById('split-challenge').value.trim().toLowerCase();
     const feedback = document.getElementById('split-feedback');
-    input = input.toLowerCase();
 
     if (input.includes('split') && input.includes('(') && input.includes(')') && input.includes(',')) {
         if (input.includes('math') || input.includes('science') || input.includes('history')) {
