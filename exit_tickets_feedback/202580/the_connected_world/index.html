@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Connected World - Fall 2025 Exit Tickets Feedback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #764ba2;
+        }
+
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .qa-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid #9dd3fc;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .qa-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46a3);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .section-content.expanded {
+            max-height: 3000px;
+            padding: 2rem;
+        }
+
+        .qa-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: #555;
+        }
+
+        .answer.show {
+            max-height: 2000px;
+            margin-top: 1rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap!important;
+            overflow-wrap: break-word!important;
+            word-wrap: break-all!important;
+        }
+
+        .highlight {
+            background: rgba(255, 193, 7, 0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .note {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .note::before {
+            content: "💡";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .warning {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .warning::before {
+            content: "⚠️";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .step-list {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-list ol {
+            counter-reset: step-counter;
+            list-style: none;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .resource-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .resource-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .network-diagram {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-content.expanded {
+                padding: 1rem;
+            }
+            
+            .category-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>The Connected World Q&A</h1>
+            <p>Essential Networking Concepts and Answers to Your Most Common Questions</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search questions... (e.g., 'bandwidth', 'IP address', 'router')" id="searchBox">
+        </div>
+
+        <div class="category-nav">
+            <button class="category-btn active" data-category="all">All Questions</button>
+            <button class="category-btn" data-category="bandwidth">Bandwidth & Speed</button>
+            <button class="category-btn" data-category="communication">How Devices Talk</button>
+            <button class="category-btn" data-category="networking">IP & Networking</button>
+            <button class="category-btn" data-category="hardware">Routers & Hardware</button>
+            <button class="category-btn" data-category="technology">5G & Technology</button>
+            <button class="category-btn" data-category="security">Security & Payments</button>
+        </div>
+
+        <div class="qa-section" data-category="bandwidth">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🚀 Bandwidth & Internet Speed</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What exactly is bandwidth and why is it confusing?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><span class="highlight">Bandwidth</span> is like the width of a highway - it determines how much data can travel at once, not necessarily how fast it travels.</p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🛣️ Highway Analogy</h4>
+                                <p><strong>Bandwidth:</strong> Number of lanes on the highway</p>
+                                <p><strong>More lanes:</strong> More cars (data) can travel simultaneously</p>
+                                <p><strong>But:</strong> Speed limit (ping/latency) still matters</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📊 Technical Definition</h4>
+                                <p><strong>Bandwidth:</strong> Maximum data transfer rate</p>
+                                <p><strong>Measured in:</strong> Mbps (megabits per second)</p>
+                                <p><strong>Example:</strong> 100 Mbps = 100 million bits per second</p>
+                            </div>
+                        </div>
+
+                        <p><strong>Why it's confusing:</strong></p>
+                        <ul>
+                            <li><strong>Advertised vs. Real:</strong> ISPs advertise "up to" speeds, but you rarely get the maximum</li>
+                            <li><strong>Shared bandwidth:</strong> Your advertised speed is shared among all devices in your home</li>
+                            <li><strong>Different activities need different amounts:</strong> Streaming Netflix needs more than browsing web</li>
+                        </ul>
+
+                        <div class="note">
+                            <strong>Quick Test:</strong> Visit fast.com to see your actual speed right now. Compare it to what you're paying for!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Why can I have high bandwidth but still experience slow internet?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>High bandwidth doesn't guarantee fast internet. Here's why:</strong></p>
+                        
+                        <div class="step-list">
+                            <h4>Common Causes of Slowdowns:</h4>
+                            <ol>
+                                <li><strong>Network Congestion:</strong> Too many people using the internet at once (like rush hour traffic)</li>
+                                <li><strong>Server Limitations:</strong> The website/service you're accessing might be slow or overloaded</li>
+                                <li><strong>WiFi Issues:</strong> Weak signal, interference, or old router</li>
+                                <li><strong>Background Apps:</strong> Updates, cloud backups eating up your bandwidth</li>
+                                <li><strong>Distance from Server:</strong> Data traveling across the globe takes time</li>
+                            </ol>
+                        </div>
+
+                        <div class="network-diagram">
+                            <p><strong>Bandwidth vs. Ping Example:</strong></p>
+                            <p>Bandwidth = 100 Mbps (highway with 100 lanes)<br>
+                            Ping = 200ms (it takes 200 milliseconds for data to make the round trip)<br>
+                            Result = High capacity but noticeable delay</p>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Remember:</strong> Your experienced internet speed is only as fast as the slowest link in the chain - your ISP, WiFi, the website's server, and network congestion all matter.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How do I measure and improve my bandwidth?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📊 Testing Your Speed</h4>
+                                <p><strong>Fast.com:</strong> Netflix's speed test</p>
+                                <p><strong>Speedtest.net:</strong> Comprehensive testing</p>
+                                <p><strong>Google:</strong> Type "speed test" into Google</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔧 Improving Speed</h4>
+                                <p><strong>Router position:</strong> Central, elevated location</p>
+                                <p><strong>Wired connection:</strong> Ethernet cable for important devices</p>
+                                <p><strong>Update equipment:</strong> Router older than 3-4 years?</p>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Troubleshooting Steps:</h4>
+                            <ol>
+                                <li><strong>Test at different times:</strong> Check speed during peak (evening) and off-peak hours</li>
+                                <li><strong>Test multiple devices:</strong> Is it one device or all devices?</li>
+                                <li><strong>Check for background usage:</strong> Pause cloud backups, updates</li>
+                                <li><strong>Restart your router:</strong> Unplug for 30 seconds, plug back in</li>
+                                <li><strong>Contact ISP:</strong> If you're getting less than 50% of advertised speed consistently</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="communication">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📡 How Devices Actually Communicate</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How do devices actually "talk" to each other? I still don't get the physical process.
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Let's break down the physical process step by step:</strong></p>
+
+                        <div class="step-list">
+                            <h4>The Physical Journey of Data:</h4>
+                            <ol>
+                                <li><strong>Your Device:</strong> Converts your request (like "show me Google") into electrical signals</li>
+                                <li><strong>WiFi/Ethernet:</strong> These signals become radio waves (WiFi) or electrical pulses (cable)</li>
+                                <li><strong>Your Router:</strong> Receives signals, reads the destination, forwards to ISP</li>
+                                <li><strong>ISP Network:</strong> Data travels through cables/fiber optic lines across the country/world</li>
+                                <li><strong>Destination Server:</strong> Google's server receives your request</li>
+                                <li><strong>Response Journey:</strong> Google sends back the webpage, following the same path in reverse</li>
+                            </ol>
+                        </div>
+
+                        <p>
+                            There are many more details concerning the protocol stack that makes this all work.
+                            If you'd like to learn more about how devices talk to each other, I recommend learning
+                            <a target="_blank" href="https://youtu.be/owDh6FNJUog?si=B3rxZVMY2sEyY7gr">the OSI model</a>
+                        </p>
+
+                        <div class="network-diagram">
+                            <p><strong>Signal Types:</strong></p>
+                            <p><strong>WiFi:</strong> Radio waves (2.4GHz or 5GHz frequency)<br>
+                            <strong>Ethernet:</strong> Electrical pulses through copper wire<br>
+                            <strong>Fiber Optic:</strong> Light pulses through glass fiber<br>
+                            <strong>Cellular:</strong> Radio waves to cell towers</p>
+                        </div>
+
+                        <div class="note">
+                            <strong>Think of it like mail:</strong> Your letter (data) needs an address (IP), gets sorted at post offices (routers), travels via trucks/planes (cables/signals), and arrives at the destination.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What are packets and why don't they get mixed up?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p>That's the million-dollar question. If you'd like a more the in-depth answer, you'll want to learn about the
+                            <a target="_blank" href="https://codefinity.com/courses/v2/78def978-8821-4d7f-8023-e92cf71802a9/0f8db00a-45d9-425c-8e21-21395fbc89df/ca39e94c-e208-4daf-821f-8940366dde02?utm_campaign=21144377223&utm_medium=cpc&utm_source=google">OSI model and TCP/IP</a>.</p>
+                        <p><strong>Data is broken into small chunks called "packets" for efficiency and reliability:</strong></p>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📦 What's in a Packet</h4>
+                                <p><strong>Header:</strong> Source IP, destination IP, packet number</p>
+                                <p><strong>Data:</strong> Small chunk of your file/webpage</p>
+                                <p><strong>Footer:</strong> Error checking information</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🧩 Why Use Packets</h4>
+                                <p><strong>Efficiency:</strong> Multiple packets can travel simultaneously</p>
+                                <p><strong>Reliability:</strong> If one packet gets lost, only resend that piece</p>
+                                <p><strong>Flexibility:</strong> Packets can take different routes to destination</p>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>How Packets Stay Organized:</h4>
+                            <ol>
+                                <li><strong>Numbering:</strong> Each packet has a sequence number (like pages in a book)</li>
+                                <li><strong>Assembly:</strong> Destination device sorts packets by number</li>
+                                <li><strong>Error Checking:</strong> Missing packets are requested again</li>
+                                <li><strong>Completion:</strong> All packets reassembled into original data</li>
+                            </ol>
+                        </div>
+
+                        <p><strong>Real-world analogy:</strong> Imagine sending a 1000-page book through the mail. Instead of one huge package, you send 100 envelopes with 10 pages each, all numbered. Even if they arrive out of order, the recipient can put them back together using the page numbers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="networking">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🏠 IP Addresses & Networking</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What's the difference between public and private IP addresses?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Think of IP addresses like mailing addresses, but for the internet:</strong></p>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🌐 Public IP Address</h4>
+                                <p><strong>What it is:</strong> Your home's address on the internet</p>
+                                <p><strong>Example:</strong> 203.0.113.45</p>
+                                <p><strong>Assigned by:</strong> Your Internet Service Provider (ISP)</p>
+                                <p><strong>Visible to:</strong> The entire internet</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🏠 Private IP Address</h4>
+                                <p><strong>What it is:</strong> Device addresses within your home network</p>
+                                <p><strong>Example:</strong> 192.168.1.15</p>
+                                <p><strong>Assigned by:</strong> Your router</p>
+                                <p><strong>Visible to:</strong> Only devices in your home</p>
+                            </div>
+                        </div>
+
+                        <div class="network-diagram">
+                            <p><strong>Real-World Analogy:</strong></p>
+                            <p><strong>Public IP:</strong> "123 Main Street" (your house address)<br>
+                            <strong>Private IP:</strong> "Room 1, Room 2, Kitchen" (rooms inside your house)</p>
+                        </div>
+
+                        <div class="note">
+                            <strong>Fun fact:</strong> Your router acts like a receptionist, keeping track of which device (private IP) requested what information, then forwarding responses from the internet (public IP) to the right device.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How easy is it for someone to get my IP address and is that dangerous?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>IP addresses are not as scary as they might seem:</strong></p>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>😱 What People Think</h4>
+                                <p>"Hackers can find my exact location"</p>
+                                <p>"They can access all my files"</p>
+                                <p>"My identity will be stolen"</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>😕 The Reality</h4>
+                                <p>IP shows general city/region only, but sophisticated cybercriminals can combine the approximate location from an IP address with other information, such as public social media posts or other leaked data, to piece together your identity and precise location</p>
+                                <br><p>Can't access files without passwords</p>
+                                <br><p>No personal info in the IP itself, but again, when connected with other identifying information, it could be used to create an accurate profile of you.</p>
+                            </div>
+                            <div class="resource-card">
+                                <p>Using a VPN hides your IP address (ISP sees communication to and from the VPN), but
+                                <a target="_blank" href="https://cybernews.com/best-vpn/no-log-vpns/">do your homework</a> before choosing any VPN provider!</p>
+                                <br><p>In Cybersecurity and Privacy week, we'll consider some tools and practices we can use to mitigate what identifying breadcrumbs we leave online to reduce the risks of hacking and identity theft.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>What Someone Can Actually Do With (Only) Your IP and Its Traffic:</h4>
+                            <ol>
+                                <li><strong>See General Location:</strong> City or region, not exact address</li>
+                                <li><strong>Know Your ISP:</strong> Which company provides your internet</li>
+                                <li><strong>Try to Ping You:</strong> See if your device responds (usually blocked by routers)</li>
+                                <li><strong>Report Abuse:</strong> If you're doing something illegal online</li>
+                            </ol>
+                        </div>
+
+                        <p><strong>How to check your public IP:</strong> Google "what is my IP" and you'll see what the rest of the internet sees when you visit websites.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="hardware">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📡 Routers & Network Hardware</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What does a Wi-Fi router actually do beyond "directing traffic"?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Your router is like a smart postal worker combined with a security guard:</strong></p>
+
+                        <div class="step-list">
+                            <h4>Router's Main Jobs:</h4>
+                            <ol>
+                                <li><strong>Creates Your Home Network:</strong> Assigns private IP addresses to all your devices</li>
+                                <li><strong>Manages Traffic:</strong> Decides which data packets go to which device</li>
+                                <li><strong>Acts as Translator:</strong> Converts between your private network and the public internet</li>
+                                <li><strong>Provides Security:</strong> Blocks unwanted incoming connections</li>
+                                <li><strong>Distributes WiFi:</strong> Creates the wireless network you connect to</li>
+                                <li><strong>Handles Multiple Requests:</strong> Keeps track of which device requested what website</li>
+                            </ol>
+                        </div>
+
+                        <div class="network-diagram">
+                            <p><strong>Router's Decision Process:</strong></p>
+                            <p>1. Device requests YouTube → Router notes "Device A wants YouTube"<br>
+                            2. Router forwards request to internet → "Someone at this address wants YouTube"<br>
+                            3. YouTube responds → Router receives response<br>
+                            4. Router checks notes → "This YouTube data goes to Device A"<br>
+                            5. Router delivers to Device A → Mission accomplished!</p>
+                        </div>
+
+                        <div class="note">
+                            <strong>Why you need it:</strong> Without a router, only one device could connect to the internet per household, and there would be no security filtering.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How does a router know where to send data packets?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Routers use routing tables - like GPS for data packets:</strong></p>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📋 Routing Table</h4>
+                                <p>A database that maps destinations to directions</p>
+                                <p><strong>Example:</strong> "To reach 192.168.1.5, send data to WiFi interface"</p>
+                                <p><strong>Updated:</strong> Automatically as network changes</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🗺️ Decision Process</h4>
+                                <p>1. Read destination IP address</p>
+                                <p>2. Look up best route in table</p>
+                                <p>3. Forward packet to next router/device</p>
+                                <p>4. Repeat until packet reaches destination</p>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>How Routers Learn Routes:</h4>
+                            <ol>
+                                <li><strong>Direct Connections:</strong> Knows about devices directly connected to it</li>
+                                <li><strong>Default Gateway:</strong> Sends unknown destinations to ISP's router</li>
+                                <li><strong>Route Updates:</strong> Learns new paths from other routers</li>
+                                <li><strong>Best Path Selection:</strong> Chooses fastest/most reliable route</li>
+                            </ol>
+                        </div>
+
+                        <p><strong>Simple example:</strong> Your device asks for Google. Your home router doesn't know where Google is, so it forwards the request to your ISP's router, which knows the path to Google's servers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="technology">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📶 5G Technology & Wireless Networks</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Why does my 5G sometimes seem slower than 4G?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>5G isn't always faster in real-world conditions. Here's why:</strong></p>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🏗️ Infrastructure Issues</h4>
+                                <p><strong>Coverage gaps:</strong> 5G towers aren't everywhere yet</p>
+                                <p><strong>Building penetration:</strong> 5G signals don't go through walls as well</p>
+                                <p><strong>Distance sensitive:</strong> Speed drops quickly when far from tower</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📱 Network Congestion</h4>
+                                <p><strong>Everyone's trying it:</strong> New 5G towers can be overloaded</p>
+                                <p><strong>Carrier differences:</strong> Some carriers have better 5G networks</p>
+                                <p><strong>Device limitations:</strong> Older 5G phones may not support newest features</p>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Types of 5G (Not All Are Equal):</h4>
+                            <ol>
+                                <li><strong>Low-band 5G:</strong> Wide coverage, speeds similar to good 4G</li>
+                                <li><strong>Mid-band 5G:</strong> Good balance of speed and coverage</li>
+                                <li><strong>High-band 5G (mmWave):</strong> Super fast but very limited range</li>
+                            </ol>
+                        </div>
+
+                        <div class="note">
+                            <strong>Bottom line:</strong> 5G is still being built out. In areas with mature 4G networks and limited 5G infrastructure, 4G might actually be more reliable and faster.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Is 5G actually dangerous? I keep hearing conflicting information.
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Based on scientific evidence, 5G is not dangerous. Here's why the confusion exists:</strong></p>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📊 The Science</h4>
+                                <p><strong>Radiation type:</strong> Non-ionizing (like FM radio, WiFi)</p>
+                                <p><strong>Energy level:</strong> Too weak to damage DNA</p>
+                                <p><strong>Studies:</strong> Multiple health agencies found no evidence of harm</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>☀️ Comparison</h4>
+                                <p><strong>5G frequency:</strong> 24-100 GHz</p>
+                                <p><strong>Visible light:</strong> 400-800 THz (much higher!)</p>
+                                <p><strong>UV radiation:</strong> Even higher than visible light</p>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Why the myths persist:</strong> Fear of new technology, misunderstanding of radiation types, and social media misinformation have created unnecessary concerns.
+                            It's true that millimeter waves penetrate the outer layers of the skin, but consider sunlight: Beyond the visible spectrum, ultraviolet radiation is (280-400 nanometers) UVA radiation (90-95 percent of the ultraviolet radiation that reaches us) penetrates deep into the skin
+                            while UVB (the shorter wavelengths) cause the more immediate skin damage like sunburn. In other words 5G mm wavelengths are millions of times larger than UV wavelengths, so its impact on the body is negligible.
+                        </div>
+
+                        <div>
+                            <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Background -->
+                                <rect width="1200" height="600" fill="#f8f9fa"/>
+                                
+                                <!-- Title -->
+                                <text x="600" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#333">
+                                    Electromagnetic Spectrum: Where Wireless Technologies Fit
+                                </text>
+        
+                                <!-- Wave patterns to show frequency increase -->
+                                <defs>
+                                    <!-- Low frequency wave (radio) -->
+                                    <pattern id="lowWave" x="0" y="0" width="40" height="60" patternUnits="userSpaceOnUse">
+                                    <rect width="40" height="60" fill="#E8F4F8"/>
+                                    <path d="M0 30 Q10 10 20 30 Q30 50 40 30" stroke="#1E90FF" stroke-width="2" fill="none"/>
+                                    </pattern>
+                                    
+                                    <!-- Medium frequency wave (microwave) -->
+                                    <pattern id="medWave" x="0" y="0" width="20" height="60" patternUnits="userSpaceOnUse">
+                                    <rect width="20" height="60" fill="#FFF8E8"/>
+                                    <path d="M0 30 Q5 10 10 30 Q15 50 20 30" stroke="#FF8C00" stroke-width="2" fill="none"/>
+                                    </pattern>
+                                    
+                                    <!-- High frequency wave (infrared) -->
+                                    <pattern id="highWave" x="0" y="0" width="10" height="60" patternUnits="userSpaceOnUse">
+                                    <rect width="10" height="60" fill="#F8E8E8"/>
+                                    <path d="M0 30 Q2.5 10 5 30 Q7.5 50 10 30" stroke="#FF4500" stroke-width="2" fill="none"/>
+                                    </pattern>
+                                    
+                                    <!-- Visible light wave -->
+                                    <pattern id="visibleWave" x="0" y="0" width="5" height="60" patternUnits="userSpaceOnUse">
+                                        <rect width="5" height="60" fill="#FFFACD"/>
+                                        <path d="M0 30 Q1.25 10 2.5 30 Q3.75 50 5 30" stroke="#DAA520" stroke-width="2" fill="none"/>
+                                    </pattern>
+                                    
+                                    <!-- UV wave -->
+                                    <pattern id="uvWave" x="0" y="0" width="3" height="60" patternUnits="userSpaceOnUse">
+                                    <rect width="3" height="60" fill="#F0E8FF"/>
+                                    <path d="M0 30 Q0.75 10 1.5 30 Q2.25 50 3 30" stroke="#9370DB" stroke-width="2" fill="none"/>
+                                    </pattern>
+                                    
+                                    <!-- X-ray wave -->
+                                    <pattern id="xrayWave" x="0" y="0" width="2" height="60" patternUnits="userSpaceOnUse">
+                                    <rect width="2" height="60" fill="#FFE8E8"/>
+                                    <path d="M0 30 Q0.5 10 1 30 Q1.5 50 2 30" stroke="#DC143C" stroke-width="2" fill="none"/>
+                                    </pattern>
+                                    
+                                    <!-- Gamma wave -->
+                                    <pattern id="gammaWave" x="0" y="0" width="1" height="60" patternUnits="userSpaceOnUse">
+                                    <rect width="1" height="60" fill="#E8E8E8"/>
+                                    <path d="M0 30 Q0.25 10 0.5 30 Q0.75 50 1 30" stroke="#4B0082" stroke-width="1" fill="none"/>
+                                    </pattern>
+                                </defs>
+                                
+                                <!-- Spectrum sections with wave patterns -->
+                                <rect x="100" y="200" width="200" height="60" fill="url(#lowWave)" stroke="#333" stroke-width="1"/>
+                                <rect x="300" y="200" width="150" height="60" fill="url(#medWave)" stroke="#333" stroke-width="1"/>
+                                <rect x="450" y="200" width="100" height="60" fill="url(#highWave)" stroke="#333" stroke-width="1"/>
+                                <rect x="550" y="200" width="80" height="60" fill="url(#visibleWave)" stroke="#333" stroke-width="1"/>
+                                <rect x="630" y="200" width="120" height="60" fill="url(#uvWave)" stroke="#333" stroke-width="1"/>
+                                <rect x="750" y="200" width="200" height="60" fill="url(#xrayWave)" stroke="#333" stroke-width="1"/>
+                                <rect x="950" y="200" width="150" height="60" fill="url(#gammaWave)" stroke="#333" stroke-width="1"/>
+                                
+                                <!-- Overall border -->
+                                <rect x="100" y="200" width="1000" height="60" fill="none" stroke="#333" stroke-width="3"/>
+                                
+                                <!-- Frequency scale (logarithmic) -->
+                                <text x="600" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+                                    Frequency (Hz)
+                                </text>
+                                
+                                <!-- Frequency markers -->
+                                <g font-family="Arial, sans-serif" font-size="12" fill="#333">
+                                    <!-- Radio -->
+                                    <line x1="120" y1="260" x2="120" y2="275" stroke="#333" stroke-width="1"/>
+                                    <text x="120" y="290" text-anchor="middle">10³</text>
+                                    
+                                    <!-- AM Radio -->
+                                    <line x1="180" y1="260" x2="180" y2="275" stroke="#333" stroke-width="1"/>
+                                    <text x="180" y="290" text-anchor="middle">10⁶</text>
+                                    
+                                    <!-- FM Radio -->
+                                    <line x1="240" y1="260" x2="240" y2="275" stroke="#333" stroke-width="1"/>
+                                    <text x="240" y="290" text-anchor="middle">10⁸</text>
+                                    
+                                    <!-- Microwave -->
+                                    <line x1="350" y1="260" x2="350" y2="275" stroke="#333" stroke-width="1"/>
+                                    <text x="350" y="290" text-anchor="middle">10¹⁰</text>
+                                    
+                                    <!-- Infrared -->
+                                    <line x1="500" y1="260" x2="500" y2="275" stroke="#333" stroke-width="1"/>
+                                    <text x="500" y="290" text-anchor="middle">10¹²</text>
+                                    
+                                    <!-- Visible Light -->
+                                    <line x1="600" y1="260" x2="600" y2="275" stroke="#333" stroke-width="1"/>
+                                    <text x="600" y="290" text-anchor="middle">10¹⁴</text>
+                                                                    
+                                    <!-- UV -->
+                                    <line x1="700" y1="260" x2="700" y2="275" stroke="#333" stroke-width="1"/>
+                                    <text x="700" y="290" text-anchor="middle">10¹⁶</text>
+                                    
+                                    <!-- X-ray -->
+                                    <line x1="850" y1="260" x2="850" y2="275" stroke="#333" stroke-width="1"/>
+                                    <text x="850" y="290" text-anchor="middle">10¹⁸</text>
+                                    
+                                    <!-- Gamma -->
+                                    <line x1="1000" y1="260" x2="1000" y2="275" stroke="#333" stroke-width="1"/>
+                                    <text x="1000" y="290" text-anchor="middle">10²⁰</text>
+                                </g>
+                                
+                                <!-- Main category labels -->
+                                <g font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+                                    <text x="160" y="185" text-anchor="middle">Radio Waves</text>
+                                    <text x="320" y="185" text-anchor="middle">Microwaves</text>
+                                    <text x="500" y="185" text-anchor="middle">Infrared</text>
+                                    <text x="600" y="185" text-anchor="middle">Visible Light</text>
+                                    <text x="700" y="185" text-anchor="middle">Ultraviolet</text>
+                                    <text x="850" y="185" text-anchor="middle">X-rays</text>
+                                    <text x="1000" y="185" text-anchor="middle">Gamma Rays</text>
+                                </g>
+                                
+                                <!-- Wireless technology markers -->
+                                <!-- AM Radio -->
+                                <g>
+                                    <line x1="175" y1="140" x2="175" y2="200" stroke="#2E8B57" stroke-width="3"/>
+                                    <rect x="130" y="100" width="90" height="40" fill="#E6FFE6" stroke="#2E8B57" stroke-width="1" rx="5"/>
+                                    <text x="175" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2E8B57">AM Radio</text>
+                                    <text x="175" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#2E8B57">0.5-1.6 MHz</text>
+                                </g>
+                                
+                                <!-- FM Radio -->
+                                <g>
+                                    <line x1="235" y1="140" x2="235" y2="200" stroke="#2E8B57" stroke-width="3"/>
+                                    <rect x="210" y="100" width="90" height="40" fill="#E6FFE6" stroke="#2E8B57" stroke-width="1" rx="5"/>
+                                    <text x="255" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2E8B57">FM Radio</text>
+                                    <text x="255" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#2E8B57">88-108 MHz</text>
+                                </g>
+                                
+                                <!-- 3G/4G/5G -->
+                                <g>
+                                    <line x1="280" y1="459" x2="280" y2="260" stroke="#FF6347" stroke-width="3"/>
+                                    <rect x="235" y="460" width="90" height="55" fill="#FFE6E6" stroke="#FF6347" stroke-width="1" rx="5"/>
+                                    <text x="280" y="475" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF6347">3G/4G</text>
+                                    <text x="280" y="488" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#FF6347">0.8-2.7 GHz</text>
+                                    <text x="280" y="501" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF6347">5G Low/Mid</text>
+                                    <text x="280" y="512" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#FF6347">0.6-6 GHz</text>
+                                </g>
+  
+                                <!-- 5G mmWave -->
+                                <g>
+                                    <line x1="380" y1="459" x2="380" y2="260" stroke="#FF6347" stroke-width="3"/>
+                                    <rect x="350" y="460" width="90" height="40" fill="#FFE6E6" stroke="#FF6347" stroke-width="1" rx="5"/>
+                                    <text x="395" y="475" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF6347">5G mmWave</text>
+                                    <text x="395" y="488" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#FF6347">24-100 GHz</text>
+                                </g>
+
+                                <!-- WiFi 2.4GHz -->
+                                <g>
+                                    <line x1="300" y1="360" x2="310" y2="260" stroke="#1E90FF" stroke-width="3"/>
+                                    <rect x="255" y="360" width="90" height="40" fill="#E6F3FF" stroke="#1E90FF" stroke-width="1" rx="5"/>
+                                    <text x="300" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1E90FF">WiFi 2.4GHz</text>
+                                    <text x="300" y="388" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1E90FF">2.4 GHz</text>
+                                </g>
+
+                                <!-- WiFi 5GHz -->
+                                <g>
+                                    <line x1="380" y1="360" x2="340" y2="260" stroke="#1E90FF" stroke-width="3"/>
+                                    <rect x="355" y="360" width="90" height="40" fill="#E6F3FF" stroke="#1E90FF" stroke-width="1" rx="5"/>
+                                    <text x="400" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1E90FF">WiFi 5GHz</text>
+                                    <text x="400" y="388" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1E90FF">5 GHz</text>
+                                </g>
+                                
+                                <!-- Microwave Oven -->
+                                <g>
+                                    <line x1="315" y1="140" x2="315" y2="200" stroke="#8A2BE2" stroke-width="3"/>
+                                    <rect x="285" y="100" width="90" height="40" fill="#F0E6FF" stroke="#8A2BE2" stroke-width="1" rx="5"/>
+                                    <text x="330" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#8A2BE2">Microwave Oven</text>
+                                    <text x="330" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#8A2BE2">2.45 GHz</text>
+                                </g>
+                                
+                                <!-- Visible light highlight -->
+                                <rect x="580" y="200" width="40" height="60" fill="none" stroke="#e5af00ff" stroke-width="4"/>
+                                <text x="600" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#c28709ff">
+                                    What we can see!
+                                </text>
+                                
+                                <!-- UV highlight with warning -->
+                                <rect x="680" y="200" width="40" height="60" fill="none" stroke="#FF4500" stroke-width="3"/>
+                                <text x="700" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FF4500">
+                                    UV from sun
+                                </text>
+                                <text x="700" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#FF4500">
+                                    (causes sunburn)
+                                </text>
+  
+                                <!-- Safety comparison box -->
+                                <rect x="50" y="520" width="1100" height="70" fill="#F0F8FF" stroke="#4682B4" stroke-width="2" rx="10"/>
+                                <text x="600" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">
+                                    Safety Comparison: Energy Level Increases Left to Right
+                                </text>
+                                <text x="150" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#2E8B57">
+                                    Radio/Cell: Very Low Energy
+                                </text>
+                                <text x="350" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1E90FF">
+                                    Microwaves: Low Energy
+                                </text>
+                                <text x="600" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+                                    Visible Light: Safe
+                                </text>
+                                <text x="750" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#FF4500">
+                                    UV: Can damage skin
+                                </text>
+                                <text x="950" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#8B0000">
+                                    X-rays/Gamma: High energy
+                                </text>
+                                
+                                <text x="600" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+                                    All wireless technologies operate at much lower energy levels than visible light!
+                                </text>
+                            </svg>
+                        </div>
+
+                        <p><strong>Sources you can trust:</strong> <a target="_blank" href="https://www.who.int/india/health-topics/electromagnetic-fields">WHO</a>,
+                            <a target="_blank" href="https://www.fda.gov/radiation-emitting-products/cell-phones/radio-frequency-radiation-and-cell-phones">FDA</a>,
+                            and peer-reviewed scientific studies all conclude 5G is safe when used as designed.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What happens if 5G networks go down while self-driving cars are on the road?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Self-driving cars are designed with multiple backup systems:</strong></p>
+
+                        <div class="step-list">
+                            <h4>Self-Driving Car Safety Layers:</h4>
+                            <ol>
+                                <li><strong>Primary:</strong> Onboard sensors (cameras, radar, lidar) work without internet</li>
+                                <li><strong>Secondary:</strong> Pre-loaded maps and traffic patterns stored locally</li>
+                                <li><strong>Tertiary:</strong> 4G/LTE backup networks for communication</li>
+                                <li><strong>Emergency:</strong> Safe stop procedures if all systems fail</li>
+                            </ol>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🚗 What 5G Does</h4>
+                                <p><strong>Enhanced features:</strong> Real-time traffic updates</p>
+                                <p><strong>Vehicle communication:</strong> Car-to-car coordination</p>
+                                <p><strong>Smart infrastructure:</strong> Traffic light optimization</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🛡️ What Happens Without 5G</h4>
+                                <p><strong>Core functions:</strong> Still work with onboard systems</p>
+                                <p><strong>Fallback:</strong> Cars operate more conservatively</p>
+                                <p><strong>Human override:</strong> Driver can always take control</p>
+                            </div>
+                        </div>
+
+                        <div class="note">
+                            <strong>Think of it like this:</strong> 5G is like having a GPS with real-time traffic updates. Without it, you can still drive using basic navigation, but you might not know about the traffic jam ahead.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="security">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🔒 Security & Digital Payments</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How does tap-to-pay encryption actually work?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Tap-to-pay uses multiple layers of security to protect your information:</strong></p>
+
+                        <div class="step-list">
+                            <h4>The Secure Payment Process:</h4>
+                            <ol>
+                                <li><strong>Tokenization:</strong> Your real card number is replaced with a random "token"</li>
+                                <li><strong>Encryption:</strong> Payment data is scrambled into unreadable code</li>
+                                <li><strong>Authentication:</strong> Your device verifies it's really you (fingerprint, Face ID)</li>
+                                <li><strong>Transmission:</strong> Encrypted token is sent to payment processor</li>
+                                <li><strong>Verification:</strong> Bank checks token and approves/denies payment</li>
+                                <li><strong>Confirmation:</strong> Transaction complete without sharing real card details</li>
+                            </ol>
+                        </div>
+                        <p>Check out <a target="_blank" href="https://www.verygoodsecurity.com/blog/posts/payments-101-an-intro-to-card-networks-and-card-transactions">this article</a>!</p>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🎭 Tokenization</h4>
+                                <p><strong>Real card:</strong> 4532-1234-5678-9012</p>
+                                <p><strong>Token:</strong> 8765-4321-9876-5432</p>
+                                <p><strong>Benefit:</strong> Hackers get useless fake number</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔐 Encryption</h4>
+                                <p><strong>Plain text:</strong> "Pay $20 to Coffee Shop"</p>
+                                <p><strong>Encrypted:</strong> "X9!mP#Q@w7$nL2&vB8"</p>
+                                <p><strong>Benefit:</strong> Unreadable without decryption key</p>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Why it's safer than swiping:</strong> Traditional cards transmit actual card numbers that can be stolen and reused. Tap-to-pay creates unique tokens for each transaction.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Is Apple Pay the same as using tap-to-pay on my regular debit card?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Similar technology, but Apple Pay has additional security layers:</strong></p>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>💳 Regular Tap-to-Pay Card</h4>
+                                <p><strong>Security:</strong> Basic tokenization and encryption</p>
+                                <p><strong>Authentication:</strong> None (just tap and go)</p>
+                                <p><strong>Limits:</strong> Usually $100-200 per transaction</p>
+                                <p><strong>If stolen:</strong> Anyone can use it until you cancel</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📱 Apple Pay</h4>
+                                <p><strong>Security:</strong> Advanced tokenization + device encryption</p>
+                                <p><strong>Authentication:</strong> Face ID, Touch ID, or passcode required</p>
+                                <p><strong>Limits:</strong> Higher or no limits with authentication</p>
+                                <p><strong>If stolen:</strong> Useless without your biometrics</p>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Apple Pay Additional Security Features:</h4>
+                            <ol>
+                                <li><strong>Secure Element:</strong> Dedicated chip stores payment info separately</li>
+                                <li><strong>Device-specific tokens:</strong> Each device gets unique payment tokens</li>
+                                <li><strong>Transaction authentication:</strong> Every payment requires your biometric</li>
+                                <li><strong>No card details stored:</strong> Apple never sees your actual card number</li>
+                            </ol>
+                        </div>
+
+                        <div class="note">
+                            <strong>Bottom line:</strong> Both are secure, but Apple Pay (and similar services like Google Pay) add an extra layer of authentication that makes them even more secure than physical tap cards.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="practical">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🛠️ Practical Troubleshooting & Tips</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How do servers handle millions of requests without crashing?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Large websites use multiple strategies to handle massive traffic:</strong></p>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🏭 Multiple Servers</h4>
+                                <p><strong>Load balancing:</strong> Requests distributed across hundreds/thousands of servers</p>
+                                <p><strong>Redundancy:</strong> If one fails, others keep working</p>
+                                <p><strong>Geographic distribution:</strong> Servers located worldwide</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>💾 Caching</h4>
+                                <p><strong>Popular content:</strong> Stored on many servers for quick access</p>
+                                <p><strong>CDNs:</strong> Content delivery networks bring data closer to users</p>
+                                <p><strong>Smart storage:</strong> Frequently requested data kept in fast memory</p>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>How Google Handles Billions of Searches:</h4>
+                            <ol>
+                                <li><strong>Request arrives:</strong> Load balancer picks least busy server</li>
+                                <li><strong>Check cache:</strong> Is answer already computed and stored?</li>
+                                <li><strong>Parallel processing:</strong> Multiple servers work on complex queries</li>
+                                <li><strong>Result assembly:</strong> Combine results from different sources</li>
+                                <li><strong>Fast delivery:</strong> Send answer from server closest to user</li>
+                            </ol>
+                        </div>
+
+                        <div class="note">
+                            <strong>University networks:</strong> Use similar principles but smaller scale. When campus WiFi is slow, it's often because too many students are streaming videos at once, exceeding the network's capacity.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Why does my internet slow down when everyone in my house is online?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Your internet connection has limited bandwidth that gets shared among all devices:</strong></p>
+
+                        <div class="network-diagram">
+                            <p><strong>Bandwidth Sharing Example:</strong></p>
+                            <p>Total bandwidth: 100 Mbps<br>
+                            - Dad streaming 4K Netflix: 25 Mbps<br>
+                            - Mom video calling: 5 Mbps<br>
+                            - Sister downloading game: 40 Mbps<br>
+                            - Your device gets: 30 Mbps remaining</p>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🏠 Bandwidth Hogs</h4>
+                                <p><strong>4K streaming:</strong> 25+ Mbps per stream</p>
+                                <p><strong>Video calls:</strong> 3-5 Mbps per call</p>
+                                <p><strong>Game downloads:</strong> Uses all available bandwidth</p>
+                                <p><strong>Cloud backups:</strong> Constant background usage</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>💡 Solutions</h4>
+                                <p><strong>QoS settings:</strong> Prioritize important devices</p>
+                                <p><strong>Schedule downloads:</strong> Large files during off-hours</p>
+                                <p><strong>Upgrade plan:</strong> More bandwidth for heavy usage</p>
+                                <p><strong>Better router:</strong> Improved traffic management</p>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Quick Fixes for Slow Internet:</h4>
+                            <ol>
+                                <li><strong>Check what's running:</strong> Look for background downloads/updates</li>
+                                <li><strong>Restart router:</strong> Unplug for 30 seconds, plug back in</li>
+                                <li><strong>Move closer to router:</strong> Better WiFi signal = better speed</li>
+                                <li><strong>Use ethernet cable:</strong> Wired connections are more stable</li>
+                                <li><strong>Limit streaming quality:</strong> Switch to 1080p instead of 4K</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How can I tell if my internet problems are my WiFi or my ISP?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Simple tests can help you identify whether the problem is your local network or your internet service:</strong></p>
+
+                        <div class="step-list">
+                            <h4>Diagnostic Steps:</h4>
+                            <ol>
+                                <li><strong>Test with ethernet cable:</strong> Connect directly to router - faster than WiFi?</li>
+                                <li><strong>Test multiple devices:</strong> All devices slow or just one?</li>
+                                <li><strong>Test at different times:</strong> Slower in evenings? (ISP congestion)</li>
+                                <li><strong>Check other households:</strong> Ask neighbors if they're having issues</li>
+                                <li><strong>Run speed test:</strong> Compare to what you're paying for</li>
+                            </ol>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🏠 WiFi Problems</h4>
+                                <p><strong>Symptoms:</strong> Faster when closer to router</p>
+                                <p><strong>Ethernet test:</strong> Much faster with cable</p>
+                                <p><strong>Fixes:</strong> Better router placement, new router, WiFi extender</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🌐 ISP Problems</h4>
+                                <p><strong>Symptoms:</strong> Slow even with ethernet</p>
+                                <p><strong>Speed test:</strong> Much slower than advertised</p>
+                                <p><strong>Fixes:</strong> Call ISP, upgrade plan, check for outages</p>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>When to call your ISP:</strong> If ethernet speed tests consistently show less than 50% of your advertised speed, or if you're experiencing frequent disconnections.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="technical">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>⚙️ Technical Deep Dives</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How do fiber optic cables transmit data at the speed of light?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p>Well... at least <a target="_blank" href="https://www.centurylink.com/home/help/internet/fiber/what-is-fiber-internet.html#:~:text=Fiber%2Doptic%20internet%2C%20commonly%20called,70%25%20the%20speed%20of%20light.">70% the speed of light</a>,
+                            but we're <a target="_blank" href="https://www.nature.com/articles/nphoton.2013.45">getting much closer</a>!
+                        </p>
+                        <p><strong>Fiber optic cables use light pulses to represent digital data:</strong></p>
+
+                        <div class="step-list">
+                            <h4>How Fiber Optics Work:</h4>
+                            <ol>
+                                <li><strong>Data conversion:</strong> Electrical signals converted to light pulses</li>
+                                <li><strong>Light encoding:</strong> Light on = 1, Light off = 0 (binary code)</li>
+                                <li><strong>Glass fiber transmission:</strong> Light bounces through ultra-pure glass</li>
+                                <li><strong>Long distances:</strong> Light can travel 100+ miles without amplification</li>
+                                <li><strong>Reception:</strong> Light converted back to electrical signals</li>
+                            </ol>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>💡 The Physics</h4>
+                                <p><strong>Total internal reflection:</strong> Light bounces off fiber walls</p>
+                                <p><strong>Core material:</strong> Ultra-pure glass (purer than window glass)</p>
+                                <p><strong>Speed:</strong> About 200,000 km/second in fiber</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>⚡ vs 🔵 Comparison</h4>
+                                <p><strong>Copper wire:</strong> Electrical signals, limited distance</p>
+                                <p><strong>Fiber optic:</strong> Light signals, much longer distance</p>
+                                <p><strong>Speed difference:</strong> Light travels faster with less interference</p>
+                            </div>
+                        </div>
+
+                        <div class="note">
+                            <strong>Why it's not exactly light speed:</strong> Light travels slower through glass than through vacuum. In fiber, it's about 2/3 the speed of light in vacuum (for now), but still much faster than electrical signals in copper.
+                        </div>
+
+                        <div class="note" style="background-color: #f9e67e8c;">
+                            <strong>Fun fact:</strong> Over 500 undersea cables carry 99% of international internet traffic - not satellites!
+                            <a target="_blank" href="https://www.cnet.com/home/internet/features/the-secret-life-of-the-500-cables-that-run-the-internet/">Read more</a> and prepare to have your mind blown!
+                        </div>
+
+                        <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Background -->
+                        <defs>
+                            <!-- Ocean gradient -->
+                            <linearGradient id="oceanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+                            <stop offset="30%" style="stop-color:#4682B4;stop-opacity:1" />
+                            <stop offset="60%" style="stop-color:#2F4F4F;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#191970;stop-opacity:1" />
+                            </linearGradient>
+                            
+                            <!-- Seafloor gradient -->
+                            <linearGradient id="seafloorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#8B7355;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#654321;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#2F4F2F;stop-opacity:1" />
+                            </linearGradient>
+                            
+                            <!-- Light rays pattern -->
+                            <pattern id="lightRays" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <rect width="20" height="20" fill="none"/>
+                            <circle cx="10" cy="10" r="1" fill="#FFD700" opacity="0.6"/>
+                            </pattern>
+                        </defs>
+                        
+                        <!-- Sky -->
+                        <rect width="1200" height="200" fill="#87CEEB"/>
+                        
+                        <!-- Ocean -->
+                        <rect x="0" y="200" width="1200" height="450" fill="url(#oceanGradient)"/>
+                        
+                        <!-- Seafloor -->
+                        <path d="M0 650 Q200 630 400 650 Q600 670 800 650 Q1000 640 1200 655 L1200 800 L0 800 Z" 
+                                fill="url(#seafloorGradient)" stroke="#654321" stroke-width="2"/>
+                        
+                        <!-- Title -->
+                        <text x="600" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#333">
+                            Undersea Fiber Optic Cable: Connecting Continents
+                        </text>
+                        
+                        <!-- Continents -->
+                        <!-- Left continent -->
+                        <rect x="0" y="150" width="150" height="50" fill="#228B22" stroke="#006400" stroke-width="2" rx="10"/>
+                        <text x="75" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">
+                            North America
+                        </text>
+  
+                        <!-- Right continent -->
+                        <rect x="1050" y="150" width="150" height="50" fill="#228B22" stroke="#006400" stroke-width="2" rx="10"/>
+                        <text x="1125" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">
+                            Europe
+                        </text>
+                        
+                        <!-- Fiber optic cable path -->
+                        <path d="M150 180 Q300 220 450 350 Q600 450 750 350 Q900 220 1050 180" 
+                                stroke="#FF4500" stroke-width="12" fill="none" stroke-linecap="round"/>
+                        
+                        <!-- Cable cross-section detail -->
+                        <g transform="translate(500, 100)">
+                            <!-- Background circle -->
+                            <circle cx="0" cy="0" r="40" fill="white" stroke="#333" stroke-width="2"/>
+                            <text x="0" y="-50" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">
+                            Cable Cross-Section
+                            </text>
+                            
+                            <!-- Layers from outside to inside -->
+                            <!-- Outer protective layer -->
+                            <circle cx="0" cy="0" r="35" fill="#2F4F4F" stroke="#000" stroke-width="1"/>
+                            <text x="45" y="0" font-family="Arial, sans-serif" font-size="12" fill="#333">
+                            Steel armor
+                            </text>
+                            
+                            <!-- Water barrier -->
+                            <circle cx="0" cy="0" r="28" fill="#4682B4" stroke="#000" stroke-width="1"/>
+                            <text x="45" y="12" font-family="Arial, sans-serif" font-size="12" fill="#333">
+                            Water barrier
+                            </text>
+                            
+                            <!-- Strength member -->
+                            <circle cx="0" cy="0" r="22" fill="#FFD700" stroke="#000" stroke-width="1"/>
+                            <text x="45" y="24" font-family="Arial, sans-serif" font-size="12" fill="#333">
+                            Strength layer
+                            </text>
+                            
+                            <!-- Fiber bundle -->
+                            <circle cx="0" cy="0" r="15" fill="#FF6347" stroke="#000" stroke-width="1"/>
+                            <text x="45" y="36" font-family="Arial, sans-serif" font-size="12" fill="#333">
+                            Fiber bundle
+                            </text>
+                            
+                            <!-- Individual fiber cores (tiny circles) -->
+                            <circle cx="-8" cy="-5" r="2" fill="#FFFF00"/>
+                            <circle cx="0" cy="-8" r="2" fill="#FFFF00"/>
+                            <circle cx="8" cy="-5" r="2" fill="#FFFF00"/>
+                            <circle cx="-5" cy="3" r="2" fill="#FFFF00"/>
+                            <circle cx="5" cy="3" r="2" fill="#FFFF00"/>
+                            <circle cx="0" cy="8" r="2" fill="#FFFF00"/>
+                            
+                            <!-- Light paths in fibers -->
+                            <circle cx="-8" cy="-5" r="1" fill="url(#lightRays)"/>
+                            <circle cx="0" cy="-8" r="1" fill="url(#lightRays)"/>
+                            <circle cx="8" cy="-5" r="1" fill="url(#lightRays)"/>
+                            
+                            <text x="0" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+                            Hair-thin glass fibers carry light
+                            </text>
+                        </g>
+                        
+                        <!-- Data centers -->
+                        <!-- Left data center -->
+                        <rect x="20" y="120" width="60" height="30" fill="#696969" stroke="#000" stroke-width="1" rx="3"/>
+                        <rect x="25" y="125" width="10" height="20" fill="#00FF00"/>
+                        <rect x="40" y="125" width="10" height="20" fill="#00FF00"/>
+                        <rect x="55" y="125" width="10" height="20" fill="#00FF00"/>
+                        <text x="50" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+                            Data Center
+                        </text>
+                        
+                        <!-- Right data center -->
+                        <rect x="1120" y="120" width="60" height="30" fill="#696969" stroke="#000" stroke-width="1" rx="3"/>
+                        <rect x="1125" y="125" width="10" height="20" fill="#00FF00"/>
+                        <rect x="1140" y="125" width="10" height="20" fill="#00FF00"/>
+                        <rect x="1155" y="125" width="10" height="20" fill="#00FF00"/>
+                        <text x="1150" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+                            Data Center
+                        </text>
+                        
+                        <!-- Connection lines from data centers to cable -->
+                        <line x1="80" y1="150" x2="150" y2="180" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
+                        <line x1="1120" y1="150" x2="1050" y2="180" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
+                        
+                        <!-- Sea life -->
+                        <!-- Fish -->
+                        <g transform="translate(300, 400)">
+                            <ellipse cx="0" cy="0" rx="20" ry="8" fill="#4169E1"/>
+                            <polygon points="-20,0 -30,-5 -30,5" fill="#4169E1"/>
+                            <circle cx="8" cy="-2" r="2" fill="white"/>
+                            <circle cx="8" cy="-2" r="1" fill="black"/>
+                        </g>
+                        
+                        <!-- Whale -->
+                        <g transform="translate(800, 300)">
+                            <ellipse cx="0" cy="0" rx="40" ry="15" fill="#2F4F4F"/>
+                            <polygon points="-40,0 -55,-8 -55,8" fill="#2F4F4F"/>
+                            <circle cx="15" cy="-5" r="3" fill="white"/>
+                            <circle cx="15" cy="-5" r="2" fill="black"/>
+                        </g>
+                        
+                        <!-- Seaweed near cable -->
+                        <g transform="translate(400, 650)">
+                            <path d="M0 0 Q-5 -20 0 -40 Q5 -60 0 -80" stroke="#228B22" stroke-width="3" fill="none"/>
+                            <path d="M10 0 Q5 -15 10 -30 Q15 -45 10 -60" stroke="#228B22" stroke-width="2" fill="none"/>
+                        </g>
+                        
+                        <g transform="translate(700, 650)">
+                            <path d="M0 0 Q-8 -25 0 -50 Q8 -75 0 -100" stroke="#228B22" stroke-width="4" fill="none"/>
+                            <path d="M15 0 Q10 -20 15 -40 Q20 -60 15 -80" stroke="#228B22" stroke-width="3" fill="none"/>
+                        </g>
+                        
+                        <!-- Light pulse animation indicators -->
+                        <g>
+                            <!-- Light pulse 1 -->
+                            <circle cx="200" cy="200" r="5" fill="#FFD700" opacity="0.8">
+                            <animate attributeName="cx" values="200;400;600;800;1000" dur="3s" repeatCount="indefinite"/>
+                            <animate attributeName="cy" values="200;280;400;280;200" dur="3s" repeatCount="indefinite"/>
+                            </circle>
+                            
+                            <!-- Light pulse 2 -->
+                            <circle cx="150" cy="190" r="4" fill="#00FFFF" opacity="0.8">
+                            <animate attributeName="cx" values="150;350;550;750;950;1050" dur="4s" repeatCount="indefinite"/>
+                            <animate attributeName="cy" values="190;270;390;270;190;180" dur="4s" repeatCount="indefinite"/>
+                            </circle>
+                        </g>
+                        
+                        <!-- Data transmission info box -->
+                        <rect x="85" y="480" width="260" height="120" fill="rgba(255,255,255,0.9)" stroke="#333" stroke-width="2" rx="10"/>
+                        <text x="200" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+                            Fiber Optic Data Transmission
+                        </text>
+                        
+                        <text x="100" y="520" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            • Light pulses = Digital data (1s and 0s)
+                        </text>
+                        <text x="100" y="535" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            • Speed: ~200,000 km/second
+                        </text>
+                        <text x="100" y="550" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            • NYC to London: ~28 milliseconds
+                        </text>
+                        <text x="100" y="565" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            • Hundreds of fiber strands per cable
+                        </text>
+                        <text x="100" y="580" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            • Carries 99% of intercontinental data
+                        </text>
+                        
+                        <!-- Cable burial info -->
+                        <rect x="850" y="480" width="320" height="100" fill="rgba(255,255,255,0.9)" stroke="#333" stroke-width="2" rx="10"/>
+                        <text x="1010" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">
+                            Cable Protection
+                        </text>
+                        
+                        <text x="860" y="520" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            • Buried 1-3 meters deep in shallow water
+                        </text>
+                        <text x="860" y="535" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            • Armored against ship anchors and fishing
+                        </text>
+                        <text x="860" y="550" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            • Repair ships fix breaks (rare but costly)
+                        </text>
+                        <text x="860" y="565" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            • Multiple redundant cables for reliability
+                        </text>
+                        
+                        <!-- Depth indicator -->
+                        <g transform="translate(50, 250)">
+                            <line x1="0" y1="0" x2="0" y2="400" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            <text x="36" y="200" font-family="Arial, sans-serif" font-size="12" fill="#fff">
+                            Depth: Up to 8,000m
+                            </text>
+                            <text x="36" y="215" font-family="Arial, sans-serif" font-size="12" fill="#fff">
+                            (26,000 feet)
+                            </text>
+                            
+                            <!-- Depth markers -->
+                            <line x1="-5" y1="100" x2="5" y2="100" stroke="#fff" stroke-width="1"/>
+                            <text x="10" y="105" font-family="Arial, sans-serif" font-size="12" fill="#fff">2km</text>
+                            
+                            <line x1="-5" y1="200" x2="5" y2="200" stroke="#fff" stroke-width="1"/>
+                            <text x="10" y="205" font-family="Arial, sans-serif" font-size="12" fill="#fff">4km</text>
+                            
+                            <line x1="-5" y1="300" x2="5" y2="300" stroke="#fff" stroke-width="1"/>
+                            <text x="10" y="305" font-family="Arial, sans-serif" font-size="12" fill="#fff">6km</text>
+                            
+                            <line x1="-5" y1="400" x2="5" y2="400" stroke="#fff" stroke-width="1"/>
+                            <text x="10" y="405" font-family="Arial, sans-serif" font-size="12" fill="#fff">8km</text>
+                        </g>
+                        
+                        <!-- Arrow marker definition -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                            refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#fff" />
+                            </marker>
+                        </defs>
+                        
+                        <!-- Bottom fact -->
+                        <text x="600" y="770" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#fff">
+                            Over 500 undersea cables carry 99% of international internet traffic - not satellites!
+                        </text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What's the difference between the internet and the World Wide Web?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p>Great question. The answer is why I prefer to teach networking before I teach about the Web!</p>
+                        <p><strong>These terms are often confused, but they're actually different things:</strong></p>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🌐 The Internet</h4>
+                                <p><strong>What it is:</strong> The physical network infrastructure</p>
+                                <p><strong>Includes:</strong> Cables, routers, servers, protocols</p>
+                                <p><strong>Think of it as:</strong> The highway system</p>
+                                <p><strong>Used for:</strong> Web, email, gaming, streaming, file sharing</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🕸️ The World Wide Web</h4>
+                                <p><strong>What it is:</strong> Web pages and websites</p>
+                                <p><strong>Includes:</strong> HTML pages, links, browsers (more on this soon)</p>
+                                <p><strong>Think of it as:</strong> One type of traffic on the highway</p>
+                                <p><strong>Accessed via:</strong> Web browsers like Chrome, Firefox</p>
+                            </div>
+                        </div>
+
+                        <div class="network-diagram">
+                            <p><strong>Simple Analogy:</strong></p>
+                            <p><strong>Internet =</strong> Road system (infrastructure)<br>
+                            <strong>World Wide Web =</strong> All the shops and businesses you can visit using those roads<br>
+                            <strong>Email =</strong> Postal service using the same roads<br>
+                            <strong>Gaming =</strong> Entertainment venues using the same roads</p>
+                        </div>
+
+                        <div class="note">
+                            <strong>Historical note:</strong> The Internet started in the 1960s as ARPANET. The World Wide Web was invented by Tim Berners-Lee in 1989 as a way to share information over the existing Internet.
+                        </div>
+
+                        <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Background -->
+                        <rect width="1200" height="800" fill="#f8f9fa"/>
+                        
+                        <!-- Title -->
+                        <text x="600" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#333">
+                            The World Wide Web Sits on Top of the Internet
+                        </text>
+                        
+                        <!-- Internet Foundation Layer -->
+                        <rect x="100" y="500" width="1000" height="180" fill="#2F4F4F" stroke="#000" stroke-width="3" rx="10"/>
+                        <text x="600" y="530" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">
+                            THE INTERNET (Physical Infrastructure)
+                        </text>
+                        
+                        <!-- Internet components -->
+                        <g font-family="Arial, sans-serif" font-size="14" fill="white">
+                            <!-- Cables and Hardware -->
+                            <rect x="130" y="550" width="180" height="40" fill="#4682B4" stroke="#fff" stroke-width="1" rx="5"/>
+                            <text x="220" y="575" text-anchor="middle" font-weight="bold">Cables & Hardware</text>
+                            
+                            <!-- Routers and Servers -->
+                            <rect x="330" y="550" width="180" height="40" fill="#4682B4" stroke="#fff" stroke-width="1" rx="5"/>
+                            <text x="420" y="575" text-anchor="middle" font-weight="bold">Routers & Servers</text>
+                            
+                            <!-- Protocols (TCP/IP) -->
+                            <rect x="530" y="550" width="180" height="40" fill="#4682B4" stroke="#fff" stroke-width="1" rx="5"/>
+                            <text x="620" y="575" text-anchor="middle" font-weight="bold">Protocols (TCP/IP)</text>
+                            
+                            <!-- ISPs -->
+                            <rect x="730" y="550" width="180" height="40" fill="#4682B4" stroke="#fff" stroke-width="1" rx="5"/>
+                            <text x="820" y="575" text-anchor="middle" font-weight="bold">Internet Providers</text>
+                            
+                            <!-- Infrastructure details -->
+                            <text x="220" y="610" text-anchor="middle" font-size="11">Fiber optics, copper wires</text>
+                            <text x="220" y="625" text-anchor="middle" font-size="11">cell towers, satellites</text>
+                            
+                            <text x="420" y="610" text-anchor="middle" font-size="11">Data centers, network</text>
+                            <text x="420" y="625" text-anchor="middle" font-size="11">equipment worldwide</text>
+                            
+                            <text x="620" y="610" text-anchor="middle" font-size="11">Rules for how data</text>
+                            <text x="620" y="625" text-anchor="middle" font-size="11">travels between devices</text>
+                            
+                            <text x="820" y="610" text-anchor="middle" font-size="11">Comcast, AT&T, Verizon</text>
+                            <text x="820" y="625" text-anchor="middle" font-size="11">Local/global providers</text>
+                        </g>
+                        
+                        <!-- Applications Layer -->
+                        <rect x="150" y="200" width="900" height="250" fill="#E6F3FF" stroke="#1E90FF" stroke-width="3" rx="10"/>
+                        <text x="600" y="230" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1E90FF">
+                            APPLICATIONS & SERVICES (What You Use)
+                        </text>
+                        
+                        <!-- Web section -->
+                        <rect x="200" y="260" width="250" height="170" fill="#FFE4B5" stroke="#FF8C00" stroke-width="2" rx="8"/>
+                        <text x="325" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FF8C00">
+                            World Wide Web
+                        </text>
+                        
+                        <!-- Web components -->
+                        <g font-family="Arial, sans-serif" font-size="12" fill="#333">
+                            <rect x="210" y="300" width="70" height="25" fill="#FFA500" rx="3"/>
+                            <text x="245" y="317" text-anchor="middle" fill="white">Websites</text>
+                            
+                            <rect x="290" y="300" width="70" height="25" fill="#FFA500" rx="3"/>
+                            <text x="325" y="317" text-anchor="middle" fill="white">HTML</text>
+                            
+                            <rect x="370" y="300" width="70" height="25" fill="#FFA500" rx="3"/>
+                            <text x="405" y="317" text-anchor="middle" fill="white">HTTP</text>
+                            
+                            <rect x="210" y="335" width="70" height="25" fill="#FFA500" rx="3"/>
+                            <text x="245" y="352" text-anchor="middle" fill="white">Browsers</text>
+                            
+                            <rect x="290" y="335" width="70" height="25" fill="#FFA500" rx="3"/>
+                            <text x="325" y="352" text-anchor="middle" fill="white">URLs</text>
+                            
+                            <rect x="370" y="335" width="70" height="25" fill="#FFA500" rx="3"/>
+                            <text x="405" y="352" text-anchor="middle" fill="white">Links</text>
+                            
+                            <text x="325" y="385" text-anchor="middle" font-size="12">Google, Facebook, Netflix</text>
+                            <text x="325" y="400" text-anchor="middle" font-size="12">Shopping, news, videos</text>
+                        </g>
+                        
+                        <!-- Other Internet Applications -->
+                        <g font-family="Arial, sans-serif" font-size="14" fill="#333">
+                            <!-- Email -->
+                            <rect x="480" y="260" width="120" height="50" fill="#98FB98" stroke="#32CD32" stroke-width="2" rx="5"/>
+                            <text x="540" y="280" text-anchor="middle" font-weight="bold">Email</text>
+                            <text x="540" y="295" text-anchor="middle" font-size="12">SMTP, POP3, IMAP</text>
+                            
+                            <!-- Gaming -->
+                            <rect x="620" y="260" width="120" height="50" fill="#FFB6C1" stroke="#FF69B4" stroke-width="2" rx="5"/>
+                            <text x="680" y="280" text-anchor="middle" font-weight="bold">Online Gaming</text>
+                            <text x="680" y="295" text-anchor="middle" font-size="12">Custom protocols</text>
+                            
+                            <!-- File Transfer -->
+                            <rect x="760" y="260" width="120" height="50" fill="#DDA0DD" stroke="#9932CC" stroke-width="2" rx="5"/>
+                            <text x="820" y="280" text-anchor="middle" font-weight="bold">File Transfer</text>
+                            <text x="820" y="295" text-anchor="middle" font-size="12">FTP, BitTorrent</text>
+                            
+                            <!-- Video Streaming -->
+                            <rect x="480" y="330" width="120" height="50" fill="#F0E68C" stroke="#DAA520" stroke-width="2" rx="5"/>
+                            <text x="540" y="350" text-anchor="middle" font-weight="bold">Video Streaming</text>
+                            <text x="540" y="365" text-anchor="middle" font-size="12">Netflix, YouTube</text>
+                            
+                            <!-- Messaging -->
+                            <rect x="620" y="330" width="120" height="50" fill="#87CEEB" stroke="#4682B4" stroke-width="2" rx="5"/>
+                            <text x="680" y="350" text-anchor="middle" font-weight="bold">Messaging</text>
+                            <text x="680" y="365" text-anchor="middle" font-size="12">WhatsApp, Slack</text>
+                            
+                            <!-- Voice Calls -->
+                            <rect x="760" y="330" width="120" height="50" fill="#F5DEB3" stroke="#D2691E" stroke-width="2" rx="5"/>
+                            <text x="820" y="350" text-anchor="middle" font-weight="bold">Voice/Video Calls</text>
+                            <text x="820" y="365" text-anchor="middle" font-size="12">Zoom, Skype</text>
+                        </g>
+                        
+                        <!-- Arrows showing Web is part of applications -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                            refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#FF8C00" />
+                            </marker>
+                        </defs>
+                        
+                        <!-- Connection arrows -->
+                        <line x1="325" y1="450" x2="325" y2="500" stroke="#FF8C00" stroke-width="4" marker-end="url(#arrowhead)"/>
+                        <line x1="540" y1="450" x2="540" y2="500" stroke="#32CD32" stroke-width="3" marker-end="url(#arrowhead)"/>
+                        <line x1="680" y1="450" x2="680" y2="500" stroke="#FF69B4" stroke-width="3" marker-end="url(#arrowhead)"/>
+                        <line x1="820" y1="450" x2="820" y2="500" stroke="#9932CC" stroke-width="3" marker-end="url(#arrowhead)"/>
+                        
+                        <!-- Analogy section -->
+                        <rect x="100" y="60" width="450" height="120" fill="#F0F8FF" stroke="#4682B4" stroke-width="2" rx="10"/>
+                        <text x="325" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">
+                            Real-World Analogy
+                        </text>
+                        <text x="120" y="105" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            <tspan x="120" dy="0">Internet = Road system (highways, streets, traffic rules)</tspan>
+                            <tspan x="120" dy="20">Web = Shops you can visit using those roads</tspan>
+                            <tspan x="120" dy="20">Email = Postal service using the same roads</tspan>
+                            <tspan x="120" dy="20">Gaming = Entertainment venues using the same roads</tspan>
+                        </text>
+                        
+                        <!-- Timeline section -->
+                        <rect x="600" y="60" width="500" height="120" fill="#FFF8DC" stroke="#DAA520" stroke-width="2" rx="10"/>
+                        <text x="850" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">
+                            Historical Timeline
+                        </text>
+                        <text x="620" y="105" font-family="Arial, sans-serif" font-size="13" fill="#333">
+                            <tspan x="620" dy="0">1960s-1980s: Internet developed (ARPANET)</tspan>
+                            <tspan x="620" dy="20">1989: Tim Berners-Lee invents the World Wide Web</tspan>
+                            <tspan x="620" dy="20">1990s: Web becomes popular part of Internet</tspan>
+                            <tspan x="620" dy="20">Today: Web is just one of many Internet applications</tspan>
+                        </text>
+                        
+                        <!-- Key distinction box -->
+                        <rect x="200" y="720" width="800" height="60" fill="#FFFACD" stroke="#F4A460" stroke-width="3" rx="10"/>
+                        <text x="600" y="745" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">
+                            Key Point: The Internet is the infrastructure. The Web is just one (huge) service that runs on it.
+                        </text>
+                        <text x="600" y="765" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#333">
+                            Without the Internet, there would be no Web. But the Internet can exist without the Web!
+                        </text>
+                        
+                        <!-- Usage examples -->
+                        <g transform="translate(900, 300)">
+                            <text x="0" y="-20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">You use both:</text>
+                            <text x="0" y="0" font-family="Arial, sans-serif" font-size="13" fill="#333">• Browse web (Chrome)</text>
+                            <text x="0" y="15" font-family="Arial, sans-serif" font-size="13" fill="#333">• Check email (Gmail)</text>
+                            <text x="0" y="30" font-family="Arial, sans-serif" font-size="13" fill="#333">• Play games online</text>
+                            <text x="0" y="45" font-family="Arial, sans-serif" font-size="13" fill="#333">• Video chat (Zoom)</text>
+                            <text x="0" y="60" font-family="Arial, sans-serif" font-size="13" fill="#333">• Stream videos</text>
+                            <text x="0" y="85" font-family="Arial, sans-serif" font-size="13" fill="#666">All using the same</text>
+                            <text x="0" y="100" font-family="Arial, sans-serif" font-size="13" fill="#666">Internet infrastructure!</text>
+                        </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '▼';
+                header.style.borderRadius = '15px';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '▲';
+                header.style.borderRadius = '15px 15px 0 0';
+            }
+        }
+
+        function toggleAnswer(questionElement) {
+            const answer = questionElement.nextElementSibling;
+            const icon = questionElement.querySelector('.toggle-icon');
+            
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                icon.textContent = '▶';
+            } else {
+                answer.classList.add('show');
+                icon.textContent = '▼';
+            }
+        }
+
+        // Category filtering
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                const sections = document.querySelectorAll('.qa-section');
+                
+                sections.forEach(section => {
+                    if (category === 'all' || section.dataset.category === category) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const sections = document.querySelectorAll('.qa-section');
+            
+            if (searchTerm === '') {
+                sections.forEach(section => {
+                    section.classList.remove('hidden');
+                    const qaItems = section.querySelectorAll('.qa-item');
+                    qaItems.forEach(item => item.style.display = 'block');
+                });
+                return;
+            }
+            
+            sections.forEach(section => {
+                let hasVisibleItems = false;
+                const qaItems = section.querySelectorAll('.qa-item');
+                
+                qaItems.forEach(item => {
+                    const questionText = item.querySelector('.question').textContent.toLowerCase();
+                    const answerText = item.querySelector('.answer').textContent.toLowerCase();
+                    
+                    if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        hasVisibleItems = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                if (hasVisibleItems) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+        });
+
+        // Auto-expand sections when searched items are found
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm !== '') {
+                document.querySelectorAll('.qa-section:not(.hidden)').forEach(section => {
+                    const content = section.querySelector('.section-content');
+                    const header = section.querySelector('.section-header');
+                    const icon = header.querySelector('.toggle-icon');
+                    
+                    if (!content.classList.contains('expanded')) {
+                        content.classList.add('expanded');
+                        icon.textContent = '▲';
+                        header.style.borderRadius = '15px 15px 0 0';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
