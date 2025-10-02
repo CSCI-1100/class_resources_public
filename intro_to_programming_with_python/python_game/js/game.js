@@ -1964,7 +1964,7 @@ function printCertificateOnly() {
         <!DOCTYPE html>
         <html>
         <head>
-            <title>csci1100_${fileName}</title>
+            <title>${fileName}</title>
             <style>
                 /* Copy relevant certificate styles */
                 body {
