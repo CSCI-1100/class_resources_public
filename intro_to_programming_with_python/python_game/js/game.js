@@ -1831,6 +1831,10 @@ function printCertificate() {
     
     modal.classList.remove('hidden');
     modal.style.display = 'flex';
+
+    setTimeout(() => {
+        document.getElementById('saveAsPDF').scrollIntoView();
+    }, 475);
 }
 
 function closeCertificate() {
