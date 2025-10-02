@@ -794,7 +794,7 @@ body {
 }
 
 .modal-content {
-    background: white;
+    background: white!important;
     border-radius: 10px;
     padding: 12px;
     max-width: 900px;
@@ -813,7 +813,7 @@ body {
 
 /* Certificate Styles */
 .certificate {
-    background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%)!important;
     border: 8px solid #4CAF50;
     border-radius: 15px;
     padding: 40px;
@@ -854,8 +854,9 @@ body {
 }
 
 .certificate-name {
-    color: #1976d2;
-    font-size: 2.2em;
+    color: #66370c;
+    font-size: 2.3em;
+    font-family: 'Brush Script MT', cursive;
     margin: 20px 0;
     text-decoration: underline;
     text-decoration-color: #4CAF50;
