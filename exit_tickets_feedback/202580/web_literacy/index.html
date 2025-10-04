@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Literacy - Fall 2025 Exit Tickets Feedback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #764ba2;
+        }
+
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .qa-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid #9dd3fc;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .qa-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46a3);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .section-content.expanded {
+            max-height: 5000px;
+            padding: 2rem;
+        }
+
+        .qa-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: #555;
+        }
+
+        .answer.show {
+            max-height: 2000px;
+            margin-top: 1rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+
+        .highlight {
+            background: rgba(255, 193, 7, 0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .note {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .note::before {
+            content: "ℹ️";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .warning {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .warning::before {
+            content: "⚠️";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .tip {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .tip::before {
+            content: "💡";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .step-list {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-list ol {
+            counter-reset: step-counter;
+            list-style: none;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .resource-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .resource-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-content.expanded {
+                padding: 1rem;
+            }
+            
+            .category-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Web Literacy Q&A</h1>
+            <p>Understanding the Internet, Web, HTML, CSS, and Online Privacy</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search questions... (e.g., 'cookies', 'HTML', 'URL', 'website creation')" id="searchBox">
+        </div>
+
+        <div class="category-nav">
+            <button class="category-btn active" data-category="all">All Questions</button>
+            <button class="category-btn" data-category="cookies">Cookies & Privacy</button>
+            <button class="category-btn" data-category="web-basics">Web Basics</button>
+            <button class="category-btn" data-category="html-css">HTML & CSS</button>
+            <button class="category-btn" data-category="urls">URLs & Domains</button>
+        </div>
+        <div class="qa-section" data-category="cookies">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🍪 Cookies & Online Privacy</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What are cookies and how do they work?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Cookies are small text files that websites store on your device to remember information about you.</strong></p>
+                        
+                        <p><strong>Think of cookies like a coat check ticket:</strong></p>
+                        <ul>
+                            <li>You give the restaurant your coat and get a ticket with a number</li>
+                            <li>When you return, you show the ticket and get your specific coat back</li>
+                            <li>Similarly, a website gives your browser a "ticket" (cookie) so it remembers you next time</li>
+                        </ul>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📝 What Cookies Store</h4>
+                                <ul>
+                                    <li>Login status (so you stay signed in)</li>
+                                    <li>Shopping cart items</li>
+                                    <li>Site preferences (language, theme)</li>
+                                    <li>Browsing history on that site</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔄 How They Work</h4>
+                                <ol>
+                                    <li>You visit a website</li>
+                                    <li>Website sends a cookie to your browser</li>
+                                    <li>Browser stores the cookie</li>
+                                    <li>Next time you visit, browser sends cookie back</li>
+                                    <li>Website recognizes you!</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="note">
+                            <strong>Important:</strong> Cookies are NOT viruses or programs. They're just text files that store information. They can't access your computer or steal passwords directly.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Is it safe to accept cookies? Which ones should I be careful about?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Not all cookies are created equal! Here's what you need to know:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>✅ Generally Safe: First-Party Cookies</h4>
+                                <p><strong>What they are:</strong> Created by the website you're actually visiting</p>
+                                <p><strong>Purpose:</strong> Keep you logged in, remember your cart, save preferences</p>
+                                <p><strong>Privacy risk:</strong> Low - only that website can see this data</p>
+                                <p><strong>Verdict:</strong> Usually safe to accept</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>⚠️ Be Cautious: Third-Party Cookies</h4>
+                                <p><strong>What they are:</strong> Created by advertisers and other companies, not the site you're on</p>
+                                <p><strong>Purpose:</strong> Track you across multiple websites for advertising</p>
+                                <p><strong>Privacy risk:</strong> Higher - builds profile of your browsing habits</p>
+                                <p><strong>Verdict:</strong> Consider blocking these</p>
+                            </div>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Pro tip:</strong> Most browsers now let you block third-party cookies while keeping first-party cookies. This is a good balance between functionality and privacy!
+                        </div>
+
+                        <div class="warning">
+                            <p><strong>Red flags - reject cookies when:</strong></p>
+                            <ul style="margin-left: 30px;">
+                                <li>You're on a sketchy or unfamiliar website</li>
+                                <li>The site requests excessive permissions</li>
+                                <li>You're using a public/shared computer</li>
+                                <li>The cookie policy is vague or concerning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How do I delete cookies? How do I know if third-party cookies are blocked?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Every browser has built-in tools for managing cookies. Here's how:</strong></p>
+                        
+                        <div class="step-list">
+                            <h4>Chrome</h4>
+                            <ol>
+                                <li><strong>Delete cookies:</strong> Settings → Privacy and security → Clear browsing data → Check "Cookies" → Clear data</li>
+                                <li><strong>Block third-party cookies:</strong> Settings → Privacy and security → Third-party cookies → Select "Block third-party cookies"</li>
+                                <li><strong>Check if blocked:</strong> Look for the cookie icon in the address bar when visiting sites</li>
+                            </ol>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Firefox</h4>
+                            <ol>
+                                <li><strong>Delete cookies:</strong> Settings → Privacy & Security → Cookies and Site Data → Clear Data</li>
+                                <li><strong>Block third-party cookies:</strong> Settings → Privacy & Security → Enhanced Tracking Protection → Choose "Strict"</li>
+                                <li><strong>Check if blocked:</strong> Click the shield icon in the address bar</li>
+                            </ol>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Safari</h4>
+                            <ol>
+                                <li><strong>Delete cookies:</strong> Preferences → Privacy → Manage Website Data → Remove All</li>
+                                <li><strong>Block third-party cookies:</strong> Preferences → Privacy → Check "Prevent cross-site tracking"</li>
+                                <li><strong>Check if blocked:</strong> Safari blocks by default; check Privacy settings to confirm</li>
+                            </ol>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Heads up:</strong> Deleting cookies will log you out of websites and clear your preferences. You'll need to sign in again.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Do cookies follow me from app to app on my phone? Is app tracking the same as cookies?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>This is a great question! Cookies and app tracking are related but different:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🍪 Web Cookies</h4>
+                                <p><strong>Where:</strong> Web browsers (Safari, Chrome)</p>
+                                <p><strong>How they work:</strong> Stored by websites in your browser</p>
+                                <p><strong>Scope:</strong> Limited to web browsing</p>
+                                <p><strong>Control:</strong> Clear through browser settings</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📱 App Tracking</h4>
+                                <p><strong>Where:</strong> Mobile apps (Instagram, TikTok, games)</p>
+                                <p><strong>How they work:</strong> Uses device identifiers (IDFA on iPhone, AAID on Android)</p>
+                                <p><strong>Scope:</strong> Can track across multiple apps</p>
+                                <p><strong>Control:</strong> Managed through phone privacy settings</p>
+                            </div>
+                        </div>
+
+                        <p><strong>The short answer:</strong> Traditional cookies don't follow you from app to app, BUT apps use similar tracking technologies that DO follow you across apps.</p>
+
+                        <div class="step-list">
+                            <h4>How to Control App Tracking:</h4>
+                            <ol>
+                                <li><strong>iPhone (iOS 14.5+):</strong> Settings → Privacy & Security → Tracking → Turn off "Allow Apps to Request to Track"</li>
+                                <li><strong>Android:</strong> Settings → Privacy → Ads → Delete advertising ID or opt out of personalization</li>
+                                <li><strong>Per-app basis:</strong> When an app asks "Allow [App] to track you?", tap "Ask App Not to Track"</li>
+                            </ol>
+                        </div>
+
+                        <div class="tip">
+                            <strong>That "creepy" feeling when ads follow you?</strong> That's often app tracking and third-party cookies working together to build a profile of your interests across devices and platforms.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Which types of cookies are most dangerous?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Let's rank cookies by privacy risk:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🟢 Low Risk: Session Cookies</h4>
+                                <p><strong>Lifespan:</strong> Deleted when you close browser</p>
+                                <p><strong>Purpose:</strong> Keep you logged in during visit</p>
+                                <p><strong>Risk level:</strong> Very low</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🟡 Medium Risk: Persistent First-Party Cookies</h4>
+                                <p><strong>Lifespan:</strong> Days to years</p>
+                                <p><strong>Purpose:</strong> Remember preferences, keep you logged in</p>
+                                <p><strong>Risk level:</strong> Low to medium</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🟠 Higher Risk: Third-Party Tracking Cookies</h4>
+                                <p><strong>Lifespan:</strong> Months to years</p>
+                                <p><strong>Purpose:</strong> Track browsing across websites</p>
+                                <p><strong>Risk level:</strong> Medium to high</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔴 Highest Risk: Zombie/Evercookies</h4>
+                                <p><strong>Lifespan:</strong> Very hard to delete</p>
+                                <p><strong>Purpose:</strong> Recreate themselves after deletion</p>
+                                <p><strong>Risk level:</strong> High (rarely used legally)</p>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>The real danger isn't the cookie itself - it's what companies do with the data.</strong>
+                            Third-party cookies can create detailed profiles of your interests, habits, health concerns, and more by tracking you across thousands of websites.
+                        </div>
+
+                        <p><strong>Why are there no legal protections?</strong> Laws are catching up slowly.
+                            The EU has GDPR (requiring cookie consent), California has CCPA, but federal US privacy laws are limited.
+                            Companies lobby heavily against stricter cookie regulations: $21 million in 2022 toward
+                            anti-data anti-data privacy law according to
+                            <a target="_blank" href="https://www.politico.com/newsletters/morning-tech/2022/01/24/tech-spent-big-on-lobbying-last-year-00001144">Birnbaum (2022)</a>
+                            as cited by <a target="_blank" href="https://scholarship.shu.edu/cgi/viewcontent.cgi?article=2129&context=shlj">Lemons (2025)</a>, an informative
+                            source for understanding why the US lags behind.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="web-basics">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🌍 Internet & Web Basics</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What's the difference between the Internet and the Web?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>These terms are often used interchangeably, but they're different!</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🔌 The Internet</h4>
+                                <p><strong>What it is:</strong> The physical network infrastructure</p>
+                                <p><strong>Think of it as:</strong> The roads and highways</p>
+                                <p><strong>Includes:</strong> Cables, routers, satellites, cell towers</p>
+                                <p><strong>Purpose:</strong> Connects billions of devices worldwide</p>
+                                <p><strong>Existed since:</strong> 1960s (ARPANET)</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🌐 The Web (World Wide Web)</h4>
+                                <p><strong>What it is:</strong> A system of linked documents and pages</p>
+                                <p><strong>Think of it as:</strong> The cars traveling on those roads</p>
+                                <p><strong>Includes:</strong> Websites, web pages, hyperlinks</p>
+                                <p><strong>Purpose:</strong> Share and access information through browsers</p>
+                                <p><strong>Existed since:</strong> 1989 (invented by Tim Berners-Lee)</p>
+                            </div>
+                        </div>
+
+                        <div class="note">
+                            <strong>Analogy:</strong> The Internet is like the postal system (infrastructure), and the Web is like the letters and packages (content) that travel through it.
+                        </div>
+
+                        <p><strong>Other things that use the Internet but aren't the Web:</strong></p>
+                        <ul>
+                            <li>Email (uses SMTP protocol, not HTTP)</li>
+                            <li>Online gaming</li>
+                            <li>Video calls (Zoom, FaceTime)</li>
+                            <li>File sharing (torrents)</li>
+                            <li>Internet of Things (smart devices)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How do web servers work? I'm confused about servers, especially Google's servers.
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>A web server is just a powerful computer that stores websites and sends them to your browser when requested.</strong></p>
+                        
+                        <div class="step-list">
+                            <h4>What Happens When You Visit a Website:</h4>
+                            <ol>
+                                <li><strong>You type URL:</strong> You enter "google.com" in your browser</li>
+                                <li><strong>DNS lookup:</strong> Your computer asks "What's the address of google.com?" (gets an IP address like 142.250.80.46)</li>
+                                <li><strong>Request sent:</strong> Your browser sends a request to Google's server at that address</li>
+                                <li><strong>Server processes:</strong> Google's server receives your request and prepares the webpage</li>
+                                <li><strong>Response sent back:</strong> Server sends HTML, CSS, images back to your browser</li>
+                                <li><strong>Browser displays:</strong> Your browser assembles and displays the webpage</li>
+                            </ol>
+                        </div>
+
+                        <p><strong>What makes Google's servers special:</strong></p>
+                        <ul>
+                            <li><strong>Scale:</strong> Google has millions of servers in data centers worldwide</li>
+                            <li><strong>Speed:</strong> They use nearby servers (edge computing) so responses are fast</li>
+                            <li><strong>Redundancy:</strong> If one server fails, another takes over instantly</li>
+                            <li><strong>Distribution:</strong> Your search might be handled by servers in multiple countries simultaneously</li>
+                        </ul>
+
+                        <div class="note">
+                            <strong>Fun fact:</strong> When you search on Google, your query might be processed by servers on multiple continents in milliseconds, with results aggregated and sent back to you almost instantly!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Tell me more about those undersea cables!
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Undersea cables are the backbone of the global Internet - and they're fascinating!</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📊 By The Numbers</h4>
+                                <ul>
+                                    <li><strong>Over 450</strong> undersea cables worldwide</li>
+                                    <li><strong>1.3+ million km</strong> total length</li>
+                                    <li><strong>99%</strong> of intercontinental data travels through them</li>
+                                    <li><strong>Fiber optic</strong> technology - faster than satellites</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔧 How They're Made</h4>
+                                <ul>
+                                    <li>About as thick as a garden hose</li>
+                                    <li>Multiple layers of protection (steel, copper, plastic)</li>
+                                    <li>Contain fiber optic strands thinner than human hair</li>
+                                    <li>Can transmit terabits per second</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p><strong>How they get there:</strong></p>
+                        <ul>
+                            <li>Special ships called cable-laying vessels slowly lay cable on ocean floor</li>
+                            <li>Takes months to lay a single transatlantic cable</li>
+                            <li>Cables follow seafloor topography to avoid damage</li>
+                            <li>Cost hundreds of millions of dollars per cable</li>
+                        </ul>
+
+                        <div class="tip">
+                            <strong>Want to see them?</strong> Check out <a href="https://www.submarinecablemap.com/" target="_blank">submarinecablemap.com</a> for an interactive map of all undersea Internet cables!
+                        </div>
+
+                        <p><strong>Why not satellites?</strong> Satellites have much higher latency (delay) because signals have to travel to space and back. Cables are much faster for most Internet traffic.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="html-css">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>💻 HTML, CSS & Website Creation</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What are HTML, CSS, and JavaScript? I'm confused about their roles.
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Think of building a website like building a house:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🏗️ HTML (HyperText Markup Language)</h4>
+                                <p><strong>Role:</strong> The structure/skeleton</p>
+                                <p><strong>Like:</strong> The walls, roof, doors, and rooms of a house</p>
+                                <p><strong>Creates:</strong> Headings, paragraphs, images, links, buttons</p>
+                                <p><strong>Example:</strong> "Put a heading here, then a paragraph, then an image"</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🎨 CSS (Cascading Style Sheets)</h4>
+                                <p><strong>Role:</strong> The styling/appearance</p>
+                                <p><strong>Like:</strong> Paint colors, furniture, decorations</p>
+                                <p><strong>Creates:</strong> Colors, fonts, layouts, spacing, animations</p>
+                                <p><strong>Example:</strong> "Make the heading blue and centered"</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>⚡ JavaScript</h4>
+                                <p><strong>Role:</strong> The interactivity/behavior</p>
+                                <p><strong>Like:</strong> Lights that turn on, doors that open, AC that adjusts</p>
+                                <p><strong>Creates:</strong> Clickable buttons, form validation, dynamic content</p>
+                                <p><strong>Example:</strong> "When button clicked, show a message"</p>
+                            </div>
+                        </div>
+
+                        <div class="code-block"><!-- HTML: Structure -->
+&lt;button&gt;Click Me&lt;/button&gt;
+
+/* CSS: Style */
+button {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+}
+
+// JavaScript: Behavior
+button.addEventListener('click', function() {
+    alert('Hello!');
+});</div>
+
+                        <div class="note">
+                            <strong>Remember:</strong> HTML = What content appears, CSS = How it looks, JavaScript = How it behaves.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        I'm confused about how to actually create a website. Where do I start?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Creating your first website is easier than you think! Here's a beginner-friendly approach:</strong></p>
+                        
+                        <div class="step-list">
+                            <h4>Method 1: Online Editor (Easiest - Start Here!)</h4>
+                            <ol>
+                                <li><strong>Go to:</strong> <a href="https://codepen.io" target="_blank">CodePen.io</a> or <a href="https://jsfiddle.net" target="_blank">JSFiddle.net</a></li>
+                                <li><strong>Create free account:</strong> Takes 30 seconds</li>
+                                <li><strong>Click "New Pen":</strong> You'll see three panels (HTML, CSS, JS)</li>
+                                <li><strong>Type in HTML panel:</strong>
+                                    <div class="code-block">&lt;h1&gt;My First Website&lt;/h1&gt;
+&lt;p&gt;Hello, world!&lt;/p&gt;</div>
+                                </li>
+                                <li><strong>See it instantly:</strong> Your website appears in the preview panel!</li>
+                                <li><strong>Add style in CSS panel:</strong>
+                                    <div class="code-block">h1 { color: blue; }
+p { font-size: 20px; }</div>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Method 2: On Your Computer</h4>
+                            <ol>
+                                <li><strong>Create a folder:</strong> Name it "my-website"</li>
+                                <li><strong>Open a text editor:</strong> Notepad (Windows), TextEdit (Mac), or <a href="https://code.visualstudio.com/" target="_blank">VS Code</a></li>
+                                <li><strong>Create a new file:</strong> Name it "index.html"</li>
+                                <li><strong>Type this basic template:</strong>
+                                    <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Website&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to My Website&lt;/h1&gt;
+    &lt;p&gt;This is my first webpage!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                                </li>
+                                <li><strong>Save the file</strong></li>
+                                <li><strong>Open in browser:</strong> Double-click the file or drag it into a browser</li>
+                            </ol>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Pro tip:</strong> Start with online editors like CodePen to learn. Once comfortable, move to creating files on your computer for more control.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How do I switch between HTML and CSS in the same file? Can they be in one file?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Great question! You can include CSS in the same HTML file or keep them separate. Here's how:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>Option 1: CSS Inside HTML (Same File)</h4>
+                                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+    &lt;style&gt;
+        /* CSS goes here between style tags */
+        h1 {
+            color: blue;
+        }
+        p {
+            font-size: 18px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- HTML content here --&gt;
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+    &lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                                <p><strong>Use when:</strong> Small projects, quick tests</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>Option 2: Separate CSS File (Better Practice)</h4>
+                                <p><strong>File: index.html</strong></p>
+                                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+    &lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                                <p><strong>File: styles.css</strong></p>
+                                <div class="code-block">h1 {
+    color: blue;
+}
+p {
+    font-size: 18px;
+}</div>
+                                <p><strong>Use when:</strong> Larger projects, professional work</p>
+                            </div>
+                        </div>
+
+                        <div class="note">
+                            <strong>You don't "switch" between them</strong> - HTML contains the content structure, and CSS (whether in the same file or separate) defines how it looks. They work together simultaneously!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        I didn't know CSS existed! Can you explain it more?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>CSS is what makes websites beautiful! Without it, every website would look like a plain document.</strong></p>
+                        
+                        <p><strong>What CSS can do:</strong></p>
+                        <ul>
+                            <li><strong>Colors:</strong> Change text, backgrounds, borders</li>
+                            <li><strong>Fonts:</strong> Change size, weight, family (Arial, Times, etc.)</li>
+                            <li><strong>Layout:</strong> Position elements, create columns</li>
+                            <li><strong>Spacing:</strong> Add margins and padding</li>
+                            <li><strong>Effects:</strong> Shadows, rounded corners, transparency</li>
+                            <li><strong>Animations:</strong> Make things move and transition</li>
+                            <li><strong>Responsive design:</strong> Make sites work on phones, tablets, desktops</li>
+                        </ul>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>Basic CSS Syntax</h4>
+                                <div class="code-block">selector {
+    property: value;
+}
+
+/* Example: */
+h1 {
+    color: red;
+    font-size: 32px;
+    text-align: center;
+}</div>
+                            </div>
+                            <div class="resource-card">
+                                <h4>Real Example</h4>
+                                <div class="code-block">/* Make all buttons blue */
+button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+/* When hover over button */
+button:hover {
+    background-color: darkblue;
+}</div>
+                            </div>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Try it out:</strong> Go to any website, right-click, select "Inspect", and you can see and edit the CSS in real-time! Changes are temporary and only on your screen.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How were people making websites before Wix and other website builders?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Before drag-and-drop builders, people coded websites by hand - and many still do!</strong></p>
+                        
+                        <div class="step-list">
+                            <h4>Evolution of Web Development:</h4>
+                            <ol>
+                                <li><strong>1990s - Pure HTML:</strong> People wrote HTML in text editors, uploaded via <a target="_blank" href="https://en.wikipedia.org/wiki/File_Transfer_Protocol#/media/File:FileZilla.png">FTP</a>. Sites were simple, mostly text and links.</li>
+                                <li><strong>Late 1990s - HTML + CSS:</strong> CSS was introduced to separate content from design. Tables were used for layout.</li>
+                                <li><strong>Early 2000s - Dynamic Sites:</strong> PHP, JavaScript made sites interactive. Content Management Systems (WordPress, Joomla) emerged.</li>
+                                <li><strong>2010s - Modern Frameworks:</strong> Bootstrap, React, responsive design. Professional tools like Dreamweaver.</li>
+                                <li><strong>Today:</strong> Both methods coexist - builders (Wix, Squarespace) for simplicity, hand-coding for customization.</li>
+                            </ol>
+                        </div>
+
+                        <p><strong>Why some people still code by hand:</strong></p>
+                        <ul>
+                            <li><strong>More control:</strong> Can do exactly what you want</li>
+                            <li><strong>Better performance:</strong> Cleaner, faster code</li>
+                            <li><strong>No monthly fees:</strong> Website builders charge subscription fees</li>
+                            <li><strong>Unique designs:</strong> Not limited to templates</li>
+                            <li><strong>Learning:</strong> Understanding how websites work</li>
+                        </ul>
+
+                        <div class="note">
+                            <strong>The truth:</strong> Website builders like Wix are great for quick, simple sites. Hand-coding is better for complex, custom applications. Many professionals use a mix of both approaches!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-section" data-category="urls">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🔗 URLs, Domains & Web Addresses</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Can you break down the anatomy of a URL? I'm still confused.
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>A URL is like an address for web content. Let's break down each part:</strong></p>
+                        
+                        <div class="code-block">https://www.example.com:443/folder/page.html?id=123&sort=asc#section2
+|___| |_| |_________| |_| |________________| |_____________| |_______|
+  |    |       |       |          |                  |            |
+Protocol |   Domain   Port      Path             Query        Fragment
+     Subdomain                                   String</div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🔒 Protocol (https://)</h4>
+                                <p><strong>What it is:</strong> The method of communication</p>
+                                <p><strong>HTTP:</strong> HyperText Transfer Protocol (not secure)</p>
+                                <p><strong>HTTPS:</strong> HTTP Secure (encrypted - look for lock icon)</p>
+                                <p><strong>Why it matters:</strong> HTTPS protects your data from hackers</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🌐 Domain (example.com)</h4>
+                                <p><strong>What it is:</strong> The human-readable name for the website</p>
+                                <p><strong>Parts:</strong> "example" (name) + ".com" (extension)</p>
+                                <p><strong>Behind the scenes:</strong> Points to an IP address</p>
+                                <p><strong>Example:</strong> google.com → 142.250.80.46</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📁 Subdomain (www.)</h4>
+                                <p><strong>What it is:</strong> A subdivision of the main domain</p>
+                                <p><strong>www:</strong> Most common, stands for "World Wide Web"</p>
+                                <p><strong>Other examples:</strong> mail.google.com, blog.example.com</p>
+                                <p><strong>Purpose:</strong> Organize different sections or services</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📂 Path (/folder/page.html)</h4>
+                                <p><strong>What it is:</strong> Location of specific file on server</p>
+                                <p><strong>Like:</strong> Folder structure on your computer</p>
+                                <p><strong>Example:</strong> /products/shoes/nike.html</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>❓ Query String (?id=123&sort=asc)</h4>
+                                <p><strong>What it is:</strong> Additional data sent to the server</p>
+                                <p><strong>Starts with:</strong> ? (question mark)</p>
+                                <p><strong>Format:</strong> key=value pairs separated by &</p>
+                                <p><strong>Example:</strong> Search results, filters, tracking</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔖 Fragment (#section2)</h4>
+                                <p><strong>What it is:</strong> Jumps to specific part of page</p>
+                                <p><strong>Starts with:</strong> # (hash/pound sign)</p>
+                                <p><strong>Example:</strong> #comments scrolls to comments section</p>
+                                <p><strong>Note:</strong> Not sent to server, handled by browser</p>
+                            </div>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Memory trick:</strong> Read a URL left-to-right like giving directions: "Use secure protocol, go to this website, enter this folder, open this file, use these settings, and scroll to this section."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What does the "S" stand for in HTTPS?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>The "S" stands for "Secure" - and it's very important!</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🔓 HTTP (Without S)</h4>
+                                <p><strong>Security:</strong> None - data sent in plain text</p>
+                                <p><strong>Anyone can:</strong> Read your passwords, credit cards, messages</p>
+                                <p><strong>Vulnerable to:</strong> Eavesdropping, man-in-the-middle attacks</p>
+                                <p><strong>Browser warning:</strong> "Not Secure" in address bar</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔒 HTTPS (With S)</h4>
+                                <p><strong>Security:</strong> Encrypted communication</p>
+                                <p><strong>Protection:</strong> Data scrambled, unreadable to hackers</p>
+                                <p><strong>Safe for:</strong> Passwords, shopping, banking, personal info</p>
+                                <p><strong>Browser shows:</strong> Lock icon 🔒 in address bar</p>
+                            </div>
+                        </div>
+
+                        <p><strong>How HTTPS encryption works:</strong></p>
+                        <ol>
+                            <li>Your browser asks the website for its security certificate</li>
+                            <li>Website provides certificate (proves it's legitimate)</li>
+                            <li>Browser and website agree on encryption method</li>
+                            <li>All data is now scrambled before sending</li>
+                            <li>Only your browser and the website can unscramble it</li>
+                        </ol>
+
+                        <div class="warning">
+                            <strong>Never enter sensitive information on HTTP sites!</strong> This includes passwords, credit card numbers, social security numbers, or personal details. Always look for the lock icon.
+                        </div>
+
+                        <div class="note">
+                            <strong>Good news:</strong> As of 2024, more than\
+                            <a target="_blank" href="https://research.mozilla.org/files/2025/03/the_state_of_https_adoption_on_the_web.pdf">80% of web pages were loaded using HTTPS</a>.
+                            Most modern browsers warn you loudly if you try to visit an HTTP site.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What are subdomains? Why do some sites have "www" and others don't?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Subdomains are subdivisions of a main domain, used to organize different parts of a website or service.</strong></p>
+                        
+                        <p><strong>Common subdomain examples:</strong></p>
+                        <ul>
+                            <li><strong>www.example.com</strong> - Main website (traditional)</li>
+                            <li><strong>mail.google.com</strong> - Email service</li>
+                            <li><strong>maps.google.com</strong> - Maps service</li>
+                            <li><strong>blog.company.com</strong> - Company blog</li>
+                            <li><strong>shop.company.com</strong> - Online store</li>
+                            <li><strong>api.service.com</strong> - Developer API</li>
+                            <li><strong>m.site.com</strong> - Mobile version (older sites)</li>
+                        </ul>
+
+                        <p><strong>About "www":</strong></p>
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>Historical Context</h4>
+                                <p>In the early web, "www" distinguished web servers from mail servers (mail.example.com) or FTP servers (ftp.example.com). It was a convention that stuck.</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>Modern Practice</h4>
+                                <p>Today, "www" is optional. Both example.com and www.example.com typically work. Sites usually redirect one to the other for consistency.</p>
+                            </div>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Try it:</strong> Visit google.com and www.google.com - they both work! Most sites automatically redirect to their preferred version.
+                        </div>
+
+                        <p><strong>Why use subdomains:</strong></p>
+                        <ul>
+                            <li><strong>Organization:</strong> Separate different services</li>
+                            <li><strong>Technical reasons:</strong> Different servers, different technologies</li>
+                            <li><strong>Testing:</strong> dev.example.com for development</li>
+                            <li><strong>Localization:</strong> uk.example.com, fr.example.com</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What is a query string and why is it confusing?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Query strings are the "?" part of URLs that pass information to websites. They look complex but follow simple rules.</strong></p>
+                        
+                        <div class="code-block">https://shop.com/search?product=laptop&price=500&color=silver&sort=price
+
+Breaking it down:
+? = Start of query string
+product=laptop = First parameter (key=value)
+& = Separator between parameters
+price=500 = Second parameter
+& = Another separator
+color=silver = Third parameter
+& = Another separator
+sort=price = Fourth parameter</div>
+
+                        <p><strong>Real-world examples you use every day:</strong></p>
+                        <ul>
+                            <li><strong>Google search:</strong> google.com/search?q=cute+cats</li>
+                            <li><strong>YouTube video:</strong> youtube.com/watch?v=dQw4w9WgXcQ</li>
+                            <li><strong>Amazon filters:</strong> amazon.com/s?k=headphones&rh=p_36:0-5000</li>
+                            <li><strong>Tracking links:</strong> site.com/page?utm_source=email&utm_campaign=summer</li>
+                        </ul>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>What Query Strings Do</h4>
+                                <ul>
+                                    <li>Pass search terms</li>
+                                    <li>Apply filters (price range, size, color)</li>
+                                    <li>Track where you came from (marketing)</li>
+                                    <li>Set preferences (language, items per page)</li>
+                                    <li>Identify specific content (video ID, product ID)</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>Rules of Query Strings</h4>
+                                <ul>
+                                    <li>Always start with ?</li>
+                                    <li>Format: key=value</li>
+                                    <li>Multiple parameters separated by &</li>
+                                    <li>Spaces become + or %20</li>
+                                    <li>Special characters are encoded</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Privacy note:</strong> Query strings are visible in your browser history and can be logged by servers. Don't put sensitive information (like passwords) in query strings!
+                        </div>
+
+                        <div class="tip">
+                            <strong>Experiment:</strong> When you search on Google or filter products on Amazon, watch the URL change. You're seeing query strings in action!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '▼';
+                header.style.borderRadius = '15px';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '▲';
+                header.style.borderRadius = '15px 15px 0 0';
+            }
+        }
+
+        function toggleAnswer(questionElement) {
+            const answer = questionElement.nextElementSibling;
+            const icon = questionElement.querySelector('.toggle-icon');
+            
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                icon.textContent = '▶';
+            } else {
+                answer.classList.add('show');
+                icon.textContent = '▼';
+            }
+        }
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                const sections = document.querySelectorAll('.qa-section');
+                
+                sections.forEach(section => {
+                    if (category === 'all' || section.dataset.category === category) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        const searchBox = document.getElementById('searchBox');
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const sections = document.querySelectorAll('.qa-section');
+            const questions = document.querySelectorAll('.qa-item');
+            
+            if (searchTerm === '') {
+                sections.forEach(section => {
+                    section.classList.remove('hidden');
+                    const qaItems = section.querySelectorAll('.qa-item');
+                    qaItems.forEach(item => item.style.display = 'block');
+                });
+                return;
+            }
+            
+            sections.forEach(section => {
+                let hasVisibleItems = false;
+                const qaItems = section.querySelectorAll('.qa-item');
+                
+                qaItems.forEach(item => {
+                    const questionText = item.querySelector('.question').textContent.toLowerCase();
+                    const answerText = item.querySelector('.answer').textContent.toLowerCase();
+                    
+                    if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        hasVisibleItems = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                if (hasVisibleItems) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+        });
+
+        document.querySelectorAll('.resource-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 25px rgba(102, 126, 234, 0.2)';
+                this.style.borderLeftColor = '#764ba2';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                this.style.borderLeftColor = '#667eea';
+            });
+        });
+
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm !== '') {
+                document.querySelectorAll('.qa-section:not(.hidden)').forEach(section => {
+                    const content = section.querySelector('.section-content');
+                    const header = section.querySelector('.section-header');
+                    const icon = header.querySelector('.toggle-icon');
+                    
+                    if (!content.classList.contains('expanded')) {
+                        content.classList.add('expanded');
+                        icon.textContent = '▲';
+                        header.style.borderRadius = '15px 15px 0 0';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
