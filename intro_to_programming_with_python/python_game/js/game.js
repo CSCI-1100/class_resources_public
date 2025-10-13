@@ -1953,7 +1953,7 @@ function printCertificateOnly() {
     let semester = '';
 
     if (month < 5) semester = '10'; 					// Spring
-    else if (month > 7 && date < 15) semester = '80';   // Fall 
+    else if (month > 7 && date > 15) semester = '80';   // Fall
     else semester = '50';							    // Summer
     let fullDate = `${year}${semester}`;
     let playerName = gameState.playerName.replace(/\s+/g, ""); // Replace whitespace with null
