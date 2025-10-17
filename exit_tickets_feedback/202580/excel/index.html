@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS Excel- Fall 2025 Exit Tickets Feedback</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e7145 0%, #2d9659 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #1e7145, #2d9659);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #1e7145;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #2d9659;
+        }
+
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #1e7145;
+            border-radius: 25px;
+            color: #1e7145;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: #1e7145;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 113, 69, 0.4);
+        }
+
+        .qa-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid #9dd3fc;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .qa-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #1e7145, #2d9659);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #1a5f3a, #25804a);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .section-content.expanded {
+            max-height: 10000px;
+            padding: 2rem;
+        }
+
+        .qa-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(30, 113, 69, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #1e7145;
+        }
+
+        .question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e7145;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: #555;
+        }
+
+        .answer.show {
+            max-height: 5000px;
+            margin-top: 1rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+
+        .highlight {
+            background: rgba(255, 193, 7, 0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .note {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .note::before {
+            content: "ℹ️";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .warning {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .warning::before {
+            content: "⚠️";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .tip {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .tip::before {
+            content: "💡";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .step-list {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-list ol {
+            counter-reset: step-counter;
+            list-style: none;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #209456;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .resource-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 4px solid #1e7145;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .resource-card h4 {
+            color: #1e7145;
+            margin-bottom: 0.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .excel-formula {
+            background: #f0f0f0;
+            border: 1px solid #1e7145;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-content.expanded {
+                padding: 1rem;
+            }
+            
+            .category-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="bi bi-file-earmark-excel-fill"></i> Microsoft Excel Q&A</h1>
+            <p>Your Guide to Formulas, Pivot Tables, Charts, and More</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search questions... (e.g., 'formulas', 'pivot tables', 'charts', 'Mac vs Windows')" id="searchBox">
+        </div>
+
+        <div class="category-nav">
+            <button class="category-btn active" data-category="all">All Questions</button>
+            <button class="category-btn" data-category="formulas">Formulas</button>
+            <button class="category-btn" data-category="pivot">Pivot Tables & Charts</button>
+            <button class="category-btn" data-category="technical">Technical Issues</button>
+            <button class="category-btn" data-category="practical">Practical Applications</button>
+        </div>
+
+        <!-- FORMULAS SECTION -->
+        <div class="qa-section" data-category="formulas">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🧮 Formulas and Data Manipulation</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        I'm still confused about how to use formulas. Where do I even start?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Don't worry - formulas seem intimidating at first, but they follow simple patterns once you understand the basics!</strong></p>
+                        
+                        <div class="note">
+                            <strong>The Golden Rule:</strong> All Excel formulas start with an equals sign (=). If you don't type =, Excel treats it as text, not a calculation.
+                        </div>
+
+                        <div class="step-list">
+                            <h4>How to Write Your First Formula:</h4>
+                            <ol>
+                                <li><strong>Click the cell</strong> where you want the result to appear</li>
+                                <li><strong>Type the equals sign:</strong> =</li>
+                                <li><strong>Type your formula</strong> (we'll cover examples below)</li>
+                                <li><strong>Press Enter</strong> - Excel calculates the result!</li>
+                            </ol>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📝 Basic Math Operators</h4>
+                                <ul>
+                                    <li><strong>+</strong> Addition: =5+3 → 8</li>
+                                    <li><strong>-</strong> Subtraction: =10-4 → 6</li>
+                                    <li><strong>*</strong> Multiplication: =6*7 → 42</li>
+                                    <li><strong>/</strong> Division: =20/4 → 5</li>
+                                    <li><strong>^</strong> Exponent: =2^3 → 8</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🎯 Using Cell References</h4>
+                                <p>Instead of typing numbers, reference cells:</p>
+                                <div class="excel-formula">=A1+B1</div>
+                                <p>This adds whatever is in cell A1 to whatever is in B1</p>
+                                <p><strong>Why this is powerful:</strong> Change A1 or B1, and the result updates automatically!</p>
+                            </div>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Pro tip:</strong> Instead of typing cell references, you can click on the cells while writing your formula. Excel will insert the reference for you!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What are the most important formulas I need to know?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Here are the "Big 5" formulas that cover 80% of what most people need in Excel:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>1️⃣ SUM - Add numbers together</h4>
+                                <p><strong>What it does:</strong> Adds up a range of numbers</p>
+                                <div class="excel-formula">=SUM(A1:A10)</div>
+                                <p>Adds all numbers from A1 through A10</p>
+                                <p><strong>Example use:</strong> Total sales, total expenses, grade totals</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>2️⃣ AVERAGE - Find the mean</h4>
+                                <p><strong>What it does:</strong> Calculates the average of numbers</p>
+                                <div class="excel-formula">=AVERAGE(B1:B20)</div>
+                                <p>Finds the average of B1 through B20</p>
+                                <p><strong>Example use:</strong> Average test score, average temperature, mean salary</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>3️⃣ COUNT - Count cells with numbers</h4>
+                                <p><strong>What it does:</strong> Counts how many cells contain numbers</p>
+                                <div class="excel-formula">=COUNT(C1:C50)</div>
+                                <p>Counts cells with numbers in C1 through C50</p>
+                                <p><strong>Example use:</strong> How many students took the test, how many sales were made</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>4️⃣ IF - Make decisions</h4>
+                                <p><strong>What it does:</strong> Returns different values based on a condition</p>
+                                <div class="excel-formula">=IF(D1>70, "Pass", "Fail")</div>
+                                <p>If D1 is greater than 70, shows "Pass", otherwise "Fail"</p>
+                                <p><strong>Example use:</strong> Pass/fail grades, discount eligibility, status labels</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>5️⃣ VLOOKUP - Find information</h4>
+                                <p><strong>What it does:</strong> Looks up information in a table</p>
+                                <div class="excel-formula">=VLOOKUP(E1, A1:C100, 2, FALSE)</div>
+                                <p>Finds E1 in the first column of A1:C100, returns value from 2nd column</p>
+                                <p><strong>Example use:</strong> Find student names from ID numbers, look up prices from product codes</p>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Common mistake:</strong> Forgetting to include the equals sign (=) at the beginning. Without it, Excel won't calculate anything!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What's the difference between relative and absolute cell references? When do I use $ signs?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>This is one of the most powerful (and confusing) concepts in Excel. Let me break it down:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📍 Relative Reference (A1)</h4>
+                                <p><strong>What it is:</strong> Cell reference that changes when you copy the formula</p>
+                                <div class="excel-formula">=A1*2</div>
+                                <p><strong>When you copy down:</strong></p>
+                                <ul>
+                                    <li>Row 1: =A1*2</li>
+                                    <li>Row 2: =A2*2 (changed!)</li>
+                                    <li>Row 3: =A3*2 (changed!)</li>
+                                </ul>
+                                <p><strong>Use when:</strong> You want the formula to adjust to each row/column</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔒 Absolute Reference ($A$1)</h4>
+                                <p><strong>What it is:</strong> Cell reference that NEVER changes when copied</p>
+                                <div class="excel-formula">=A1*$B$1</div>
+                                <p><strong>When you copy down:</strong></p>
+                                <ul>
+                                    <li>Row 1: =A1*$B$1</li>
+                                    <li>Row 2: =A2*$B$1 (B1 stays same!)</li>
+                                    <li>Row 3: =A3*$B$1 (B1 stays same!)</li>
+                                </ul>
+                                <p><strong>Use when:</strong> You want to reference one fixed cell (like a tax rate or conversion factor)</p>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Real-World Example: Calculating Prices with Tax</h4>
+                            <ol>
+                                <li>Put your tax rate in cell B1: <strong>0.07</strong> (7% tax)</li>
+                                <li>Put prices in column A (A3, A4, A5, etc.)</li>
+                                <li>In B3, type: <div class="excel-formula">=A3*(1+$B$1)</div></li>
+                                <li>Copy the formula down - A3 changes (A4, A5...) but $B$1 stays locked!</li>
+                            </ol>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Quick tip:</strong> To add dollar signs quickly, click on the cell reference in your formula and press <strong>F4</strong>. It cycles through: A1 → $A$1 → A$1 → $A1
+                        </div>
+
+                        <div class="note">
+                            <strong>Mixed references exist too:</strong>
+                            <ul>
+                                <li><strong>$A1</strong> - Column locked, row changes</li>
+                                <li><strong>A$1</strong> - Row locked, column changes</li>
+                            </ul>
+                            These are useful for more advanced scenarios!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How do I apply a formula to an entire column without typing it over and over?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>There are several quick ways to copy formulas down a column - no tedious retyping required!</strong></p>
+                        
+                        <div class="step-list">
+                            <h4>Method 1: The Fill Handle (Easiest)</h4>
+                            <ol>
+                                <li>Type your formula in the first cell (e.g., B2)</li>
+                                <li>Press Enter - your formula calculates</li>
+                                <li>Click back on that cell to select it</li>
+                                <li>Look for the small square in the bottom-right corner of the cell (the "fill handle")</li>
+                                <li>Hover over it until your cursor becomes a black crosshair (+)</li>
+                                <li>Click and drag down as far as you need</li>
+                                <li>Release - Excel copies the formula to all selected cells!</li>
+                            </ol>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Method 2: Double-Click Fill (Fastest for Large Datasets)</h4>
+                            <ol>
+                                <li>Type your formula in the first cell</li>
+                                <li>Select that cell</li>
+                                <li>Move to the fill handle (bottom-right corner)</li>
+                                <li><strong>Double-click</strong> the fill handle</li>
+                                <li>Excel automatically fills down to match adjacent data!</li>
+                            </ol>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Method 3: Copy-Paste</h4>
+                            <ol>
+                                <li>Select the cell with your formula</li>
+                                <li>Copy it (Ctrl+C or Cmd+C)</li>
+                                <li>Select the range where you want the formula</li>
+                                <li>Paste (Ctrl+V or Cmd+V)</li>
+                            </ol>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Pro tip:</strong> The double-click fill method (Method 2) is a game-changer for large spreadsheets with thousands of rows!
+                        </div>
+
+                        <div class="warning">
+                            <strong>Watch out:</strong> Make sure you're using the right type of cell reference (relative vs. absolute) before copying formulas, or your calculations might reference the wrong cells!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PIVOT TABLES SECTION -->
+        <div class="qa-section" data-category="pivot">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📊 Pivot Tables and Charts</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What's the difference between a PivotTable and a PivotChart? Which should I create?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>This is one of the most confusing aspects for students! Let me clarify the difference:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📊 PivotTable</h4>
+                                <p><strong>What it is:</strong> A data summary table with rows and columns of numbers</p>
+                                <p><strong>Looks like:</strong> A spreadsheet grid with calculated totals</p>
+                                <p><strong>Best for:</strong> Detailed numerical analysis, seeing exact values</p>
+                                <p><strong>Example output:</strong> A table showing each salesperson's name with their total sales amount</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📈 PivotChart</h4>
+                                <p><strong>What it is:</strong> A visual chart (bar, line, pie) that summarizes data</p>
+                                <p><strong>Looks like:</strong> A colorful graph with bars, lines, or pie slices</p>
+                                <p><strong>Best for:</strong> Visual presentation, spotting trends, comparing categories at a glance</p>
+                                <p><strong>Example output:</strong> A bar chart showing each salesperson with a colored bar representing their sales</p>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>KEY POINT:</strong> When your assignment asks for a "PivotChart," you should create a CHART (visual graph), NOT a table of numbers. Many students create a PivotTable by mistake!
+                        </div>
+
+                        <div class="note">
+                            <strong>The relationship:</strong> Every PivotChart is based on a PivotTable (Excel creates one automatically behind the scenes), but not every PivotTable needs a PivotChart. If your lab asks for a PivotChart, you're being asked for the visual graph!
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Step-by-Step: Creating a PivotChart (What You Need for Labs!)</h4>
+                            <ol>
+                                <li><strong>Prepare your data:</strong>
+                                    <ul style="margin-left: 30px; margin-top: 0.5rem;">
+                                        <li>Make sure your data has headers in the first row (e.g., "Date", "Name", "Sales")</li>
+                                        <li>No blank rows or columns in the middle of your data</li>
+                                        <li>Each column contains one type of information</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Select your data:</strong> Click any cell within your data range</li>
+                                <li><strong>Insert the PivotChart:</strong>
+                                    <ul style="margin-left: 30px; margin-top: 0.5rem;">
+                                        <li><strong>Windows:</strong> Insert tab → PivotChart button (or PivotChart dropdown → PivotChart)</li>
+                                        <li><strong>Mac:</strong> Insert tab → PivotChart button</li>
+                                        <li><strong>IMPORTANT:</strong> Click "PivotChart" NOT "PivotTable"!</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Choose chart location:</strong> Dialog box appears - usually choose "New Worksheet"</li>
+                                <li><strong>Click OK:</strong> Excel creates BOTH a chart AND a pivot table (the table is hidden behind the scenes or in a separate area)</li>
+                                <li><strong>Build your PivotChart:</strong> You'll see the chart area and a field list on the right. Drag fields:
+                                    <ul style="margin-left: 30px; margin-top: 0.5rem;">
+                                        <li><strong>Axis (Categories):</strong> What you want along the bottom (e.g., Salesperson names, Months)</li>
+                                        <li><strong>Legend (Series):</strong> What you want to compare with colors (optional)</li>
+                                        <li><strong>Values:</strong> What you want to measure (e.g., Sales Amount - creates bar heights)</li>
+                                        <li><strong>Filters:</strong> What you want to filter by (e.g., Year, Region)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Choose chart type:</strong> Right-click chart → Change Chart Type if you want a different style (bar, line, pie, etc.)</li>
+                            </ol>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Pro tip:</strong> You can tell if you created the right thing by looking at what appears on your screen:
+                            <ul style="margin-left: 30px;">
+                                <li>✅ <strong>PivotChart:</strong> You see a colorful visual chart/graph</li>
+                                <li>❌ <strong>PivotTable:</strong> You see a grid of numbers and text (no visual bars/lines)</li>
+                            </ul>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🎯 Quick PivotChart Example</h4>
+                                <p><strong>Goal:</strong> Bar chart showing total sales by salesperson</p>
+                                <ol>
+                                    <li>Select your data</li>
+                                    <li>Insert → <strong>PivotChart</strong></li>
+                                    <li>Drag "Salesperson" to <strong>Axis</strong></li>
+                                    <li>Drag "Sales Amount" to <strong>Values</strong></li>
+                                    <li>You should see colorful bars!</li>
+                                </ol>
+                            </div>
+                            <div class="resource-card">
+                                <h4>❌ Common Lab Mistake</h4>
+                                <p><strong>Assignment says:</strong> "Create a PivotChart"</p>
+                                <p><strong>Student does:</strong> Insert → PivotTable</p>
+                                <p><strong>Result:</strong> They get a table of numbers, not a chart ❌</p>
+                                <p><strong>Correct action:</strong> Insert → <strong>PivotChart</strong></p>
+                                <p><strong>Result:</strong> They get a visual chart ✅</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How do I create charts in Excel? And how do I make pivot charts?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Excel offers two types of charts: regular charts and pivot charts. Let's cover both!</strong></p>
+                        
+                        <div class="step-list">
+                            <h4>Method 1: Regular Charts (From Any Data)</h4>
+                            <ol>
+                                <li><strong>Select your data:</strong> Click and drag to highlight the data you want to chart (include headers)</li>
+                                <li><strong>Go to Insert tab</strong></li>
+                                <li><strong>Choose a chart type:</strong>
+                                    <ul style="margin-left: 30px; margin-top: 0.5rem;">
+                                        <li><strong>Column/Bar:</strong> Compare values across categories</li>
+                                        <li><strong>Line:</strong> Show trends over time</li>
+                                        <li><strong>Pie:</strong> Show parts of a whole</li>
+                                        <li><strong>Scatter:</strong> Show relationship between two variables</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Click your choice:</strong> Excel inserts the chart immediately!</li>
+                                <li><strong>Customize:</strong> Click on chart elements to change titles, colors, labels</li>
+                            </ol>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Method 2: Pivot Charts (From Pivot Tables)</h4>
+                            <ol>
+                                <li><strong>Create or select your pivot table first</strong></li>
+                                <li><strong>Click anywhere in the pivot table</strong></li>
+                                <li><strong>Go to Insert tab → PivotChart</strong> (or on PivotTable Analyze tab)</li>
+                                <li><strong>Choose chart type</strong></li>
+                                <li><strong>Click OK</strong></li>
+                            </ol>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📊 Regular Charts</h4>
+                                <p><strong>Pros:</strong></p>
+                                <ul>
+                                    <li>Simple and straightforward</li>
+                                    <li>Good for static presentations</li>
+                                    <li>Easy to format</li>
+                                </ul>
+                                <p><strong>Cons:</strong></p>
+                                <ul>
+                                    <li>Not interactive</li>
+                                    <li>Need to recreate if data structure changes</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🎯 Pivot Charts</h4>
+                                <p><strong>Pros:</strong></p>
+                                <ul>
+                                    <li>Interactive - has filter buttons</li>
+                                    <li>Updates automatically with pivot table</li>
+                                    <li>Can quickly change what you're viewing</li>
+                                </ul>
+                                <p><strong>Cons:</strong></p>
+                                <ul>
+                                    <li>Slightly more complex</li>
+                                    <li>Requires understanding pivot tables first</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Which chart type should I use?</strong>
+                            <ul style="margin-left: 30px;">
+                                <li><strong>Comparing categories:</strong> Column or Bar chart</li>
+                                <li><strong>Showing change over time:</strong> Line chart</li>
+                                <li><strong>Showing percentages of a whole:</strong> Pie or Donut chart</li>
+                                <li><strong>Showing correlation:</strong> Scatter plot</li>
+                            </ul>
+                        </div>
+
+                        <div class="note">
+                            <strong>Quick tip:</strong> Not sure which chart works best? Select your data and press <strong>Alt + F1</strong> (Windows) or <strong>Fn + Option + F1</strong> (Mac) to instantly create a default chart. You can always change the type later!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How do I read and interpret pivot charts? They seem confusing.
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Pivot charts look complex at first, but once you understand the components, they become powerful analysis tools!</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🔍 Key Components</h4>
+                                <ol>
+                                    <li><strong>The main chart area:</strong> Shows your data visually (bars, lines, etc.)</li>
+                                    <li><strong>Axes:</strong>
+                                        <ul style="margin-left: 20px;">
+                                            <li><strong>Horizontal (X):</strong> Categories (e.g., months, products)</li>
+                                            <li><strong>Vertical (Y):</strong> Values (e.g., sales amounts, quantities)</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Legend:</strong> Explains what different colors/patterns represent</li>
+                                    <li><strong>Filter buttons:</strong> Small dropdown arrows - click to filter data</li>
+                                </ol>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📖 Reading Strategy</h4>
+                                <ol>
+                                    <li><strong>Look at the title:</strong> What is being measured?</li>
+                                    <li><strong>Check the axes:</strong> What do the numbers represent?</li>
+                                    <li><strong>Examine the legend:</strong> What do the colors mean?</li>
+                                    <li><strong>Identify patterns:</strong>
+                                        <ul style="margin-left: 20px;">
+                                            <li>Which bars are tallest/shortest?</li>
+                                            <li>Are there trends (going up/down)?</li>
+                                            <li>Any outliers or surprises?</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Interacting with Pivot Charts:</h4>
+                            <ol>
+                                <li><strong>Click filter buttons</strong> (small dropdowns on the chart) to show/hide specific data</li>
+                                <li><strong>Hover over chart elements</strong> to see exact values</li>
+                                <li><strong>Click legend items</strong> to show/hide specific series</li>
+                                <li><strong>Change the underlying pivot table</strong> and the chart updates automatically</li>
+                            </ol>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Pro tip:</strong> The power of pivot charts is in the exploration. Try clicking different filters and watch how the visualization changes. This helps you discover insights you might miss in raw data!
+                        </div>
+
+                        <div class="note">
+                            <strong>Common question:</strong> "Why does my chart look weird?" Usually it's because:
+                            <ul style="margin-left: 30px;">
+                                <li>Wrong chart type for your data (try a different type)</li>
+                                <li>Too many categories (filter to show fewer)</li>
+                                <li>Data in Values area should be in Rows or vice versa (rearrange in pivot table)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Can I add a pivot chart to a Word document or PowerPoint presentation?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Yes! You can easily move charts between Office applications. Here's how:</strong></p>
+                        
+                        <div class="step-list">
+                            <h4>Method 1: Copy and Paste (Simple, but Chart Becomes Static)</h4>
+                            <ol>
+                                <li><strong>In Excel:</strong> Click on your pivot chart to select it</li>
+                                <li><strong>Copy:</strong> Ctrl+C (Windows) or Cmd+C (Mac)</li>
+                                <li><strong>Switch to Word/PowerPoint</strong></li>
+                                <li><strong>Paste:</strong> Ctrl+V (Windows) or Cmd+V (Mac)</li>
+                                <li><strong>Choose paste option:</strong>
+                                    <ul style="margin-left: 30px; margin-top: 0.5rem;">
+                                        <li><strong>Picture:</strong> Chart becomes an image (can't edit)</li>
+                                        <li><strong>Keep Source Formatting:</strong> Maintains Excel formatting</li>
+                                        <li><strong>Use Destination Theme:</strong> Adapts to Word/PowerPoint theme</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Method 2: Paste with Link (Chart Updates When Excel Data Changes)</h4>
+                            <ol>
+                                <li><strong>In Excel:</strong> Select and copy your chart (Ctrl+C / Cmd+C)</li>
+                                <li><strong>In Word/PowerPoint:</strong> Go to Home tab</li>
+                                <li><strong>Click the dropdown arrow</strong> under Paste button</li>
+                                <li><strong>Choose "Paste Special"</strong></li>
+                                <li><strong>Select "Paste Link"</strong> and choose "Microsoft Excel Chart Object"</li>
+                                <li><strong>Click OK</strong></li>
+                            </ol>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📋 Static Paste</h4>
+                                <p><strong>Pros:</strong></p>
+                                <ul>
+                                    <li>File size smaller</li>
+                                    <li>No need to keep Excel file</li>
+                                    <li>Guaranteed to look the same</li>
+                                </ul>
+                                <p><strong>Cons:</strong></p>
+                                <ul>
+                                    <li>Won't update if data changes</li>
+                                    <li>Have to recreate if you need changes</li>
+                                </ul>
+                                <p><strong>Best for:</strong> Final reports, presentations where data won't change</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🔗 Linked Paste</h4>
+                                <p><strong>Pros:</strong></p>
+                                <ul>
+                                    <li>Updates automatically when Excel data changes</li>
+                                    <li>Always shows current data</li>
+                                    <li>Can edit by double-clicking</li>
+                                </ul>
+                                <p><strong>Cons:</strong></p>
+                                <ul>
+                                    <li>Requires keeping Excel file</li>
+                                    <li>Link can break if files move</li>
+                                    <li>Larger file size</li>
+                                </ul>
+                                <p><strong>Best for:</strong> Living documents, recurring reports</p>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Important:</strong> If you use paste with link, keep your Excel file in the same location! If you move it, the link will break and the chart won't update.
+                        </div>
+
+                        <div class="tip">
+                            <strong>Pro tip:</strong> For presentations, paste as a picture for the cleanest look. For reports that you'll update regularly, use paste link so your charts automatically refresh!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TECHNICAL ISSUES SECTION -->
+        <div class="qa-section" data-category="technical">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🔧 Technical Difficulties and Device Issues</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Excel looks different on my Mac than in class (Windows). Are there important differences?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Yes, there are some differences between Excel on Mac and Windows, but the core functionality is the same. Here's what you need to know:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🖥️ Visual Differences</h4>
+                                <ul>
+                                    <li><strong>Menu layout:</strong> Mac follows macOS design, Windows follows Windows design</li>
+                                    <li><strong>Ribbon organization:</strong> Slightly different tab arrangements</li>
+                                    <li><strong>Icons and buttons:</strong> May look different but serve same purpose</li>
+                                    <li><strong>Right-click menus:</strong> Mac uses Control+Click or two-finger click</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>⌨️ Keyboard Shortcut Differences</h4>
+                                <table style="width: 100%; margin-top: 0.5rem;">
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 0.5rem;">Action</th>
+                                        <th style="padding: 0.5rem;">Windows</th>
+                                        <th style="padding: 0.5rem;">Mac</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.5rem;">Copy</td>
+                                        <td>Ctrl+C</td>
+                                        <td>Cmd+C</td>
+                                    </tr>
+                                    <tr style="background: #f5f5f5;">
+                                        <td style="padding: 0.5rem;">Paste</td>
+                                        <td>Ctrl+V</td>
+                                        <td>Cmd+V</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.5rem;">Undo</td>
+                                        <td>Ctrl+Z</td>
+                                        <td>Cmd+Z</td>
+                                    </tr>
+                                    <tr style="background: #f5f5f5;">
+                                        <td style="padding: 0.5rem;">Save</td>
+                                        <td>Ctrl+S</td>
+                                        <td>Cmd+S</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.5rem;">Absolute reference</td>
+                                        <td>F4</td>
+                                        <td>Cmd+T or Fn+F4</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>✅ What's the Same</h4>
+                                <ul>
+                                    <li>All formulas work identically</li>
+                                    <li>Pivot tables function the same way</li>
+                                    <li>Files are fully compatible</li>
+                                    <li>Charts and formatting transfer perfectly</li>
+                                    <li>Core features and capabilities</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>⚠️ Features That May Differ</h4>
+                                <ul>
+                                    <li>Some advanced Power Query features</li>
+                                    <li>Visual Basic macros (different implementation)</li>
+                                    <li>A few add-ins may not be available</li>
+                                    <li>Some very new Windows features may lag on Mac</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Pro tip:</strong> For classroom work and most professional use, Mac and Windows Excel are functionally equivalent. Don't worry about the visual differences - focus on learning the concepts!
+                        </div>
+
+                        <div class="note">
+                            <strong>Remember:</strong> Generally, where instructions say "Ctrl," Mac users should use "Cmd" (Command key). That's the biggest shortcut difference!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Can I use Excel on my iPad? What are the limitations?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Yes, Excel is available for iPad, but it's a simplified version with some limitations. Here's what you need to know:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>✅ What Works on iPad</h4>
+                                <ul>
+                                    <li>Basic formulas (SUM, AVERAGE, IF, etc.)</li>
+                                    <li>Creating and editing spreadsheets</li>
+                                    <li>Formatting cells, rows, columns</li>
+                                    <li>Creating basic charts</li>
+                                    <li>Sorting and filtering data</li>
+                                    <li>Reading and viewing all Excel files</li>
+                                    <li>Sharing and collaboration</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>❌ What Doesn't Work (or is Limited)</h4>
+                                <ul>
+                                    <li><strong>Pivot tables:</strong> Can view but creating/editing is limited</li>
+                                    <li><strong>Advanced formulas:</strong> Some complex functions unavailable</li>
+                                    <li><strong>Macros:</strong> Cannot run or create</li>
+                                    <li><strong>Add-ins:</strong> Most not available</li>
+                                    <li><strong>Advanced charting:</strong> Some chart types not supported</li>
+                                    <li><strong>Screen size:</strong> Can be cramped for large spreadsheets</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>For this class:</strong> Don't use Excel on an iPad. Windows or MacOS is required (see syllabus).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        Excel keeps crashing or freezing on my computer. What can I do?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Excel crashes can be frustrating! Here are the most common causes and solutions:</strong></p>
+                        
+                        <div class="step-list">
+                            <h4>Quick Fixes to Try First:</h4>
+                            <ol>
+                                <li><strong>Save and restart Excel:</strong> Close completely and reopen</li>
+                                <li><strong>Restart your computer:</strong> Clears memory and background processes</li>
+                                <li><strong>Check for updates:</strong>
+                                    <ul style="margin-left: 30px; margin-top: 0.5rem;">
+                                        <li><strong>Windows:</strong> File → Account → Update Options → Update Now</li>
+                                        <li><strong>Mac:</strong> Help → Check for Updates</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Disable add-ins:</strong> File → Options → Add-ins → Manage: COM Add-ins → Go → Uncheck all → OK</li>
+                            </ol>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🐌 If Excel is Slow/Freezing</h4>
+                                <p><strong>Common causes:</strong></p>
+                                <ul>
+                                    <li>File is too large (many thousands of rows)</li>
+                                    <li>Too many formulas recalculating</li>
+                                    <li>Conditional formatting on large ranges</li>
+                                    <li>Links to external files</li>
+                                </ul>
+                                <p><strong>Solutions:</strong></p>
+                                <ul>
+                                    <li>Turn off automatic calculation: Formulas tab → Calculation Options → Manual</li>
+                                    <li>Remove unnecessary formatting</li>
+                                    <li>Split large files into smaller ones</li>
+                                    <li>Close other programs to free up memory</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>💥 If Excel Keeps Crashing</h4>
+                                <p><strong>Try these solutions:</strong></p>
+                                <ul>
+                                    <li>Open in Safe Mode:
+                                        <ul style="margin-left: 20px;">
+                                            <li><strong>Windows:</strong> Hold Ctrl while opening Excel</li>
+                                            <li><strong>Mac:</strong> Hold Shift while opening</li>
+                                        </ul>
+                                    </li>
+                                    <li>Repair Office:
+                                        <ul style="margin-left: 20px;">
+                                            <li><strong>Windows:</strong> Control Panel → Programs → Repair</li>
+                                            <li><strong>Mac:</strong> Reinstall from App Store or office.com</li>
+                                        </ul>
+                                    </li>
+                                    <li>Check if specific file causes crashes (file corruption)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Important:</strong> Always save your work frequently! Use Ctrl+S (Cmd+S on Mac) regularly, or enable AutoSave if using OneDrive or SharePoint.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        I don't have Microsoft Office. Where can I install it?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        See the syllabus.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRACTICAL APPLICATIONS SECTION -->
+        <div class="qa-section" data-category="practical">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>💼 Practical Applications and Real-World Use</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How useful is Excel for elementary teachers? Will I actually use this?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Excel is incredibly useful for teachers! Here are real ways elementary teachers use it every day:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📚 Gradebook Management</h4>
+                                <ul>
+                                    <li>Track student grades and assignments</li>
+                                    <li>Calculate averages automatically</li>
+                                    <li>Weight different assignment types</li>
+                                    <li>Generate progress reports</li>
+                                    <li>Identify students who need help</li>
+                                </ul>
+                                <p><strong>Example formulas:</strong></p>
+                                <ul>
+                                    <li>=AVERAGE(B2:B10) for class average</li>
+                                    <li>=IF(C2<70,"Needs Support","On Track") for status</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📊 Data Analysis</h4>
+                                <ul>
+                                    <li>Analyze test results across classes</li>
+                                    <li>Track student growth over time</li>
+                                    <li>Identify learning gaps</li>
+                                    <li>Prepare data for IEP meetings</li>
+                                    <li>Create visual charts for parent conferences</li>
+                                </ul>
+                                <p><strong>Use pivot tables to:</strong></p>
+                                <ul>
+                                    <li>Compare class performance</li>
+                                    <li>See which standards students struggle with</li>
+                                    <li>Track behavioral patterns</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>📝 Administrative Tasks</h4>
+                                <ul>
+                                    <li>Attendance tracking</li>
+                                    <li>Parent contact logs</li>
+                                    <li>Field trip planning and budgets</li>
+                                    <li>Classroom supply inventory</li>
+                                    <li>Volunteer schedules</li>
+                                    <li>Reading level tracking</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>👨‍👩‍👧‍👦 Parent Communication</h4>
+                                <ul>
+                                    <li>Create visual progress charts</li>
+                                    <li>Generate individual student reports</li>
+                                    <li>Track parent-teacher conference notes</li>
+                                    <li>Organize class contact information</li>
+                                    <li>Plan parent volunteer rotations</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Real Example: Simple Gradebook Setup</h4>
+                            <ol>
+                                <li><strong>Column A:</strong> Student names</li>
+                                <li><strong>Columns B-F:</strong> Assignment scores</li>
+                                <li><strong>Column G:</strong> Average formula: =AVERAGE(B2:F2)</li>
+                                <li><strong>Column H:</strong> Letter grade: =IF(G2>=90,"A",IF(G2>=80,"B",IF(G2>=70,"C",IF(G2>=60,"D","F"))))</li>
+                                <li><strong>Bottom row:</strong> Class averages for each assignment</li>
+                            </ol>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Bottom line:</strong> Excel saves teachers hours every week on grading, data analysis, and administrative tasks. It's one of the most practical technology skills you'll learn!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How can I utilize Excel better as a college student?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Excel can be a game-changer for college success! Here are practical ways students use it:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>💰 Financial Management</h4>
+                                <p><strong>Budget Tracking:</strong></p>
+                                <ul>
+                                    <li>Track income (job, financial aid, family support)</li>
+                                    <li>Monitor expenses by category</li>
+                                    <li>Set budget limits with alerts</li>
+                                    <li>Calculate remaining funds</li>
+                                </ul>
+                                <p><strong>Example formulas:</strong></p>
+                                <ul>
+                                    <li>=SUM(Income)-SUM(Expenses) for balance</li>
+                                    <li>=IF(Spent>Budget,"Over Budget","On Track")</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📚 Academic Planning</h4>
+                                <p><strong>Grade Tracking:</strong></p>
+                                <ul>
+                                    <li>Calculate current course grades</li>
+                                    <li>Project final grades with "what-if" scenarios</li>
+                                    <li>Track GPA across semesters</li>
+                                    <li>Plan needed scores on upcoming exams</li>
+                                </ul>
+                                <p><strong>Schedule Management:</strong></p>
+                                <ul>
+                                    <li>Create semester schedules</li>
+                                    <li>Track assignment due dates</li>
+                                    <li>Plan study hours per subject</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🔬 Research and Data</h4>
+                                <ul>
+                                    <li>Organize research data and sources</li>
+                                    <li>Analyze survey results</li>
+                                    <li>Create charts for presentations</li>
+                                    <li>Calculate statistics for lab reports</li>
+                                    <li>Track bibliography information</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🎯 Job Hunting & Career</h4>
+                                <ul>
+                                    <li>Track job applications and responses</li>
+                                    <li>Organize networking contacts</li>
+                                    <li>Calculate salary negotiations</li>
+                                    <li>Compare job offers (salary, benefits)</li>
+                                    <li>Plan career goals and timelines</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-list">
+                            <h4>Quick Student Budget Template:</h4>
+                            <ol>
+                                <li><strong>Income section:</strong> Financial aid, job, family support → Total income</li>
+                                <li><strong>Fixed expenses:</strong> Rent, utilities, phone, insurance → Total fixed</li>
+                                <li><strong>Variable expenses:</strong> Food, entertainment, gas, books → Total variable</li>
+                                <li><strong>Bottom line:</strong> =Total Income - Total Fixed - Total Variable</li>
+                                <li><strong>Add conditional formatting:</strong> Make negative balances show red</li>
+                            </ol>
+                        </div>
+
+                        <div class="note">
+                            <strong>Study tip:</strong> Use Excel to track your study hours and grades. Tracking your study habits <a target="_blank" href="https://sci-hub.se/https://ieeexplore.ieee.org/abstract/document/9462241">may help you perform better and manage time more effectively</a>!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        What careers or industries use Excel the most?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Excel is used across virtually every industry. Here's where it's especially critical:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>💼 Business & Finance</h4>
+                                <p><strong>Accountants & Financial Analysts:</strong></p>
+                                <ul>
+                                    <li>Financial modeling and forecasting</li>
+                                    <li>Budget planning and variance analysis</li>
+                                    <li>Tax calculations and reporting</li>
+                                    <li>Investment analysis and portfolio tracking</li>
+                                </ul>
+                                <p><strong>Business Analysts:</strong></p>
+                                <ul>
+                                    <li>Sales data analysis</li>
+                                    <li>Market research and trends</li>
+                                    <li>Performance dashboards</li>
+                                    <li>Profitability analysis</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📊 Data & Analytics</h4>
+                                <p><strong>Data Analysts:</strong></p>
+                                <ul>
+                                    <li>Clean and prepare datasets</li>
+                                    <li>Statistical analysis</li>
+                                    <li>Create visualizations</li>
+                                    <li>Generate reports and insights</li>
+                                </ul>
+                                <p><strong>Marketing Analysts:</strong></p>
+                                <ul>
+                                    <li>Campaign performance tracking</li>
+                                    <li>Customer segmentation</li>
+                                    <li>ROI calculations</li>
+                                    <li>A/B test analysis</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🏥 Healthcare & Science</h4>
+                                <ul>
+                                    <li><strong>Healthcare administrators:</strong> Patient data, scheduling, budgets</li>
+                                    <li><strong>Researchers:</strong> Experimental data, statistical analysis</li>
+                                    <li><strong>Pharmacists:</strong> Inventory management, dosage calculations</li>
+                                    <li><strong>Lab technicians:</strong> Test results tracking and analysis</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🏭 Operations & Supply Chain</h4>
+                                <ul>
+                                    <li><strong>Supply chain managers:</strong> Inventory tracking, forecasting</li>
+                                    <li><strong>Operations analysts:</strong> Efficiency metrics, process optimization</li>
+                                    <li><strong>Project managers:</strong> Timelines, resources, budgets</li>
+                                    <li><strong>Quality control:</strong> Defect tracking, statistical process control</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>👔 Human Resources</h4>
+                                <ul>
+                                    <li>Payroll calculations</li>
+                                    <li>Employee data management</li>
+                                    <li>Performance tracking</li>
+                                    <li>Hiring pipelines and metrics</li>
+                                    <li>Benefits administration</li>
+                                </ul>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🏪 Retail & E-commerce</h4>
+                                <ul>
+                                    <li>Sales reporting and forecasting</li>
+                                    <li>Inventory management</li>
+                                    <li>Pricing optimization</li>
+                                    <li>Customer purchase analysis</li>
+                                    <li>Store performance comparisons</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        I've heard about AI in Excel. What is that and should I learn it?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p><strong>Excel is integrating AI features that can dramatically speed up your work. Here's what you need to know:</strong></p>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🤖 Ideas (Built-in AI Analysis)</h4>
+                                <p><strong>What it does:</strong> Automatically analyzes your data and suggests insights</p>
+                                <p><strong>How to use:</strong> Select your data → Home tab → Analyze Data button</p>
+                                <p><strong>Features:</strong></p>
+                                <ul>
+                                    <li>Automatically creates charts</li>
+                                    <li>Identifies trends and patterns</li>
+                                    <li>Suggests interesting insights</li>
+                                    <li>Answers natural language questions</li>
+                                </ul>
+                                <p><strong>Example:</strong> Type "What were my top 5 sales months?" and it shows you!</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>✨ Excel Copilot (Premium Feature)</h4>
+                                <p><strong>What it does:</strong> AI assistant that helps with Excel tasks</p>
+                                <p><strong>Features:</strong></p>
+                                <ul>
+                                    <li>Write formulas from plain English descriptions</li>
+                                    <li>Generate pivot tables from questions</li>
+                                    <li>Create charts based on what you ask</li>
+                                    <li>Explain what formulas do</li>
+                                    <li>Clean and format data automatically</li>
+                                </ul>
+                                <p><strong>Note:</strong> Requires Microsoft 365 Copilot subscription (additional cost)</p>
+                            </div>
+                        </div>
+
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🔮 Flash Fill (Smart Auto-Complete)</h4>
+                                <p><strong>What it does:</strong> Learns patterns from your examples</p>
+                                <p><strong>Example use case:</strong></p>
+                                <ol>
+                                    <li>Column A has: "Smith, John"</li>
+                                    <li>Column B, you type: "John Smith"</li>
+                                    <li>Next row, start typing: "Jane"</li>
+                                    <li>Excel suggests completing all names!</li>
+                                    <li>Press Enter to accept</li>
+                                </ol>
+                                <p><strong>Works for:</strong> Splitting names, extracting data, formatting, combining text</p>
+                            </div>
+                            <div class="resource-card">
+                                <h4>📈 Quick Analysis Tool</h4>
+                                <p><strong>What it does:</strong> Smart suggestions for formatting and charts</p>
+                                <p><strong>How to use:</strong></p>
+                                <ol>
+                                    <li>Select your data</li>
+                                    <li>Click the Quick Analysis icon (bottom-right of selection)</li>
+                                    <li>See instant previews of formatting, charts, totals</li>
+                                    <li>Click to apply</li>
+                                </ol>
+                                <p><strong>Great for:</strong> Fast visualizations without manual chart creation</p>
+                            </div>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Important about AI in Excel:</strong> AI tools are assistants, not replacements. You still need to understand formulas and data analysis to:
+                            <ul style="margin-left: 30px;">
+                                <li>Verify AI suggestions are correct</li>
+                                <li>Fix errors when AI gets it wrong</li>
+                                <li>Customize outputs for your specific needs</li>
+                                <li>Work without AI when it's not available</li>
+                            </ul>
+                        </div>
+
+                        <div class="tip">
+                            <strong>Learning strategy:</strong> Master the fundamentals first (formulas, pivot tables, charts), then add AI tools to speed up your workflow. AI helps you work faster, but you need the foundation to use it effectively!
+                        </div>
+
+                        <div class="note">
+                            <strong>Free AI alternatives:</strong> Even without Copilot, you can use:
+                            <ul style="margin-left: 30px;">
+                                <li>ChatGPT or Claude to explain formulas or generate formula examples</li>
+                                <li>Ideas feature (free in Excel)</li>
+                                <li>Flash Fill (free in Excel)</li>
+                                <li>Quick Analysis (free in Excel)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="question" onclick="toggleAnswer(this)">
+                        How did you get ChatGPT to give you what you wanted in Excel?
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="answer">
+                        <p>If you were in one of my (Prof Haas') classes, you may have seen me paste the column of favorite movie titles into ChatGPT and ask it to generate a new column that provided a genre for each movie title.</p>
+                        <p>The purpose was to categorize every title without having to go row by row. Of course, I'm letting the AI assign the genre, so there might be times when it predicts a genre that is not suitable for the title.</p>
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <h4>🤖 Understanding Generative AI</h4>
+                                <strong>What results you get depend on several factors!</strong>
+                                <div class="step-list">
+                                    <ol>
+                                        <li><strong>Training data/bias: </strong>Anthropic, Google, Microsoct, and OpenAI are U.S.-based companies. I'd bet ChatGPT's training data featured more info about popular American movies!</li>
+                                        <li><strong>Prompt features: </strong>Later in class, we'll learn about the "CLEAR" method for crafting effective prompts. GenAI is very sensitive to phrasing and does better when we give it examples.</li>
+                                        <li><strong>Iteration: </strong>
+                                            Core to computational thinking, when we don't get exactly the right output the 1st time, we construct feedback and get more specific about what we do or DON'T want.
+                                            <ul style="margin-left: 30px; margin-top: 0.5rem; list-style: none;">
+                                                <strong>Example:</strong>
+                                                <li>I asked ChatGPT to print the Genre column again beside each movie title so I could compare accross. Asking for a table format may also make it easier to copy into Excel.</li>
+                                            </ul>
+                                        </li>       
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="resource-card">
+                                <h4>🤖 Understanding Generative AI</h4>
+                                <p>
+                                    The transformer architecture that generative AI is built on was trained to get really good at predicting the next word.
+                                    GPT-1 was trained on massive amounts of text data to recognize patterns and predict the next coherent word at a time. Once
+                                    OpenAI had GPT-1 (circa 2018) trained on the structure and patterns of human language, they began fine-tuning their model
+                                    for specific, single tasks like text summarization and question answering.
+                                </p>
+                                <p>GPT-2 in 2019 was expoentially larger than GPT-1
+                                    consisting of 1.5 billion parameters -- small by 2025 standards (for reference, an M4 MacBook Air can easily run 4- to
+                                    8-billion-parameter models, and models like Claude Sonnet 4.5 are estimated to be have 150-250 billion parameters). It was
+                                    handling open-ended prompts for a variety of lanugage tasks, but still lacked factual accuracy and sruggled with long
+                                    conversations.
+                                </p>
+                                <p>
+                                    GPT-3 in 2020 was a giant leap from 1.5 to 175 billion parameters! Prior to the groundbreaking 2020 paper <a target="_blank" href="https://eliaszwang.com/paper-reviews/scaling-laws-neural-lm/#:~:text=In%20*Artificial%20Intelligence*%2C%20Elias%20Z.%20Wang%20published,**There%20are%20diminishing%20returns%20as%20scale%20increases**">"Scaling Laws
+                                    for Neural Language Models"</a> by Kaplan et al., it was not widely assumed that there was a predictable power law between
+                                    model "loss", dataset size, and computing power. The discovery of this law allowed for optimization of training and showed
+                                    the promise of training large models with fewer steps (as opposed to small models with many steps). GPT-3 provided capable
+                                    of handling a much wider array of tasks fluently (writing essays, coding from a single prompt), but it suffered more pronounced
+                                    hallucinations and lack of contextual memory for long conversations.
+                                </p>
+                                <p>
+                                    Generative AI models have tended to become more capable since (albeit with more potent side-effects and dangers along the way,
+                                    notably sycophancy). Keep in mind, the that fundumaentally, we are still dealing will fallable prediction machines. Ask ChatGPT
+                                    to write you a paper on a topic of your choice and cite its sources. Check those sources very carefully! There's a strong chance
+                                    that it cited real sources but those sources don't actually make the claim or support the statements that it attributes to them.
+                                    There's also a strong chance it wrote some sources based on real authors and keywords in the titles of papers related to your topic
+                                    that aren't actually real sources! In other words, even with GenAI being able to use web-search tools, they still make things up,
+                                    not because they are conspiring to undermine you, but because they are prediction machines that don't flawlessly context switch
+                                    to tool use or flawlessly review their own work!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '▼';
+                header.style.borderRadius = '15px';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '▲';
+                header.style.borderRadius = '15px 15px 0 0';
+            }
+        }
+
+        function toggleAnswer(questionElement) {
+            const answer = questionElement.nextElementSibling;
+            const icon = questionElement.querySelector('.toggle-icon');
+            
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                icon.textContent = '▶';
+            } else {
+                answer.classList.add('show');
+                icon.textContent = '▼';
+            }
+        }
+
+        // Category filtering
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                const sections = document.querySelectorAll('.qa-section');
+                
+                sections.forEach(section => {
+                    if (category === 'all' || section.dataset.category === category) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const sections = document.querySelectorAll('.qa-section');
+            
+            if (searchTerm === '') {
+                sections.forEach(section => {
+                    section.classList.remove('hidden');
+                    const qaItems = section.querySelectorAll('.qa-item');
+                    qaItems.forEach(item => item.style.display = 'block');
+                });
+                return;
+            }
+            
+            sections.forEach(section => {
+                let hasVisibleItems = false;
+                const qaItems = section.querySelectorAll('.qa-item');
+                
+                qaItems.forEach(item => {
+                    const questionText = item.querySelector('.question').textContent.toLowerCase();
+                    const answerText = item.querySelector('.answer').textContent.toLowerCase();
+                    
+                    if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        hasVisibleItems = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                if (hasVisibleItems) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+        });
+
+        // Auto-expand sections when searching
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm !== '') {
+                document.querySelectorAll('.qa-section:not(.hidden)').forEach(section => {
+                    const content = section.querySelector('.section-content');
+                    const header = section.querySelector('.section-header');
+                    const icon = header.querySelector('.toggle-icon');
+                    
+                    if (!content.classList.contains('expanded')) {
+                        content.classList.add('expanded');
+                        icon.textContent = '▲';
+                        header.style.borderRadius = '15px 15px 0 0';
+                    }
+                });
+            }
+        });
+
+        // Resource card hover effects
+        document.querySelectorAll('.resource-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 25px rgba(30, 113, 69, 0.2)';
+                this.style.borderLeftColor = '#2d9659';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                this.style.borderLeftColor = '#1e7145';
+            });
+        });
+    </script>
+</body>
+</html>
