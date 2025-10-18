@@ -1858,9 +1858,10 @@ async function downloadCertificateAsPDF() {
     let date = d.getDate();
     let semester = '';
 
-    if (month < 5) semester = '10';                     // Spring
-    else if (month > 7 && date < 15) semester = '80';   // Fall 
-    else semester = '50';                               // Summer
+    if (month < 5) semester = '10';                     // Jan-Apr -> Spring (10)
+    else if (month > 8) semester = '80';                // Sep-Dec -> Fall (80)
+    else if (month == 8 && date > 15) semester = '80'; 
+    else semester = '50';                               // May-mid Aug -> Summer (50)
     
     let fullDate = `${year}${semester}`;
     let playerName = gameState.playerName.replace(/\s+/g, "");
