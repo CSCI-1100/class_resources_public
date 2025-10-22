@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store Customer Segmentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            min-height: 100vh;
+            font-size: 1.3em;
+        }
+        
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 2.1em;
+            color: #e67e22;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .store-logo {
+            text-align: center;
+            font-size: 3em;
+            color: #2ecc71;
+            margin-bottom: 30px;
+        }
+        
+        .cluster-visualization {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .user-profiles {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .section-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        
+        .user-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+        
+        .user-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .user-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .user-preferences {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+        
+        .cluster-center {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cluster-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .cluster-groups {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            min-height: 400px;
+        }
+        
+        .cluster-group {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+        
+        .cluster-label {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1em;
+            line-height: 1.3;
+        }
+        
+        .cluster-users {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .cluster-user {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            text-align: center;
+        }
+        
+        .recommendations {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #e74c3c;
+        }
+        
+        .promo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .promo-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid #e74c3c;
+            transition: all 0.3s ease;
+        }
+        
+        .promo-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .promo-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .promo-reason {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        .algorithm-explanation {
+            background: #fef5e7;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .algo-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #e67e22;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .algo-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .algo-step {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border-top: 4px solid #e67e22;
+        }
+        
+        .step-number {
+            background: #e67e22;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+        
+        .step-description {
+            color: #2c3e50;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .cluster-visualization {
+                grid-template-columns: 1fr;
+            }
+            
+            .cluster-groups {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            
+            .algo-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="store-logo">🛒 KROGEMART</div>
+        <h1 class="title">Machine Learning in Action</h1>
+        <h2 class="subtitle">Customer Segmentation for Targeted Promotions</h2>
+        
+        <div class="cluster-visualization">
+            <!-- Customer Profiles -->
+            <div class="user-profiles">
+                <div class="section-title">
+                    <span class="section-icon">👥</span>
+                    Customer Purchase Data
+                </div>
+                
+                <div class="user-card">
+                    <div class="user-name">Sarah (32)</div>
+                    <div class="user-preferences">
+                        Buys: Organic produce, almond milk, quinoa<br>
+                        Avg basket: $85 | Frequency: Weekly
+                    </div>
+                </div>
+                
+                <div class="user-card">
+                    <div class="user-name">Marcus (28)</div>
+                    <div class="user-preferences">
+                        Buys: Frozen meals, energy drinks, chips<br>
+                        Avg basket: $35 | Frequency: 2-3x/week
+                    </div>
+                </div>
+                
+                <div class="user-card">
+                    <div class="user-name">Tyler (22)</div>
+                    <div class="user-preferences">
+                        Buys: Ramen, soda, frozen pizza, snacks<br>
+                        Avg basket: $30 | Frequency: Weekly
+                    </div>
+                </div>
+                
+                <div class="user-card">
+                    <div class="user-name">Patricia (38)</div>
+                    <div class="user-preferences">
+                        Buys: Gluten-free items, kale, protein bars<br>
+                        Avg basket: $95 | Frequency: Bi-weekly
+                    </div>
+                </div>
+                
+                <div class="user-card">
+                    <div class="user-name">David (55)</div>
+                    <div class="user-preferences">
+                        Buys: Deli meats, bread, milk, eggs<br>
+                        Avg basket: $65 | Frequency: Weekly
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Clustering Algorithm -->
+            <div class="cluster-center">
+                <div class="cluster-title">🧠 ML Clustering Algorithm</div>
+                <div class="cluster-groups">
+                    <div class="cluster-group">
+                        <div class="cluster-label">🥗 Health-Conscious Shoppers</div>
+                        <div class="cluster-users">
+                            <div class="cluster-user">Sarah</div>
+                            <div class="cluster-user">Patricia</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cluster-group">
+                        <div class="cluster-label">⚡ Convenience Seekers</div>
+                        <div class="cluster-users">
+                            <div class="cluster-user">Marcus</div>
+                            <div class="cluster-user">Tyler</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cluster-group">
+                        <div class="cluster-label">🏠 Traditional Family Shoppers</div>
+                        <div class="cluster-users">
+                            <div class="cluster-user">David</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px; font-size: 0.9em; opacity: 0.9;">
+                    Algorithm groups customers with similar purchasing patterns
+                </div>
+            </div>
+            
+            <!-- Recommendations -->
+            <div class="recommendations">
+                <div class="section-title">
+                    <span class="section-icon">🎯</span>
+                    New Customer: Emma
+                </div>
+                
+                <div class="user-card" style="border-left-color: #f39c12; background: #fef9e7;">
+                    <div class="user-name">Emma (29) - New Customer</div>
+                    <div class="user-preferences">
+                        First purchase: Spinach, avocados, kombucha<br>
+                        Detected: Health-conscious preferences
+                    </div>
+                </div>
+                
+                <div class="section-title" style="margin-top: 25px;">
+                    <span class="section-icon">🎫</span>
+                    Targeted Promotions
+                </div>
+                
+                <div class="promo-grid">
+                    <div class="promo-card">
+                        <div class="promo-title">20% Off Organic Produce</div>
+                        <div class="promo-reason">Popular with health-conscious shoppers</div>
+                    </div>
+                    
+                    <div class="promo-card">
+                        <div class="promo-title">Buy 2 Get 1: Almond Milk</div>
+                        <div class="promo-reason">Frequently bought in your cluster</div>
+                    </div>
+                    
+                    <div class="promo-card">
+                        <div class="promo-title">$5 Off Protein Bars</div>
+                        <div class="promo-reason">Similar customers love these</div>
+                    </div>
+                    
+                    <div class="promo-card">
+                        <div class="promo-title">Loyalty Bonus: Fresh Fish</div>
+                        <div class="promo-reason">Pairs well with your purchases</div>
+                    </div>
+                    
+                    <div class="promo-card">
+                        <div class="promo-title">Free Yoga Mat ($25 value)</div>
+                        <div class="promo-reason">Spend $150+ on healthy items</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="algorithm-explanation">
+            <div class="algo-title">How Stores Use ML for Targeted Marketing</div>
+            <div class="algo-steps">
+                <div class="algo-step">
+                    <div class="step-number">1</div>
+                    <div class="step-description">
+                        Collect purchase history data including items bought, frequency, basket size, and timing patterns
+                    </div>
+                </div>
+                
+                <div class="algo-step">
+                    <div class="step-number">2</div>
+                    <div class="step-description">
+                        Group customers with similar shopping behaviors into segments using clustering algorithms
+                    </div>
+                </div>
+                
+                <div class="algo-step">
+                    <div class="step-number">3</div>
+                    <div class="step-description">
+                        When a new customer shops, identify their cluster based on initial purchases and patterns
+                    </div>
+                </div>
+                
+                <div class="algo-step">
+                    <div class="step-number">4</div>
+                    <div class="step-description">
+                        Send personalized coupons and rewards for products popular within that customer's cluster
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
