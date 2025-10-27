@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Data Processor</title>
+    <style>
+        :root {
+            --primary: #8b8acd;
+            --secondary: #b8ecf3;
+            --tertiary: #f1e6ba;
+            --background: #f8f9fa;
+            --text: #333333;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 8px;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .file-input-area {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .results-area {
+            display: none;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .statistics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: var(--background);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-top: 3px solid var(--primary);
+        }
+        
+        .feedback-table-container {
+            background-color: var(--background);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-top: 2rem;
+            border-top: 3px solid var(--tertiary);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--tertiary);
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .file-input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1rem;
+            border: 1px dashed var(--primary);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #7a79b8;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--text);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #9ed9e0;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .instructions {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        .copy-button {
+            background-color: var(--tertiary);
+            color: var(--text);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .copy-button:hover {
+            background-color: #e5daac;
+        }
+
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 5px 0;
+            height: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background-color: var(--primary);
+            width: 0;
+            transition: width 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .familiarity-before .progress-bar {
+            background-color: var(--secondary);
+            color: var(--text);
+        }
+
+        .familiarity-after .progress-bar {
+            background-color: var(--primary);
+        }
+
+        .enjoyment .progress-bar {
+            background-color: var(--tertiary);
+            color: var(--text);
+        }
+
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Feedback Data Processor</h1>
+    </header>
+    
+    <div class="container">
+        <div class="file-input-area">
+            <h2>Upload Feedback CSV File</h2>
+            <p class="instructions">Upload a CSV file exported from Microsoft Forms containing feedback data.</p>
+            <input type="file" id="csvFile" accept=".csv" class="file-input">
+            <div class="error" id="error-message"></div>
+            <button id="processBtn" class="btn">Process Feedback Data</button>
+        </div>
+        
+        <div class="results-area" id="results">
+            <h2>Analysis Results</h2>
+            
+            <div class="statistics-container">
+                <div class="stat-card">
+                    <h3>Familiarity Before</h3>
+                    <div class="progress-container familiarity-before">
+                        <div class="progress-bar" id="familiarity-before-bar">0%</div>
+                    </div>
+                    <p>Average: <span id="avg-familiarity-before">0</span> / 5</p>
+                    <p>Most common rating: <span id="mode-familiarity-before">0</span></p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Familiarity After</h3>
+                    <div class="progress-container familiarity-after">
+                        <div class="progress-bar" id="familiarity-after-bar">0%</div>
+                    </div>
+                    <p>Average: <span id="avg-familiarity-after">0</span> / 5</p>
+                    <p>Most common rating: <span id="mode-familiarity-after">0</span></p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Enjoyment</h3>
+                    <div class="progress-container enjoyment">
+                        <div class="progress-bar" id="enjoyment-bar">0%</div>
+                    </div>
+                    <p>Average: <span id="avg-enjoyment">0</span> / 5</p>
+                    <p>Most common rating: <span id="mode-enjoyment">0</span></p>
+                </div>
+            </div>
+            
+            <div class="comparison-container">
+                <canvas class="chart-container" id="familiarity-chart"></canvas>
+                <canvas class="chart-container" id="enjoyment-chart"></canvas>
+            </div>
+            
+            <div class="feedback-table-container">
+                <h3>Written Feedback</h3>
+                <p id="feedback-count">Total comments: 0</p>
+                <button id="copy-feedback-btn" class="copy-button">Copy All Feedback</button>
+                <table id="feedback-table">
+                    <thead>
+                        <tr>
+                            <th>Feedback Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feedback-tbody">
+                        <!-- Feedback comments will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <button id="downloadBtn" class="btn btn-secondary" style="margin-top: 2rem;">Download Results as JSON</button>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Created by Ryan's Feedback Processor Tool</p>
+    </div>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <script>
+        // DOM Elements
+        const csvFileInput = document.getElementById('csvFile');
+        const processBtn = document.getElementById('processBtn');
+        const resultsArea = document.getElementById('results');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const copyFeedbackBtn = document.getElementById('copy-feedback-btn');
+        const errorMessage = document.getElementById('error-message');
+        
+        // Statistics elements
+        const avgFamiliarityBefore = document.getElementById('avg-familiarity-before');
+        const modeFamiliarityBefore = document.getElementById('mode-familiarity-before');
+        const avgFamiliarityAfter = document.getElementById('avg-familiarity-after');
+        const modeFamiliarityAfter = document.getElementById('mode-familiarity-after');
+        const avgEnjoyment = document.getElementById('avg-enjoyment');
+        const modeEnjoyment = document.getElementById('mode-enjoyment');
+        const feedbackCount = document.getElementById('feedback-count');
+        const feedbackTbody = document.getElementById('feedback-tbody');
+        
+        // Progress bars
+        const familiarityBeforeBar = document.getElementById('familiarity-before-bar');
+        const familiarityAfterBar = document.getElementById('familiarity-after-bar');
+        const enjoymentBar = document.getElementById('enjoyment-bar');
+        
+        // Charts
+        let familiarityChart;
+        let enjoymentChart;
+        
+        // Global variables
+        let analysisResults;
+        
+        // Event listeners
+        processBtn.addEventListener('click', processCSV);
+        downloadBtn.addEventListener('click', downloadJSON);
+        copyFeedbackBtn.addEventListener('click', copyFeedbackToClipboard);
+        
+        // CSV Processing Function
+        function processCSV() {
+            const file = csvFileInput.files[0];
+            if (!file) {
+                showError('Please select a CSV file first.');
+                return;
+            }
+            
+            // Check if it's a CSV file
+            if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
+                showError('Please upload a valid CSV file.');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const csvData = e.target.result;
+                    const results = parseAndProcessCSV(csvData);
+                    displayResults(results);
+                    analysisResults = results;
+                    hideError();
+                } catch (error) {
+                    console.error('Error processing CSV:', error);
+                    showError('Error processing the CSV file. Please make sure it follows the expected format.');
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        // CSV Parser and Processor
+        function parseAndProcessCSV(csvText) {
+            // Parse CSV (handle quotes properly)
+            const parsedData = parseCSV(csvText);
+            
+            if (parsedData.length < 2) { // Need at least headers and one data row
+                throw new Error('CSV file does not contain enough data');
+            }
+            
+            // Get header row and find relevant columns
+            const headers = parsedData[0];
+            
+            // Find column indices
+            const familiarityBeforeIndex = headers.findIndex(h => h.includes('Familiarity before'));
+            const familiarityAfterIndex = headers.findIndex(h => h.includes('Familiarity after'));
+            const enjoymentIndex = headers.findIndex(h => h.includes('Enjoyment'));
+            const feedbackIndex = headers.findIndex(h => 
+                h.toLowerCase().includes('feedback') || h.toLowerCase().includes('notes')
+            );
+            
+            if (familiarityBeforeIndex === -1 || familiarityAfterIndex === -1 || 
+                enjoymentIndex === -1 || feedbackIndex === -1) {
+                throw new Error('CSV is missing required columns');
+            }
+            
+            // Process data rows (skip header row)
+            const data = parsedData.slice(1);
+            
+            // Map emoji ratings to numeric values
+            const enjoymentMapping = {
+                "😭 strongly dislike": 1,
+                "☹️ dislike": 2,
+                "😐 neutral": 3,
+                "🙂 like": 4,
+                "🥰 strongly like": 5
+            };
+            
+            // Extract data
+            const familiarityBeforeValues = [];
+            const familiarityAfterValues = [];
+            const enjoymentValues = [];
+            const feedbackComments = [];
+            
+            for (const row of data) {
+                // Skip empty rows
+                if (row.length <= 1) continue;
+                
+                // Extract familiarity before (should be numeric 1-5)
+                const famBeforeStr = row[familiarityBeforeIndex];
+                if (famBeforeStr && !isNaN(parseInt(famBeforeStr))) {
+                    familiarityBeforeValues.push(parseInt(famBeforeStr));
+                }
+                
+                // Extract familiarity after (should be numeric 1-5)
+                const famAfterStr = row[familiarityAfterIndex];
+                if (famAfterStr && !isNaN(parseInt(famAfterStr))) {
+                    familiarityAfterValues.push(parseInt(famAfterStr));
+                }
+                
+                // Extract and convert enjoyment rating
+                const enjoymentStr = row[enjoymentIndex];
+                if (enjoymentStr) {
+                    if (enjoymentMapping[enjoymentStr]) {
+                        enjoymentValues.push(enjoymentMapping[enjoymentStr]);
+                    } else if (!isNaN(parseInt(enjoymentStr))) {
+                        // In case it's already a number
+                        enjoymentValues.push(parseInt(enjoymentStr));
+                    }
+                }
+                
+                // Extract feedback comments
+                const feedback = row[feedbackIndex];
+                if (feedback && feedback.trim()) {
+                    feedbackComments.push(feedback.trim());
+                }
+            }
+            
+            // Calculate statistics
+            const results = {
+                statistics: {
+                    familiarity_before: {
+                        average: calculateAverage(familiarityBeforeValues),
+                        mode: calculateMode(familiarityBeforeValues)
+                    },
+                    familiarity_after: {
+                        average: calculateAverage(familiarityAfterValues),
+                        mode: calculateMode(familiarityAfterValues)
+                    },
+                    enjoyment: {
+                        average: calculateAverage(enjoymentValues),
+                        mode: calculateMode(enjoymentValues)
+                    }
+                },
+                written_feedback: feedbackComments,
+                raw_data: {
+                    familiarity_before: familiarityBeforeValues,
+                    familiarity_after: familiarityAfterValues,
+                    enjoyment: enjoymentValues
+                }
+            };
+            
+            return results;
+        }
+        
+        // CSV Parser function
+        function parseCSV(text) {
+            const result = [];
+            const lines = text.split(/\r?\n/);
+            
+            for (let line of lines) {
+                if (line.trim() === '') continue;
+                
+                const values = [];
+                let current = '';
+                let inQuotes = false;
+                
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    
+                    if (char === '"') {
+                        if (i + 1 < line.length && line[i + 1] === '"') {
+                            // Handle escaped quote
+                            current += '"';
+                            i++; // Skip the next quote
+                        } else {
+                            // Toggle quote state
+                            inQuotes = !inQuotes;
+                        }
+                    } else if (char === ',' && !inQuotes) {
+                        // End of field
+                        values.push(current);
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                
+                // Add the last field
+                values.push(current);
+                result.push(values);
+            }
+            
+            return result;
+        }
+        
+        // Display results function
+        function displayResults(results) {
+            // Show the results area
+            resultsArea.style.display = 'block';
+            
+            // Update statistics
+            avgFamiliarityBefore.textContent = results.statistics.familiarity_before.average.toFixed(2);
+            modeFamiliarityBefore.textContent = results.statistics.familiarity_before.mode;
+            avgFamiliarityAfter.textContent = results.statistics.familiarity_after.average.toFixed(2);
+            modeFamiliarityAfter.textContent = results.statistics.familiarity_after.mode;
+            avgEnjoyment.textContent = results.statistics.enjoyment.average.toFixed(2);
+            modeEnjoyment.textContent = results.statistics.enjoyment.mode;
+            
+            // Update progress bars (percentage of 5.0 max)
+            const beforePercent = (results.statistics.familiarity_before.average / 5) * 100;
+            const afterPercent = (results.statistics.familiarity_after.average / 5) * 100;
+            const enjoymentPercent = (results.statistics.enjoyment.average / 5) * 100;
+            
+            familiarityBeforeBar.style.width = `${beforePercent}%`;
+            familiarityBeforeBar.textContent = `${beforePercent.toFixed(1)}%`;
+            
+            familiarityAfterBar.style.width = `${afterPercent}%`;
+            familiarityAfterBar.textContent = `${afterPercent.toFixed(1)}%`;
+            
+            enjoymentBar.style.width = `${enjoymentPercent}%`;
+            enjoymentBar.textContent = `${enjoymentPercent.toFixed(1)}%`;
+            
+            // Update feedback table
+            feedbackTbody.innerHTML = '';
+            feedbackCount.textContent = `Total comments: ${results.written_feedback.length}`;
+            
+            results.written_feedback.forEach(feedback => {
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.textContent = feedback;
+                row.appendChild(cell);
+                feedbackTbody.appendChild(row);
+            });
+            
+            // Create charts
+            createCharts(results);
+        }
+        
+        // Create charts
+        function createCharts(results) {
+            // Destroy existing charts if they exist
+            if (familiarityChart) familiarityChart.destroy();
+            if (enjoymentChart) enjoymentChart.destroy();
+            
+            // Familiarity comparison chart
+            const famCtx = document.getElementById('familiarity-chart').getContext('2d');
+            familiarityChart = new Chart(famCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Before', 'After'],
+                    datasets: [{
+                        label: 'Average Familiarity (1-5)',
+                        data: [
+                            results.statistics.familiarity_before.average,
+                            results.statistics.familiarity_after.average
+                        ],
+                        backgroundColor: [
+                            '#b8ecf3',
+                            '#8b8acd'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 5,
+                            title: {
+                                display: true,
+                                text: 'Average Rating'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Familiarity Comparison Before vs. After'
+                        }
+                    }
+                }
+            });
+            
+            // Enjoyment distribution chart
+            const enjoymentCounts = countOccurrences(results.raw_data.enjoyment);
+            const enjoymentCtx = document.getElementById('enjoyment-chart').getContext('2d');
+            
+            enjoymentChart = new Chart(enjoymentCtx, {
+                type: 'pie',
+                data: {
+                    labels: [
+                        'Strongly Dislike (1)',
+                        'Dislike (2)',
+                        'Neutral (3)',
+                        'Like (4)',
+                        'Strongly Like (5)'
+                    ],
+                    datasets: [{
+                        data: [
+                            enjoymentCounts[1] || 0,
+                            enjoymentCounts[2] || 0,
+                            enjoymentCounts[3] || 0,
+                            enjoymentCounts[4] || 0,
+                            enjoymentCounts[5] || 0
+                        ],
+                        backgroundColor: [
+                            '#ff6b6b',
+                            '#ffa76b',
+                            '#ffd76b',
+                            '#b8ecf3',
+                            '#8b8acd'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Enjoyment Distribution'
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Utility functions
+        function calculateAverage(arr) {
+            if (arr.length === 0) return 0;
+            return arr.reduce((sum, val) => sum + val, 0) / arr.length;
+        }
+        
+        function calculateMode(arr) {
+            if (arr.length === 0) return 0;
+            
+            const counts = {};
+            let maxCount = 0;
+            let mode = 0;
+            
+            for (const num of arr) {
+                counts[num] = (counts[num] || 0) + 1;
+                if (counts[num] > maxCount) {
+                    maxCount = counts[num];
+                    mode = num;
+                }
+            }
+            
+            return mode;
+        }
+        
+        function countOccurrences(arr) {
+            const counts = {};
+            for (const num of arr) {
+                counts[num] = (counts[num] || 0) + 1;
+            }
+            return counts;
+        }
+        
+        // Download results as JSON
+        function downloadJSON() {
+            if (!analysisResults) return;
+            
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(analysisResults, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "feedback_analysis.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+        
+        // Copy all feedback to clipboard
+        function copyFeedbackToClipboard() {
+            if (!analysisResults || !analysisResults.written_feedback.length) return;
+            
+            const feedbackText = analysisResults.written_feedback.join('\n\n');
+            navigator.clipboard.writeText(feedbackText).then(() => {
+                copyFeedbackBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyFeedbackBtn.textContent = 'Copy All Feedback';
+                }, 2000);
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+            });
+        }
+        
+        // Error handling
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+        
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
