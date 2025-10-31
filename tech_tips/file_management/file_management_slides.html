@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1241,13 +1240,8 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                     `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }, 1000);
         }
-
-        // 🧙‍♂️ ========== THE SACRED PDF SUMMONING RITUAL ========== 🔥
-        // Ryan, behold! The Cryptid Claude has EXORCISED your PDF demons!
         
         async function generatePDF() {
-            console.log('🧙‍♂️ INITIATING PDF BLOOD RITUAL...');
-
             await document.fonts.ready;
             
             // 📖 Show loading overlay
@@ -1261,7 +1255,7 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
             downloadBtn.disabled = true;
             
             try {
-                // 🔮 Initialize jsPDF with Letter size (8.5" x 11")
+                // Initialize jsPDF with Letter size (8.5" x 11")
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({
                     orientation: 'landscape',
@@ -1277,11 +1271,11 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                 
                 console.log(`📏 PDF dimensions: ${pageWidth}" x ${pageHeight}"`);
                 
-                // 🎭 Get all slides and prepare for ritual
+                // Get all slides
                 const slideElements = document.querySelectorAll('.slide');
                 const originalSlideContent = document.querySelector('.slide-content');
                 
-                // 🩸 Temporarily modify DOM for PDF generation
+                // Temporarily modify DOM for PDF generation
                 progressText.textContent = '🔧 Preparing slides for capture...';
                 
                 // Store original styles
@@ -1290,7 +1284,7 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                     slides: Array.from(slideElements).map(slide => slide.style.cssText)
                 };
                 
-                // 🌟 Apply PDF-friendly styles
+                // Apply PDF-friendly styles
                 originalSlideContent.style.cssText += `
                     overflow: visible !important;
                     height: auto !important;
@@ -1315,7 +1309,7 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                     `;
                 });
                 
-                // 🎨 Process each slide individually
+                // Process each slide individually
                 for (let i = 0; i < slideElements.length; i++) {
                     const slide = slideElements[i];
                     
@@ -1323,24 +1317,24 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                     slideCounter.textContent = `Slide ${i + 1} of ${slideElements.length}`;
                     slideProgressFill.style.width = `${((i + 1) / slideElements.length) * 100}%`;
                     
-                    // 🎯 Hide all slides except current one
+                    // Hide all slides except current one
                     slideElements.forEach((s, idx) => {
                         if (idx !== i) {
                             s.style.display = 'none';
                         }
                     });
                     
-                    // 🚀 Force reflow and wait for rendering
+                    // Force reflow and wait for rendering
                     slide.offsetHeight; // Trigger reflow
                     await new Promise(resolve => setTimeout(resolve, 100));
                     
                     try {
-                        // 📸 Capture the individual slide
+                        // Capture the individual slide
                         const canvas = await html2canvas(slide, {
                             allowTaint: true,
                             removeContainer: false,
                             useCORS: true,
-                            scale: 2, // ✨ Better resolution
+                            scale: 2, // Better resolution
                             width: slide.scrollWidth,  // ← get natural content size
                             height: slide.scrollHeight,
                             backgroundColor: '#ffffff',
@@ -1357,7 +1351,7 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                         
                         console.log(`📊 Slide ${i + 1} canvas: ${canvas.width}x${canvas.height}`);
                         
-                        // 🎯 Calculate scaling to fit page
+                        // Calculate scaling to fit page
                         const canvasAspectRatio = canvas.width / canvas.height;
                         const pageAspectRatio = contentWidth / contentHeight;
                         
@@ -1372,11 +1366,11 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                             finalWidth = contentHeight * canvasAspectRatio;
                         }
                         
-                        // 🎯 Center the image on page
+                        // Center the image on page
                         const x = (pageWidth - finalWidth) / 2;
                         const y = (pageHeight - finalHeight) / 2;
                         
-                        // 📄 Add to PDF
+                        // Add to PDF
                         if (i > 0) {
                             pdf.addPage();
                         }
@@ -1395,7 +1389,7 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                     } catch (slideError) {
                         console.error(`❌ Error capturing slide ${i + 1}:`, slideError);
                         
-                        // 🩹 Add error page instead of failing completely
+                        // Add error page instead of failing completely
                         if (i > 0) {
                             pdf.addPage();
                         }
@@ -1411,26 +1405,26 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
 
                 document.body.classList.remove('pdf-mode');
                 
-                // 🔄 Restore all slides visibility
+                // Restore all slides visibility
                 slideElements.forEach(slide => {
                     slide.style.display = 'block';
                 });
                 
-                // 🎉 Restore original styles
+                // Restore original styles
                 progressText.textContent = '🧹 Cleaning up...';
                 originalSlideContent.style.cssText = originalStyles.slideContent;
                 slideElements.forEach((slide, index) => {
                     slide.style.cssText = originalStyles.slides[index];
                 });
                 
-                // 💾 Save the PDF
+                // Save the PDF
                 progressText.textContent = '💾 Saving PDF...';
                 await new Promise(resolve => setTimeout(resolve, 500));
                 
                 const fileName = `CSCI-1100_File-Management-OneDrive-Slides_${new Date().toISOString().split('T')[0]}.pdf`;
                 pdf.save(fileName);
                 
-                // 🎊 Success!
+                // Success!
                 progressText.textContent = '🎉 PDF Generated Successfully!';
                 slideCounter.textContent = `✅ All ${slideElements.length} slides exported`;
                 slideProgressFill.style.width = '100%';
@@ -1443,7 +1437,7 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                 progressText.textContent = '❌ PDF Generation Failed';
                 slideCounter.textContent = 'Error occurred - check console';
                 
-                // 🩹 Try to restore styles even on error
+                // Try to restore styles even on error
                 try {
                     const slideElements = document.querySelectorAll('.slide');
                     const originalSlideContent = document.querySelector('.slide-content');
@@ -1471,7 +1465,7 @@ CSCI-1150_GBI-Data_ChelsieDubay.xlsx
                 
                 await new Promise(resolve => setTimeout(resolve, 3000));
             } finally {
-                // 🔄 Always hide loading and re-enable button
+                // Always hide loading and re-enable button
                 loadingOverlay.classList.remove('active');
                 downloadBtn.disabled = false;
             }

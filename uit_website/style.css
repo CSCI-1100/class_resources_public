@@ -309,7 +309,6 @@ footer {
 }
 
 .scrollbox-xs, .scrollbox-sm, .scrollbox-md, .scrollbox-lg {
-    overflow-y: scroll;
     border-radius: 3px;
     background-color: transparent;
     white-space: nowrap;
@@ -319,18 +318,26 @@ footer {
 
 .scrollbox-xs {
     height: 25vh;
+    min-height: calc-size(fit-content, size + 100px);
+    overflow-y: scroll;
 }
 
 .scrollbox-sm {
     height: 35vh;
+    min-height: calc-size(fit-content, size + 100px); 
+    overflow-y: scroll;
 }
 
 .scrollbox-md {
     height: 45vh;
+    min-height: calc-size(fit-content, size + 100px); 
+    overflow-y: scroll;
 }
 
 .scrollbox-lg {
     height: 55vh;
+    min-height: calc-size(fit-content, size + 100px); 
+    overflow-y: scroll;
 }
 
 /* Remove animations for those who have turned them off */

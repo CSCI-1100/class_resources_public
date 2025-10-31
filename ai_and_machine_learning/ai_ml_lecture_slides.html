@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI & Machine Learning - Lecture Slides</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <!-- jsPDF and html2canvas for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -48,6 +53,12 @@
         .header h1 {
             font-size: 1.8em;
             font-weight: 700;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .slide-counter {
@@ -482,14 +493,152 @@
             cursor: pointer;
             transform: translateY(2px);
         }
+
+        /* ---------- PDF Exort styles ---------- */
+        .pdf-mode .slide {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: static !important;
+            height: auto !important;
+            page-break-after: always;
+            margin-bottom: 50px;
+            border: 2px solid #ddd;
+            background: white;
+            padding: 40px;
+        }
+
+        .pdf-mode .slide-content {
+            overflow: visible !important;
+            height: auto !important;
+        }
+
+        .download-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .download-icon {
+            font-size: 1.1em;
+        }
+
+        /* Loading overlay for PDF generation */
+        .pdf-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .pdf-loading.active {
+            display: flex;
+        }
+
+        .loading-content {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #00ff88;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-text {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #00ff88;
+        }
+
+        .slide-progress {
+            background: rgba(255, 255, 255, 0.2);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .slide-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #0088ff);
+            transition: width 0.3s ease;
+        }
     </style>
 </head>
 <body>
+    <!-- Loading overlay for PDF generation -->
+    <div class="pdf-loading" id="pdfLoading">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="progress-text" id="progressText">🧙‍♂️ Summoning PDF Magic...</div>
+            <div style="font-size: 0.9em; margin-bottom: 15px;">
+                <span id="slideCounter">Slide 0 of 22</span>
+            </div>
+            <div class="slide-progress">
+                <div class="slide-progress-fill" id="slideProgressFill" style="width: 0%"></div>
+            </div>
+            <div style="font-size: 0.8em; margin-top: 15px; opacity: 0.8;">
+                This may take a few moments...
+            </div>
+        </div>
+    </div>
+
     <div class="presentation-container">
         <div class="header">
             <h1>AI & Machine Learning</h1>
-            <div class="slide-counter">
-                <span id="current-slide">1</span> / <span id="total-slides">25</span>
+            <div class="header-right">
+                <button class="download-btn" id="downloadPDF" onclick="generatePDF()">
+                    <span class="download-icon">📄</span>
+                    <span>Download PDF</span>
+                </button>
+                <div class="slide-counter">
+                    <span id="current-slide">1</span> / <span id="total-slides">22</span>
+                </div>
             </div>
         </div>
         <div class="progress-bar">
@@ -1162,6 +1311,237 @@
                 document.getElementById('timer').textContent = 
                     `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }, 1000);
+        }
+
+                
+        async function generatePDF() {
+            await document.fonts.ready;
+            
+            // 📖 Show loading overlay
+            const loadingOverlay = document.getElementById('pdfLoading');
+            const progressText = document.getElementById('progressText');
+            const slideCounter = document.getElementById('slideCounter');
+            const slideProgressFill = document.getElementById('slideProgressFill');
+            const downloadBtn = document.getElementById('downloadPDF');
+            
+            loadingOverlay.classList.add('active');
+            downloadBtn.disabled = true;
+            
+            try {
+                // Initialize jsPDF with Letter size (8.5" x 11")
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'in',
+                    format: 'letter'
+                });
+                
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const margin = 0.5;
+                const contentWidth = pageWidth - (2 * margin);
+                const contentHeight = pageHeight - (2 * margin);
+                
+                console.log(`📏 PDF dimensions: ${pageWidth}" x ${pageHeight}"`);
+                
+                // Get all slides
+                const slideElements = document.querySelectorAll('.slide');
+                const originalSlideContent = document.querySelector('.slide-content');
+                
+                // Temporarily modify DOM for PDF generation
+                progressText.textContent = '🔧 Preparing slides for capture...';
+                
+                // Store original styles
+                const originalStyles = {
+                    slideContent: originalSlideContent.style.cssText,
+                    slides: Array.from(slideElements).map(slide => slide.style.cssText)
+                };
+                
+                // Apply PDF-friendly styles
+                originalSlideContent.style.cssText += `
+                    overflow: visible !important;
+                    height: auto !important;
+                    padding: 0 !important;
+                `;
+
+                document.body.classList.add('pdf-mode');
+                
+                slideElements.forEach((slide, index) => {
+                    slide.style.cssText += `
+                        display: block !important;
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                        position: static !important;
+                        height: auto !important;
+                        min-height: 800px !important;
+                        background: white !important;
+                        margin-bottom: 20px !important;
+                        padding: 40px !important;
+                        page-break-after: always;
+                        border: none !important;
+                    `;
+                });
+                
+                // Process each slide individually
+                for (let i = 0; i < slideElements.length; i++) {
+                    const slide = slideElements[i];
+                    
+                    progressText.textContent = `🖼️ Capturing slide ${i + 1}...`;
+                    slideCounter.textContent = `Slide ${i + 1} of ${slideElements.length}`;
+                    slideProgressFill.style.width = `${((i + 1) / slideElements.length) * 100}%`;
+                    
+                    // Hide all slides except current one
+                    slideElements.forEach((s, idx) => {
+                        if (idx !== i) {
+                            s.style.display = 'none';
+                        }
+                    });
+                    
+                    // Force reflow and wait for rendering
+                    slide.offsetHeight; // Trigger reflow
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    
+                    try {
+                        // Capture the individual slide
+                        const canvas = await html2canvas(slide, {
+                            allowTaint: true,
+                            removeContainer: false,
+                            useCORS: true,
+                            scale: 2, // Better resolution
+                            width: slide.scrollWidth,  // ← get natural content size
+                            height: slide.scrollHeight,
+                            backgroundColor: '#ffffff',
+                            logging: false,
+                            onclone: (clonedDoc) => {
+                                const clonedSlides = clonedDoc.querySelectorAll('.slide');
+                                clonedSlides.forEach(s => {
+                                    s.style.display = 'block';
+                                    s.style.opacity = '1';
+                                    s.style.visibility = 'visible';
+                                });
+                            }
+                        });
+                        
+                        console.log(`📊 Slide ${i + 1} canvas: ${canvas.width}x${canvas.height}`);
+                        
+                        // Calculate scaling to fit page
+                        const canvasAspectRatio = canvas.width / canvas.height;
+                        const pageAspectRatio = contentWidth / contentHeight;
+                        
+                        let finalWidth, finalHeight;
+                        if (canvasAspectRatio > pageAspectRatio) {
+                            // Canvas is wider - fit to width
+                            finalWidth = contentWidth;
+                            finalHeight = contentWidth / canvasAspectRatio;
+                        } else {
+                            // Canvas is taller - fit to height
+                            finalHeight = contentHeight;
+                            finalWidth = contentHeight * canvasAspectRatio;
+                        }
+                        
+                        // Center the image on page
+                        const x = (pageWidth - finalWidth) / 2;
+                        const y = (pageHeight - finalHeight) / 2;
+                        
+                        // Add to PDF
+                        if (i > 0) {
+                            pdf.addPage();
+                        }
+                        
+                        progressText.textContent = `📝 Adding slide ${i + 1} to PDF...`;
+                        
+                        pdf.addImage(
+                            canvas.toDataURL('image/jpeg', 0.85),
+                            'JPEG',
+                            x, y,
+                            finalWidth, finalHeight
+                        );
+                        
+                        console.log(`✅ Added slide ${i + 1} to PDF`);
+                        
+                    } catch (slideError) {
+                        console.error(`❌ Error capturing slide ${i + 1}:`, slideError);
+                        
+                        // Add error page instead of failing completely
+                        if (i > 0) {
+                            pdf.addPage();
+                        }
+                        
+                        pdf.setFontSize(20);
+                        pdf.setTextColor(220, 53, 69);
+                        pdf.text(`Error capturing slide ${i + 1}`, pageWidth / 2, pageHeight / 2, { align: 'center' });
+                        pdf.setFontSize(12);
+                        pdf.setTextColor(108, 117, 125);
+                        pdf.text('This slide could not be rendered properly', pageWidth / 2, (pageHeight / 2) + 0.5, { align: 'center' });
+                    }
+                }
+
+                document.body.classList.remove('pdf-mode');
+                
+                // Restore all slides visibility
+                slideElements.forEach(slide => {
+                    slide.style.display = 'block';
+                });
+                
+                // Restore original styles
+                progressText.textContent = '🧹 Cleaning up...';
+                originalSlideContent.style.cssText = originalStyles.slideContent;
+                slideElements.forEach((slide, index) => {
+                    slide.style.cssText = originalStyles.slides[index];
+                });
+                
+                // Save the PDF
+                progressText.textContent = '💾 Saving PDF...';
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                const fileName = `CSCI-1100_File-Management-OneDrive-Slides_${new Date().toISOString().split('T')[0]}.pdf`;
+                pdf.save(fileName);
+                
+                // Success!
+                progressText.textContent = '🎉 PDF Generated Successfully!';
+                slideCounter.textContent = `✅ All ${slideElements.length} slides exported`;
+                slideProgressFill.style.width = '100%';
+                
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+            } catch (error) {
+                console.error('💀 PDF GENERATION FAILED:', error);
+                
+                progressText.textContent = '❌ PDF Generation Failed';
+                slideCounter.textContent = 'Error occurred - check console';
+                
+                // Try to restore styles even on error
+                try {
+                    const slideElements = document.querySelectorAll('.slide');
+                    const originalSlideContent = document.querySelector('.slide-content');
+                    
+                    slideElements.forEach(slide => {
+                        slide.style.display = '';
+                        slide.style.opacity = '';
+                        slide.style.visibility = '';
+                        slide.style.position = '';
+                        slide.style.height = '';
+                        slide.style.minHeight = '';
+                        slide.style.background = '';
+                        slide.style.marginBottom = '';
+                        slide.style.padding = '';
+                    });
+                    
+                    originalSlideContent.style.overflow = '';
+                    originalSlideContent.style.height = '';
+                    originalSlideContent.style.padding = '';
+                    
+                    updateSlideDisplay(); // Restore normal navigation
+                } catch (restoreError) {
+                    console.error('Failed to restore styles:', restoreError);
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, 3000));
+            } finally {
+                // Always hide loading and re-enable button
+                loadingOverlay.classList.remove('active');
+                downloadBtn.disabled = false;
+            }
         }
 
         // Keyboard navigation
