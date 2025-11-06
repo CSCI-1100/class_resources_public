@@ -1021,8 +1021,8 @@
                 <p style="margin-top: 10px;">It's time to leverage your computational thinking to tackle this problem using AgentFlow — a drag-and-drop workflow automation tool with AI agents!</p>
             </div>
             <div class="input-group">
-                <label for="user-name">Enter your name to get started:</label>
-                <input type="text" id="user-name" placeholder="Your name">
+                <label for="user-name">Enter your first and last name to get started:</label>
+                <input type="text" id="user-name" placeholder="Your full name">
             </div>
             <button id="start-button" class="primary-button">Let's Build a Workflow!</button>
         </div>
@@ -1464,10 +1464,16 @@
             document.getElementById('start-button').addEventListener('click', function() {
                 userName = document.getElementById('user-name').value.trim();
                 if (userName) {
-                    document.getElementById('landing').style.display = 'none';
-                    showToast(`Welcome, ${userName}! Let's automate your support workflow.`);
+                    // If username contains space, assume first and last provided
+                    if (userName.includes(' ')) {
+                        document.getElementById('landing').style.display = 'none';
+                        showToast(`Welcome, ${userName.split(' ')[0]}! Let's automate your support workflow.`);
+                    }
+                    else {
+                        alert(`Please enter your first and last name to get started!`);
+                    }
                 } else {
-                    showToast('Please enter your name to continue.');
+                    alert('Please enter your full name to continue.');
                 }
             });
             
