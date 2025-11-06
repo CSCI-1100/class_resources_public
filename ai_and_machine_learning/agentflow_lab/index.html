@@ -130,11 +130,11 @@
             color: var(--dark-gray);
         }
         
-        .input-block { border-left: 4px solid var(--lochmara); }
-        .process-block { border-left: 4px solid var(--keppel); }
-        .ai-block { border-left: 4px solid var(--shocking); }
-        .output-block { border-left: 4px solid var(--outrageous-orange); }
-        .condition-block { border-left: 4px solid var(--bright-sun); }
+        .email_monitor-block { border-left: 4px solid var(--lochmara); }
+        .info_extractor-block { border-left: 4px solid var(--keppel); }
+        .ai_agent-block { border-left: 4px solid var(--shocking); }
+        .ticket_creator-block { border-left: 4px solid var(--outrageous-orange); }
+        .decision_router-block { border-left: 4px solid var(--bright-sun); }
         
         .workspace {
             flex: 1;
@@ -339,11 +339,11 @@
             cursor: pointer;
         }
 
-        .dropped-input { border-left: 4px solid var(--lochmara); }
-        .dropped-process { border-left: 4px solid var(--keppel); }
-        .dropped-ai { border-left: 4px solid var(--shocking); }
-        .dropped-output { border-left: 4px solid var(--outrageous-orange); }
-        .dropped-condition { border-left: 4px solid var(--bright-sun); }
+        .dropped-email_monitor { border-left: 4px solid var(--lochmara); }
+        .dropped-info_extractor { border-left: 4px solid var(--keppel); }
+        .dropped-ai_agent { border-left: 4px solid var(--shocking); }
+        .dropped-ticket_creator { border-left: 4px solid var(--outrageous-orange); }
+        .dropped-decision_router { border-left: 4px solid var(--bright-sun); }
         
         .connection-point {
             width: 17px;
@@ -1039,27 +1039,27 @@
         <div class="sidebar">
             <h3 class="sidebar-title">Workflow Blocks</h3>
             
-            <div class="block input-block" draggable="true" data-type="Email Monitor">
+            <div class="block email_monitor-block" draggable="true" data-type="Email Monitor">
                 <div class="block-title"><i class="bi bi-activity"></i> Email Monitor</div>
                 <div class="block-desc">Continuously checks support inbox for new messages</div>
             </div>
             
-            <div class="block process-block" draggable="true" data-type="Info Extractor">
+            <div class="block info_extractor-block" draggable="true" data-type="Info Extractor">
                 <div class="block-title"><i class="bi bi-funnel"></i> Info Extractor</div>
                 <div class="block-desc">Extracts customer details and problem description</div>
             </div>
             
-            <div class="block ai-block" draggable="true" data-type="AI Agent">
+            <div class="block ai_agent-block" draggable="true" data-type="AI Agent">
                 <div class="block-title"><i class="bi bi-robot"></i> AI Agent</div>
                 <div class="block-desc">Uses AI to analyze and categorize support requests</div>
             </div>
             
-            <div class="block condition-block" draggable="true" data-type="Decision Router">
+            <div class="block decision_router-block" draggable="true" data-type="Decision Router">
                 <div class="block-title"><i class="bi bi-sign-turn-right"></i> Decision Router</div>
                 <div class="block-desc">Routes tickets based on priority and type</div>
             </div>
             
-            <div class="block output-block" draggable="true" data-type="Ticket Creator">
+            <div class="block ticket_creator-block" draggable="true" data-type="Ticket Creator">
                 <div class="block-title"><i class="bi bi-file-earmark-plus"></i> Ticket Creator</div>
                 <div class="block-desc">Creates support tickets in the system</div>
             </div>
@@ -1366,7 +1366,7 @@
                 </div>
                 
                 <p>The system has automatically assigned tickets based on priority:</p>
-                <ul>
+                <ul style="padding-left:30px;">
                     <li><strong>High Priority:</strong> Assigned to Lead Support Specialist (1 ticket)</li>
                     <li><strong>Medium Priority:</strong> Assigned to Available Support Team Members (3 tickets)</li>
                     <li><strong>Low Priority:</strong> Added to Feature Request Backlog (1 ticket)</li>
@@ -1547,7 +1547,7 @@
             const expectedBlockType = tutorialSteps[currentStep].expectedBlock;
             
             if (expectedBlockType && blockType !== expectedBlockType) {
-                showToast(`Try using the ${expectedBlockType.charAt(0).toUpperCase() + expectedBlockType.slice(1)} block for this step.`);
+                showToast(`🤔 Try using the ${expectedBlockType.charAt(0).toUpperCase() + expectedBlockType.slice(1)} block for this step.`);
                 return;
             }
             
@@ -1571,7 +1571,8 @@
         function createBlock(type, x, y) {
             const blockId = 'block-' + Date.now();
             const blockElement = document.createElement('div');
-            blockElement.className = `dropped-block dropped-${type}`;
+            // Now that I changed the types to include spaces in the names, this was necessary
+            blockElement.className = `dropped-block dropped-${type.toLowerCase().replace(/ /g, "_")}`;
             blockElement.id = blockId;
             blockElement.dataset.type = type;
             blockElement.style.left = `${x}px`;
@@ -1615,7 +1616,7 @@
                     if (currentStep >= 6) { // Only allow configuration after the connection step
                         document.getElementById('prompt-modal').style.display = 'flex';
                     } else {
-                        showToast("First connect all blocks, then you'll configure the AI.");
+                        showToast("☝ First connect all blocks, then you'll configure the AI.");
                     }
                 });
             }
@@ -2003,7 +2004,7 @@ function handleCanvasMouseUp(e) {
                 testResult.className = "test-result success";
                 testResult.style.display = "block";
             } else {
-                let feedback = `<strong>Your prompt needs improvement (${Math.round(score * 100)}% complete).</strong><br>Missing elements:<br><ul>`;
+                let feedback = `<strong>Your prompt needs improvement (${Math.round(score * 100)}% complete).</strong><br>Missing elements:<br><ul style="margin-top:5px;margin-bottom:0;padding-left:30px;">`;
                 missingPoints.forEach(point => {
                     feedback += `<li>${point}</li>`;
                 });
@@ -2046,14 +2047,14 @@ function handleCanvasMouseUp(e) {
             
             // Check if all connections are made
             if (connections.length < 4) {
-                showToast("Your blocks aren't fully connected. Make connections between all blocks.");
+                showToast("🧐 Your blocks aren't fully connected. Make connections between all blocks.");
                 return;
             }
             
             // Check if AI agent is configured
             const aiBlock = blocks.find(block => block.type.toLowerCase() === 'ai agent');
             if (!aiBlock || !aiBlock.prompt) {
-                showToast("Configure your AI Agent before running the workflow.");
+                showToast("☝ Configure your AI Agent before running the workflow. Click on the agent block to get started.");
                 return;
             }
             
@@ -2065,7 +2066,7 @@ function handleCanvasMouseUp(e) {
                 if (missingElements.length > 0) {
                     // Display the missing elements in a detailed toast
                     let message = `Your AI Agent's instructions need improvement. Missing elements:<br>`;
-                    message += `<ul style="margin-top:5px;margin-bottom:0;padding-left:20px;">`;
+                    message += `<ul style="margin-top:5px;margin-bottom:0;padding-left:30px;">`;
                     // Show all missing elements, not just 3
                     missingElements.forEach(element => {
                         message += `<li>${element}</li>`;
