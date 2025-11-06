@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentFlow: Support Automation Simulator</title>
+    <!-- Import Outfit font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+    <style>
+        :root {
+            --black: #000;
+            --white: #fff;
+            --bright-sun: #ffd140;
+            --keppel: #00af9b;
+            --lochmara: #0089d8;
+            --outrageous-orange: #ff5d36;
+            --shocking: #f295ce;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--black);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--keppel), var(--lochmara));
+            color: var(--white);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .run-button {
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            z-index: 10;
+            background: var(--white);
+            color: var(--lochmara);
+            border: 2px solid var(--white);
+            border-radius: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .run-button:hover {
+            background: transparent;
+            color: var(--white);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transform: translateY(-50%) scale(1.05);
+        }
+        
+        h1 {
+            font-weight: 800;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .container {
+            display: flex;
+            flex: 1;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: var(--light-gray);
+            padding: 1rem;
+            border-right: 1px solid var(--medium-gray);
+            overflow-y: auto;
+        }
+        
+        .sidebar-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+        
+        .block {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: grab;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none;    /* IE 10 and IE 11 */
+            user-select: none;        /* Standard syntax */
+        }
+        
+        .block:hover {
+            cursor: pointer;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .block-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .block-desc {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+        }
+        
+        .input-block { border-left: 4px solid var(--lochmara); }
+        .process-block { border-left: 4px solid var(--keppel); }
+        .ai-block { border-left: 4px solid var(--shocking); }
+        .output-block { border-left: 4px solid var(--outrageous-orange); }
+        .condition-block { border-left: 4px solid var(--bright-sun); }
+        
+        .workspace {
+            flex: 1;
+            background-color: var(--white);
+            padding: 1rem;
+            position: relative;
+            overflow: auto;
+            display: flex;
+        }
+        
+        .workflow-canvas {
+            flex: 1;
+            min-height: 500px;
+            background: linear-gradient(var(--light-gray) 1px, transparent 1px), 
+                        linear-gradient(90deg, var(--light-gray) 1px, transparent 1px);
+            background-size: 20px 20px;
+            position: relative;
+            margin-right: 1rem;
+        }
+        
+        .right-panels {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .instruction-panel, .scenario-panel {
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--medium-gray);
+        }
+
+        .instruction-panel {
+            background-color: #fde595;
+        }
+
+        .scenario-panel {
+            background-color: var(--light-gray);
+        }
+        
+        .instruction-title, .scenario-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+        
+        .scenario-content {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .scenario-content p {
+            margin-bottom: 0.75rem;
+        }
+        
+        .sample-emails-toggle {
+            margin-top: 1.5rem;
+        }
+        
+        #toggle-emails {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        #toggle-emails:hover {
+            background-color: var(--medium-gray);
+        }
+        
+        .emails-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .emails-container {
+            background-color: var(--white);
+            border-radius: 12px;
+            width: 90%;
+            font-size: 0.9rem;
+            max-width: 800px;
+            min-height: 85vh;
+            max-height: 95vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .emails-header {
+            padding: 1rem;
+            background-color: var(--lochmara);
+            color: var(--white);
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .emails-header h2 {
+            margin: 0;
+        }
+        
+        .emails-close {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .emails-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+        }
+        
+        .email-item {
+            border-bottom: 1px solid var(--light-gray);
+            padding: 1rem;
+            cursor: pointer;
+        }
+        
+        .email-item:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .email-header {
+            margin-bottom: 0.5rem;
+        }
+        
+        .email-from {
+            font-weight: 600;
+        }
+        
+        .email-subject {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .email-preview {
+            color: var(--dark-gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .email-content {
+            padding: 1.5rem;
+            background-color: var(--light-gray);
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .email-full-header {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .email-metadata {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+        
+        .email-body {
+            line-height: 1.6;
+        }
+        
+        .dropped-block {
+            position: absolute;
+            width: 200px;
+            min-height: 100px;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(5px);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none;    /* IE 10 and IE 11 */
+            user-select: none;        /* Standard syntax */
+        }
+        
+        .dropped-block:hover {
+            cursor: pointer;
+        }
+
+        .dropped-input { border-left: 4px solid var(--lochmara); }
+        .dropped-process { border-left: 4px solid var(--keppel); }
+        .dropped-ai { border-left: 4px solid var(--shocking); }
+        .dropped-output { border-left: 4px solid var(--outrageous-orange); }
+        .dropped-condition { border-left: 4px solid var(--bright-sun); }
+        
+        .connection-point {
+            width: 17px;
+            height: 17px;
+            background-color: var(--medium-gray);
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+        }
+        
+        .connection-point.top { top: -6px; left: 50%; transform: translateX(-50%); }
+        .connection-point.bottom { bottom: -6px; left: 50%; transform: translateX(-50%); }
+        
+        .connection-line {
+            position: absolute;
+            background-color: var(--dark-gray);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .landing {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .landing-card {
+            max-width: 600px;
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .landing-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--keppel), var(--lochmara));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .scenario {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--medium-gray);
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        input[type="text"]:focus {
+            border-color: var(--lochmara);
+        }
+        
+        button {
+            color: var(--white);
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .completion-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        
+        .primary-button {
+            background: linear-gradient(135deg, var(--keppel), var(--lochmara));
+            color: var(--white);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .secondary-button {
+            background: #fccbe9;
+            color: var(--dark-gray);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #dbadc9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+        }
+        
+        .secondary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: var(--shocking);
+        }
+        
+        .certificate-button {
+            background-color: var(--bright-sun)!important;
+            color: var(--black);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .certificate-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background-color: #ffe270!important; /* Brighter version of bright-sun */
+        }
+        
+        .prompt-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .prompt-container {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 1rem;
+        }
+        
+        .prompt-header {
+            margin-bottom: 0.5rem;
+        }
+        
+        .prompt-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        .prompt-guidance {
+            background-color: var(--light-gray);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            overflow-y: auto;
+        }
+        
+        .prompt-guidance h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--keppel);
+        }
+        
+        .guidance-section {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .guidance-section:last-child {
+            border-bottom: none;
+        }
+        
+        .guidance-section h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+        
+        .guidance-section ul {
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .guidance-section li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .example-prompt {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+        }
+        
+        .prompt-body textarea {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--medium-gray);
+            border-radius: 8px;
+            outline: none;
+            resize: none;
+        }
+        
+        .prompt-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .test-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            grid-column: 1 / -1;
+        }
+        
+        .success {
+            background-color: rgba(0, 175, 155, 0.2);
+            border: 1px solid var(--keppel);
+        }
+        
+        .error {
+            background-color: rgba(255, 93, 54, 0.2);
+            border: 1px solid var(--outrageous-orange);
+        }
+        
+        /* Tickets Modal Styles */
+        .tickets-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .tickets-container {
+            background-color: var(--white);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tickets-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--keppel), var(--lochmara));
+            color: var(--white);
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tickets-header h2 {
+            margin: 0;
+        }
+        
+        .tickets-close {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .tickets-content {
+            padding: 1.5rem;
+        }
+        
+        .tickets-categories {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .ticket-category {
+            flex: 1;
+            min-width: 250px;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .category-header {
+            border-bottom: 2px solid var(--medium-gray);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-name {
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+        
+        .category-count {
+            background-color: var(--medium-gray);
+            color: var(--dark-gray);
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .high-priority {
+            border-left: 4px solid var(--outrageous-orange);
+        }
+        
+        .medium-priority {
+            border-left: 4px solid var(--bright-sun);
+        }
+        
+        .low-priority {
+            border-left: 4px solid var(--keppel);
+        }
+        
+        .ticket-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .ticket {
+            background-color: var(--white);
+            border-radius: 6px;
+            padding: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .ticket-subject {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .ticket-customer {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+        
+        .ticket-preview {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .priority-tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .high-tag {
+            background-color: rgba(255, 93, 54, 0.15);
+            color: var(--outrageous-orange);
+        }
+        
+        .medium-tag {
+            background-color: rgba(255, 209, 64, 0.15);
+            color: #d9ae2c; /* Darker shade of bright-sun for readability */
+        }
+        
+        .low-tag {
+            background-color: rgba(0, 175, 155, 0.15);
+            color: var(--keppel);
+        }
+        
+        /* Certificate Modal Styles */
+        .certificate-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Completion Modal Styles */
+        .completion-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .completion-container {
+            max-width: 700px;
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .completion-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--keppel), var(--lochmara));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .completion-content {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .certificate-container {
+            background-color: var(--white);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            height: 600px;
+            max-height: 90vh;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .certificate-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--white);
+            border: none;
+            color: var(--dark-gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        
+        .certificate {
+            width: 100%;
+            height: 100%;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at bottom right, rgba(255, 209, 64, 0.15), transparent 400px),
+                        radial-gradient(circle at top left, rgba(0, 175, 155, 0.15), transparent 400px);
+            position: relative;
+        }
+        
+        .certificate::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 15px solid transparent;
+            border-image: linear-gradient(45deg, var(--keppel), var(--bright-sun), var(--lochmara), var(--keppel)) 1;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .certificate-logo {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-weight: 800;
+            font-style: italic;
+            color: var(--keppel);
+        }
+        
+        .certificate-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+        
+        .certificate-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--lochmara);
+        }
+        
+        .certificate-user {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--black);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--bright-sun);
+        }
+        
+        .certificate-text {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 80%;
+        }
+        
+        .certificate-skills {
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .certificate-skill {
+            background-color: rgba(0, 137, 216, 0.1);
+            color: var(--lochmara);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .certificate-date {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+        
+        .certificate-seal {
+            position: absolute;
+            bottom: 3rem;
+            right: 3rem;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 209, 64, 0.1);
+            border-radius: 50%;
+            border: 2px dashed var(--bright-sun);
+        }
+        
+        .certificate-seal-inner {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: rgba(255, 209, 64, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--outrageous-orange);
+            font-size: 1.2rem;
+            transform: rotate(-15deg);
+            border: 1px solid var(--outrageous-orange);
+        }
+        
+        .run-button {
+            position: fixed;
+            top: 3rem;
+            right: 2rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            z-index: 10;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            max-width: 450px;
+            text-align: left;
+            line-height: 1.4;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div class="landing" id="landing">
+        <div class="landing-card">
+            <h1 class="landing-title">AgentFlow: Customer Support Automation</h1>
+            <div class="scenario">
+                <p><strong>Scenario:</strong> You've just completed your first month as the customer support specialist at TechStart, a growing software company with a popular productivity app. What seemed like a manageable job has quickly become overwhelming: your inbox is constantly flooded with support requests ranging from simple password resets to complex technical issues.</p>
+                <p style="margin-top: 10px;">As the only full-time support, you're struggling to keep up. Customers are waiting longer for responses, you're working overtime, and your manager has noticed the growing backlog of unresolved tickets.</p>
+                <p style="margin-top: 10px;">It's time to leverage your computational thinking to tackle this problem using AgentFlow — a drag-and-drop workflow automation tool with AI agents!</p>
+            </div>
+            <div class="input-group">
+                <label for="user-name">Enter your name to get started:</label>
+                <input type="text" id="user-name" placeholder="Your name">
+            </div>
+            <button id="start-button" class="primary-button">Let's Build a Workflow!</button>
+        </div>
+    </div>
+    
+    <!-- Main Application -->
+    <header>
+        <h1 style="font-style: italic;"><i class="bi bi-robot"></i>AgentFlow</h1>
+        <h2>Customer Support Automation</h2>
+        <button class="run-button" id="run-workflow">▶&ensp;Run Workflow</button>
+    </header>
+    
+    <div class="container">
+        <div class="sidebar">
+            <h3 class="sidebar-title">Workflow Blocks</h3>
+            
+            <div class="block input-block" draggable="true" data-type="input">
+                <div class="block-title"><i class="bi bi-activity"></i> Email Monitor</div>
+                <div class="block-desc">Continuously checks support inbox for new messages</div>
+            </div>
+            
+            <div class="block process-block" draggable="true" data-type="process">
+                <div class="block-title"><i class="bi bi-funnel"></i> Info Extractor</div>
+                <div class="block-desc">Extracts customer details and problem description</div>
+            </div>
+            
+            <div class="block ai-block" draggable="true" data-type="ai">
+                <div class="block-title"><i class="bi bi-robot"></i> AI Agent</div>
+                <div class="block-desc">Uses AI to analyze and categorize support requests</div>
+            </div>
+            
+            <div class="block condition-block" draggable="true" data-type="condition">
+                <div class="block-title"><i class="bi bi-sign-turn-right"></i> Decision Router</div>
+                <div class="block-desc">Routes tickets based on priority and type</div>
+            </div>
+            
+            <div class="block output-block" draggable="true" data-type="output">
+                <div class="block-title"><i class="bi bi-file-earmark-plus"></i> Ticket Creator</div>
+                <div class="block-desc">Creates support tickets in the system</div>
+            </div>
+        </div>
+        
+        <div class="workspace">
+            <div class="workflow-canvas" id="workflow-canvas"></div>
+            
+            <div class="right-panels">
+                <div class="instruction-panel">
+                    <h3 class="instruction-title">Instructions</h3>
+                    <div id="current-instruction">
+                        <p>Welcome to AgentFlow! You'll build a workflow to automate support ticket processing.</p>
+                        <p>Start by dragging the <strong>Email Monitor</strong> block onto the workspace.</p>
+                    </div>
+                </div>
+                
+                <div class="scenario-panel">
+                    <h3 class="scenario-title">Scenario Details</h3>
+                    <div class="scenario-content">
+                        <p><strong>Your Role:</strong> Customer support specialist at TechStart</p>
+                        <p><strong>Challenge:</strong> Overwhelming volume of support emails ranging from simple password resets to complex technical issues</p>
+                        <p><strong>Problem:</strong> Growing backlog, longer response times, working overtime</p>
+                        <p><strong>Goal:</strong> Create an automated workflow that can monitor the inbox, categorize tickets, and route them appropriately</p>
+                        
+                        <div class="sample-emails-toggle">
+                            <button id="toggle-emails" class="primary-button"><i class="bi bi-envelope-at"></i>&ensp;View Sample Support Emails</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Prompt Modal for AI Agent Configuration -->
+    <div class="prompt-modal" id="prompt-modal">
+        <div class="prompt-container">
+            <div class="prompt-header">
+                <h2>Configure AI Agent</h2>
+                <p>Write instructions for your AI agent to analyze and categorize support emails.</p>
+            </div>
+            <div class="prompt-body">
+                <div class="prompt-guidance">
+                    <h3>Guidance for Writing Effective AI Instructions</h3>
+                    <p>Your AI agent needs clear instructions on how to categorize and prioritize support emails. Include the following in your prompt:</p>
+                    
+                    <div class="guidance-section">
+                        <h4>1. Customer Information to Extract</h4>
+                        <ul>
+                            <li>Name</li>
+                            <li>Email address</li>
+                            <li>Account type (if mentioned)</li>
+                            <li>Product/app version (if mentioned)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="guidance-section">
+                        <h4>2. Issue Categories</h4>
+                        <p>Consider these common support categories:</p>
+                        <ul>
+                            <li><strong>Account Access:</strong> Password resets, login problems</li>
+                            <li><strong>Technical Issues:</strong> App errors, crashes, bugs</li>
+                            <li><strong>Billing:</strong> Payment problems, refund requests</li>
+                            <li><strong>Feature Requests:</strong> Suggestions for improvements</li>
+                            <li><strong>Data Issues:</strong> Syncing problems, lost data</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="guidance-section">
+                        <h4>3. Priority Levels</h4>
+                        <p>Explain how to determine the priority of a ticket:</p>
+                        <ul>
+                            <li><strong>High Priority:</strong> Issues preventing work, affecting many users, or containing urgent language</li>
+                            <li><strong>Medium Priority:</strong> Functional problems with workarounds</li>
+                            <li><strong>Low Priority:</strong> Feature requests, minor issues</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="guidance-section">
+                        <h4>4. Example Instructions</h4>
+                        <div class="example-prompt">
+                            <p><strong>Example 1 (incomplete):</strong></p>
+                            <p>"Analyze each support email to identify the customer's name and email address. Categorize the issue as either Account, Technical, Billing, Feature Request, or Data problem. For technical issues, check if they mention app version..."</p>
+                        </div>
+                        
+                        <div class="example-prompt">
+                            <p><strong>Example 2 (incomplete):</strong></p>
+                            <p>"Look for urgent language like 'ASAP', 'urgent', 'critical', or 'deadline' to identify high-priority tickets. Also consider enterprise or paid customers as higher priority. Technical issues that prevent work should be high priority, while feature requests are generally low priority..."</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <textarea id="agent-prompt" placeholder="Enter your instructions for the AI agent..."></textarea>
+                <div class="test-result" id="test-result"></div>
+            </div>
+            <div class="prompt-footer">
+                <button id="test-prompt" class="primary-button"><i class="bi bi-arrow-clockwise"></i> Test Prompt</button>
+                <button id="save-prompt" class="secondary-button"><i class="bi bi-check"></i> Save & Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sample Emails Modal -->
+    <div class="emails-modal" id="emails-modal">
+        <div class="emails-container">
+            <div class="emails-header">
+                <h2>Support Emails</h2>
+                <button class="emails-close" id="close-emails">&times;</button>
+            </div>
+            <div class="emails-list" id="emails-list">
+                <div class="email-item" data-email="1">
+                    <div class="email-header">
+                        <div class="email-from">Sarah Johnson</div>
+                        <div class="email-subject">Password Reset Needed</div>
+                        <div class="email-preview">Hi, I've been trying to log in to my account but I can't remember my password...</div>
+                    </div>
+                </div>
+                <div class="email-item" data-email="2">
+                    <div class="email-header">
+                        <div class="email-from">Michael Chen</div>
+                        <div class="email-subject">URGENT: Can't access project files</div>
+                        <div class="email-preview">I have a critical deadline in 2 hours and I can't access any of my project files...</div>
+                    </div>
+                </div>
+                <div class="email-item" data-email="3">
+                    <div class="email-header">
+                        <div class="email-from">James Wilson</div>
+                        <div class="email-subject">Feature request: Dark mode</div>
+                        <div class="email-preview">I love your app, but I work late at night and the bright interface hurts my eyes...</div>
+                    </div>
+                </div>
+                <div class="email-item" data-email="4">
+                    <div class="email-header">
+                        <div class="email-from">Emma Rodriguez</div>
+                        <div class="email-subject">Sync issues with multiple devices</div>
+                        <div class="email-preview">I'm having trouble getting my tasks to sync between my phone and laptop...</div>
+                    </div>
+                </div>
+                <div class="email-item" data-email="5">
+                    <div class="email-header">
+                        <div class="email-from">David Thompson</div>
+                        <div class="email-subject">Billing question</div>
+                        <div class="email-preview">I was charged twice for my monthly subscription. Can you please help resolve this?</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Email Content -->
+            <div class="email-content" id="email-content-1">
+                <div class="email-full-header">
+                    <div class="email-from">Sarah Johnson &lt;sarah.j@example.com&gt;</div>
+                    <div class="email-subject">Password Reset Needed</div>
+                    <div class="email-metadata">To: support@techstart.com | Today, 9:15 AM</div>
+                </div>
+                <div class="email-body">
+                    <p>Hi TechStart Support,</p>
+                    <p>I've been trying to log in to my account but I can't remember my password. I've tried the "forgot password" link, but I'm not receiving any reset email.</p>
+                    <p>I've checked my spam folder and it's not there either. I've been a premium user for 6 months now and really need to access my account for work today.</p>
+                    <p>Can you please help me reset my password?</p>
+                    <p>Thanks,<br>Sarah</p>
+                    <p>Sarah Johnson<br>Account email: sarah.j@example.com</p>
+                </div>
+            </div>
+            
+            <div class="email-content" id="email-content-2">
+                <div class="email-full-header">
+                    <div class="email-from">Michael Chen &lt;m.chen@designco.net&gt;</div>
+                    <div class="email-subject">URGENT: Can't access project files</div>
+                    <div class="email-metadata">To: support@techstart.com | Today, 10:03 AM</div>
+                </div>
+                <div class="email-body">
+                    <p>Hello,</p>
+                    <p>I have a critical deadline in 2 hours and I can't access any of my project files in the app. When I try to open my "Client Presentation" project, I keep getting an error message saying "Project unavailable, try again later".</p>
+                    <p>I've restarted the app and my computer multiple times, cleared cache, and even reinstalled the app, but nothing is working. This is EXTREMELY URGENT as I have a client presentation that I need to finish.</p>
+                    <p>Please help me recover my files ASAP! I'm on the Enterprise plan and expect immediate support for issues like this.</p>
+                    <p>Michael Chen<br>
+                    Design Co Ltd.<br>
+                    Account: m.chen@designco.net<br>
+                    Phone: 555-789-4321</p>
+                </div>
+            </div>
+            
+            <div class="email-content" id="email-content-3">
+                <div class="email-full-header">
+                    <div class="email-from">James Wilson &lt;james.w@gmail.com&gt;</div>
+                    <div class="email-subject">Feature request: Dark mode</div>
+                    <div class="email-metadata">To: support@techstart.com | Yesterday, 8:42 PM</div>
+                </div>
+                <div class="email-body">
+                    <p>Hey TechStart team,</p>
+                    <p>I love your app, but I work late at night and the bright interface hurts my eyes. It would be amazing if you could add a dark mode option in a future update.</p>
+                    <p>Many competing apps already have this feature, and it would make a big difference for night owls like me! I think other users would appreciate it too.</p>
+                    <p>Thanks for considering this suggestion.</p>
+                    <p>Best,<br>James</p>
+                </div>
+            </div>
+            
+            <div class="email-content" id="email-content-4">
+                <div class="email-full-header">
+                    <div class="email-from">Emma Rodriguez &lt;emma.rodriguez@mail.com&gt;</div>
+                    <div class="email-subject">Sync issues with multiple devices</div>
+                    <div class="email-metadata">To: support@techstart.com | Yesterday, 3:17 PM</div>
+                </div>
+                <div class="email-body">
+                    <p>Hi Support Team,</p>
+                    <p>I'm having trouble getting my tasks to sync between my phone and laptop. I'm using your app on both an iPhone 13 and a Windows 11 laptop.</p>
+                    <p>When I create or update tasks on my phone, the changes don't appear on my laptop for hours, if at all. I've checked that both devices are connected to the internet and have the latest app version installed.</p>
+                    <p>This is becoming a real problem for my productivity as I need my task list to be up-to-date across all my devices.</p>
+                    <p>Any suggestions on how to fix this?</p>
+                    <p>Thanks,<br>Emma</p>
+                    <p>App version (iPhone): 4.2.1<br>App version (Windows): 4.2.0</p>
+                </div>
+            </div>
+            
+            <div class="email-content" id="email-content-5">
+                <div class="email-full-header">
+                    <div class="email-from">David Thompson &lt;david.t@company.org&gt;</div>
+                    <div class="email-subject">Billing question</div>
+                    <div class="email-metadata">To: support@techstart.com | 2 days ago, 1:30 PM</div>
+                </div>
+                <div class="email-body">
+                    <p>To whom it may concern,</p>
+                    <p>I was checking my credit card statement and noticed I was charged twice for my monthly subscription to TechStart Pro. The charges occurred on Nov 1 and Nov 3, both for $12.99.</p>
+                    <p>I should only be billed once per month according to my subscription plan. Can you please look into this and refund the duplicate charge?</p>
+                    <p>My account email is david.t@company.org and the last four digits of the credit card are 7890.</p>
+                    <p>Thank you for your assistance.</p>
+                    <p>Regards,<br>David Thompson</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tickets Modal -->
+    <div class="tickets-modal" id="tickets-modal">
+        <div class="tickets-container">
+            <div class="tickets-header">
+                <h2>TechStart Support Tickets</h2>
+                <button class="tickets-close" id="close-tickets">&times;</button>
+            </div>
+            <div class="tickets-content">
+                <p>Your AI Agent has processed and categorized the support emails. Here are the results:</p>
+                
+                <div class="tickets-categories">
+                    <div class="ticket-category">
+                        <div class="category-header">
+                            <div class="category-name">Account Access</div>
+                            <div class="category-count">1</div>
+                        </div>
+                        <div class="ticket-list">
+                            <div class="ticket medium-priority">
+                                <div class="ticket-subject">Password Reset Needed <span class="priority-tag medium-tag">Medium</span></div>
+                                <div class="ticket-customer">Sarah Johnson (sarah.j@example.com)</div>
+                                <div class="ticket-preview">Premium user for 6 months. Not receiving password reset emails.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ticket-category">
+                        <div class="category-header">
+                            <div class="category-name">Technical Issues</div>
+                            <div class="category-count">2</div>
+                        </div>
+                        <div class="ticket-list">
+                            <div class="ticket high-priority">
+                                <div class="ticket-subject">Can't access project files <span class="priority-tag high-tag">High</span></div>
+                                <div class="ticket-customer">Michael Chen (m.chen@designco.net)</div>
+                                <div class="ticket-preview">Enterprise user with urgent deadline. Project files unavailable error.</div>
+                            </div>
+                            <div class="ticket medium-priority">
+                                <div class="ticket-subject">Sync issues with multiple devices <span class="priority-tag medium-tag">Medium</span></div>
+                                <div class="ticket-customer">Emma Rodriguez (emma.rodriguez@mail.com)</div>
+                                <div class="ticket-preview">Tasks not syncing between iPhone and Windows laptop.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ticket-category">
+                        <div class="category-header">
+                            <div class="category-name">Billing</div>
+                            <div class="category-count">1</div>
+                        </div>
+                        <div class="ticket-list">
+                            <div class="ticket medium-priority">
+                                <div class="ticket-subject">Billing question <span class="priority-tag medium-tag">Medium</span></div>
+                                <div class="ticket-customer">David Thompson (david.t@company.org)</div>
+                                <div class="ticket-preview">Charged twice for monthly subscription. Requesting refund.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ticket-category">
+                        <div class="category-header">
+                            <div class="category-name">Feature Requests</div>
+                            <div class="category-count">1</div>
+                        </div>
+                        <div class="ticket-list">
+                            <div class="ticket low-priority">
+                                <div class="ticket-subject">Feature request: Dark mode <span class="priority-tag low-tag">Low</span></div>
+                                <div class="ticket-customer">James Wilson (james.w@gmail.com)</div>
+                                <div class="ticket-preview">Requesting dark mode feature for night use.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>The system has automatically assigned tickets based on priority:</p>
+                <ul>
+                    <li><strong>High Priority:</strong> Assigned to Lead Support Specialist (1 ticket)</li>
+                    <li><strong>Medium Priority:</strong> Assigned to Available Support Team Members (3 tickets)</li>
+                    <li><strong>Low Priority:</strong> Added to Feature Request Backlog (1 ticket)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Certificate Modal -->
+    <div class="certificate-modal" id="certificate-modal">
+        <div class="certificate-container">
+            <button class="certificate-close" id="close-certificate">&times;</button>
+            <div class="certificate">
+                <div class="certificate-logo"><i class="bi bi-robot"></i> AgentFlow</div>
+                <div class="certificate-title">Certificate of Completion</div>
+                <div class="certificate-subtitle">Support Workflow Automation</div>
+                <div class="certificate-user" id="certificate-user"></div>
+                <div class="certificate-text">
+                    Has successfully designed and implemented an AI-powered support workflow automation system, demonstrating proficiency in computational thinking and prompt engineering.
+                </div>
+                <div class="certificate-skills">
+                    <div class="certificate-skill">Workflow Design</div>
+                    <div class="certificate-skill">Process Automation</div>
+                    <div class="certificate-skill">AI Prompt Engineering</div>
+                    <div class="certificate-skill">System Integration</div>
+                    <div class="certificate-skill">Support Ticketing</div>
+                </div>
+                <div class="certificate-date" id="certificate-date"></div>
+                <div class="certificate-seal">
+                    <div class="certificate-seal-inner">A+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+    
+    <script>
+        // Global variables
+        let userName = "";
+        let currentStep = 0;
+        let blocks = [];
+        let connections = [];
+        let isDragging = false;
+        let draggedBlock = null;
+        let startConnectionPoint = null;
+        let isConnecting = false;
+        let tempLine = null;
+        let promptQuality = 0;
+        
+        // Tutorial steps
+        const tutorialSteps = [
+            {
+                instruction: "Start by dragging the <strong>Email Monitor</strong> block onto the workspace.",
+                expectedBlock: "input",
+                position: { x: 100, y: 25 }
+            },
+            {
+                instruction: "Great job! Now add the <strong>Info Extractor</strong> block below the Email Monitor.",
+                expectedBlock: "process",
+                position: { x: 100, y: 175 }
+            },
+            {
+                instruction: "Perfect! Next, add the <strong>AI Agent</strong> block to analyze and categorize the emails.",
+                expectedBlock: "ai",
+                position: { x: 100, y: 325 }
+            },
+            {
+                instruction: "Now add the <strong>Decision Router</strong> to determine how tickets should be handled.",
+                expectedBlock: "condition",
+                position: { x: 100, y: 475 }
+            },
+            {
+                instruction: "Finally, add the <strong>Ticket Creator</strong> block to create support tickets in the system.",
+                expectedBlock: "output",
+                position: { x: 100, y: 625 }
+            },
+            {
+                instruction: "Great work! Now connect the blocks by clicking and dragging from the bottom connection point of one block to the top connection point of the next block.",
+                expectedConnections: 4
+            },
+            {
+                instruction: "Now configure your AI Agent by clicking on the AI Agent block. Write detailed instructions for how it should analyze and categorize support emails.",
+                expectedAction: "configureAI"
+            },
+            {
+                instruction: "Your workflow is complete! Click the 'Run Workflow' button to see it in action."
+            }
+        ];
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Landing page
+            document.getElementById('start-button').addEventListener('click', function() {
+                userName = document.getElementById('user-name').value.trim();
+                if (userName) {
+                    document.getElementById('landing').style.display = 'none';
+                    showToast(`Welcome, ${userName}! Let's automate your support workflow.`);
+                } else {
+                    showToast('Please enter your name to continue.');
+                }
+            });
+            
+            // Drag and drop functionality
+            const draggableBlocks = document.querySelectorAll('.block');
+            const workflowCanvas = document.getElementById('workflow-canvas');
+            
+            draggableBlocks.forEach(block => {
+                block.addEventListener('dragstart', handleDragStart);
+            });
+            
+            workflowCanvas.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            });
+            
+            workflowCanvas.addEventListener('drop', handleDrop);
+            
+            // Canvas click handler for connections
+            workflowCanvas.addEventListener('mousedown', handleCanvasMouseDown);
+            workflowCanvas.addEventListener('mousemove', handleCanvasMouseMove);
+            workflowCanvas.addEventListener('mouseup', handleCanvasMouseUp);
+            
+            // Run workflow button
+            document.getElementById('run-workflow').addEventListener('click', runWorkflow);
+            
+            // AI Agent configuration
+            document.getElementById('test-prompt').addEventListener('click', testAIPrompt);
+            document.getElementById('save-prompt').addEventListener('click', saveAIPrompt);
+            
+            // Sample Emails Toggle
+            document.getElementById('toggle-emails').addEventListener('click', function() {
+                document.getElementById('emails-modal').style.display = 'flex';
+            });
+            
+            document.getElementById('close-emails').addEventListener('click', function() {
+                document.getElementById('emails-modal').style.display = 'none';
+                hideAllEmailContents();
+            });
+            
+            // Tickets Modal
+            document.getElementById('close-tickets').addEventListener('click', function() {
+                hideTicketsModal();
+            });
+            
+            // Certificate Modal
+            document.getElementById('close-certificate').addEventListener('click', function() {
+                hideCertificateModal();
+            });
+            
+            // Email item click handlers
+            const emailItems = document.querySelectorAll('.email-item');
+            emailItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const emailId = this.getAttribute('data-email');
+                    showEmailContent(emailId);
+                });
+            });
+        });
+        
+        function handleDragStart(e) {
+            draggedBlock = e.target;
+            e.dataTransfer.setData('text/plain', '');
+            isDragging = true;
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            if (!draggedBlock) return;
+            
+            const blockType = draggedBlock.dataset.type;
+            const expectedBlockType = tutorialSteps[currentStep].expectedBlock;
+            
+            if (expectedBlockType && blockType !== expectedBlockType) {
+                showToast(`Try using the ${expectedBlockType.charAt(0).toUpperCase() + expectedBlockType.slice(1)} block for this step.`);
+                return;
+            }
+            
+            // Calculate position relative to canvas
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Create block on canvas
+            createBlock(blockType, x, y);
+            
+            // Check if we should advance to the next step
+            if (expectedBlockType === blockType) {
+                advanceStep();
+            }
+            
+            isDragging = false;
+            draggedBlock = null;
+        }
+        
+        function createBlock(type, x, y) {
+            const blockId = 'block-' + Date.now();
+            const blockElement = document.createElement('div');
+            blockElement.className = `dropped-block dropped-${type}`;
+            blockElement.id = blockId;
+            blockElement.dataset.type = type;
+            blockElement.style.left = `${x}px`;
+            blockElement.style.top = `${y}px`;
+            
+            let title, description;
+            
+            switch(type) {
+                case 'input':
+                    title = '<i class="bi bi-activity"></i> Email Monitor';
+                    description = 'Checks support inbox for new messages';
+                    break;
+                case 'process':
+                    title = '<i class="bi bi-funnel"></i> Info Extractor';
+                    description = 'Extracts customer details and problem';
+                    break;
+                case 'ai':
+                    title = 'AI Agent';
+                    description = '<i class="bi bi-robot"></i> Analyzes and categorizes requests';
+                    break;
+                case 'condition':
+                    title = '<i class="bi bi-sign-turn-right"></i> Decision Router';
+                    description = 'Routes tickets based on priority';
+                    break;
+                case 'output':
+                    title = '<i class="bi bi-file-earmark-plus"></i> Ticket Creator';
+                    description = 'Creates support tickets in system';
+                    break;
+            }
+            
+            blockElement.innerHTML = `
+                <div class="block-title">${title}</div>
+                <div class="block-desc">${description}</div>
+                <div class="connection-point top" data-block="${blockId}" data-position="top"></div>
+                <div class="connection-point bottom" data-block="${blockId}" data-position="bottom"></div>
+            `;
+            
+            // If it's an AI block, make it clickable for configuration
+            if (type === 'ai') {
+                blockElement.addEventListener('click', function() {
+                    if (currentStep >= 6) { // Only allow configuration after the connection step
+                        document.getElementById('prompt-modal').style.display = 'flex';
+                    } else {
+                        showToast("First connect all blocks, then you'll configure the AI.");
+                    }
+                });
+            }
+            
+            document.getElementById('workflow-canvas').appendChild(blockElement);
+            
+            // Make block draggable within canvas
+            blockElement.addEventListener('mousedown', function(e) {
+                if (e.target.classList.contains('connection-point')) return;
+                
+                const startX = e.clientX;
+                const startY = e.clientY;
+                const startLeft = parseInt(blockElement.style.left);
+                const startTop = parseInt(blockElement.style.top);
+                
+                function moveBlock(e) {
+                    const newX = startLeft + e.clientX - startX;
+                    const newY = startTop + e.clientY - startY;
+                    blockElement.style.left = `${newX}px`;
+                    blockElement.style.top = `${newY}px`;
+                    
+                    // Update connections
+                    updateConnections(blockId);
+                }
+                
+                function stopMoving() {
+                    document.removeEventListener('mousemove', moveBlock);
+                    document.removeEventListener('mouseup', stopMoving);
+                }
+                
+                document.addEventListener('mousemove', moveBlock);
+                document.addEventListener('mouseup', stopMoving);
+            });
+            
+            blocks.push({
+                id: blockId,
+                type: type,
+                element: blockElement
+            });
+        }
+        
+        function handleCanvasMouseDown(e) {
+            if (e.target.classList.contains('connection-point')) {
+                isConnecting = true;
+                startConnectionPoint = e.target;
+                
+                // Create temporary line
+                tempLine = document.createElement('div');
+                tempLine.className = 'connection-line';
+                document.getElementById('workflow-canvas').appendChild(tempLine);
+                
+                // Set initial position
+                const rect = startConnectionPoint.getBoundingClientRect();
+                const canvasRect = document.getElementById('workflow-canvas').getBoundingClientRect();
+                const startX = rect.left + rect.width/2 - canvasRect.left;
+                const startY = rect.top + rect.height/2 - canvasRect.top;
+                
+                tempLine.style.left = `${startX}px`;
+                tempLine.style.top = `${startY}px`;
+                tempLine.style.width = '2px';
+                tempLine.style.height = '2px';
+            }
+        }
+        
+        function handleCanvasMouseMove(e) {
+            if (isConnecting && tempLine) {
+                const rect = startConnectionPoint.getBoundingClientRect();
+                const canvasRect = document.getElementById('workflow-canvas').getBoundingClientRect();
+                const startX = rect.left + rect.width/2 - canvasRect.left;
+                const startY = rect.top + rect.height/2 - canvasRect.top;
+                
+                const currentX = e.clientX - canvasRect.left;
+                const currentY = e.clientY - canvasRect.top;
+                
+                // Calculate line dimensions and position
+                const length = Math.sqrt(Math.pow(currentX - startX, 2) + Math.pow(currentY - startY, 2));
+                const angle = Math.atan2(currentY - startY, currentX - startX);
+                
+                tempLine.style.left = `${startX}px`;
+                tempLine.style.top = `${startY}px`;
+                tempLine.style.width = `${length}px`;
+                tempLine.style.height = '2px';
+                tempLine.style.transformOrigin = '0 0';
+                tempLine.style.transform = `rotate(${angle}rad)`;
+            }
+        }
+        
+        function handleCanvasMouseUp(e) {
+            if (isConnecting && tempLine) {
+                if (e.target.classList.contains('connection-point') && e.target !== startConnectionPoint) {
+                    const endConnectionPoint = e.target;
+                    const startPosition = startConnectionPoint.dataset.position;
+                    const endPosition = endConnectionPoint.dataset.position;
+                    
+                    // Only allow top-to-bottom or bottom-to-top connections
+                    if ((startPosition === 'bottom' && endPosition === 'top') || 
+                        (startPosition === 'top' && endPosition === 'bottom')) {
+                        
+                        // Create permanent connection
+                        createConnection(startConnectionPoint, endConnectionPoint);
+                        
+                        // Check if all expected connections are made
+                        if (tutorialSteps[currentStep].expectedConnections && 
+                            connections.length >= tutorialSteps[currentStep].expectedConnections) {
+                            advanceStep();
+                        }
+                    } else {
+                        showToast("Connect from bottom to top to create a workflow sequence.");
+                    }
+                }
+                
+                // Remove temporary line
+                tempLine.remove();
+                tempLine = null;
+            }
+            
+            isConnecting = false;
+            startConnectionPoint = null;
+        }
+        
+        function createConnection(startPoint, endPoint) {
+            const startBlockId = startPoint.dataset.block;
+            const endBlockId = endPoint.dataset.block;
+            
+            // Check if connection already exists
+            const connectionExists = connections.some(conn => 
+                (conn.startBlock === startBlockId && conn.endBlock === endBlockId) ||
+                (conn.startBlock === endBlockId && conn.endBlock === startBlockId)
+            );
+            
+            if (connectionExists) return;
+            
+            const startRect = startPoint.getBoundingClientRect();
+            const endRect = endPoint.getBoundingClientRect();
+            const canvasRect = document.getElementById('workflow-canvas').getBoundingClientRect();
+            
+            const startX = startRect.left + startRect.width/2 - canvasRect.left;
+            const startY = startRect.top + startRect.height/2 - canvasRect.top;
+            const endX = endRect.left + endRect.width/2 - canvasRect.left;
+            const endY = endRect.top + endRect.height/2 - canvasRect.top;
+            
+            // Create line
+            const line = document.createElement('div');
+            line.className = 'connection-line';
+            document.getElementById('workflow-canvas').appendChild(line);
+            
+            // Calculate line dimensions and position
+            const length = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+            const angle = Math.atan2(endY - startY, endX - startX);
+            
+            line.style.left = `${startX}px`;
+            line.style.top = `${startY}px`;
+            line.style.width = `${length}px`;
+            line.style.height = '2px';
+            line.style.transformOrigin = '0 0';
+            line.style.transform = `rotate(${angle}rad)`;
+            
+            const connectionId = 'connection-' + Date.now();
+            line.id = connectionId;
+            
+            connections.push({
+                id: connectionId,
+                startBlock: startBlockId,
+                endBlock: endBlockId,
+                element: line,
+                startPoint: startPoint.dataset.position,
+                endPoint: endPoint.dataset.position
+            });
+        }
+        
+        function updateConnections(blockId) {
+            connections.forEach(connection => {
+                if (connection.startBlock === blockId || connection.endBlock === blockId) {
+                    const startBlock = document.getElementById(connection.startBlock);
+                    const endBlock = document.getElementById(connection.endBlock);
+                    
+                    if (!startBlock || !endBlock) return;
+                    
+                    const startPoint = startBlock.querySelector(`.connection-point[data-position="${connection.startPoint}"]`);
+                    const endPoint = endBlock.querySelector(`.connection-point[data-position="${connection.endPoint}"]`);
+                    
+                    if (!startPoint || !endPoint) return;
+                    
+                    const startRect = startPoint.getBoundingClientRect();
+                    const endRect = endPoint.getBoundingClientRect();
+                    const canvasRect = document.getElementById('workflow-canvas').getBoundingClientRect();
+                    
+                    const startX = startRect.left + startRect.width/2 - canvasRect.left;
+                    const startY = startRect.top + startRect.height/2 - canvasRect.top;
+                    const endX = endRect.left + endRect.width/2 - canvasRect.left;
+                    const endY = endRect.top + endRect.height/2 - canvasRect.top;
+                    
+                    // Update line
+                    const line = connection.element;
+                    
+                    // Calculate line dimensions and position
+                    const length = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+                    const angle = Math.atan2(endY - startY, endX - startX);
+                    
+                    line.style.left = `${startX}px`;
+                    line.style.top = `${startY}px`;
+                    line.style.width = `${length}px`;
+                    line.style.transformOrigin = '0 0';
+                    line.style.transform = `rotate(${angle}rad)`;
+                }
+            });
+        }
+        
+        function advanceStep() {
+            currentStep++;
+            if (currentStep < tutorialSteps.length) {
+                document.getElementById('current-instruction').innerHTML = tutorialSteps[currentStep].instruction;
+                
+                // If this step includes positioning recommendation, show toast
+                if (tutorialSteps[currentStep].position) {
+                    const pos = tutorialSteps[currentStep].position;
+                    showToast(`Try placing the block around position (${pos.x}, ${pos.y})`);
+                }
+            }
+        }
+        
+        function testAIPrompt() {
+            const promptText = document.getElementById('agent-prompt').value.trim();
+            const testResult = document.getElementById('test-result');
+            
+            if (promptText.length < 50) {
+                testResult.innerHTML = "Your prompt is too short. Provide more detailed instructions for your AI agent.";
+                testResult.className = "test-result error";
+                testResult.style.display = "block";
+                promptQuality = 0.3;
+                return;
+            }
+            
+            // Check for key concepts
+            const keyPoints = {
+                customerIdentification: promptText.toLowerCase().includes('customer') && 
+                                       (promptText.toLowerCase().includes('identify') || 
+                                        promptText.toLowerCase().includes('extract') ||
+                                        promptText.toLowerCase().includes('find')),
+                productMention: promptText.toLowerCase().includes('product') || 
+                              promptText.toLowerCase().includes('app') ||
+                              promptText.toLowerCase().includes('application'),
+                problemCategories: (promptText.toLowerCase().includes('categor') || 
+                                 promptText.toLowerCase().includes('classif') ||
+                                 promptText.toLowerCase().includes('type')) &&
+                                 (promptText.toLowerCase().includes('account') ||
+                                  promptText.toLowerCase().includes('technical') ||
+                                  promptText.toLowerCase().includes('billing') ||
+                                  promptText.toLowerCase().includes('feature') ||
+                                  promptText.toLowerCase().includes('data')),
+                priority: promptText.toLowerCase().includes('priority') || 
+                         promptText.toLowerCase().includes('urgent') ||
+                         promptText.toLowerCase().includes('important'),
+                urgencyWords: promptText.toLowerCase().includes('asap') || 
+                             promptText.toLowerCase().includes('deadline') ||
+                             promptText.toLowerCase().includes('urgent') ||
+                             promptText.toLowerCase().includes('critical'),
+                accountType: promptText.toLowerCase().includes('premium') || 
+                           promptText.toLowerCase().includes('enterprise') ||
+                           promptText.toLowerCase().includes('paid'),
+                ticketInfo: promptText.toLowerCase().includes('ticket') && 
+                           (promptText.toLowerCase().includes('information') ||
+                            promptText.toLowerCase().includes('details') ||
+                            promptText.toLowerCase().includes('fields')),
+                specificExamples: promptText.match(/["''].*["'']/g) !== null || 
+                                 promptText.toLowerCase().includes('for example') ||
+                                 promptText.toLowerCase().includes('such as')
+            };
+            
+            // Calculate score based on key concepts
+            let score = 0;
+            
+            for (const point in keyPoints) {
+                if (keyPoints[point]) {
+                    score += 0.125; // Each point is worth 12.5% (total 8 points)
+                }
+            }
+            
+            // Get missing elements
+            const missingPoints = getMissingPromptElements(promptText);
+            
+            promptQuality = score;
+            
+            if (score >= 0.85) {
+                testResult.innerHTML = "Great job! Your prompt is detailed and addresses all key requirements for effective support ticket categorization and prioritization.";
+                testResult.className = "test-result success";
+                testResult.style.display = "block";
+            } else {
+                let feedback = `<strong>Your prompt needs improvement (${Math.round(score * 100)}% complete).</strong><br>Missing elements:<br><ul>`;
+                missingPoints.forEach(point => {
+                    feedback += `<li>${point}</li>`;
+                });
+                feedback += '</ul>';
+                
+                testResult.innerHTML = feedback;
+                testResult.className = "test-result error";
+                testResult.style.display = "block";
+            }
+        }
+        
+        function saveAIPrompt() {
+            const promptText = document.getElementById('agent-prompt').value.trim();
+            
+            // Find AI block and update its description
+            const aiBlock = blocks.find(block => block.type === 'ai');
+            if (aiBlock) {
+                const shortPrompt = promptText.substring(0, 50) + (promptText.length > 50 ? '...' : '');
+                aiBlock.element.querySelector('.block-desc').textContent = shortPrompt;
+                
+                // Store the full prompt
+                aiBlock.prompt = promptText;
+                aiBlock.promptQuality = promptQuality;
+            }
+            
+            document.getElementById('prompt-modal').style.display = 'none';
+            
+            // If this is the AI configuration step, advance
+            if (currentStep === 6) {
+                advanceStep();
+            }
+        }
+        
+        function runWorkflow() {
+            // Check if all blocks are present
+            if (blocks.length < 5) {
+                showToast("Your workflow is incomplete. Add all required blocks.");
+                return;
+            }
+            
+            // Check if all connections are made
+            if (connections.length < 4) {
+                showToast("Your blocks aren't fully connected. Make connections between all blocks.");
+                return;
+            }
+            
+            // Check if AI agent is configured
+            const aiBlock = blocks.find(block => block.type === 'ai');
+            if (!aiBlock || !aiBlock.prompt) {
+                showToast("Configure your AI Agent before running the workflow.");
+                return;
+            }
+            
+            // Check prompt quality
+            if (aiBlock.promptQuality < 0.85) {
+                // Get missing elements from prompt
+                const missingElements = getMissingPromptElements(aiBlock.prompt);
+                
+                if (missingElements.length > 0) {
+                    // Display the missing elements in a detailed toast
+                    let message = `Your AI Agent's instructions need improvement. Missing elements:<br>`;
+                    message += `<ul style="margin-top:5px;margin-bottom:0;padding-left:20px;">`;
+                    // Show all missing elements, not just 3
+                    missingElements.forEach(element => {
+                        message += `<li>${element}</li>`;
+                    });
+                    message += `</ul>`;
+                    
+                    showToast(message, 6000); // Display for 6 seconds since it's longer
+                } else {
+                    showToast("Your AI Agent's instructions need improvement before running.");
+                }
+                
+                document.getElementById('prompt-modal').style.display = 'flex';
+                return;
+            }
+            
+            // If all checks pass, show success animation
+            showSuccessAnimation();
+        }
+        
+        function getMissingPromptElements(promptText) {
+            const missingPoints = [];
+            
+            // Check for key concepts
+            const keyPoints = {
+                customerIdentification: promptText.toLowerCase().includes('customer') && 
+                                       (promptText.toLowerCase().includes('identify') || 
+                                        promptText.toLowerCase().includes('extract') ||
+                                        promptText.toLowerCase().includes('find')),
+                productMention: promptText.toLowerCase().includes('product') || 
+                              promptText.toLowerCase().includes('app') ||
+                              promptText.toLowerCase().includes('application'),
+                problemCategories: (promptText.toLowerCase().includes('categor') || 
+                                 promptText.toLowerCase().includes('classif') ||
+                                 promptText.toLowerCase().includes('type')) &&
+                                 (promptText.toLowerCase().includes('account') ||
+                                  promptText.toLowerCase().includes('technical') ||
+                                  promptText.toLowerCase().includes('billing') ||
+                                  promptText.toLowerCase().includes('feature') ||
+                                  promptText.toLowerCase().includes('data')),
+                priority: promptText.toLowerCase().includes('priority') || 
+                         promptText.toLowerCase().includes('urgent') ||
+                         promptText.toLowerCase().includes('important'),
+                urgencyWords: promptText.toLowerCase().includes('asap') || 
+                             promptText.toLowerCase().includes('deadline') ||
+                             promptText.toLowerCase().includes('urgent') ||
+                             promptText.toLowerCase().includes('critical'),
+                accountType: promptText.toLowerCase().includes('premium') || 
+                           promptText.toLowerCase().includes('enterprise') ||
+                           promptText.toLowerCase().includes('paid'),
+                ticketInfo: promptText.toLowerCase().includes('ticket') && 
+                           (promptText.toLowerCase().includes('information') ||
+                            promptText.toLowerCase().includes('details') ||
+                            promptText.toLowerCase().includes('fields')),
+                specificExamples: promptText.match(/["''].*["'']/g) !== null || 
+                                 promptText.toLowerCase().includes('for example') ||
+                                 promptText.toLowerCase().includes('such as')
+            };
+            
+            // Build list of missing elements
+            for (const point in keyPoints) {
+                if (!keyPoints[point]) {
+                    switch(point) {
+                        case 'customerIdentification':
+                            missingPoints.push("instructions for identifying customer information");
+                            break;
+                        case 'productMention':
+                            missingPoints.push("references to the app/product");
+                            break;
+                        case 'problemCategories':
+                            missingPoints.push("specific issue categories to use");
+                            break;
+                        case 'priority':
+                            missingPoints.push("priority levels for tickets");
+                            break;
+                        case 'urgencyWords':
+                            missingPoints.push("keywords that indicate urgency");
+                            break;
+                        case 'accountType':
+                            missingPoints.push("consideration of customer account types");
+                            break;
+                        case 'ticketInfo':
+                            missingPoints.push("information to include in support tickets");
+                            break;
+                        case 'specificExamples':
+                            missingPoints.push("specific examples to help the AI");
+                            break;
+                    }
+                }
+            }
+            
+            return missingPoints;
+        }
+        
+        function showSuccessAnimation() {
+            // Highlight blocks sequentially
+            let blockIndex = 0;
+            const interval = setInterval(() => {
+                if (blockIndex < blocks.length) {
+                    const block = blocks[blockIndex];
+                    block.element.style.boxShadow = '0 0 15px var(--keppel)';
+                    setTimeout(() => {
+                        block.element.style.boxShadow = '';
+                    }, 1500);
+                    blockIndex++;
+                } else {
+                    clearInterval(interval);
+                    // Show completion message
+                    setTimeout(() => {
+                        showCompletionMessage();
+                    }, 1000);
+                }
+            }, 800);
+        }
+        
+        function showCompletionMessage() {
+            // Instead of reusing the landing modal, let's create a dedicated completion modal
+            const completionHTML = `
+                <div class="completion-modal" id="completion-modal">
+                    <div class="completion-container">
+                        <h1 class="completion-title">Great Job, ${userName}!</h1>
+                        <div class="completion-content">
+                            <p>You've successfully built an automated workflow to handle support tickets at TechStart!</p>
+                            <p>Your workflow will:</p>
+                            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                                <li>Continuously monitor the support inbox</li>
+                                <li>Extract important information from customer emails</li>
+                                <li>Use AI to analyze and categorize support requests</li>
+                                <li>Make smart routing decisions based on priority</li>
+                                <li>Create organized support tickets for follow-up</li>
+                            </ul>
+                            <p>With this automation in place, you'll be able to focus on solving the most complex problems while routine issues are handled efficiently.</p>
+                        </div>
+                        <div class="completion-buttons">
+                            <button id="view-tickets-button" class="primary-button">➊ View Categorized Tickets</button>
+                            <button id="view-certificate-button" class="certificate-button">➋ Get Certificate!</button>
+                            <button id="restart-button" class="secondary-button">⚠ Restart</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Create and append the completion modal
+            const completionModal = document.createElement('div');
+            completionModal.innerHTML = completionHTML;
+            document.body.appendChild(completionModal.firstElementChild);
+            
+            // Add event listeners
+            document.getElementById('restart-button').addEventListener('click', function() {
+                location.reload();
+            });
+            
+            document.getElementById('view-tickets-button').addEventListener('click', function() {
+                // Hide the completion modal before showing tickets
+                document.getElementById('completion-modal').style.display = 'none';
+                showTicketsModal();
+            });
+            
+            document.getElementById('view-certificate-button').addEventListener('click', function() {
+                // Hide the completion modal before showing certificate
+                document.getElementById('completion-modal').style.display = 'none';
+                showCertificateModal();
+            });
+        }
+        
+        function showEmailContent(emailId) {
+            // Hide all email contents first
+            hideAllEmailContents();
+            
+            // Show the selected email content
+            const emailContent = document.getElementById(`email-content-${emailId}`);
+            if (emailContent) {
+                emailContent.style.display = 'block';
+            }
+        }
+        
+        function showTicketsModal() {
+            document.getElementById('tickets-modal').style.display = 'flex';
+        }
+        
+        function hideTicketsModal() {
+            document.getElementById('tickets-modal').style.display = 'none';
+            // Show the completion modal again
+            document.getElementById('completion-modal').style.display = 'flex';
+        }
+        
+        function showCertificateModal() {
+            // Get current date and determine semester
+            const d = new Date();
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const month = d.getMonth(); // 0-11
+            const date = d.getDate();
+            const year = d.getFullYear();
+            
+            let semester;
+            if (month < 4) semester = 'Spring'; // Jan-Apr -> Spring
+            else if (month > 8) semester = 'Fall'; // Sep-Dec -> Fall
+            else if (month == 8 && date > 15) semester = 'Fall'; 
+            else semester = 'Summer'; // May-mid Aug -> Summer
+            
+            // Set certificate content
+            document.getElementById('certificate-user').textContent = userName;
+            document.getElementById('certificate-date').textContent = `${semester} ${year}`;
+            
+            // Show the certificate modal
+            document.getElementById('certificate-modal').style.display = 'flex';
+        }
+        
+        function hideCertificateModal() {
+            document.getElementById('certificate-modal').style.display = 'none';
+            // Show the completion modal again
+            document.getElementById('completion-modal').style.display = 'flex';
+        }
+        
+        function hideAllEmailContents() {
+            const emailContents = document.querySelectorAll('.email-content');
+            emailContents.forEach(content => {
+                content.style.display = 'none';
+            });
+        }
+        
+        function showToast(message, duration = 3000) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.innerHTML = message;
+            tooltip.style.left = '50%';
+            tooltip.style.top = '20px';
+            tooltip.style.transform = 'translateX(-50%)';
+            tooltip.style.opacity = '1';
+            tooltip.style.maxWidth = '450px'; // Make toast wider for lists
+            
+            setTimeout(() => {
+                tooltip.style.opacity = '0';
+            }, duration);
+        }
+    </script>
+</body>
+</html>
