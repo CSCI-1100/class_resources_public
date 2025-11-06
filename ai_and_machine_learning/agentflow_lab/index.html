@@ -359,9 +359,18 @@
         
         .connection-line {
             position: absolute;
-            background-color: var(--dark-gray);
+            background-color: var(--keppel);
             z-index: 0;
             pointer-events: none;
+            height: 3px !important;
+            border-radius: 1.5px;
+            box-shadow: 0 0 4px rgba(0, 175, 155, 0.5);
+        }
+        
+        /* Temporary line when making a connection */
+        .temp-connection-line {
+            background-color: var(--medium-gray);
+            opacity: 0.7;
         }
         
         .landing {
@@ -1030,27 +1039,27 @@
         <div class="sidebar">
             <h3 class="sidebar-title">Workflow Blocks</h3>
             
-            <div class="block input-block" draggable="true" data-type="input">
+            <div class="block input-block" draggable="true" data-type="Email Monitor">
                 <div class="block-title"><i class="bi bi-activity"></i> Email Monitor</div>
                 <div class="block-desc">Continuously checks support inbox for new messages</div>
             </div>
             
-            <div class="block process-block" draggable="true" data-type="process">
+            <div class="block process-block" draggable="true" data-type="Info Extractor">
                 <div class="block-title"><i class="bi bi-funnel"></i> Info Extractor</div>
                 <div class="block-desc">Extracts customer details and problem description</div>
             </div>
             
-            <div class="block ai-block" draggable="true" data-type="ai">
+            <div class="block ai-block" draggable="true" data-type="AI Agent">
                 <div class="block-title"><i class="bi bi-robot"></i> AI Agent</div>
                 <div class="block-desc">Uses AI to analyze and categorize support requests</div>
             </div>
             
-            <div class="block condition-block" draggable="true" data-type="condition">
+            <div class="block condition-block" draggable="true" data-type="Decision Router">
                 <div class="block-title"><i class="bi bi-sign-turn-right"></i> Decision Router</div>
                 <div class="block-desc">Routes tickets based on priority and type</div>
             </div>
             
-            <div class="block output-block" draggable="true" data-type="output">
+            <div class="block output-block" draggable="true" data-type="Ticket Creator">
                 <div class="block-title"><i class="bi bi-file-earmark-plus"></i> Ticket Creator</div>
                 <div class="block-desc">Creates support tickets in the system</div>
             </div>
@@ -1407,32 +1416,33 @@
         let isConnecting = false;
         let tempLine = null;
         let promptQuality = 0;
+        let successAnimationIsRunning = false;
         
         // Tutorial steps
         const tutorialSteps = [
             {
                 instruction: "Start by dragging the <strong>Email Monitor</strong> block onto the workspace.",
-                expectedBlock: "input",
+                expectedBlock: "Email Monitor",
                 position: { x: 100, y: 25 }
             },
             {
                 instruction: "Great job! Now add the <strong>Info Extractor</strong> block below the Email Monitor.",
-                expectedBlock: "process",
+                expectedBlock: "Info Extractor",
                 position: { x: 100, y: 175 }
             },
             {
                 instruction: "Perfect! Next, add the <strong>AI Agent</strong> block to analyze and categorize the emails.",
-                expectedBlock: "ai",
+                expectedBlock: "AI Agent",
                 position: { x: 100, y: 325 }
             },
             {
                 instruction: "Now add the <strong>Decision Router</strong> to determine how tickets should be handled.",
-                expectedBlock: "condition",
+                expectedBlock: "Decision Router",
                 position: { x: 100, y: 475 }
             },
             {
                 instruction: "Finally, add the <strong>Ticket Creator</strong> block to create support tickets in the system.",
-                expectedBlock: "output",
+                expectedBlock: "Ticket Creator",
                 position: { x: 100, y: 625 }
             },
             {
@@ -1563,24 +1573,24 @@
             
             let title, description;
             
-            switch(type) {
-                case 'input':
+            switch(type.toLowerCase()) {
+                case 'email monitor':
                     title = '<i class="bi bi-activity"></i> Email Monitor';
                     description = 'Checks support inbox for new messages';
                     break;
-                case 'process':
+                case 'info extractor':
                     title = '<i class="bi bi-funnel"></i> Info Extractor';
                     description = 'Extracts customer details and problem';
                     break;
-                case 'ai':
-                    title = 'AI Agent';
-                    description = '<i class="bi bi-robot"></i> Analyzes and categorizes requests';
+                case 'ai agent':
+                    title = '<i class="bi bi-robot"></i> AI Agent';
+                    description = 'Analyzes and categorizes requests';
                     break;
-                case 'condition':
+                case 'decision router':
                     title = '<i class="bi bi-sign-turn-right"></i> Decision Router';
                     description = 'Routes tickets based on priority';
                     break;
-                case 'output':
+                case 'ticket creator':
                     title = '<i class="bi bi-file-earmark-plus"></i> Ticket Creator';
                     description = 'Creates support tickets in system';
                     break;
@@ -1594,7 +1604,7 @@
             `;
             
             // If it's an AI block, make it clickable for configuration
-            if (type === 'ai') {
+            if (type.toLowerCase() === 'ai agent') {
                 blockElement.addEventListener('click', function() {
                     if (currentStep >= 6) { // Only allow configuration after the connection step
                         document.getElementById('prompt-modal').style.display = 'flex';
@@ -1648,7 +1658,7 @@
                 
                 // Create temporary line
                 tempLine = document.createElement('div');
-                tempLine.className = 'connection-line';
+                tempLine.className = 'connection-line temp-connection-line';
                 document.getElementById('workflow-canvas').appendChild(tempLine);
                 
                 // Set initial position
@@ -1681,43 +1691,142 @@
                 tempLine.style.left = `${startX}px`;
                 tempLine.style.top = `${startY}px`;
                 tempLine.style.width = `${length}px`;
-                tempLine.style.height = '2px';
+                tempLine.style.height = '3px'; // Slightly thicker line for better visibility
                 tempLine.style.transformOrigin = '0 0';
                 tempLine.style.transform = `rotate(${angle}rad)`;
+                
+                // Highlight valid connection points when hovering near them
+                const connectionPoints = document.querySelectorAll('.connection-point');
+                let foundValidTarget = false;
+                
+                // Define a proximity threshold (in pixels)
+                const proximityThreshold = 40;
+                
+                // Reset all connection points to default style
+                connectionPoints.forEach(point => {
+                    if (point !== startConnectionPoint) {
+                        point.style.transform = '';
+                        point.style.backgroundColor = '';
+                        point.style.boxShadow = '';
+                    }
+                });
+                
+                // Check if we're near any valid connection point
+                connectionPoints.forEach(point => {
+                    if (point === startConnectionPoint) return; // Skip the starting point
+                    
+                    const pointRect = point.getBoundingClientRect();
+                    const pointX = pointRect.left + pointRect.width/2 - canvasRect.left;
+                    const pointY = pointRect.top + pointRect.height/2 - canvasRect.top;
+                    
+                    const distance = Math.sqrt(Math.pow(currentX - pointX, 2) + Math.pow(currentY - pointY, 2));
+                    
+                    if (distance < proximityThreshold) {
+                        // Check if it's a valid connection (top-to-bottom or bottom-to-top)
+                        const startPosition = startConnectionPoint.dataset.position;
+                        const endPosition = point.dataset.position;
+                        
+                        if ((startPosition === 'bottom' && endPosition === 'top') || 
+                            (startPosition === 'top' && endPosition === 'bottom')) {
+                            
+                            // Highlight valid connection point
+                            point.style.transform = 'scale(1.3)';
+                            point.style.backgroundColor = 'var(--keppel)';
+                            point.style.boxShadow = '0 0 8px var(--keppel)';
+                            foundValidTarget = true;
+                        } else {
+                            // Highlight invalid connection point
+                            point.style.transform = 'scale(1.3)';
+                            point.style.backgroundColor = 'var(--outrageous-orange)';
+                        }
+                    }
+                });
+                
+                // Change line color based on whether we have a valid target
+                tempLine.style.backgroundColor = foundValidTarget ? 'var(--keppel)' : 'var(--dark-gray)';
             }
         }
-        
-        function handleCanvasMouseUp(e) {
+
+function handleCanvasMouseUp(e) {
             if (isConnecting && tempLine) {
+                // First, check if we're directly on a connection point
                 if (e.target.classList.contains('connection-point') && e.target !== startConnectionPoint) {
-                    const endConnectionPoint = e.target;
-                    const startPosition = startConnectionPoint.dataset.position;
-                    const endPosition = endConnectionPoint.dataset.position;
+                    completeConnection(e.target);
+                } else {
+                    // If not directly on a connection point, look for nearby connection points
+                    const connectionPoints = document.querySelectorAll('.connection-point');
+                    const canvasRect = document.getElementById('workflow-canvas').getBoundingClientRect();
+                    const mouseX = e.clientX - canvasRect.left;
+                    const mouseY = e.clientY - canvasRect.top;
                     
-                    // Only allow top-to-bottom or bottom-to-top connections
-                    if ((startPosition === 'bottom' && endPosition === 'top') || 
-                        (startPosition === 'top' && endPosition === 'bottom')) {
+                    // Define a proximity threshold (in pixels)
+                    const proximityThreshold = 30;
+                    
+                    let closestPoint = null;
+                    let closestDistance = proximityThreshold;
+                    
+                    // Find the closest connection point within threshold
+                    connectionPoints.forEach(point => {
+                        if (point === startConnectionPoint) return; // Skip the starting point
                         
-                        // Create permanent connection
-                        createConnection(startConnectionPoint, endConnectionPoint);
+                        const pointRect = point.getBoundingClientRect();
+                        const pointX = pointRect.left + pointRect.width/2 - canvasRect.left;
+                        const pointY = pointRect.top + pointRect.height/2 - canvasRect.top;
                         
-                        // Check if all expected connections are made
-                        if (tutorialSteps[currentStep].expectedConnections && 
-                            connections.length >= tutorialSteps[currentStep].expectedConnections) {
-                            advanceStep();
+                        const distance = Math.sqrt(Math.pow(mouseX - pointX, 2) + Math.pow(mouseY - pointY, 2));
+                        
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            closestPoint = point;
                         }
+                    });
+                    
+                    if (closestPoint) {
+                        // If we found a close enough connection point, use it
+                        completeConnection(closestPoint);
+                        
+                        // Show a visual feedback to the user
+                        closestPoint.style.transform = 'scale(1.5)';
+                        closestPoint.style.backgroundColor = `var(--keppel)`;
+                        setTimeout(() => {
+                            closestPoint.style.transform = '';
+                            closestPoint.style.backgroundColor = '';
+                        }, 300);
                     } else {
-                        showToast("Connect from bottom to top to create a workflow sequence.");
+                        // No nearby connection point, just remove the temporary line
+                        tempLine.remove();
+                        tempLine = null;
                     }
                 }
-                
-                // Remove temporary line
-                tempLine.remove();
-                tempLine = null;
             }
             
             isConnecting = false;
             startConnectionPoint = null;
+        }
+        
+        function completeConnection(endConnectionPoint) {
+            const startPosition = startConnectionPoint.dataset.position;
+            const endPosition = endConnectionPoint.dataset.position;
+            
+            // Only allow top-to-bottom or bottom-to-top connections
+            if ((startPosition === 'bottom' && endPosition === 'top') || 
+                (startPosition === 'top' && endPosition === 'bottom')) {
+                
+                // Create permanent connection
+                createConnection(startConnectionPoint, endConnectionPoint);
+                
+                // Check if all expected connections are made
+                if (tutorialSteps[currentStep].expectedConnections && 
+                    connections.length >= tutorialSteps[currentStep].expectedConnections) {
+                    advanceStep();
+                }
+            } else {
+                showToast("Connect from bottom to top to create a workflow sequence.");
+            }
+            
+            // Remove temporary line
+            tempLine.remove();
+            tempLine = null;
         }
         
         function createConnection(startPoint, endPoint) {
@@ -1807,16 +1916,16 @@
                 }
             });
         }
-        
+    
         function advanceStep() {
             currentStep++;
-            if (currentStep < tutorialSteps.length) {
+            if (currentStep < tutorialSteps.length && currentStep > 1) {
                 document.getElementById('current-instruction').innerHTML = tutorialSteps[currentStep].instruction;
                 
                 // If this step includes positioning recommendation, show toast
                 if (tutorialSteps[currentStep].position) {
                     const pos = tutorialSteps[currentStep].position;
-                    showToast(`Try placing the block around position (${pos.x}, ${pos.y})`);
+                    showToast(`✅ Place the block below the previous block`);
                 }
             }
         }
@@ -1904,7 +2013,7 @@
             const promptText = document.getElementById('agent-prompt').value.trim();
             
             // Find AI block and update its description
-            const aiBlock = blocks.find(block => block.type === 'ai');
+            const aiBlock = blocks.find(block => block.type.toLowerCase() === 'ai agent');
             if (aiBlock) {
                 const shortPrompt = promptText.substring(0, 50) + (promptText.length > 50 ? '...' : '');
                 aiBlock.element.querySelector('.block-desc').textContent = shortPrompt;
@@ -1936,7 +2045,7 @@
             }
             
             // Check if AI agent is configured
-            const aiBlock = blocks.find(block => block.type === 'ai');
+            const aiBlock = blocks.find(block => block.type.toLowerCase() === 'ai agent');
             if (!aiBlock || !aiBlock.prompt) {
                 showToast("Configure your AI Agent before running the workflow.");
                 return;
@@ -2045,24 +2154,36 @@
         }
         
         function showSuccessAnimation() {
-            // Highlight blocks sequentially
-            let blockIndex = 0;
-            const interval = setInterval(() => {
-                if (blockIndex < blocks.length) {
-                    const block = blocks[blockIndex];
-                    block.element.style.boxShadow = '0 0 15px var(--keppel)';
-                    setTimeout(() => {
-                        block.element.style.boxShadow = '';
-                    }, 1500);
-                    blockIndex++;
-                } else {
-                    clearInterval(interval);
-                    // Show completion message
-                    setTimeout(() => {
-                        showCompletionMessage();
-                    }, 1000);
-                }
-            }, 800);
+            // Boolean ensures that the workflow animation will only run
+            // if it is running not already.
+            if (!successAnimationIsRunning){
+                // Boolean to lock, basically
+                successAnimationIsRunning = true;
+                // Highlight blocks sequentially
+                let blockIndex = 0;
+                const interval = setInterval(() => {
+                    if (blockIndex < blocks.length) {
+                        const block = blocks[blockIndex];
+                        block.element.style.boxShadow = '0 0 15px var(--keppel)';
+                        setTimeout(() => {
+                            block.element.style.boxShadow = '';
+                        }, 1500);
+                        blockIndex++;
+                    } else {
+                        clearInterval(interval);
+                        // Show completion message
+                        setTimeout(() => {
+                            showCompletionMessage();
+                            successAnimationIsRunning = false;
+                        }, 1000);
+                    }
+                }, 800);
+            }
+            else {
+                setInterval(() => {
+                    successAnimationIsRunning = false;
+                }, 8600);
+            }
         }
         
         function showCompletionMessage() {
