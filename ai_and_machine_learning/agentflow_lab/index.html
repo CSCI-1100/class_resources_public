@@ -516,6 +516,38 @@
             justify-content: center;
             align-items: center;
         }
+
+        .agent-actions-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .agent-actions-body {
+            display: grid;
+            grid-template-columns: 1fr;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .glass-container {
+            background: rgba(153, 204, 247, 0.15); /* Translucent layer */
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.4); /* Soft outline */
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 10px 10px 5px 10px;
+            width: 100%;
+            color: #2a2a2a;
+        }
         
         .prompt-container {
             background-color: var(--white);
@@ -1161,6 +1193,21 @@
             </div>
         </div>
     </div>
+
+    <!-- Agent actions modal - Simulates Agent's reasoning step by step when user's prompt is accepted -->
+    <div class="agent-actions-modal" id="agent-actions-modal">
+        <div class="prompt-container">
+            <div class="prompt-header">
+                <h2>Agentic Workflow In Progress</h2>
+                <p>An AI Agent task is running. Review your Agent's output below to debug your workflow.</p>
+            </div>
+            <div class="agent-actions-body">
+                <div class="prompt-guidance" id="agent-reasoning-output">
+                </div>
+            </div>
+            <button onclick="showCompletionMessage();" class="primary-button" id="complete-scenario-button" style="display:none;">Approve Agentic Workflow</button>
+        </div>
+    </div>
     
     <!-- Sample Emails Modal -->
     <div class="emails-modal" id="emails-modal">
@@ -1296,12 +1343,11 @@
     <div class="tickets-modal" id="tickets-modal">
         <div class="tickets-container">
             <div class="tickets-header">
-                <h2>TechStart Support Tickets</h2>
+                <h2>Support Tickets Successfully Created!</h2>
                 <button class="tickets-close" id="close-tickets">&times;</button>
             </div>
             <div class="tickets-content">
-                <p>Your AI Agent has processed and categorized the support emails. Here are the results:</p>
-                
+                <p>Your AI Agent has processed and categorized the support emails. Here are the results:</p>  
                 <div class="tickets-categories">
                     <div class="ticket-category">
                         <div class="category-header">
@@ -1379,24 +1425,26 @@
     <div class="certificate-modal" id="certificate-modal">
         <div class="certificate-container">
             <button class="certificate-close" id="close-certificate">&times;</button>
-            <div class="certificate">
-                <div class="certificate-logo"><i class="bi bi-robot"></i> AgentFlow</div>
-                <div class="certificate-title">Certificate of Completion</div>
-                <div class="certificate-subtitle">Support Workflow Automation</div>
-                <div class="certificate-user" id="certificate-user"></div>
-                <div class="certificate-text">
-                    Has successfully designed and implemented an AI-powered support workflow automation system, demonstrating proficiency in computational thinking and prompt engineering.
-                </div>
-                <div class="certificate-skills">
-                    <div class="certificate-skill">Workflow Design</div>
-                    <div class="certificate-skill">Process Automation</div>
-                    <div class="certificate-skill">AI Prompt Engineering</div>
-                    <div class="certificate-skill">System Integration</div>
-                    <div class="certificate-skill">Support Ticketing</div>
-                </div>
-                <div class="certificate-date" id="certificate-date"></div>
-                <div class="certificate-seal">
-                    <div class="certificate-seal-inner">A+</div>
+            <div style="scale: .75;">
+                <div class="certificate">
+                    <div class="certificate-logo"><i class="bi bi-robot"></i> AgentFlow</div>
+                    <div class="certificate-title">Certificate of Completion</div>
+                    <div class="certificate-subtitle">Support Workflow Automation</div>
+                    <div class="certificate-user" id="certificate-user"></div>
+                    <div class="certificate-text">
+                        Has successfully designed and implemented an AI-powered support workflow automation system, demonstrating proficiency in computational thinking and prompt engineering.
+                    </div>
+                    <div class="certificate-skills">
+                        <div class="certificate-skill">Workflow Design</div>
+                        <div class="certificate-skill">Process Automation</div>
+                        <div class="certificate-skill">AI Prompt Engineering</div>
+                        <div class="certificate-skill">System Integration</div>
+                        <div class="certificate-skill">Support Ticketing</div>
+                    </div>
+                    <div class="certificate-date" id="certificate-date"></div>
+                    <div class="certificate-seal">
+                        <div class="certificate-seal-inner">A+</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2180,7 +2228,7 @@ function handleCanvasMouseUp(e) {
                         clearInterval(interval);
                         // Show completion message
                         setTimeout(() => {
-                            showCompletionMessage();
+                            showAIReasoning();
                             successAnimationIsRunning = false;
                         }, 1000);
                     }
@@ -2195,10 +2243,11 @@ function handleCanvasMouseUp(e) {
         
         function showCompletionMessage() {
             // Instead of reusing the landing modal, let's create a dedicated completion modal
+            document.getElementById('agent-actions-modal').style.display = 'none';
             const completionHTML = `
                 <div class="completion-modal" id="completion-modal">
                     <div class="completion-container">
-                        <h1 class="completion-title">Great Job, ${userName}!</h1>
+                        <h1 class="completion-title">Great Job, ${userName.split(' ')[0]}!</h1>
                         <div class="completion-content">
                             <p>You've successfully built an automated workflow to handle support tickets at TechStart!</p>
                             <p>Your workflow will:</p>
@@ -2285,7 +2334,155 @@ function handleCanvasMouseUp(e) {
             // Show the certificate modal
             document.getElementById('certificate-modal').style.display = 'flex';
         }
-        
+
+        function showAIReasoning() {
+            let reasoningSteps = {
+                'Scanning emails...': '',
+                'Identifying keywords...': '',
+                'Identifying topics...': '',
+                'Now let me create support tickets for each of the emails in the customer support inbox.': '',
+                'Creating support tickets...':
+`Sarah's email requesting a password reset should be categorized as an "Account Access" issue.
+I see that Sarah is a Premium user, so she should take priority of free-tier users and low-urgency requests, like feature requests. I'll set this ticket's priority to Medium.
+<br><br>
+Michael's email describes an urgent file access issue which is disrupting DesignCo's business operations. This incident should be categorized under "Technical Issues" with High priority to assign the incident to the Lead Support Specialist.
+<br><br>
+Emma's email describes an issue with tasks not syncing consistently across multiple devices. Emma's message does not contain keywords that would suggest high urgency. This request should be categorized as "Technical Issues" and assigned Medium priority.
+<br><br>
+David's email suggests a possible payment dispute, therefore, this incident should be categorized as "Billing". The customer's tone and keywords suggest that he expects timely customer support in resolving this matter, but they do not warrant urgency, so this should be assigned Medium priority.
+<br><br>
+James' email expresses positive sentiment toward TechStart's app, but expresses the desire for a dark mode feature to reduce eye discomfort when using the app at night. This incident should be categorized under "Feature Requests" and assigned a low priority.`,
+                '🎉 Task complete! All tickets created': 'All emails have been converted into support tickets, categorized, prioritized, and assigned according to your instructions.'
+            };
+
+            document.getElementById('agent-actions-modal').style.display = 'flex';
+            let agentReasoningContainer = document.getElementById('agent-reasoning-output');
+            let currentSectionIndex = 0;
+            const entries = Object.entries(reasoningSteps);
+            
+            // Function to add the next section
+            function addNextSection() {
+                if (currentSectionIndex >= entries.length) {
+                    // All sections have been added and streamed
+                    document.getElementById('complete-scenario-button').style.display = 'block';
+                    return;
+                }
+                
+                const [heading, content] = entries[currentSectionIndex];
+                
+                // Create the section container
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'glass-container';
+                
+                // Add the heading container (empty at first)
+                const headingElement = document.createElement('h3');
+                headingElement.style.color = 'var(--dark-gray)';
+                sectionDiv.appendChild(headingElement);
+                
+                // Add to the page
+                agentReasoningContainer.appendChild(sectionDiv);
+                
+                // Stream the heading first
+                streamText(heading, headingElement, () => {
+                    // After heading is complete, check if there's content to stream
+                    if (content !== '') {
+                        const contentElement = document.createElement('div');
+                        contentElement.className = 'prompt-guidance';
+                        sectionDiv.appendChild(contentElement);
+                        
+                        // Start streaming content
+                        setTimeout(() => {
+                            streamText(content, contentElement, () => {
+                                // Move to the next section after content is fully streamed
+                                currentSectionIndex++;
+                                setTimeout(addNextSection, 800);
+                            });
+                        }, 300);
+                    } else {
+                        // If no content, move to the next section after a delay
+                        currentSectionIndex++;
+                        setTimeout(addNextSection, 800);
+                    }
+                });
+            }
+            
+            // Start adding sections
+            addNextSection();
+        }
+
+        // Function to stream text character-by-character with HTML tags support
+        function streamText(text, element, onComplete) {
+            // Replace newlines with appropriate HTML
+            const htmlContent = text.replace(/\\n\\n+/g, '<br><br>');
+            
+            // Split content into characters, preserving HTML tags
+            const chars = [];
+            let currentTag = '';
+            let inTag = false;
+            
+            for (let i = 0; i < htmlContent.length; i++) {
+                const char = htmlContent[i];
+                
+                // Handle HTML tags as single units
+                if (char === '<') {
+                    inTag = true;
+                    currentTag = char;
+                } else if (char === '>') {
+                    currentTag += char;
+                    chars.push(currentTag);
+                    currentTag = '';
+                    inTag = false;
+                } else if (inTag) {
+                    currentTag += char;
+                } else {
+                    // Regular character
+                    chars.push(char);
+                }
+            }
+            
+            // Stream the characters one at a time
+            let charIndex = 0;
+            element.innerHTML = ''; // Start with empty content
+            
+            function addNextChar() {
+                if (charIndex < chars.length) {
+                    const char = chars[charIndex];
+                    
+                    // Add the character (handles HTML tags)
+                    if (char.startsWith('<')) {
+                        // This is an HTML tag, add it as-is
+                        element.innerHTML += char;
+                    } else {
+                        // This is a regular character, add it
+                        element.innerHTML += char;
+                    }
+                    
+                    charIndex++;
+                    
+                    // Schedule the next character
+                    // Use a slightly randomized delay to make it look more natural
+                    const delay = Math.random() * 10 + 15; // 15-25ms between chars
+                    setTimeout(addNextChar, delay);
+                } else {
+                    // All characters have been added
+                    if (onComplete)
+                    {
+                        element.scrollIntoView();
+                        onComplete();
+                    }
+                }
+            }
+            
+            // Start adding characters
+            addNextChar();
+        }
+
+        // Example usage:
+        // showAIReasoning(() => {
+        //     console.log("All streaming completed!");
+        //     // Do something after all streaming is done
+        //     document.getElementById("next-button").disabled = false;
+        // });
         function hideCertificateModal() {
             document.getElementById('certificate-modal').style.display = 'none';
             // Show the completion modal again
