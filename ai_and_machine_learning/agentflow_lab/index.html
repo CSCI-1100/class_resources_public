@@ -980,10 +980,20 @@
             font-weight: 600;
         }
         
-        .certificate-date {
+        .certificate-semester {
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--dark-gray);
+        }
+
+        .certificate-timestamp {
+            align-self: flex-start;
+            margin: 0;
+            padding: 0;
+            line-height: 0.2rem;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--medium-gray);
         }
         
         .certificate-seal {
@@ -1427,6 +1437,7 @@
             <button class="certificate-close" id="close-certificate">&times;</button>
             <div style="scale: .75;">
                 <div class="certificate">
+                    <span class="certificate-timestamp" id="certificate-timestamp"></span>
                     <div class="certificate-logo"><i class="bi bi-robot"></i> AgentFlow</div>
                     <div class="certificate-title">Certificate of Completion</div>
                     <div class="certificate-subtitle">Support Workflow Automation</div>
@@ -1441,7 +1452,7 @@
                         <div class="certificate-skill">System Integration</div>
                         <div class="certificate-skill">Support Ticketing</div>
                     </div>
-                    <div class="certificate-date" id="certificate-date"></div>
+                    <div class="certificate-semester" id="certificate-semester"></div>
                     <div class="certificate-seal">
                         <div class="certificate-seal-inner">A+</div>
                     </div>
@@ -2317,19 +2328,24 @@ function handleCanvasMouseUp(e) {
             // Get current date and determine semester
             const d = new Date();
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            const month = d.getMonth(); // 0-11
+            let month = d.getMonth(); // 0-11
             const date = d.getDate();
             const year = d.getFullYear();
+            const hours = String(d.getHours()).padStart(2, '0');
+            const minutes = String(d.getMinutes()).padStart(2, '0');
+            const time = `${hours}:${minutes}`;
             
             let semester;
             if (month < 4) semester = 'Spring'; // Jan-Apr -> Spring
             else if (month > 8) semester = 'Fall'; // Sep-Dec -> Fall
             else if (month == 8 && date > 15) semester = 'Fall'; 
             else semester = 'Summer'; // May-mid Aug -> Summer
+            month = months[month].substring(0, 3);
             
             // Set certificate content
             document.getElementById('certificate-user').textContent = userName;
-            document.getElementById('certificate-date').textContent = `${semester} ${year}`;
+            document.getElementById('certificate-semester').textContent = `${semester} ${year}`;
+            document.getElementById('certificate-timestamp').textContent = `${time}.${d.getMilliseconds()}, ${month} ${date} ${year}`;
             
             // Show the certificate modal
             document.getElementById('certificate-modal').style.display = 'flex';
