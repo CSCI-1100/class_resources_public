@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Literacy Lab - Interactive</title>
+    <title>Prompting with Purpose Lab - Interactive</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/css/style.css">
 
@@ -20,7 +20,7 @@
 <body>
     <div class="roadmap-container">
         <div class="header">
-            <h1>🧠 AI Literacy Lab</h1>
+            <h1>Prompting with Purpose Lab</h1>
             <p>Prompt Engineering with the CLEAR Framework</p>
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
@@ -535,7 +535,7 @@ Please [SPECIFIC REQUIREMENTS AND REFINEMENTS]."
             // Title
             doc.setFontSize(18);
             doc.setFont(undefined, 'bold');
-            doc.text('AI Literacy Lab Report', 20, yPosition);
+            doc.text('Prompting with Purpose Lab Report', 20, yPosition);
             yPosition += 15;
 
             // Student Information
@@ -736,7 +736,7 @@ Please [SPECIFIC REQUIREMENTS AND REFINEMENTS]."
             let fullDate = `${year}${semester}`;
 
             const studentNameClean = formData.studentName.replace(/[^a-z0-9]/gi, '_') || 'student';
-            const fileName = `CSCI-1100_${fullDate}_${studentNameClean}_ai_literacy_lab.pdf`;
+            const fileName = `CSCI-1100_${fullDate}_${studentNameClean}_ai_prompt_lab.pdf`;
             
             // Save the PDF
             doc.save(fileName);
