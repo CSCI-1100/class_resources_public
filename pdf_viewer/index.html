@@ -692,7 +692,24 @@
                 onGoToPage();
             }
         });
-        
+
+        // Listeners for key commands
+        document.addEventListener('keydown', function(event) {
+            // Prevent default browser scrolling behavior for arrow keys
+            if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+                event.preventDefault();
+            }
+
+            switch (event.key) {
+                case 'ArrowRight':
+                    onNextPage();
+                    break;
+                case 'ArrowLeft':
+                    onPrevPage();
+                    break;
+            }
+        });
+                
         // Add resize listener
         window.addEventListener('resize', handleResize);
 
