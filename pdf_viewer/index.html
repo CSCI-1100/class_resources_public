@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Slide Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <style>
+        /* Layout */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .page-navigation {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-navigation span {
+            font-size: 14px;
+        }
+
+        .button {
+            background-color: #f8f9fa;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            color: #3c4043;
+            cursor: pointer;
+            font-size: 14px;
+            height: 36px;
+            line-height: 34px;
+            padding: 0 12px;
+            text-align: center;
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+
+        .button:hover {
+            background-color: #e8eaed;
+            border-color: #dadce0;
+        }
+
+        .button i {
+            margin-right: 5px;
+        }
+
+        .button.download {
+            background-color: #1a73e8;
+            color: white;
+            border-color: #1a73e8;
+        }
+
+        .button.download:hover {
+            background-color: #1765cc;
+            border-color: #1765cc;
+        }
+
+        .button.fullscreen {
+            background-color: transparent;
+            border: 1px solid #dadce0;
+        }
+
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 15px;
+        }
+
+        .zoom-value {
+            font-size: 14px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        /* Main content area */
+        .content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar / TOC */
+        .sidebar {
+            width: 250px;
+            overflow: auto;
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 10px 0;
+            transition: width 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 0;
+            padding: 0;
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            left: 250px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            border: 1px solid #ddd;
+            border-left: 0;
+            border-radius: 0 4px 4px 0;
+            padding: 10px 5px;
+            cursor: pointer;
+            z-index: 5;
+            transition: left 0.3s ease;
+        }
+
+        .sidebar-toggle.collapsed {
+            left: 0;
+        }
+
+        /* TOC styles */
+        .toc-container {
+            padding: 0 10px;
+        }
+
+        .toc-header {
+            font-size: 16px;
+            font-weight: 600;
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+
+        .toc-list {
+            overflow-x: hidden;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc-item {
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .toc-item:hover {
+            background-color: #f1f3f4;
+        }
+
+        .toc-item.active {
+            background-color: #e8f0fe;
+            color: #1a73e8;
+            font-weight: 500;
+        }
+
+        .toc-section {
+            font-weight: bold;
+            padding: 10px 15px 5px;
+            color: #5f6368;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 5px;
+        }
+
+        .toc-section:first-child {
+            border-top: none;
+            margin-top: 0;
+        }
+
+        /* Canvas container */
+        .canvas-container {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Changed from center to flex-start to better handle scrolling */
+            padding: 20px;
+            background-color: #e8eaed;
+        }
+
+        .pdf-canvas-wrapper {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            background-color: white;
+            display: inline-block; /* Let the container size to the canvas */
+            position: relative;
+            margin: 0 auto;
+        }
+
+        #pdf-canvas {
+            display: block; /* Removes extra space below canvas */
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+            
+            .sidebar-toggle {
+                left: 200px;
+            }
+        }
+
+        /* Loading indicator */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Icons */
+        .icon {
+            display: inline-block;
+            margin-top: -8px;
+            width: 30px;
+            height: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .page-input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            padding: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header navigation -->
+    <div class="header">
+        <div class="page-navigation">
+            <button class="button" id="prev-page">
+                <span class="icon">←</span>
+                <span>Previous</span>
+            </button>
+            <span>
+                <input type="number" class="page-input" id="page-num" min="1" value="1">
+                / <span id="page-count">0</span>
+            </span>
+            <button class="button" id="next-page">
+                <span>Next</span>
+                <span class="icon">→</span>
+            </button>
+            
+            <div class="zoom-controls">
+                <button class="button" id="zoom-out">-</button>
+                <span class="zoom-value" id="zoom-value">100%</span>
+                <button class="button" id="zoom-in">+</button>
+                <button class="button" id="zoom-fit">Fit</button>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="button fullscreen" id="fullscreen">
+                <span class="icon">⛶</span>
+                <span>Fullscreen</span>
+            </button>
+            <button class="button download" id="download">
+                <span class="icon">⤓</span>
+                <span>Download</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main content area with sidebar and canvas -->
+    <div class="content">
+        <div class="sidebar" id="sidebar">
+            <div class="toc-container">
+                <div class="toc-header">Contents</div>
+                <div id="toc-placeholder">
+                    <div class="loader"></div>
+                    <p style="text-align: center;">Loading contents...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar toggle button -->
+        <button class="sidebar-toggle" id="sidebar-toggle">◀</button>
+        
+        <!-- PDF rendering area -->
+        <div class="canvas-container" id="canvas-container">
+            <div class="pdf-canvas-wrapper" id="pdf-canvas-wrapper">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set up PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // Elements
+        const pageNum = document.getElementById('page-num');
+        const pageCount = document.getElementById('page-count');
+        const prevButton = document.getElementById('prev-page');
+        const nextButton = document.getElementById('next-page');
+        const zoomInButton = document.getElementById('zoom-in');
+        const zoomOutButton = document.getElementById('zoom-out');
+        const zoomFitButton = document.getElementById('zoom-fit');
+        const zoomValue = document.getElementById('zoom-value');
+        const fullscreenButton = document.getElementById('fullscreen');
+        const downloadButton = document.getElementById('download');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const canvasContainer = document.getElementById('canvas-container');
+        const canvasWrapper = document.getElementById('pdf-canvas-wrapper');
+        const canvas = document.getElementById('pdf-canvas');
+        const ctx = canvas.getContext('2d');
+        const tocPlaceholder = document.getElementById('toc-placeholder');
+
+        // PDF viewer state
+        let pdfDoc = null;
+        let pageRendering = false;
+        let pageNumPending = null;
+        let currentPage = 1;
+        let scale = 1.0;
+        let originalPowerPointUrl = '';
+        
+        // Track the original dimensions of the current page
+        let currentPageOriginalWidth = 0;
+        let currentPageOriginalHeight = 0;
+
+        // URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const pdfUrl = urlParams.get('pdf');
+        const pptxUrl = urlParams.get('pptx');
+
+        // Initialize download button
+        if (pptxUrl) {
+            originalPowerPointUrl = pptxUrl;
+            downloadButton.onclick = () => {
+                window.location.href = originalPowerPointUrl;
+            };
+        } else {
+            downloadButton.style.display = 'none';
+        }
+
+        // Toggle sidebar
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            sidebarToggle.classList.toggle('collapsed');
+            sidebarToggle.textContent = sidebar.classList.contains('collapsed') ? '▶' : '◀';
+        });
+
+        // Handle fullscreen
+        fullscreenButton.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable fullscreen mode: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // Zoom controls
+        zoomInButton.addEventListener('click', () => {
+            scale *= 1.25;
+            updateZoomValue();
+            queueRenderPage(currentPage);
+        });
+
+        zoomOutButton.addEventListener('click', () => {
+            scale /= 1.25;
+            updateZoomValue();
+            queueRenderPage(currentPage);
+        });
+
+        zoomFitButton.addEventListener('click', () => {
+            calculateFitScale();
+            updateZoomValue();
+            queueRenderPage(currentPage);
+        });
+
+        /**
+         * Update the zoom value display
+         */
+        function updateZoomValue() {
+            const zoomPercent = Math.round(scale * 100);
+            zoomValue.textContent = `${zoomPercent}%`;
+        }
+
+        /**
+         * Calculate scale to fit the page in the container
+         */
+        function calculateFitScale() {
+            if (!currentPageOriginalWidth || !currentPageOriginalHeight) return;
+            
+            // Account for padding
+            const containerWidth = canvasContainer.clientWidth - 40; // 20px padding on each side
+            const containerHeight = canvasContainer.clientHeight - 40;
+            
+            // Calculate the scale to fit both width and height
+            const scaleX = containerWidth / currentPageOriginalWidth;
+            const scaleY = containerHeight / currentPageOriginalHeight;
+            
+            // Use the smaller scale to fit the entire page
+            scale = Math.min(scaleX, scaleY) * 0.95; // Add a small margin
+        }
+
+        /**
+         * Get page info from document, resize canvas accordingly, and render page.
+         * @param num Page number.
+         */
+        function renderPage(num) {
+            pageRendering = true;
+            
+            // Update current page input
+            pageNum.value = num;
+            
+            // Update active TOC item
+            document.querySelectorAll('.toc-item').forEach(item => {
+                item.classList.remove('active');
+                if (parseInt(item.dataset.page) === num) {
+                    item.classList.add('active');
+                    // Scroll to the item in the sidebar
+                    item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+
+            // Get page
+            pdfDoc.getPage(num).then(function(page) {
+                // Get the original dimensions of the page
+                const viewport = page.getViewport({ scale: 1.0 });
+                currentPageOriginalWidth = viewport.width;
+                currentPageOriginalHeight = viewport.height;
+                
+                // If no scale has been set yet (first load), calculate fit scale
+                if (scale === 1.0 && num === 1) {
+                    calculateFitScale();
+                    updateZoomValue();
+                }
+                
+                // Now render with the actual scale
+                const scaledViewport = page.getViewport({ scale });
+                
+                // Set canvas dimensions to match the viewport
+                canvas.height = scaledViewport.height;
+                canvas.width = scaledViewport.width;
+                
+                // Render PDF page into canvas context
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: scaledViewport
+                };
+
+                const renderTask = page.render(renderContext);
+
+                // Wait for rendering to finish
+                renderTask.promise.then(() => {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        // New page rendering is pending
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+        }
+
+        /**
+         * If another page rendering in progress, wait until it finishes.
+         * Otherwise, execute rendering immediately.
+         */
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        /**
+         * Go to previous page
+         */
+        function onPrevPage() {
+            if (currentPage <= 1) {
+                return;
+            }
+            currentPage--;
+            queueRenderPage(currentPage);
+        }
+
+        /**
+         * Go to next page
+         */
+        function onNextPage() {
+            if (currentPage >= pdfDoc.numPages) {
+                return;
+            }
+            currentPage++;
+            queueRenderPage(currentPage);
+        }
+
+        /**
+         * Jump to specific page
+         */
+        function onGoToPage() {
+            const pageRequested = parseInt(pageNum.value);
+            if (isNaN(pageRequested) || pageRequested < 1 || pageRequested > pdfDoc.numPages) {
+                pageNum.value = currentPage;
+                return;
+            }
+            
+            currentPage = pageRequested;
+            queueRenderPage(currentPage);
+        }
+
+        /**
+         * Generate table of contents from PDF outlines
+         */
+        function buildTableOfContents(outlines) {
+            if (!outlines || outlines.length === 0) {
+                tocPlaceholder.innerHTML = '<p style="text-align: center; padding: 20px;">No table of contents available</p>';
+                return;
+            }
+
+            let tocHtml = '<ul class="toc-list">';
+            let previousLevel = 0;
+            let currentSection = '';
+
+            const processOutlineItems = (items, level = 0) => {
+                if (!items || items.length === 0) return '';
+                
+                let html = level === 0 ? '' : '<ul style="padding-left: 15px;">';
+                
+                items.forEach(item => {
+                    if (item.title) {
+                        // Use destination to determine page number
+                        const dest = item.dest;
+                        let pageNumber = null;
+
+                        // Process the item to extract page number information
+                        if (typeof dest === 'string') {
+                            // Named destination - need to resolve it
+                            pdfDoc.getDestination(dest).then(destArray => {
+                                if (destArray && destArray.length > 0) {
+                                    pdfDoc.getPageIndex(destArray[0]).then(pageIndex => {
+                                        // Page index is 0-based, add 1 to get the page number
+                                        const pageNum = pageIndex + 1;
+                                        // Update the DOM element with the page number
+                                        const tocItem = document.querySelector(`.toc-item[data-title="${item.title}"]`);
+                                        if (tocItem) {
+                                            tocItem.dataset.page = pageNum;
+                                        }
+                                    });
+                                }
+                            }).catch(err => console.error('Error resolving destination:', err));
+                            
+                            // Use placeholder for now
+                            pageNumber = '...';
+                        } else if (Array.isArray(dest)) {
+                            // Direct destination array
+                            pdfDoc.getPageIndex(dest[0]).then(pageIndex => {
+                                // Page index is 0-based, add 1 to get the page number
+                                const pageNum = pageIndex + 1;
+                                // Update the DOM element with the page number
+                                const tocItem = document.querySelector(`.toc-item[data-title="${item.title}"]`);
+                                if (tocItem) {
+                                    tocItem.dataset.page = pageNum;
+                                }
+                            }).catch(err => console.error('Error resolving destination:', err));
+                            
+                            // Use placeholder for now
+                            pageNumber = '...';
+                        }
+                        
+                        // Check if this is a section header
+                        const isSection = item.bold && level === 0;
+                        
+                        if (isSection) {
+                            currentSection = item.title;
+                            html += `<div class="toc-section">${currentSection}</div>`;
+                        } else {
+                            html += `<li class="toc-item" data-title="${item.title}" data-page="${pageNumber || '...'}">${item.title}</li>`;
+                        }
+                    }
+                    
+                    // Process child items recursively
+                    if (item.items && item.items.length > 0) {
+                        html += processOutlineItems(item.items, level + 1);
+                    }
+                });
+                
+                return html + (level === 0 ? '' : '</ul>');
+            };
+            
+            tocHtml += processOutlineItems(outlines);
+            tocHtml += '</ul>';
+            
+            tocPlaceholder.innerHTML = tocHtml;
+            
+            // Add click event listeners to TOC items
+            document.querySelectorAll('.toc-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const pageNum = parseInt(item.dataset.page);
+                    if (!isNaN(pageNum) && pageNum > 0 && pageNum <= pdfDoc.numPages) {
+                        currentPage = pageNum;
+                        queueRenderPage(currentPage);
+                    }
+                });
+            });
+        }
+
+        /**
+         * Handle window resize to update the fit scale
+         */
+        function handleResize() {
+            if (document.getElementById('zoom-fit').classList.contains('active')) {
+                calculateFitScale();
+                updateZoomValue();
+                queueRenderPage(currentPage);
+            }
+        }
+
+        /**
+         * Initialize PDF viewer
+         */
+        function initPdfViewer(pdfUrl) {
+            // Set loading state
+            tocPlaceholder.innerHTML = '<div class="loader"></div><p style="text-align: center;">Loading contents...</p>';
+            canvas.style.display = 'none';
+            
+            // Load the PDF
+            pdfjsLib.getDocument(pdfUrl).promise
+                .then(doc => {
+                    pdfDoc = doc;
+                    pageCount.textContent = pdfDoc.numPages;
+                    
+                    // Get document outline
+                    pdfDoc.getOutline().then(outline => {
+                        buildTableOfContents(outline);
+                    }).catch(error => {
+                        console.error('Error loading outline:', error);
+                        tocPlaceholder.innerHTML = '<p style="text-align: center; padding: 20px;">No table of contents available</p>';
+                    });
+                    
+                    // Initial render
+                    canvas.style.display = 'block';
+                    renderPage(currentPage);
+                })
+                .catch(error => {
+                    console.error('Error loading PDF:', error);
+                    canvasContainer.innerHTML = `
+                        <div style="text-align: center; padding: 50px; background: white; border-radius: 5px; max-width: 600px; margin: auto;">
+                            <h2>Error Loading PDF</h2>
+                            <p>${error.message || 'Could not load the PDF document'}</p>
+                        </div>
+                    `;
+                });
+        }
+
+        // Attach event listeners
+        prevButton.addEventListener('click', onPrevPage);
+        nextButton.addEventListener('click', onNextPage);
+        pageNum.addEventListener('change', onGoToPage);
+        pageNum.addEventListener('keypress', e => {
+            if (e.key === 'Enter') {
+                onGoToPage();
+            }
+        });
+        
+        // Add resize listener
+        window.addEventListener('resize', handleResize);
+
+        // Initialize the viewer with provided PDF URL
+        if (pdfUrl) {
+            initPdfViewer(pdfUrl);
+        } else {
+            canvasContainer.innerHTML = `
+                <div style="text-align: center; padding: 50px; background: white; border-radius: 5px; max-width: 600px; margin: auto;">
+                    <h2>No PDF Specified</h2>
+                    <p>Please provide a PDF URL in the query parameters (?pdf=your-pdf-url)</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
