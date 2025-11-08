@@ -45,16 +45,18 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: relative;
         }
+
+        header h1, h2 {
+            margin-left: 7rem; /* Offset for button */
+        }
         
         .run-button {
-            position: absolute;
-            top: 50%;
-            right: 2rem;
-            transform: translateY(-50%);
+            float: right;
+            margin-top: 1.2rem;
+            margin-right: 7rem;
             padding: 0.75rem 1.5rem;
             font-size: 1rem;
             font-weight: 600;
-            z-index: 10;
             background: var(--white);
             color: var(--lochmara);
             border: 2px solid var(--white);
@@ -67,7 +69,7 @@
             background: transparent;
             color: var(--white);
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transform: translateY(-50%) scale(1.05);
+            transform: scale(1.05);
         }
         
         h1 {
@@ -162,8 +164,27 @@
             flex-direction: column;
             gap: 1rem;
         }
+
+        .progress-dots-container {
+            border: 1px solid var(--dark-gray);
+            border-radius: 14px;
+            margin-bottom: 10px;
+            padding: 6px;
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(7, 1fr);
+            background-color: rgba(245, 245, 245, 0.2);
+        }
+
+        .progress-dot {
+            border: 1px solid var(--dark-gray);
+            border-radius: 50px;
+            width: 14px;
+            height: 14px;
+            color: var(--medium-gray);
+        }
         
-        .instruction-panel, .scenario-panel {
+        .instruction-panel, .scenario-panel, .progress-panel {
             padding: 1rem;
             border-radius: 8px;
             border: 1px solid var(--medium-gray);
@@ -171,6 +192,10 @@
 
         .instruction-panel {
             background-color: #fde595;
+        }
+
+        .progress-panel {
+            background-color: #86d6cd;
         }
 
         .scenario-panel {
@@ -1025,15 +1050,6 @@
             border: 1px solid var(--outrageous-orange);
         }
         
-        .run-button {
-            position: fixed;
-            top: 3rem;
-            right: 2rem;
-            padding: 0.75rem 1.5rem;
-            font-size: 1.1rem;
-            z-index: 10;
-        }
-        
         .tooltip {
             position: absolute;
             background-color: var(--dark-gray);
@@ -1072,9 +1088,9 @@
     
     <!-- Main Application -->
     <header>
+        <button class="run-button" id="run-workflow">▶&ensp;Run Workflow</button>
         <h1 style="font-style: italic;"><i class="bi bi-robot"></i> AgentFlow</h1>
         <h2>Customer Support Automation</h2>
-        <button class="run-button" id="run-workflow">▶&ensp;Run Workflow</button>
     </header>
     
     <div class="container">
@@ -1111,11 +1127,24 @@
             <div class="workflow-canvas" id="workflow-canvas"></div>
             
             <div class="right-panels">
-                <div class="instruction-panel">
+                <div class="instruction-panel"> 
                     <h3 class="instruction-title">Instructions</h3>
                     <div id="current-instruction">
                         <p>Welcome to AgentFlow! You'll build a workflow to automate support ticket processing.</p>
                         <p>Start by dragging the <strong>Email Monitor</strong> block onto the workspace.</p>
+                    </div>
+                </div>
+
+                <div class="progress-panel">
+                    <h3 class="instruction-title">Progress</h3>
+                    <div class="progress-dots-container">
+                        <span class="progress-dot"></span>
+                        <span class="progress-dot"></span>
+                        <span class="progress-dot"></span>
+                        <span class="progress-dot"></span>
+                        <span class="progress-dot"></span>
+                        <span class="progress-dot"></span>
+                        <span class="progress-dot"></span>
                     </div>
                 </div>
                 
@@ -1213,6 +1242,7 @@
             </div>
             <div class="agent-actions-body">
                 <div class="prompt-guidance" id="agent-reasoning-output">
+                    <div style="font-size: 1.4em; margin-bottom: 12px;"><i class="bi bi-robot"></i> AI Agent:</div>
                 </div>
             </div>
             <button onclick="showCompletionMessage();" class="primary-button" id="complete-scenario-button" style="display:none;">Approve Agentic Workflow</button>
@@ -1513,7 +1543,7 @@
                 expectedAction: "configureAI"
             },
             {
-                instruction: "Your workflow is complete! Click the 'Run Workflow' button to see it in action."
+                instruction: "Your workflow is complete! Click the 'Run Workflow' button above to see it in action."
             }
         ];
         
@@ -1984,8 +2014,11 @@ function handleCanvasMouseUp(e) {
         }
     
         function advanceStep() {
+            const progressDot = document.getElementsByClassName('progress-dot')[currentStep];
+            progressDot.style.backgroundColor = `var(--shocking)`;
+
             currentStep++;
-            if (currentStep < tutorialSteps.length && currentStep > 1) {
+            if (currentStep < tutorialSteps.length && currentStep > 0) {
                 document.getElementById('current-instruction').innerHTML = tutorialSteps[currentStep].instruction;
                 
                 // If this step includes positioning recommendation, show toast
@@ -2062,6 +2095,7 @@ function handleCanvasMouseUp(e) {
                 testResult.innerHTML = "Great job! Your prompt is detailed and addresses all key requirements for effective support ticket categorization and prioritization.";
                 testResult.className = "test-result success";
                 testResult.style.display = "block";
+                advanceStep();
             } else {
                 let feedback = `<strong>Your prompt needs improvement (${Math.round(score * 100)}% complete).</strong><br>Missing elements:<br><ul style="margin-top:5px;margin-bottom:0;padding-left:30px;">`;
                 missingPoints.forEach(point => {
