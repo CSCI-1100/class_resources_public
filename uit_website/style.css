@@ -340,7 +340,7 @@ footer {
 }
 
 .scrollbox-xl {
-    height: 65vh;
+    height: 70vh;
     min-height: fit-content; 
     overflow-y: scroll;
 }
