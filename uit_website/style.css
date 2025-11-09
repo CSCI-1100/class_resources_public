@@ -402,6 +402,11 @@ and (max-width: 440px) {
     .bg-light-gray { background-color: hsl( var(--clr-light-gray) )!important; }
     .bg-accent-light { background-color: hsl( var(--clr-accent-dark) )!important; }
 
+    .alert-info {
+        background-color: #469891!important;
+        color: #a6d1f3!important;
+    }
+
     .card-row {
         background-color: hsl( var(--clr-dark) )!important;
         color: white!important;
@@ -445,7 +450,6 @@ and (max-width: 440px) {
     .expand-content {
         background-color: hsl( var(--clr-accent-dark) );
     }
-
 }
 
 /* ----- From https://www.w3schools.com/howto/howto_js_tabs.asp ----- */
