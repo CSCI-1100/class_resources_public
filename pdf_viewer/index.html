@@ -340,7 +340,6 @@
         <div class="canvas-container" id="canvas-container">
             <div class="pdf-canvas-wrapper" id="pdf-canvas-wrapper">
                 <canvas id="pdf-canvas"></canvas>
-                <div class="annotationLayer" id="annotation-layer"></div>
             </div>
         </div>
     </div>
@@ -378,7 +377,6 @@
             const canvasWrapper = document.getElementById('pdf-canvas-wrapper');
             const canvas = document.getElementById('pdf-canvas');
             const ctx = canvas.getContext('2d');
-            const annotationLayer = document.getElementById('annotation-layer');
             const tocPlaceholder = document.getElementById('toc-placeholder');
 
             // PDF viewer state
@@ -393,8 +391,8 @@
             let currentPageOriginalWidth = 0;
             let currentPageOriginalHeight = 0;
 
-            // Create link service for annotations
-            const linkService = new pdfjsViewer.PDFLinkService();
+            // Create link service for annotations (open links in new tabs)
+            const linkService = new pdfjsViewer.PDFLinkService({ externalLinkTarget: pdfjsViewer.LinkTarget.BLANK, });
 
             // URL parameters
             const urlParams = new URLSearchParams(window.location.search);
@@ -496,8 +494,11 @@
                     }
                 });
 
-                // Clear previous annotations
-                annotationLayer.innerHTML = '';
+                // Clear previous annotation layer (if any)
+                const oldLayer = document.querySelector(".annotationLayer");
+                if (oldLayer) {
+                    oldLayer.remove();
+                }
 
                 // Get page
                 pdfDoc.getPage(num).then(function(page) {
@@ -530,10 +531,6 @@
                     canvas.height = scaledViewport.height;
                     canvas.width = scaledViewport.width;
                     
-                    // Update the annotation layer dimensions
-                    annotationLayer.style.width = `${scaledViewport.width}px`;
-                    annotationLayer.style.height = `${scaledViewport.height}px`;
-                    
                     // Render PDF page into canvas context
                     const renderContext = {
                         canvasContext: ctx,
@@ -549,14 +546,15 @@
                     }).then((annotations) => {
                         // Render annotations if available
                         // Create AnnotationLayerBuilder
-                        const layer = new pdfjsViewer.AnnotationLayerBuilder({
+                        const annotationLayer = new pdfjsViewer.AnnotationLayerBuilder({
                             pageDiv: canvas.parentNode,
                             pdfPage: page,
                             renderForms: true,
                             linkService: linkService,
                         });
 
-                        layer.render(scaledViewport.clone({ dontFlip: true }));
+                        annotationLayer.render(scaledViewport.clone({ dontFlip: true }));
+                        console.log(annotationLayer);
                         
                         // Update rendering state
                         pageRendering = false;
