@@ -20,7 +20,7 @@ for (let i = 0; i < collapse.length; i++) {
         }
         else {
             content.style.display = "block";
-            content.scrollIntoView();
+            this.scrollIntoView();
         }
     });
 }
