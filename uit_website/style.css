@@ -394,6 +394,56 @@ and (max-width: 440px) {
     }
 }
 
+/* Styles for dark mode */
+@media (prefers-color-scheme: dark) {
+    .bg-dark { background-color: hsl( var(--clr-light) )!important; }
+    .bg-light { background-color: var(--clr-icon-charcoal)!important; }
+    .bg-white { background-color: hsl( var(--clr-dark) )!important; }
+    .bg-light-gray { background-color: hsl( var(--clr-light-gray) )!important; }
+    .bg-accent-light { background-color: hsl( var(--clr-accent-dark) )!important; }
+
+    .card-row {
+        background-color: hsl( var(--clr-dark) )!important;
+        color: white!important;
+    }
+
+    .card, .card-body {
+        background-color: #343338!important;
+        color: white!important;
+    }
+
+    a.href {
+        color: #5395cc!important;
+    }
+
+    .text-primary-blue {
+        color: #a6d1f3!important;
+    }
+
+    .card-subtitle {
+        color: #7692a8!important;
+    }
+
+    .scrollbox-xs, .scrollbox-md, .scrollbox-lg, .scrollbox-xl {
+        border-bottom: 1px solid var(--clr-icon-charcoal);
+        border-top: 1px solid var(--clr-icon-charcoal);
+    }
+
+    .collapse-container {
+        background-color: hsl( var(--clr-accent-dark) )!important;
+        color: hsl( var(--clr-light) )!important;
+    }
+
+    .active, .collapse-container:hover {
+        background-color: #47507c!important;
+    }
+
+    .expand-content {
+        background-color: hsl( var(--clr-accent-dark) );
+    }
+
+}
+
 /* ----- From https://www.w3schools.com/howto/howto_js_tabs.asp ----- */
 /* Style the tab */
 .tab {
