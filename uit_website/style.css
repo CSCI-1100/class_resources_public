@@ -311,32 +311,31 @@ footer {
 .scrollbox-xs, .scrollbox-sm, .scrollbox-md, .scrollbox-lg {
     border-radius: 3px;
     background-color: transparent;
-    white-space: nowrap;
     border-bottom: 1px solid hsl(var(--clr-light-gray));
     border-top: 1px solid hsl(var(--clr-light-gray));
 }
 
 .scrollbox-xs {
     height: 25vh;
-    min-height: calc-size(fit-content, size + 100px);
+    min-height: fit-content;
     overflow-y: scroll;
 }
 
 .scrollbox-sm {
     height: 35vh;
-    min-height: calc-size(fit-content, size + 100px); 
+    min-height: fit-content; 
     overflow-y: scroll;
 }
 
 .scrollbox-md {
     height: 45vh;
-    min-height: calc-size(fit-content, size + 100px); 
+    min-height: fit-content; 
     overflow-y: scroll;
 }
 
 .scrollbox-lg {
     height: 55vh;
-    min-height: calc-size(fit-content, size + 100px); 
+    min-height: fit-content; 
     overflow-y: scroll;
 }
 
