@@ -5,6 +5,11 @@ const hideActivities = urlParams.get('noactivities');
 if (hidePlaylist) document.getElementById('playlist').style.display = 'none';
 if (hideActivities) document.getElementById('activities').style.display = 'none';
 
+if (hidePlaylist && hideActivities) {
+    document.getElementsByTagName('nav')[0].style.display = 'none';
+    document.getElementById('main').style.display = 'none';
+}
+
 let collapse = document.getElementsByClassName("collapse-container");
 for (let i = 0; i < collapse.length; i++) {
     collapse[i].addEventListener("click", function() {
