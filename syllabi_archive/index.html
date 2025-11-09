@@ -38,24 +38,22 @@
                 content: "\002B07";
                 padding-left: 3px
             }
+            #syllabi-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                padding: 12px;
+            }
         </style>
     </head>
     
-    <body class="body-bg-img-light">
-        <div class="container-lg br-8 mt-3" style="clear: both;">
+    <body class="body-bg-img">
+        <div class="container-lg br-8 mt-3" style="clear: both; padding: 0;">
             <div class="text-center text-white p-1">
                 <h1 class="text-white" style="margin-bottom: 0;" id="title">
-                    <i class="bi bi-file-earmark-word fs-650 text-light"></i>
-                    &nbsp;CSCI 1100 Syllabi Archive
+                    <i class="bi bi-file-earmark-word fs-650 text-putty-yellow"></i> CSCI 1100 Syllabi Archive
                 </h1>
                 <h2 class="ff-script text-light" style="text-transform: none; font-weight: 400;">Historical Course Syllabi</h2>
-            </div>
-
-            <div class="alert alert-info" role="alert">
-                <div>
-                    <span class="alert-heading fs-450">Syllabi Archive</span>
-                    <p>Access historical syllabi for CSCI 1100 - Using Information Technology organized by semester.</p>
-                </div>
             </div>
 
             <div class="row mt-2 ml-1 mb-2 mr-1">
@@ -67,7 +65,7 @@
                 </div>
             </div>
 
-            <nav class="tab-purple show-when-small fs-300 br-8 mb-2 shadow" style="z-index: 10;">
+            <nav class="tab show-when-small fs-300 br-8 mb-2 shadow" style="z-index: 10; border: 1px dotted white;">
                 <div class="d-flex justify-content-center">
                     <button onclick="scrollToSection('syllabi-list')">
                         <i class="bi bi-folder-fill fs-450"></i>
@@ -81,8 +79,9 @@
             </nav>
         </div>
 
-        <div class="container-lg br-8 mb-3 pt-3 bg-light-purple" style="clear: both; border: 1px dotted white;" id="main" role="main">
-            <div class="tab-purple hide-when-small fs-300 br-8 mb-2 shadow" style="z-index: 10; margin-top: -130px; margin-left: -260px; position: fixed;">
+        <div class="container-lg br-8 mb-4 bg-light" style="clear: both; padding: 0; border: 1px dotted white;" id="main" role="main">
+            <div class="tab hide-when-small fs-300 br-8 mb-2 border shadow"
+                style="z-index: 10; margin-top: -130px; margin-left: -260px; position: fixed;">
                 <div class="text-center">
                     <span class="text-light fs-450 ff-sans-bold text-center">Navigation<hr color="#9A97D4"></span>
                 </div>
@@ -92,7 +91,7 @@
                 </button>
                 <button onclick="window.open(`https://www.etsu.edu/cbat/computing/csci_1100_-_using_information_technology_uit/index.html`, '_blank')">
                     <i class="bi bi-house-fill fs-450"></i>
-                    &ensp;Back to Main Site
+                    &ensp;Main Site
                 </button>
                 <button onclick="scrollToSection('syllabi-list')">
                     <i class="bi bi-folder-fill fs-450"></i>
@@ -108,32 +107,27 @@
                 </button>
             </div>
 
-            <div class="bg-light mb-4 br-8">
-                <div class="row card-row pt-3" id="syllabi-list">
-                    <div class="col-xl br-8">
-                        <div class="scrollbox-wrapper br-8 bg-white" style="padding: 0;">
-                            <div class="title-container-light-purple">
-                                <h2 class="text-light">Available Syllabi</h2>
-                            </div>
-                            <div class="d-flex p-2">
-                                <button class="bttn-white-sm sort mt-2 mr-3 mb-2 d-inline" data-sort="semester">Sort by Semester</button>
-                                <input name="Syllabus name search" id="syllabus-name-search" class="fuzzy-search br-8" type="search" placeholder="Search syllabus name" style="width: 205px;">
-                            </div>
-                            <div class="scrollbox-wrapper bg-white fs-400" style="border: none;">
-                                <div class="list" id="syllabi-container">
-                                    <!-- Syllabi dynamically generated here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="scrollbox-wrapper br-8 bg-white" style="margin: 0; padding: 0;">
+                <div class="title-container-primary-blue">
+                    <h2 class="text-putty-yellow">Available Syllabi</h2>
                 </div>
+                <div class="scrollbox-md" id="syllabi-list">
+                    <div class="d-flex p-2">
+                        <button class="bttn-white sort mt-2 mr-3 mb-2 d-inline" data-sort="semester">Sort by Semester</button>
+                    </div>
+                    <ul class="list bg-white fs-400" style="border: none;" id="syllabi-container">
+                        <!-- Syllabi dynamically generated here -->
+                    </ul>
+                </div>
+            </div>
 
-                <div class="row card-row br-8 pt-3" id="about">
-                    <div class="col-md">
-                        <div class="title-container-light-purple">
-                            <h2 class="text-light">About This Archive</h2>
-                        </div>
-                        <div class="scrollbox-wrapper bg-white fs-400">
+            <div class="row br-8 pt-2" id="about">
+                <div class="col-md">
+                    <div class="title-container-primary-blue">
+                        <h2 class="text-putty-yellow">About This Archive</h2>
+                    </div>
+                    <div class="scrollbox-wrapper">
+                        <div class="scrollbox-xs bg-white fs-400">
                             <p class="mt-2">
                                 This archive contains past syllabi for CSCI 1100 - Using Information Technology,
                                 since Fall 2024, which marked the beginning of our recent major course redesign.
@@ -145,11 +139,13 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md">
-                        <div class="title-container-light-purple">
-                            <h2 class="text-light">Questions?</h2>
-                        </div>
-                        <div class="scrollbox-wrapper bg-white fs-400">
+                </div>
+                <div class="col-md">
+                    <div class="title-container-primary-blue">
+                        <h2 class="text-putty-yellow">Questions?</h2>
+                    </div>
+                    <div class="scrollbox-wrapper">
+                        <div class="scrollbox-xs bg-white fs-400">
                             <p>
                                 If you need a specific syllabus that's not available here, or have questions about 
                                 course requirements from a particular semester,
@@ -221,41 +217,34 @@
                 sortedSemesters.forEach(semester => {
                     const semesterName = getSemesterName(semester);
                     const files = result[semester];
-                    
-                    i++;
-
-                    if (i%2 == 1)
-                        html += `<div class="gridbox-2">`;
+                    let fileKeywords;
 
                     html += `
-                        <div class="border-dotted-primary-blue br-8 p-3 bg-light">
-                            <span class="semester "style="display:none;">${semester}</span>
-                            <h3 class="text-primary-blue text-left">${semesterName}</h3>
-                            <div class="text-left">
-                                    
+                    <li class="border-dotted-primary-blue br-8 p-3 bg-light">
+                        <span class="semester" style="display:none;">${semester}</span>
+                        <h3 class="text-primary-blue text-left">${semesterName}</h3>
+                        <div class="text-left">                                
                     `;
+                    fileKeywords = ""; // Clear foreach semester
                     
                     files.forEach(file => {
                         const cleanName = cleanFileName(file);
+                        const shortName = cleanName.replace('Syllabus', '').trim();
+                        fileKeywords += shortName + " ";
                         const filePath = `./${semester}/${file}`;
                         
                         html += `
-                                <a href="${filePath}" title="Download ${semesterName} ${cleanName}">
-                                    <span class="syllabusname" style="display:none;">${cleanName}</span>
-                                    <div class="mb-2">
-                                        ${cleanName} &ensp;<i class="bi bi-download"></i>
-                                    </div>
-                                </a>
+                        <a href="${filePath}" title="Download ${semesterName} ${cleanName}">
+                            <div class="mb-2">${cleanName}</span> &ensp;<i class="bi bi-download"></i></div>
+                        </a>
                         `;
                     });
                     
                     html += `
-                            </div>
                         </div>
+                        <span class="fileKeywords" style="display:none;">${fileKeywords.trim()}</span>
+                    </li>
                     `;
-
-                    if (i%2 == 0)
-                        html += `</div>`;
                 });
 
                 // If the total count of syllabi is odd (i is odd from last iteration), need to add a second div to the last gridbox and close it
@@ -279,7 +268,14 @@
                 
                 try {
                     // Get the main directory contents
-                    const response = await fetch(apiBase);
+                    const response = await fetch(apiBase, {
+                        method: 'GET',
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
+                            'Accept': 'application/vnd.github+json',
+                            'X-GitHub-Api-Version': '2022-11-28'
+                        }
+                    });
                     const contents = await response.json();
                     
                     // Filter for directories that start with "202"
@@ -323,18 +319,9 @@
             function loadList() {
                 console.log('Loading syllabi list for sorting and filtering...');
                 let listOptions = {
-                    valueNames: [ 'semester', 'syllabusname' ],
-                    searchClass: 'syllabusname'
+                    valueNames: [ 'semester', 'fileKeywords' ],
                 }
                 var syllabiList = new List('syllabi-list', listOptions);
-
-                document.getElementById('syllabus-name-search').addEventListener('focusout', (ev) => {
-                    syllabiList.search('');
-                });
-
-                document.getElementById('syllabus-name-search').addEventListener('focusin', (ev) => {
-                    syllabiList.search('');
-                });
             }
 
             console.log('Starting syllabi archive scraping...');
