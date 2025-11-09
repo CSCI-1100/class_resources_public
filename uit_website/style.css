@@ -412,6 +412,10 @@ and (max-width: 440px) {
         color: white!important;
     }
 
+    p {
+        color: white!important;
+    }
+
     a.href {
         color: #5395cc!important;
     }
