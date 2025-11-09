@@ -7,7 +7,7 @@ if (hideActivities) document.getElementById('activities').style.display = 'none'
 
 if (hidePlaylist && hideActivities) {
     document.getElementsByTagName('nav')[0].style.display = 'none';
-    document.getElementById('main').style.display = 'none';
+    document.getElementsByClassName('tab')[0].style.display = 'none';
 }
 
 let collapse = document.getElementsByClassName("collapse-container");
