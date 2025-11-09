@@ -403,7 +403,7 @@ and (max-width: 440px) {
     .bg-accent-light { background-color: hsl( var(--clr-accent-dark) )!important; }
 
     .alert-info {
-        background-color: #469891!important;
+        background-color: #306c67!important;
         color: #a6d1f3!important;
     }
 
