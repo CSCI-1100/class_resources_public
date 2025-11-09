@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrogeMart Market Basket Analysis</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            min-height: 100vh;
+            font-size: 1.3em;
+        }
+        
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 2.1em;
+            color: #3498db;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .store-logo {
+            text-align: center;
+            font-size: 3em;
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+        
+        .basket-visualization {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .transaction-data {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #9b59b6;
+        }
+        
+        .section-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        
+        .transaction-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #9b59b6;
+            transition: all 0.3s ease;
+        }
+        
+        .transaction-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .transaction-id {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .transaction-items {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+        
+        .mba-center {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mba-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .association-rules {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .rule-card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .rule-items {
+            padding: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .rule-arrow {
+            font-size: 1.5em;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .rule-metrics {
+            font-size: 0.8em;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0,0,0,0.1);
+            padding: 5px;
+            border-radius: 8px;
+        }
+        
+        .metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .metric-label {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+        
+        .metric-value {
+            font-weight: bold;
+        }
+        
+        .recommendations {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #2ecc71;
+        }
+        
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .action-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid #2ecc71;
+            transition: all 0.3s ease;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .action-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .action-reason {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        .algorithm-explanation {
+            background: #e8f6fd;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .algo-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #3498db;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .algo-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .algo-step {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border-top: 4px solid #3498db;
+        }
+        
+        .step-number {
+            background: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+        
+        .step-description {
+            color: #2c3e50;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .store-layout {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f0f9ff;
+            border-radius: 15px;
+        }
+        
+        .layout-title {
+            text-align: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        
+        .layout-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            aspect-ratio: 2 / 1;
+        }
+        
+        .layout-section {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.8em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .layout-section-icon {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        
+        .layout-connection {
+            position: absolute;
+            border: 2px dashed #2ecc71;
+            z-index: 1;
+        }
+        
+        .optimized-layout {
+            border: 2px solid #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .basket-visualization {
+                grid-template-columns: 1fr;
+            }
+            
+            .algo-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .layout-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(8, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="store-logo">🛒 KROGEMART</div>
+        <h1 class="title">Machine Learning in Action</h1>
+        <h2 class="subtitle">Market Basket Analysis for Intelligent Store Planning</h2>
+        
+        <div class="basket-visualization">
+            <!-- Transaction Data -->
+            <div class="transaction-data">
+                <div class="section-title">
+                    <span class="section-icon">🧾</span>
+                    Transaction Records
+                </div>
+                
+                <div class="transaction-card">
+                    <div class="transaction-id">Transaction #7842</div>
+                    <div class="transaction-items">
+                        Bread, Milk, Eggs, Butter
+                    </div>
+                </div>
+                
+                <div class="transaction-card">
+                    <div class="transaction-id">Transaction #7843</div>
+                    <div class="transaction-items">
+                        Diapers, Baby Food, Wipes, Formula
+                    </div>
+                </div>
+                
+                <div class="transaction-card">
+                    <div class="transaction-id">Transaction #7844</div>
+                    <div class="transaction-items">
+                        Beer, Chips, Salsa, Ice
+                    </div>
+                </div>
+                
+                <div class="transaction-card">
+                    <div class="transaction-id">Transaction #7845</div>
+                    <div class="transaction-items">
+                        Pasta, Ground Beef, Tomato Sauce, Cheese
+                    </div>
+                </div>
+                
+                <div class="transaction-card">
+                    <div class="transaction-id">Transaction #7846</div>
+                    <div class="transaction-items">
+                        Diapers, Beer, Chips
+                    </div>
+                </div>
+                
+                <div class="transaction-card">
+                    <div class="transaction-id">Transaction #7847</div>
+                    <div class="transaction-items">
+                        Bread, Peanut Butter, Jelly
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Market Basket Analysis -->
+            <div class="mba-center">
+                <div class="mba-title">🔍 Association Rule Mining</div>
+                <div class="association-rules">
+                    <div class="rule-card">
+                        <div class="rule-items">Bread</div>
+                        <div class="rule-arrow">➡️</div>
+                        <div class="rule-items">Peanut Butter, Jelly</div>
+                        <div class="rule-metrics" style="grid-column: 1 / span 3;">
+                            <div class="metric">
+                                <div class="metric-label">Support</div>
+                                <div class="metric-value">12%</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Confidence</div>
+                                <div class="metric-value">75%</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Lift</div>
+                                <div class="metric-value">3.2</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-card">
+                        <div class="rule-items">Diapers</div>
+                        <div class="rule-arrow">➡️</div>
+                        <div class="rule-items">Beer</div>
+                        <div class="rule-metrics" style="grid-column: 1 / span 3;">
+                            <div class="metric">
+                                <div class="metric-label">Support</div>
+                                <div class="metric-value">8%</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Confidence</div>
+                                <div class="metric-value">35%</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Lift</div>
+                                <div class="metric-value">2.5</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-card">
+                        <div class="rule-items">Pasta, Ground Beef</div>
+                        <div class="rule-arrow">➡️</div>
+                        <div class="rule-items">Tomato Sauce, Cheese</div>
+                        <div class="rule-metrics" style="grid-column: 1 / span 3;">
+                            <div class="metric">
+                                <div class="metric-label">Support</div>
+                                <div class="metric-value">15%</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Confidence</div>
+                                <div class="metric-value">85%</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Lift</div>
+                                <div class="metric-value">4.1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px; font-size: 0.9em; opacity: 0.9;">
+                    Apriori algorithm reveals which products are frequently purchased together
+                </div>
+            </div>
+            
+            <!-- Business Applications -->
+            <div class="recommendations">
+                <div class="section-title">
+                    <span class="section-icon">💼</span>
+                    Business Applications
+                </div>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-title">Cross-Sell: "Jelly 50% off when you buy PB"</div>
+                        <div class="action-reason">75% of bread buyers also purchase PB & jelly</div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-title">Bundle: "Spaghetti Night Package"</div>
+                        <div class="action-reason">High confidence rule for pasta dinner ingredients</div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-title">Product Placement: Beer near Diapers</div>
+                        <div class="action-reason">Surprising but strong association discovered</div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-title">Checkout Display: Add Butter with Bread</div>
+                        <div class="action-reason">Frequent combination with high lift value</div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-title">Targeted Coupon: Chips with Salsa purchase</div>
+                        <div class="action-reason">Complementary items with strong association</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="algorithm-explanation">
+            <div class="algo-title">How Market Basket Analysis Works</div>
+            <div class="algo-steps">
+                <div class="algo-step">
+                    <div class="step-number">1</div>
+                    <div class="step-description">
+                        Collect transaction data recording which items are purchased together in the same basket
+                    </div>
+                </div>
+                
+                <div class="algo-step">
+                    <div class="step-number">2</div>
+                    <div class="step-description">
+                        Apply the Apriori algorithm to find frequent itemsets that appear in many transactions
+                    </div>
+                </div>
+                
+                <div class="algo-step">
+                    <div class="step-number">3</div>
+                    <div class="step-description">
+                        Generate association rules showing which items predict the purchase of other items
+                    </div>
+                </div>
+                
+                <div class="algo-step">
+                    <div class="step-number">4</div>
+                    <div class="step-description">
+                        Calculate support (frequency), confidence (reliability), and lift (strength) for each rule
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="store-layout">
+            <div class="layout-title">Optimized Store Layout Based on MBA Insights</div>
+            <div class="layout-grid">
+                <!-- Row 1 -->
+                <div class="layout-section">
+                    <div class="layout-section-icon">🥛</div>
+                    Dairy
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">🥚</div>
+                    Eggs
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">🧈</div>
+                    Butter
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">🍞</div>
+                    Bread
+                    <div class="layout-connection" style="width: 100px; height: 100px; border-top: none; border-left: none; top: 50%; left: 100%;"></div>
+                </div>
+                <div class="layout-section optimized-layout">
+                    <div class="layout-section-icon">🥜</div>
+                    Peanut Butter
+                </div>
+                <div class="layout-section optimized-layout">
+                    <div class="layout-section-icon">🍓</div>
+                    Jelly
+                </div>
+                
+                <!-- Row 2 -->
+                <div class="layout-section">
+                    <div class="layout-section-icon">🥩</div>
+                    Meat
+                </div>
+                <div class="layout-section optimized-layout">
+                    <div class="layout-section-icon">🍝</div>
+                    Pasta
+                </div>
+                <div class="layout-section optimized-layout">
+                    <div class="layout-section-icon">🍅</div>
+                    Tomato Sauce
+                </div>
+                <div class="layout-section optimized-layout">
+                    <div class="layout-section-icon">🧀</div>
+                    Cheese
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">🥫</div>
+                    Canned Goods
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">🍯</div>
+                    Condiments
+                </div>
+                
+                <!-- Row 3 -->
+                <div class="layout-section">
+                    <div class="layout-section-icon">🧁</div>
+                    Bakery
+                </div>
+                <div class="layout-section optimized-layout">
+                    <div class="layout-section-icon">👶</div>
+                    Baby Products
+                    <div class="layout-connection" style="width: 100px; height: 50px; border-bottom: none; border-left: none; top: 100%; left: 50%;"></div>
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">🧼</div>
+                    Cleaning
+                </div>
+                <div class="layout-section optimized-layout">
+                    <div class="layout-section-icon">🍺</div>
+                    Beer
+                </div>
+                <div class="layout-section optimized-layout">
+                    <div class="layout-section-icon">🌮</div>
+                    Chips & Salsa
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">🧊</div>
+                    Frozen Foods
+                </div>
+                
+                <!-- Row 4 -->
+                <div class="layout-section">
+                    <div class="layout-section-icon">🥦</div>
+                    Produce
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">💊</div>
+                    Pharmacy
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">📰</div>
+                    Magazines
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">🧻</div>
+                    Paper Goods
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">🥤</div>
+                    Beverages
+                </div>
+                <div class="layout-section">
+                    <div class="layout-section-icon">💰</div>
+                    Checkout
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px; font-size: 0.9em; color: #2c3e50;">
+                Green highlighted sections show strategic placement based on association rules
+            </div>
+        </div>
+        
+        <div class="algorithm-explanation" style="margin-top: 40px; background: #f5f5f5;">
+            <div class="algo-title" style="color: #2c3e50;">Key Metrics in Market Basket Analysis</div>
+            <div class="algo-steps">
+                <div class="algo-step" style="border-top-color: #9b59b6;">
+                    <div class="step-number" style="background: #9b59b6;">S</div>
+                    <div class="step-description">
+                        <strong>Support:</strong> The percentage of transactions containing both items A and B. Measures how frequently the itemset appears in the dataset.
+                    </div>
+                </div>
+                
+                <div class="algo-step" style="border-top-color: #9b59b6;">
+                    <div class="step-number" style="background: #9b59b6;">C</div>
+                    <div class="step-description">
+                        <strong>Confidence:</strong> The likelihood that item B is purchased when item A is purchased. Calculated as Support(A,B)/Support(A).
+                    </div>
+                </div>
+                
+                <div class="algo-step" style="border-top-color: #9b59b6;">
+                    <div class="step-number" style="background: #9b59b6;">L</div>
+                    <div class="step-description">
+                        <strong>Lift:</strong> How much more likely item B is purchased when A is purchased compared to when A is not purchased. Lift > 1 indicates a useful association.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
