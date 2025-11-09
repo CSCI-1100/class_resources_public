@@ -34,20 +34,9 @@
         <div class="container-lg br-8 mt-3" style="clear: both;">
             <div class="text-center text-white p-1">
                 <h1 class="text-white" style="margin-bottom: 0;" id="title">
-                    <i class="bi bi-code-slash fs-650 text-putty-yellow"></i>
-                    &nbsp;Introduction to Programming with Python
+                    <i class="bi bi-code-slash fs-650 text-putty-yellow"></i> Introduction to Programming with Python
                 </h1>
                 <h3 class="ff-script text-putty-yellow">Resources & Study Materials</h3>
-            </div>
-
-            <div class="alert alert-info" role="alert">
-                <div>
-                    <span class="alert-heading fs-450">Programming Module Resources</span>
-                    <p>Access all materials for learning Python programming fundamentals, from basic syntax to interactive labs!</p>
-                </div>
-                <div class="mt-4 p-2">
-                    <a style="float:right;margin-top: -16px;" href="#resources"><button class="bttn-putty-yellow-sm">View Resources&ensp;<i class="bi bi-arrow-down-square-fill"></i></button></a>
-                </div>
             </div>
 
             <div class="row mt-2 ml-1 mb-2 mr-1">
@@ -97,7 +86,7 @@
                     &ensp;Getting Started
                 </button>
                 <br>
-                <button onclick="scrollToSection('interactive-lab')">
+                <button onclick="scrollToSection('activities')">
                     <i class="bi bi-controller fs-450"></i>
                     &ensp;Interactive Lab
                 </button>
@@ -113,9 +102,9 @@
                     <div class="col-md br-8">
                         <div class="title-container-primary-blue">
                             <h2 class="text-putty-yellow">Module Overview</h2>
-                            <h3 class="ff-script">Learn Python programming fundamentals</h3>
                         </div>
                         <div class="scrollbox-wrapper bg-white fs-400">
+                            <h3 class="ff-script">Learn Python programming fundamentals</h3>
                             <p>
                                 Python is one of the most popular and beginner-friendly programming languages in the world. 
                                 In this module, you'll learn the basic concepts of programming using Python, including variables, 
@@ -145,12 +134,13 @@
                                 </ul>
                             </div>
                         </div>
-
-                        <div class="title-container-primary-blue">
-                            <h2 class="text-putty-yellow">Lecture Playlist</h2>
-                        </div>
-                        <div class="scrollbox-wrapper bg-white fs-400">
-                            <iframe width="434" height="241" src="https://www.youtube-nocookie.com/embed/videoseries?si=vNyaBB4c03sGrl3j&amp;list=PLrjCHLkhc_paaLM52sMLMRlPFnFV3NEqk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <div id="playlist">
+                            <div class="title-container-primary-blue">
+                                <h2 class="text-putty-yellow">Lecture Playlist</h2>
+                            </div>
+                            <div class="scrollbox-wrapper bg-white fs-400">
+                                <iframe width="434" height="241" src="https://www.youtube-nocookie.com/embed/videoseries?si=vNyaBB4c03sGrl3j&amp;list=PLrjCHLkhc_paaLM52sMLMRlPFnFV3NEqk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -259,8 +249,8 @@
                     </div>
                 </div>
 
-                <div class="row card-row br-8 pt-3">
-                    <div class="col-xl br-8" id="interactive-lab">
+                <div class="row card-row br-8 pt-3" id="activities">
+                    <div class="col-xl br-8">
                         <div class="title-container-primary-blue">
                             <h2 class="text-putty-yellow">Interactive Python Lab</h2>
                         </div>
@@ -321,24 +311,6 @@
             </div>
         </div>
 
-        <script>
-            let collapse = document.getElementsByClassName("collapse-container");
-            for (let i = 0; i < collapse.length; i++) {
-                collapse[i].addEventListener("click", function() {
-                    this.classList.toggle("active");
-                    var content = this.nextElementSibling;
-                    if (content.style.display === "block") {
-                        content.style.display = "none";
-                    }
-                    else {
-                        content.style.display = "block";
-                    }
-                });
-            }
-
-            function scrollToSection(ID) {
-                document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
-            }
-        </script>
+        <script src="https://csci-1100.github.io/class_resources_public/assets/js/module_default.js"></script>
     </body>
 </html>

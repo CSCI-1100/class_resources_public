@@ -34,20 +34,9 @@
         <div class="container-lg br-8 mt-3" style="clear: both;">
             <div class="text-center text-white p-1">
                 <h1 class="text-white" style="margin-bottom: 0;" id="title">
-                    <i class="bi bi-gear-fill fs-650 text-putty-yellow"></i>
-                    &nbsp;Technology Tips
+                    <i class="bi bi-lightbulb-fill fs-650 text-putty-yellow"></i> Technology Tips
                 </h1>
                 <h3 class="ff-script text-putty-yellow">Resources & Productivity Tools</h3>
-            </div>
-
-            <div class="alert alert-info" role="alert">
-                <div>
-                    <span class="alert-heading fs-450">Technology Tips Resources</span>
-                    <p>Access essential tools and guides for boosting your productivity and digital literacy skills!</p>
-                </div>
-                <div class="mt-4 p-2">
-                    <a style="float:right;margin-top: -16px;" href="#resources"><button class="bttn-putty-yellow-sm">View Resources&ensp;<i class="bi bi-arrow-down-square-fill"></i></button></a>
-                </div>
             </div>
 
             <div class="row mt-2 ml-1 mb-2 mr-1">
@@ -64,10 +53,6 @@
                     <button onclick="scrollToSection('resources')">
                         <i class="bi bi-folder-fill fs-450"></i>
                         Resources
-                    </button>
-                    <button onclick="scrollToSection('video-playlist')">
-                        <i class="bi bi-play-circle-fill fs-450"></i>
-                        Video Playlist
                     </button>
                 </div>
             </nav>
@@ -88,11 +73,6 @@
                     &ensp;Resources
                 </button>
                 <br>
-                <button onclick="scrollToSection('video-playlist')">
-                    <i class="bi bi-play-circle-fill fs-450"></i>
-                    &ensp;Video Playlist
-                </button>
-                <br>
                 <button onclick="window.scrollTo({ top: document.body.scrollHeight, left: 0, behavior: 'smooth' });">
                     <i class="bi bi-arrow-90deg-down"></i>
                     &ensp;<span class="text-putty-yellow">Scroll to bottom</span>
@@ -104,9 +84,9 @@
                     <div class="col-md br-8">
                         <div class="title-container-primary-blue">
                             <h2 class="text-putty-yellow">Module Overview</h2>
-                            <h3 class="ff-script">Essential Skills for Digital Productivity</h3>
                         </div>
                         <div class="scrollbox-wrapper bg-white fs-400">
+                            <h3 class="ff-script">Essential Skills for Digital Productivity</h3>
                             <p>
                                 Mastering technology tools is essential for academic and professional success. 
                                 This collection of technology tips covers fundamental skills from keyboard shortcuts 
@@ -137,11 +117,13 @@
                             </div>
                         </div>
 
-                        <div class="title-container-primary-blue" id="video-playlist">
-                            <h2 class="text-putty-yellow">Video Playlist</h2>
-                        </div>
-                        <div class="scrollbox-wrapper bg-white fs-400">
-                            <iframe width="434" height="241" src="https://www.youtube-nocookie.com/embed/videoseries?si=PAe1i2Puf4rWs-IG&amp;list=PLrjCHLkhc_pbSLZDKj5zQ6XM4y24ZgBCm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <div id="playlist">
+                            <div class="title-container-primary-blue">
+                                <h2 class="text-putty-yellow">Video Playlist</h2>
+                            </div>
+                            <div class="scrollbox-wrapper bg-white fs-400">
+                                <iframe width="434" height="241" src="https://www.youtube-nocookie.com/embed/videoseries?si=PAe1i2Puf4rWs-IG&amp;list=PLrjCHLkhc_pbSLZDKj5zQ6XM4y24ZgBCm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -152,10 +134,6 @@
                             <h2 class="text-putty-yellow">Technology Tips Resources</h2>
                         </div>
                         <div class="scrollbox-wrapper bg-white fs-400">
-                            <p class="text-center mb-2">
-                                Click on any resource below to access the materials.
-                            </p>
-                            
                             <div class="gridbox-2 mt-4">
                                 <div class="border-dotted-primary-blue br-8 p-3 bg-light">
                                     <div class="text-center mb-3">
@@ -241,24 +219,6 @@
             </div>
         </div>
 
-        <script>
-            let collapse = document.getElementsByClassName("collapse-container");
-            for (let i = 0; i < collapse.length; i++) {
-                collapse[i].addEventListener("click", function() {
-                    this.classList.toggle("active");
-                    var content = this.nextElementSibling;
-                    if (content.style.display === "block") {
-                        content.style.display = "none";
-                    }
-                    else {
-                        content.style.display = "block";
-                    }
-                });
-            }
-
-            function scrollToSection(ID) {
-                document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
-            }
-        </script>
+        <script src="https://csci-1100.github.io/class_resources_public/assets/js/module_default.js"></script>
     </body>
 </html>
