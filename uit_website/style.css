@@ -317,31 +317,26 @@ footer {
 
 .scrollbox-xs {
     height: 25vh;
-    min-height: fit-content;
     overflow-y: scroll;
 }
 
 .scrollbox-sm {
     height: 35vh;
-    min-height: fit-content; 
     overflow-y: scroll;
 }
 
 .scrollbox-md {
     height: 45vh;
-    min-height: fit-content; 
     overflow-y: scroll;
 }
 
 .scrollbox-lg {
     height: 55vh;
-    min-height: fit-content; 
     overflow-y: scroll;
 }
 
 .scrollbox-xl {
     height: 70vh;
-    min-height: fit-content; 
     overflow-y: scroll;
 }
 
