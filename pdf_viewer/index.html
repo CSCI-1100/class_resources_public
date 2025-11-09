@@ -207,6 +207,43 @@
             display: block;
         }
 
+        /* Text layer styles */
+        .textLayer {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            opacity: 0.2;
+            line-height: 1.0;
+            user-select: text;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            pointer-events: auto;
+            z-index: 1; /* Lower z-index than annotations */
+        }
+
+        .textLayer span,
+        .textLayer br {
+            color: transparent;
+            position: absolute;
+            white-space: pre;
+            cursor: text;
+            transform-origin: 0% 0%;
+            /* Don't set pointer-events here to avoid overriding annotations */
+        }
+
+        /* Highlight selected text */
+        .textLayer ::selection {
+            background: rgba(0, 102, 255, 0.8);
+        }
+
+        .textLayer ::-moz-selection {
+            background: rgba(0, 100, 255, 0.8);
+        }
+
         /* Annotation layer styles */
         .annotationLayer {
             position: absolute;
@@ -215,11 +252,14 @@
             right: 0;
             bottom: 0;
             overflow: hidden;
+            z-index: 2; /* Higher z-index than text layer */
+            pointer-events: none; /* Let events pass through by default */
         }
 
         /* Specific annotations styles that PDF.js needs */
         .annotationLayer section {
             position: absolute;
+            pointer-events: none; /* Let events pass through by default */
         }
 
         .annotationLayer .linkAnnotation > a {
@@ -229,6 +269,8 @@
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: auto; /* Capture events for links */
+            cursor: pointer;
         }
 
         .annotationLayer .linkAnnotation > a:hover {
@@ -289,7 +331,7 @@
     <!-- Header navigation -->
     <div class="header">
         <div class="page-navigation">
-            <button class="button" id="prev-page">
+            <button class="button" id="prev-page" aria-label="Previous page">
                 <span class="icon">←</span>
                 <span>Previous</span>
             </button>
@@ -297,7 +339,7 @@
                 <input type="number" class="page-input" id="page-num" min="1" value="1">
                 / <span id="page-count">0</span>
             </span>
-            <button class="button" id="next-page">
+            <button class="button" id="next-page" aria-label="Next page">
                 <span>Next</span>
                 <span class="icon">→</span>
             </button>
@@ -340,14 +382,14 @@
         <div class="canvas-container" id="canvas-container">
             <div class="pdf-canvas-wrapper" id="pdf-canvas-wrapper">
                 <canvas id="pdf-canvas"></canvas>
+                <div class="textLayer"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Load PDF.js annotation layer code
-        // This requires loading the pdf_viewer.js file for annotations
         const script = document.createElement('script');
+        // Includes TextLayerBuilder, AnnotationLayerBuilder and other viewer compontents
         script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.js';
         document.head.appendChild(script);
 
@@ -489,84 +531,152 @@
                     item.classList.remove('active');
                     if (parseInt(item.dataset.page) === num) {
                         item.classList.add('active');
-                        // Scroll to the item in the sidebar
                         item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     }
                 });
 
-                // Clear previous annotation layer (if any)
-                const oldLayer = document.querySelector(".annotationLayer");
-                if (oldLayer) {
-                    oldLayer.remove();
+                // Clear previous layers
+                const oldAnnotationLayer = document.querySelector(".annotationLayer");
+                if (oldAnnotationLayer) {
+                    oldAnnotationLayer.remove();
                 }
-
+                
+                const oldTextLayer = document.querySelector(".textLayer");
+                if (oldTextLayer) {
+                    oldTextLayer.remove();
+                }
+                
                 // Get page
                 pdfDoc.getPage(num).then(function(page) {
-                    // Get the original dimensions of the page
+                    // Get original dimensions
                     const viewport = page.getViewport({ scale: 1.0 });
                     currentPageOriginalWidth = viewport.width;
                     currentPageOriginalHeight = viewport.height;
                     
-                    // If no scale has been set yet (first load), calculate fit scale
+                    // Calculate scale if needed
                     if (scale === 1.0 && num === 1) {
                         calculateFitScale();
                         updateZoomValue();
                     }
                     
-                    // Now render with the actual scale
+                    // Create scaled viewport
                     const scaledViewport = page.getViewport({ scale });
                     
-                    // Update the link service
-                    linkService.setDocument(pdfDoc);
-                    linkService.setViewer({
-                        scrollPageIntoView: ({ pageNumber }) => {
-                            if (pageNumber !== currentPage) {
-                                currentPage = pageNumber;
-                                queueRenderPage(currentPage);
-                            }
-                        }
-                    });
-                    
-                    // Set canvas dimensions to match the viewport
+                    // Set canvas dimensions
                     canvas.height = scaledViewport.height;
                     canvas.width = scaledViewport.width;
                     
-                    // Render PDF page into canvas context
+                    // STEP 1: Render the PDF page to canvas
                     const renderContext = {
                         canvasContext: ctx,
                         viewport: scaledViewport
                     };
-
-                    const renderTask = page.render(renderContext);
-
-                    // Wait for rendering to finish then render annotations
-                    renderTask.promise.then(() => {
-                        // Get annotations
-                        return page.getAnnotations();
-                    }).then((annotations) => {
-                        // Render annotations if available
-                        // Create AnnotationLayerBuilder
-                        const annotationLayer = new pdfjsViewer.AnnotationLayerBuilder({
-                            pageDiv: canvas.parentNode,
-                            pdfPage: page,
-                            renderForms: true,
-                            linkService: linkService,
+                    
+                    // Create text layer container
+                    const textLayerDiv = document.createElement('div');
+                    textLayerDiv.className = 'textLayer';
+                    canvasWrapper.appendChild(textLayerDiv);
+                    
+                    // Set text layer dimensions
+                    textLayerDiv.style.width = `${scaledViewport.width}px`;
+                    textLayerDiv.style.height = `${scaledViewport.height}px`;
+                    
+                    // Critical: Set the scale factor CSS variable on the text layer div
+                    textLayerDiv.style.setProperty('--scale-factor', scaledViewport.scale);
+                    
+                    // First render the canvas
+                    page.render(renderContext).promise
+                        .then(() => {
+                            // Now get text content
+                            return page.getTextContent();
+                        })
+                        .then(textContent => {
+                            console.log('Text content for page', num, textContent);
+                            
+                            // Create the render task using renderTextLayer
+                            const renderTextLayerTask = pdfjsLib.renderTextLayer({
+                                textContentSource: textContent, // Use textContentSource instead of textContent
+                                container: textLayerDiv,
+                                viewport: scaledViewport,
+                                textDivs: []
+                            });
+                            
+                            return renderTextLayerTask.promise.then(() => {
+                                console.log('Text layer rendered successfully for page', num);
+                                return page.getAnnotations();
+                            });
+                        })
+                        .then(annotations => {
+                            try {
+                                if (annotations && annotations.length > 0) {
+                                    // Create annotation layer container
+                                    const annotationLayerDiv = document.createElement('div');
+                                    annotationLayerDiv.className = 'annotationLayer';
+                                    canvasWrapper.appendChild(annotationLayerDiv);
+                                    
+                                    // Set up link service with a `inimal viewer implementation
+                                    linkService.setDocument(pdfDoc);
+                                    
+                                    const mockViewer = {
+                                        isInPresentationMode: false,
+                                        rotatePages: () => {},
+                                        scrollPageIntoView: ({ pageNumber }) => {
+                                            if (pageNumber !== currentPage) {
+                                                currentPage = pageNumber;
+                                                queueRenderPage(currentPage);
+                                            }
+                                        }
+                                    };
+                                    
+                                    linkService.setViewer(mockViewer);
+                                    
+                                    // Create a fresh event bus for each page
+                                    const eventBus = new pdfjsViewer.EventBus();
+                                    
+                                    // Render annotations with careful error handling
+                                    try {
+                                        const annotationLayer = new pdfjsViewer.AnnotationLayerBuilder({
+                                            pageDiv: annotationLayerDiv,
+                                            pdfPage: page,
+                                            renderForms: true,
+                                            linkService: linkService,
+                                            eventBus: eventBus
+                                        });
+                                        
+                                        annotationLayer.render(scaledViewport.clone({ dontFlip: true }));
+                                    } catch (annotError) {
+                                        console.warn('Error rendering annotations for page', num, annotError);
+                                    }
+                                }
+                            } catch (error) {
+                                console.warn('Error setting up annotations for page', num, error);
+                            }
+                            
+                            // Update rendering state
+                            pageRendering = false;
+                            if (pageNumPending !== null) {
+                                renderPage(pageNumPending);
+                                pageNumPending = null;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error in rendering process for page', num, error);
+                            pageRendering = false;
+                            if (pageNumPending !== null) {
+                                renderPage(pageNumPending);
+                                pageNumPending = null;
+                            }
                         });
-
-                        annotationLayer.render(scaledViewport.clone({ dontFlip: true }));
-                        console.log(annotationLayer);
-                        
-                        // Update rendering state
-                        pageRendering = false;
-                        if (pageNumPending !== null) {
-                            // New page rendering is pending
-                            renderPage(pageNumPending);
-                            pageNumPending = null;
-                        }
-                    });
+                }).catch(error => {
+                    console.error('Error getting page', num, error);
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
                 });
             }
-
+       
             /**
              * If another page rendering in progress, wait until it finishes.
              * Otherwise, execute rendering immediately.
