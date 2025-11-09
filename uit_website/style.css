@@ -308,7 +308,7 @@ footer {
     padding: 1rem;
 }
 
-.scrollbox-xs, .scrollbox-sm, .scrollbox-md, .scrollbox-lg {
+.scrollbox-xs, .scrollbox-sm, .scrollbox-md, .scrollbox-lg, .scrollbox-xl {
     border-radius: 3px;
     background-color: transparent;
     border-bottom: 1px solid hsl(var(--clr-light-gray));
@@ -335,6 +335,12 @@ footer {
 
 .scrollbox-lg {
     height: 55vh;
+    min-height: fit-content; 
+    overflow-y: scroll;
+}
+
+.scrollbox-xl {
+    height: 65vh;
     min-height: fit-content; 
     overflow-y: scroll;
 }
@@ -392,6 +398,8 @@ and (max-width: 440px) {
 }
 
 .tab, .tab-purple {
+    display: flex;
+    flex-direction: column;
     padding: 0.5rem;
     margin-bottom: none;
     overflow: hidden;
