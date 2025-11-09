@@ -367,6 +367,7 @@ and (max-width: 760px) {
 and (max-width: 700px) {
     .scrollbox-xs, .scrollbox-sm, .scrollbox-md, .scrollbox-lg, .scrollbox-xl {
         height: fit-content;
+        overflow-y: hidden;
     }
 }
 
