@@ -402,10 +402,6 @@ and (max-width: 440px) {
     .bg-light-gray { background-color: hsl( var(--clr-light-gray) )!important; }
     .bg-accent-light { background-color: hsl( var(--clr-accent-dark) )!important; }
 
-    body {
-        color: white!important;
-    }
-
     .alert-info {
         background-color: #306c67!important;
         color: #a6d1f3!important;
@@ -421,7 +417,7 @@ and (max-width: 440px) {
         color: white!important;
     }
 
-    p {
+    body, p, li {
         color: white!important;
     }
 
