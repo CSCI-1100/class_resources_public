@@ -407,6 +407,10 @@ and (max-width: 440px) {
         color: #a6d1f3!important;
     }
 
+    .highlight {
+        background-color: hsl(49deg 25% 27%)!important;
+    }
+
     .card-row {
         background-color: hsl( var(--clr-dark) )!important;
         color: white!important;
