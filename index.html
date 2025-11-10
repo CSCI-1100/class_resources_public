@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>CSCI 1100 - Free Learning Resources</title>
+        <meta name="description" content="Free, open educational resources for digital literacy, programming, AI, and data literacy. Available for educators, students, and self-learners.">
+        <meta name="author" content="Ryan Haas">
+        <meta name="keywords" content="csci, 1100, free, learning, resources, digital literacy, open education, programming, python, AI, machine learning, data literacy, using, information, technology, uit, etsu, east, tennessee, computing, university">
+        <meta name="robots" content="noarchive">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        
+        <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link type="text/css" rel="stylesheet" href="./uit_website/style.css">
+
+        <script type="application/javascript"
+            src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+            crossorigin="anonymous"></script>
+        <script type="application/javascript"
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script
+            type="application/javascript"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+
+        <style>
+            .sort.asc::after {
+                content: "\002B06";
+                padding-left: 3px;
+            }
+            .sort.desc::after {
+                content: "\002B07";
+                padding-left: 3px
+            }
+            #modules-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                padding: 12px;
+            }
+
+            @media only screen and (max-width: 540px) {
+                /* Just one semester per row on small screen */
+                #modules-container {
+                    display: block;
+                    padding: 12px;
+                }
+            }
+        </style>
+    </head>
+    
+    <body class="body-bg-img">
+        <div class="container-lg br-8 mt-3" style="clear: both; padding: 0;">
+            <div class="text-center text-white p-1">
+                <h1 class="text-white" style="margin-bottom: 0;" id="title">
+                    <i class="bi bi-bookmark-heart fs-650 text-putty-yellow"></i> CSCI 1100 - Free Learning Resources
+                </h1>
+                <h2 class="ff-script text-light" style="text-transform: none; font-weight: 400;">Open Educational Materials for Digital Literacy</h2>
+            </div>
+
+            <div class="row mt-2 ml-1 mb-2 mr-1">
+                <div class="col-sm center text-white fs-200 mt-5 pr-3 pl-5">
+                    <i class="bi bi-pen-fill"></i>&nbsp;Ryan Haas, Asst. Director of Using Information Technology
+                    <br>
+                    <div class="mt-2"><i class="bi bi-archive"></i>&nbsp;Free Learning Resources</div>
+                    <br>
+                </div>
+            </div>
+
+            <nav class="tab show-when-small fs-300 br-8 mb-2 shadow" style="z-index: 10; border: 1px dotted white;">
+                <div class="d-flex justify-content-center">
+                    <button onclick="window.open(`https://www.etsu.edu/cbat/computing/csci_1100_-_using_information_technology_uit/index.html`)">
+                        <i class="bi bi-house-fill fs-450"></i>
+                        Main Site
+                    </button>
+                    <button onclick="scrollToSection('modules-list')">
+                        <i class="bi bi-folder-fill fs-450"></i>
+                        Resources
+                    </button>
+                    <button onclick="scrollToSection('about')">
+                        <i class="bi bi-info-circle-fill fs-450"></i>
+                        About
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <div class="container-lg br-8 mb-4 bg-light" style="clear: both; padding: 0; border: 1px dotted white;" id="main" role="main">
+            <div class="tab hide-when-small fs-300 br-8 mb-2 border shadow"
+                style="z-index: 10; margin-top: -130px; margin-left: -260px; position: fixed;">
+                <div class="text-center">
+                    <span class="text-light fs-450 ff-sans-bold text-center">Navigation<hr color="#9A97D4"></span>
+                </div>
+                <button onclick="window.scrollTo({ top:0, left:0, behavior: 'smooth' })">
+                    <i class="bi bi-arrow-90deg-up"></i>
+                    &ensp;<span class="text-light">Scroll to top</span>
+                </button>
+                <button onclick="window.open(`https://www.etsu.edu/cbat/computing/csci_1100_-_using_information_technology_uit/index.html`)">
+                    <i class="bi bi-house-fill fs-450"></i>
+                    &ensp;Main Site
+                </button>
+                <button onclick="scrollToSection('modules-list')">
+                    <i class="bi bi-folder-fill fs-450"></i>
+                    &ensp;Resources
+                </button>
+                <button onclick="scrollToSection('about')">
+                    <i class="bi bi-info-circle-fill fs-450"></i>
+                    &ensp;About
+                </button>
+                <button onclick="window.scrollTo({ top: document.body.scrollHeight, left: 0, behavior: 'smooth' });">
+                    <i class="bi bi-arrow-90deg-down"></i>
+                    &ensp;<span class="text-light">Scroll to bottom</span>
+                </button>
+            </div>
+
+            <div class="scrollbox-wrapper br-8 bg-white" style="margin: 0; padding: 0;">
+                <div class="title-container-primary-blue">
+                    <h2 class="text-putty-yellow">Available Learning Modules</h2>
+                </div>
+                <div class="scrollbox-xl" id="modules-list">
+                    <ul class="list bg-white fs-400" style="border: none;" id="modules-container">
+                         <li class="border-dotted-primary-blue br-8 p-3 bg-light">
+                            <a class="text-primary-blue text-left fs-550"
+                             href="https://csci-1100.github.io/class_resources_public/tech_tips/">🔥 Techology Tips</a>
+                            <div class="text-left">
+                                From boosting productivity with keyboard shortcuts to organizing your digital life with proper file management, this collection of technology tips covers fundamental skills from keyboard shortcuts to file organization, helping students work more efficiently and effectively.
+                            </div>
+                        </li>
+                        <li class="border-dotted-primary-blue br-8 p-3 bg-light">
+                            <a class="text-primary-blue text-left fs-550"
+                             href="https://csci-1100.github.io/class_resources_public/intro_to_programming_with_python/">🐍 Intro to Programming with Python</a>
+                            <div class="text-left">
+                                Learning the fundamentals of writing code. Students learn basic programming concepts, syntax, and practice computational thinking approaches to problem-solving.
+                            </div>
+                        </li>
+                        <li class="border-dotted-primary-blue br-8 p-3 bg-light">
+                            <a class="text-primary-blue text-left fs-550"
+                             href="https://csci-1100.github.io/class_resources_public/data_literacy/">📊 Data Literacy</a>
+                            <div class="text-left">
+                                Understanding, interpreting, and using data. Students learn to analyze data, visualize it using charts and graphs, and make data-driven decisions.
+                            </div>
+                        </li>
+                        <li class="border-dotted-primary-blue br-8 p-3 bg-light">
+                            <a class="text-primary-blue text-left fs-550"
+                             href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/">🤖 AI & Machine Learning</a>
+                            <div class="text-left">
+                                Demystify AI! Learn about the different types of AI, the data-driven process of Machine Learning, how to maximize your prompting power, and the ethical dimensions around AI technologies and their use.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row br-8 mt-2 pt-2" id="about">
+                <div class="col-md">
+                    <div class="title-container-primary-blue">
+                        <h2 class="text-putty-yellow">About These Resources</h2>
+                    </div>
+                    <div class="scrollbox-wrapper bg-white">
+                        <div class="scrollbox-md fs-400">
+                            <p class="mt-2">
+                                These educational materials are freely available to everyone—whether you're a self-learner 
+                                building your digital literacy skills, an educator looking for class resources, or an 
+                                instructional designer seeking materials to adapt for your own courses.
+                            </p>
+                            <p class="mt-2">
+                                <span class="ff-sans-bold">License & Usage:</span> All materials may be accessed, used, and 
+                                modified freely for educational purposes. Commercial use is not permitted. We encourage 
+                                educators to adapt these resources for their own teaching contexts and welcome feedback 
+                                (including criticism) and collaboration.
+                            </p>
+                            <p class="mt-2">
+                                <span class="ff-sans-bold">Our Mission:</span> These resources are part of an effort to 
+                                promote wider adoption of modern curriculum topics in foundational digital literacy courses—including 
+                                data literacy, digital content creation, AI, and emerging technology trends—which traditionally 
+                                focus primarily on computer applications. This initiative also affirms human-centric course 
+                                design that doesn't rely on commercial textbooks and courseware, instead emphasizing 
+                                free and open-source education and collaborative development.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="title-container-primary-blue">
+                        <h2 class="text-putty-yellow">Questions or Feedback?</h2>
+                    </div>
+                    <div class="scrollbox-wrapper bg-white">
+                        <div class="scrollbox-md fs-400">
+                            <p>
+                                Have questions about these resources? Want to collaborate or provide feedback? 
+                                Interested in contributing to the development of additional modules?
+                                <a href="mailto:csci1100@etsu.edu?subject=CSCI 1100 - Learning Resources Inquiry">We'd love to hear from you</a>.
+                            </p>
+                            <p class="mt-2">
+                                <span class="ff-sans-bold">Coming Soon:</span> Additional modules covering more topics in 
+                                digital literacy and emerging technologies will be released in the coming months.
+                            </p>
+                            <div class="text-center mt-3">
+                                <a class="text-primary-blue" href="mailto:csci1100@etsu.edu">
+                                    <button class="bttn-white-sm">
+                                        <i class="bi bi-envelope-at fs-450"></i>&ensp;csci1100@etsu.edu
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function scrollToSection(ID) {
+                document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
+            }
+        </script>
+    </body>
+</html>
