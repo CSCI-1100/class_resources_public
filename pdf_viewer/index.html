@@ -522,7 +522,17 @@
             if (pptxUrl) {
                 originalPowerPointUrl = pptxUrl;
                 downloadButton.onclick = () => {
-                    window.location.href = originalPowerPointUrl;
+                    // Create an invisible <a> element
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = originalPowerPointUrl;
+                    downloadLink.download = originalPowerPointUrl.split('/').pop(); // You can customize the file name here
+                    document.body.appendChild(downloadLink);
+
+                    // Trigger the download by clicking the <a> element
+                    downloadLink.click();
+
+                    // Remove the <a> element after the download is triggered
+                    document.body.removeChild(downloadLink);
                 };
             } else {
                 downloadButton.style.display = 'none';
