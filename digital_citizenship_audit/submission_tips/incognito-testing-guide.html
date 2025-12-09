@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Your Link in Private/Incognito Mode</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .header .subtitle {
+            font-size: 24px;
+            color: #e53e3e;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .header .warning {
+            background: #fff5f5;
+            border-left: 6px solid #e53e3e;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 18px;
+            color: #742a2a;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .why-section {
+            background: #edf2f7;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 3px solid #4299e1;
+        }
+
+        .why-section h2 {
+            color: #2c5282;
+            font-size: 28px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .why-section p {
+            font-size: 18px;
+            color: #2d3748;
+            line-height: 1.8;
+        }
+
+        .steps-container {
+            margin-bottom: 50px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f7fafc;
+            border-radius: 15px;
+            border: 3px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            color: #2d3748;
+            font-size: 26px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .step-content p {
+            color: #4a5568;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .browsers-section {
+            margin-top: 50px;
+        }
+
+        .browsers-section h2 {
+            text-align: center;
+            font-size: 36px;
+            color: #2d3748;
+            margin-bottom: 40px;
+            font-weight: 800;
+        }
+
+        .browser-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .browser-card {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .browser-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .browser-card.chrome {
+            border-color: #4285f4;
+        }
+
+        .browser-card.chrome:hover {
+            border-color: #1967d2;
+            background: #e8f0fe;
+        }
+
+        .browser-card.edge {
+            border-color: #0078d4;
+        }
+
+        .browser-card.edge:hover {
+            border-color: #005a9e;
+            background: #deecf9;
+        }
+
+        .browser-card.firefox {
+            border-color: #ff7139;
+        }
+
+        .browser-card.firefox:hover {
+            border-color: #e25525;
+            background: #fff4e5;
+        }
+
+        .browser-card.safari {
+            border-color: #006cff;
+        }
+
+        .browser-card.safari:hover {
+            border-color: #0051cc;
+            background: #e5f1ff;
+        }
+
+        .browser-icon {
+            font-size: 72px;
+            margin-bottom: 20px;
+        }
+
+        .browser-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .browser-mode {
+            font-size: 18px;
+            color: #718096;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .shortcut {
+            background: #2d3748;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: inline-block;
+            letter-spacing: 1px;
+        }
+
+        .shortcut.windows {
+            background: #0078d4;
+        }
+
+        .shortcut.mac {
+            background: #555;
+        }
+
+        .or-text {
+            color: #a0aec0;
+            font-size: 14px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .menu-path {
+            color: #4a5568;
+            font-size: 15px;
+            line-height: 1.6;
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 6px;
+            border-left: 3px solid #cbd5e0;
+        }
+
+        .video-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .video-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .video-section p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+
+        .video-link {
+            display: inline-block;
+            background: white;
+            color: #f5576c;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .video-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .final-reminder {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 50px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .final-reminder h2 {
+            font-size: 36px;
+            color: #742a2a;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .final-reminder p {
+            font-size: 20px;
+            color: #2d3748;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .final-reminder strong {
+            color: #c53030;
+            font-size: 24px;
+        }
+
+        .incognito-icon {
+            font-size: 120px;
+            text-align: center;
+            margin: 30px 0;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Test Your Link BEFORE Submitting! 🔒</h1>
+            <div class="subtitle">How to Check if Your Link is Actually Public</div>
+            <div class="warning">
+                <strong>⚠️ CRITICAL:</strong> If your professor can't access your link, your hard work doesn't count! Test your link in private/incognito mode to make sure ANYONE can view it without needing special permissions.
+            </div>
+        </div>
+
+        <div class="why-section">
+            <h2>🤔 Why Use Private/Incognito Mode?</h2>
+            <p>
+                When you're logged into Google, you can see your own files even if they're private. Private/Incognito mode simulates what your professor sees when they click your link. If you can't access your project in incognito mode, <strong>neither can your professor</strong>, and you'll get a zero even though you completed the work!
+            </p>
+        </div>
+
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Open a Private/Incognito Window</h3>
+                    <p>Use the keyboard shortcuts below or find it in your browser's menu. See the browser-specific instructions below for details.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Paste Your Link</h3>
+                    <p>Copy the link you're planning to submit and paste it into the address bar of the private/incognito window.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Check If It Works!</h3>
+                    <p><strong>✅ SUCCESS:</strong> If you can view your project → Your link is public! You're good to submit.<br>
+                    <strong>❌ FAILURE:</strong> If you get an error or "Access Denied" → Your link is private! Fix the sharing settings NOW!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="incognito-icon">🕵️</div>
+
+        <div class="browsers-section">
+            <h2>Browser-Specific Instructions</h2>
+            
+            <div class="browser-grid">
+                <!-- Chrome -->
+                <div class="browser-card chrome">
+                    <div class="browser-icon">🔵</div>
+                    <div class="browser-name">Google Chrome</div>
+                    <div class="browser-mode">"Incognito Window"</div>
+                    <div class="shortcut windows">Ctrl + Shift + N</div>
+                    <div class="or-text">Windows/Linux</div>
+                    <div class="shortcut mac">Cmd + Shift + N</div>
+                    <div class="or-text">Mac</div>
+                    <div style="margin: 15px 0; color: #a0aec0; font-weight: 600;">OR</div>
+                    <div class="menu-path">
+                        Click three dots (⋮) → <strong>New Incognito window</strong>
+                    </div>
+                </div>
+
+                <!-- Edge -->
+                <div class="browser-card edge">
+                    <div class="browser-icon">🔷</div>
+                    <div class="browser-name">Microsoft Edge</div>
+                    <div class="browser-mode">"InPrivate Window"</div>
+                    <div class="shortcut windows">Ctrl + Shift + N</div>
+                    <div class="or-text">Windows</div>
+                    <div class="shortcut mac">Cmd + Shift + N</div>
+                    <div class="or-text">Mac</div>
+                    <div style="margin: 15px 0; color: #a0aec0; font-weight: 600;">OR</div>
+                    <div class="menu-path">
+                        Click three dots (...) → <strong>New InPrivate window</strong>
+                    </div>
+                </div>
+
+                <!-- Firefox -->
+                <div class="browser-card firefox">
+                    <div class="browser-icon">🦊</div>
+                    <div class="browser-name">Mozilla Firefox</div>
+                    <div class="browser-mode">"Private Window"</div>
+                    <div class="shortcut windows">Ctrl + Shift + P</div>
+                    <div class="or-text">Windows/Linux</div>
+                    <div class="shortcut mac">Cmd + Shift + P</div>
+                    <div class="or-text">Mac</div>
+                    <div style="margin: 15px 0; color: #a0aec0; font-weight: 600;">OR</div>
+                    <div class="menu-path">
+                        Click three lines (≡) → <strong>New private window</strong>
+                    </div>
+                </div>
+
+                <!-- Safari -->
+                <div class="browser-card safari">
+                    <div class="browser-icon">🧭</div>
+                    <div class="browser-name">Safari</div>
+                    <div class="browser-mode">"Private Window"</div>
+                    <div class="shortcut mac">Cmd + Shift + N</div>
+                    <div class="or-text">Mac Only</div>
+                    <div style="margin: 15px 0; color: #a0aec0; font-weight: 600;">OR</div>
+                    <div class="menu-path">
+                        <strong>File</strong> menu → <strong>New Private Window</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-section">
+            <h2>📹 Video Tutorial</h2>
+            <p>Watch this quick video demonstration showing how to open private windows in different browsers:</p>
+            <a href="https://youtu.be/1XP74MY7U2g" target="_blank" class="video-link">
+                ▶️ Watch on YouTube
+            </a>
+        </div>
+
+        <div class="final-reminder">
+            <h2>🚨 FINAL REMINDER 🚨</h2>
+            <p>
+                Test your link in incognito/private mode <strong>BEFORE</strong> you submit it to the D2L Dropbox! 
+                <br><br>
+                If it doesn't work in incognito mode, fix your sharing settings and <strong>RE-SUBMIT to the D2L DROPBOX</strong> tonight!
+                <br><br>
+                <strong>DO NOT EMAIL YOUR PROFESSOR!</strong>
+                <br><br>
+                Fix it. Test it. Submit it. Save yourself!
+            </p>
+        </div>
+    </div>
+</body>
+</html>
