@@ -418,7 +418,7 @@
                 <input 
                     type="url" 
                     id="linkInput" 
-                    placeholder="https://sites.google.com/view/your-site-name or https://docs.google.com/... or https://1drv.ms/..."
+                    placeholder="https://sites.google.com/view/your-site-name or https://docs.google.com/... or https://etsu365-my.sharepoint.com"
                     autocomplete="off"
                 >
             </div>
@@ -661,7 +661,12 @@
             // Google Sites and many other platforms block iframe embedding
             // Show alternative method immediately for known blocking platforms
             else if (linkType === 'google-sites' || url.includes('sites.google.com')) {
-                showAlternativeTest();
+                showGoogleSitesAlternativeTest();
+                return;
+            }
+
+            else if (linkType === 'onedrive') {
+                showOneDriveAlternativeTest();
                 return;
             }
             
@@ -786,7 +791,7 @@
             showHelp(linkType);
         }
 
-        function showAlternativeTest() {
+        function showGoogleSitesAlternativeTest() {
             const previewContainer = document.getElementById('previewContainer');
             previewContainer.style.display = 'block';
             
@@ -836,6 +841,96 @@
             `;
             
             showStatus('ℹ️ Google Sites blocks iframe previews. Use the incognito testing method described below!', 'info');
+            showHelp(linkType);
+        }
+
+        function showOneDriveAlternativeTest() {
+            const previewContainer = document.getElementById('previewContainer');
+            previewContainer.style.display = 'block';
+            
+            const iframeWrapper = document.querySelector('.iframe-wrapper');
+            iframeWrapper.innerHTML = `
+                <div style="padding: 40px; text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">☁️</div>
+                    <h3 style="color: #2d3748; margin-bottom: 15px; font-size: 1.5rem;">OneDrive/SharePoint Detected</h3>
+                    <p style="color: #4a5568; margin-bottom: 25px; line-height: 1.6;">
+                        OneDrive and SharePoint block iframe previews for security. This is normal!<br>
+                        Use the method below to properly test your link.
+                    </p>
+                    <div style="background: #e6fffa; padding: 25px; border-radius: 10px; margin-bottom: 20px; border: 3px solid #38b2ac;">
+                        <h4 style="color: #234e52; margin-bottom: 15px; font-size: 1.2rem;">🎯 How to Test Your OneDrive Link:</h4>
+                        <ol style="text-align: left; color: #2c5282; line-height: 2; margin-bottom: 20px;">
+                            <li><strong>Open an Incognito/Private window</strong> (Ctrl+Shift+N or Cmd+Shift+N)</li>
+                            <li><strong>Paste your link</strong> into the incognito window</li>
+                            <li><strong>Check what loads:</strong>
+                                <ul style="margin-top: 10px;">
+                                    <li>✅ If you can view the file → Link is PUBLIC!</li>
+                                    <li>❌ If you see "Sign in" or "Access Denied" → Link is PRIVATE!</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <button
+                            id="copy-link-btn"
+                            onclick="copyLink(this);" 
+                            style="background: linear-gradient(135deg, #38b2ac, #319795); color: white; padding: 15px 35px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(56, 178, 172, 0.4); transition: all 0.3s ease;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(56, 178, 172, 0.6)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(56, 178, 172, 0.4)';"
+                        >
+                            🔗 Copy Your Link to Test
+                        </button>
+                        <p style="color: #718096; font-size: 0.9rem; margin-top: 15px; font-style: italic;">
+                            Click the button above, then open an incognito window and paste the link there
+                        </p>
+                    </div>
+                    
+                    <div style="background: #fff5f5; padding: 25px; border-radius: 10px; border-left: 4px solid #f56565; margin-bottom: 20px;">
+                        <p style="color: #742a2a; font-weight: 600; margin-bottom: 15px; font-size: 1.1rem;">⚠️ Common OneDrive Mistakes:</p>
+                        <ul style="text-align: left; color: #742a2a; line-height: 1.8;">
+                            <li>Setting link to <strong>"Specific people"</strong> instead of <strong>"Anyone"</strong></li>
+                            <li>Sharing via email instead of using <strong>"Copy link"</strong></li>
+                            <li>Not clicking the <strong>gear/settings icon</strong> before copying the link</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #deecf9; padding: 25px; border-radius: 10px; border: 3px solid #0078d4;">
+                        <h4 style="color: #005a9e; margin-bottom: 15px; font-size: 1.2rem;">📋 How to Fix OneDrive Sharing:</h4>
+                        <ol style="text-align: left; color: #2c5282; line-height: 1.8; margin-bottom: 15px; padding-left: 25px;">
+                            <li>Go to <strong>office.com/apps</strong> or log into Outlook and find OneDrive</li>
+                            <li>Find your file and click the <strong>Share icon</strong></li>
+                            <li>Click the <strong>gear/settings icon ⚙️</strong> next to "Copy link"</li>
+                            <li>Under "The link works for", select <strong>"Anyone"</strong></li>
+                            <li>Click <strong>"Apply"</strong> (APPPPLLLY!)</li>
+                            <li>Click the <strong>back arrow</strong> to return to the share dialog</li>
+                            <li>Now click <strong>"Copy link"</strong></li>
+                            <li>Hover over the copy button - it should say <strong>"Anyone can view"</strong></li>
+                        </ol>
+                        <div style="background: #fff5f5; padding: 15px; border-radius: 8px; border-left: 4px solid #f56565;">
+                            <p style="color: #742a2a; font-weight: 600; margin-bottom: 8px;">⚠️ DON'T:</p>
+                            <p style="color: #742a2a; margin-bottom: 12px;">Share by typing someone's email - this restricts access!</p>
+                            <p style="color: #2f855a; font-weight: 600; margin-bottom: 8px;">✅ DO:</p>
+                            <p style="color: #2f855a;">Use the "Copy link" button AFTER setting it to "Anyone"</p>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fa709980 0%, #fee14095 100%); padding: 25px; border-radius: 10px; margin-top: 25px;">
+                        <p style="color: #2d3748; line-height: 1.8; font-weight: 600; font-size: 1.05rem;">
+                            ⚠️ Always just click <strong>"Anyone"</strong>. Don't share it to an individual person or email.
+                            It's annoying, things don't work as expected, your instructor has to request access, 
+                            you don't see the request for 3 days... Just select <strong>Anyone</strong>!
+                        </p>
+                    </div>
+
+                    <div style="background: #f7fafc; padding: 20px; border-radius: 10px; margin-top: 20px; border: 2px solid #cbd5e0;">
+                        <h4 style="color: #2d3748; margin-bottom: 12px; font-size: 1rem;">💡 Pro Tip:</h4>
+                        <p style="color: #4a5568; line-height: 1.6;">
+                            By default, OneDrive sets permission to <strong>"Can edit"</strong>. You can change this to 
+                            <strong>"Can view"</strong> if you don't want others to modify your file.
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            showStatus('ℹ️ OneDrive/SharePoint blocks iframe previews. Use the incognito testing method shown above!', 'info');
             showHelp(linkType);
         }
 
