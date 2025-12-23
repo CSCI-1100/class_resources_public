@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔗 Share Link Checker - Test Your Public Links</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f8f9fa;
+        }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+
+        .header .warning {
+            background: #fff5f5;
+            border-left: 6px solid #e53e3e;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #742a2a;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .checker-section {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 3px solid #e2e8f0;
+        }
+
+        .checker-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #75acc4;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .status-message {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .status-message.info {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            color: #234e52;
+            display: block;
+        }
+
+        .status-message.success {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            color: #22543d;
+            display: block;
+        }
+
+        .status-message.error {
+            background: #fff5f5;
+            border-left: 4px solid #f56565;
+            color: #742a2a;
+            display: block;
+        }
+
+        .status-message.warning {
+            background: #fffaf0;
+            border-left: 4px solid #ed8936;
+            color: #7c2d12;
+            display: block;
+        }
+
+        .preview-container {
+            margin-top: 20px;
+        }
+
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            background: #f7fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        .iframe-wrapper iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+
+        .iframe-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #4a5568;
+        }
+
+        .spinner {
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .help-section {
+            background: #edf2f7;
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 3px solid #cbd5e0;
+            display: none;
+        }
+
+        .help-section.show {
+            display: block;
+        }
+
+        .help-section h3 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .help-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .help-content h4 {
+            color: #2c5282;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .help-content p, .help-content ol, .help-content ul {
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .help-content ol, .help-content ul {
+            padding-left: 25px;
+        }
+
+        .help-content li {
+            margin-bottom: 10px;
+        }
+
+        .help-content strong {
+            color: #2d3748;
+        }
+
+        .help-content code {
+            background: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Lucida Console', monospace;
+            color: #e53e3e;
+        }
+
+        .alert-box {
+            background: #fed7d7;
+            border: 2px solid #fc8181;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .alert-box strong {
+            color: #c53030;
+            font-size: 1.1rem;
+        }
+
+        .platform-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .badge-google {
+            background: #e8f0fe;
+            color: #1967d2;
+            border: 2px solid #4285f4;
+        }
+
+        .badge-microsoft {
+            background: #deecf9;
+            color: #005a9e;
+            border: 2px solid #0078d4;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header .subtitle {
+                font-size: 1rem;
+            }
+
+            .checker-section {
+                padding: 20px;
+            }
+
+            .checker-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .iframe-wrapper iframe {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+                border-radius: 8px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header .warning {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+
+            .checker-section {
+                padding: 15px;
+            }
+        }
+
+        .link-type-indicator {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .detected-google {
+            background: #e8f0fe;
+            color: #1967d2;
+        }
+
+        .detected-microsoft {
+            background: #deecf9;
+            color: #005a9e;
+        }
+
+        .detected-unknown {
+            background: #f7fafc;
+            color: #4a5568;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="bi bi-link-45deg" style="font-size: 1.5em;"></i> Share Link Checker</h1>
+            <div class="subtitle">Test if your link is truly public before submitting!</div>
+            <div class="warning">
+                <strong>⚠️ IMPORTANT:</strong> This tool simulates what your instructor sees when they click your link. If the preview shows an error, login screen, or "Access Denied", your link is NOT public and needs to be fixed!
+            </div>
+        </div>
+
+        <div class="checker-section">
+            <h2><i class="bi bi-clipboard2-check" style="font-size: 1.2em;"></i> Test Your Link</h2>
+            
+            <div class="input-group">
+                <label for="linkInput">Paste your Google Sites, Google Docs, or OneDrive/SharePoint link here:</label>
+                <input 
+                    type="url" 
+                    id="linkInput" 
+                    placeholder="https://sites.google.com/view/your-site-name or https://docs.google.com/... or https://1drv.ms/..."
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="testLink()">Test Link</button>
+                <button class="btn btn-secondary" onclick="clearTest()">🗑️ Clear</button>
+            </div>
+
+            <div id="statusMessage" class="status-message"></div>
+            <div id="linkTypeIndicator"></div>
+
+            <div id="previewContainer" class="preview-container" style="display: none;">
+                <h3 style="color: #2d3748; margin-bottom: 15px;">Preview (Incognito Mode Simulation):</h3>
+                <div class="iframe-wrapper">
+                    <div id="iframeLoading" class="iframe-loading">
+                        <div class="spinner"></div>
+                        <p>Loading preview...</p>
+                    </div>
+                    <iframe 
+                        id="previewFrame" 
+                        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                        referrerpolicy="no-referrer"
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Section for Google Sites -->
+        <div id="helpGoogleSites" class="help-section">
+            <h3>🌐 How to Fix: Google Sites</h3>
+            
+            <div class="help-content">
+                <h4>Common Problems:</h4>
+                <ul>
+                    <li>You shared the <strong>EDIT link</strong> instead of the <strong>PUBLISHED link</strong></li>
+                    <li>Your site is not published</li>
+                    <li>Your site is set to "Restricted" instead of "Anyone"</li>
+                </ul>
+
+                <h4>How to Fix:</h4>
+                <ol>
+                    <li><strong>Click "Publish"</strong> button in the top right corner</li>
+                    <li>Enter a <strong>unique web address</strong> (e.g., "yourname-dca-fall25")</li>
+                    <li>Under "Who can view my site", click <strong>MANAGE</strong></li>
+                    <li>Select <strong>"Anyone"</strong> (not "People in [your organization]")</li>
+                    <li>Click <strong>"Publish"</strong></li>
+                    <li>Click the <strong>link icon</strong> at the top and click <strong>"Copy published site link"</strong></li>
+                </ol>
+
+                <div class="alert-box">
+                    <strong>⚠️ WRONG LINK:</strong> If your URL looks like <code>https://sites.google.com/d/1BkR4nd0mN/edit</code> - that's the EDIT link, not the PUBLIC link!<br><br>
+                    <strong>✅ CORRECT LINK:</strong> Should look like <code>https://sites.google.com/view/your-site-name</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Section for Google Docs -->
+        <div id="helpGoogleDocs" class="help-section">
+            <h3>📄 How to Fix: Google Docs/Sheets/Slides</h3>
+            
+            <div class="help-content">
+                <h4>Common Problems:</h4>
+                <ul>
+                    <li>Document is set to "Restricted" (only specific people can access)</li>
+                    <li>Link requires sign-in with university account</li>
+                </ul>
+
+                <h4>How to Fix:</h4>
+                <ol>
+                    <li>Open your document/sheet/presentation</li>
+                    <li>Click the <strong>"Share"</strong> button (top right)</li>
+                    <li>Under "General access", click <strong>"Restricted"</strong></li>
+                    <li>Change it to <strong>"Anyone with the link"</strong></li>
+                    <li>Set permission to <strong>"Viewer"</strong> (unless you want others to edit)</li>
+                    <li>Click <strong>"Copy link"</strong></li>
+                    <li>Click <strong>"Done"</strong></li>
+                </ol>
+
+                <div class="alert-box">
+                    <strong>⚠️ IMPORTANT:</strong> Make sure it says "Anyone with the link" - NOT "People in [organization] with the link"!
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Section for OneDrive/SharePoint -->
+        <div id="helpOneDrive" class="help-section">
+            <h3>☁️ How to Fix: OneDrive/SharePoint</h3>
+            
+            <div class="help-content">
+                <h4>Common Problems:</h4>
+                <ul>
+                    <li>Link is set to "Specific people" instead of "Anyone"</li>
+                    <li>Link requires university sign-in</li>
+                    <li>You shared via email instead of using "Copy link"</li>
+                </ul>
+
+                <h4>How to Fix:</h4>
+                <ol>
+                    <li>Go to <strong>office.com/apps</strong> or log into Outlook and find OneDrive</li>
+                    <li>Find your file and click the <strong>Share icon</strong></li>
+                    <li>Click the <strong>gear/settings icon</strong> next to "Copy link"</li>
+                    <li>Under "The link works for", select <strong>"Anyone"</strong></li>
+                    <li>Click <strong>"Apply"</strong></li>
+                    <li>Click the back arrow to return to the share dialog</li>
+                    <li>Now click <strong>"Copy link"</strong></li>
+                </ol>
+
+                <div class="alert-box">
+                    <strong>⚠️ DON'T:</strong> Share by typing someone's email - this restricts access!<br><br>
+                    <strong>✅ DO:</strong> Use the "Copy link" button AFTER setting it to "Anyone"
+                </div>
+
+                <div class="help-content" style="margin-top: 20px;">
+                    <h4>Note about default permissions:</h4>
+                    <p>By default, OneDrive sets permission to <strong>"Can edit"</strong>. You can change this to <strong>"Can view"</strong> if you don't want others to modify your file.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- General Help -->
+        <div id="helpGeneral" class="help-section">
+            <h3>👁️‍🗨️ Test Your Link Incognito</h3>
+            
+            <div class="help-content">
+                <h4>Test Your Link in Incognito/Private Mode:</h4>
+                <ol>
+                    <li>Open a new Incognito/Private window:
+                        <ul>
+                            <li><strong>Chrome/Edge:</strong> Ctrl+Shift+N (Windows) or Cmd+Shift+N (Mac)</li>
+                            <li><strong>Firefox:</strong> Ctrl+Shift+P (Windows) or Cmd+Shift+P (Mac)</li>
+                            <li><strong>Safari:</strong> Cmd+Shift+N (Mac)</li>
+                        </ul>
+                    </li>
+                    <li>Paste your link in the incognito window</li>
+                    <li>If you see a login screen or error → Your link is NOT public</li>
+                    <li>If you can see your content → Your link is public! ✅</li>
+                </ol>
+
+                <div class="alert-box">
+                    <strong>🚨 DEADLINE REMINDER:</strong> Don't wait until the last minute! Test your link NOW and fix it if needed. <strong>Instructors will NOT accept links via email</strong> - you must resubmit to the Dropbox with a working link!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLink = '';
+        let linkType = '';
+
+        function detectLinkType(url) {
+            if (!url) return 'unknown';
+            
+            // Google Sites
+            if (url.includes('sites.google.com')) {
+                return 'google-sites';
+            }
+            // Google Docs/Drive
+            if (url.includes('docs.google.com') || url.includes('drive.google.com')) {
+                return 'google-docs';
+            }
+            // OneDrive/SharePoint
+            if (url.includes('1drv.ms') || url.includes('onedrive.') || url.includes('sharepoint.com')) {
+                return 'onedrive';
+            }
+            
+            return 'unknown';
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.className = `status-message ${type}`;
+            statusEl.innerHTML = message;
+        }
+
+        function hideAllHelp() {
+            document.querySelectorAll('.help-section').forEach(el => {
+                el.classList.remove('show');
+            });
+        }
+
+        function showHelp(type) {
+            hideAllHelp();
+            
+            if (type === 'google-sites') {
+                document.getElementById('helpGoogleSites').classList.add('show');
+            } else if (type === 'google-docs') {
+                document.getElementById('helpGoogleDocs').classList.add('show');
+            } else if (type === 'onedrive') {
+                document.getElementById('helpOneDrive').classList.add('show');
+            }
+            
+            // Always show general help
+            document.getElementById('helpGeneral').classList.add('show');
+        }
+
+        function showLinkType(type) {
+            const indicator = document.getElementById('linkTypeIndicator');
+            
+            if (type === 'google-sites') {
+                indicator.innerHTML = '<span class="link-type-indicator detected-google">📍 Google Sites Link Detected</span>';
+            } else if (type === 'google-docs') {
+                indicator.innerHTML = '<span class="link-type-indicator detected-google">📄 Google Docs/Drive Link Detected</span>';
+            } else if (type === 'onedrive') {
+                indicator.innerHTML = '<span class="link-type-indicator detected-microsoft">☁️ OneDrive/SharePoint Link Detected</span>';
+            } else {
+                indicator.innerHTML = '<span class="link-type-indicator detected-unknown">❓ Link Type Unknown</span>';
+            }
+        }
+
+        function testLink() {
+            const input = document.getElementById('linkInput');
+            const url = input.value.trim();
+            
+            if (!url) {
+                showStatus('⚠️ Please enter a URL to test.', 'warning');
+                return;
+            }
+
+            // Basic URL validation
+            try {
+                new URL(url);
+            } catch (e) {
+                showStatus('❌ Invalid URL format. Please enter a complete URL starting with https://', 'error');
+                return;
+            }
+
+            currentLink = url;
+            linkType = detectLinkType(url);
+            
+            showLinkType(linkType);
+            
+
+            // Ex: https://sites.google.com/d/15UnotEz_wi1FVYz-Qrc1KTX6VgXz6DWR/p/1p_FmAmfo2BHUF0-THxgj8k4zUAAQUJjY/edit
+            if ( linkType === 'google-sites' && url.includes('/edit')) {
+                showGoogleSitesEditLinkWarning();
+                return;
+            }
+
+            // Google Sites and many other platforms block iframe embedding
+            // Show alternative method immediately for known blocking platforms
+            else if (linkType === 'google-sites' || url.includes('sites.google.com')) {
+                showAlternativeTest();
+                return;
+            }
+            
+            showStatus('🔄 Loading preview... This may take a few moments.', 'info');
+            
+            // Show preview container
+            const previewContainer = document.getElementById('previewContainer');
+            previewContainer.style.display = 'block';
+            
+            // Show loading indicator
+            const loading = document.getElementById('iframeLoading');
+            loading.style.display = 'block';
+            
+            // Load in iframe
+            const iframe = document.getElementById('previewFrame');
+            iframe.src = url;
+            
+            // Set up load detection
+            let loadTimeout;
+            let hasLoaded = false;
+            
+            iframe.onload = function() {
+                hasLoaded = true;
+                loading.style.display = 'none';
+                clearTimeout(loadTimeout);
+                
+                // Try to detect common error scenarios
+                setTimeout(() => {
+                    checkIframeContent();
+                }, 1500);
+                
+                // Check if iframe was blocked
+                detectIframeBlocking();
+            };
+
+            iframe.onerror = function() {
+                loading.style.display = 'none';
+                handleIframeBlocked();
+            };
+
+            // Timeout after 10 seconds
+            loadTimeout = setTimeout(() => {
+                if (!hasLoaded) {
+                    loading.style.display = 'none';
+                    showStatus('⏱️ Preview is taking a long time to load. This might indicate an access issue.', 'warning');
+                    showHelp(linkType);
+                }
+            }, 10000);
+        }
+
+        function showGoogleSitesEditLinkWarning() {
+            const previewContainer = document.getElementById('previewContainer');
+            previewContainer.style.display = 'block';
+            
+            const iframeWrapper = document.querySelector('.iframe-wrapper');
+            iframeWrapper.innerHTML = `
+                <div style="padding: 40px; text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">🚫</div>
+                    <h3 style="color: #c53030; margin-bottom: 15px; font-size: 1.8rem; font-weight: 800;">WRONG LINK!</h3>
+                    <p style="color: #742a2a; margin-bottom: 25px; line-height: 1.6; font-size: 1.1rem; font-weight: 600;">
+                        You copied the <strong>EDIT link</strong> from your address bar.<br>
+                        This will NOT work for your instructor!
+                    </p>
+                    
+                    <div style="background: #fff5f5; padding: 25px; border-radius: 10px; margin-bottom: 25px; border: 3px solid #f56565;">
+                        <h4 style="color: #742a2a; margin-bottom: 15px; font-size: 1.3rem;">❌ What You Did Wrong:</h4>
+                        <p style="color: #742a2a; margin-bottom: 10px; font-weight: 600;">You copied this from your address bar:</p>
+                        <code style="display: block; background: #fed7d7; padding: 12px; border-radius: 6px; color: #c53030; font-size: 0.9rem; word-break: break-all; margin-bottom: 15px;">
+                            https://sites.google.com/d/random_numbers_and_letters/edit
+                        </code>
+                        <p style="color: #742a2a; line-height: 1.8;">
+                            ⚠️ Copying whatever random link is in your address bar is <strong>NOT</strong> the same as clicking the 
+                            <strong>"Copy published site link"</strong> button! The address bar URL is specific to YOUR logged-in 
+                            Google account session, so you can't just send this to someone and expect them to view your website!
+                        </p>
+                    </div>
+
+                    <div style="background: #e6fffa; padding: 25px; border-radius: 10px; margin-bottom: 20px; border: 3px solid #38b2ac;">
+                        <h4 style="color: #234e52; margin-bottom: 15px; font-size: 1.3rem;">✅ How to Get the CORRECT Link:</h4>
+                        <ol style="text-align: left; color: #2c5282; line-height: 2; margin-bottom: 15px; padding-left: 25px;">
+                            <li><strong>Click the "Publish" button</strong> in the top right corner of Google Sites</li>
+                            <li><strong>Type a unique web address</strong> (e.g., "yourname-dca-fall25")<br>
+                                <span style="font-size: 0.9rem; color: #4a5568;">This creates your URL: https://sites.google.com/view/yourname-dca-fall25</span>
+                            </li>
+                            <li>Under <strong>"Who can view my site"</strong>, click <strong>MANAGE</strong></li>
+                            <li>Select <strong>"Anyone"</strong> (NOT "People in [organization]")</li>
+                            <li>Click <strong>"Publish"</strong></li>
+                            <li>Click the <strong>link icon (🔗)</strong> at the top of the page</li>
+                            <li>Click <strong>"Copy published site link"</strong> button</li>
+                        </ol>
+                        <div style="background: #ffffff; padding: 15px; border-radius: 8px; border-left: 4px solid #38b2ac;">
+                            <p style="color: #234e52; font-weight: 600; margin-bottom: 8px;">✅ CORRECT link format:</p>
+                            <code style="color: #2f855a; font-size: 0.95rem;">https://sites.google.com/view/your-site-name</code>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffaf0; padding: 25px; border-radius: 10px; border: 3px solid #ed8936;">
+                        <h4 style="color: #7c2d12; margin-bottom: 15px; font-size: 1.2rem;">🧪 After You Fix It - TEST IT!</h4>
+                        <ol style="text-align: left; color: #7c2d12; line-height: 1.8; padding-left: 25px;">
+                            <li>Open an <strong>Incognito/Private window</strong> (Ctrl+Shift+N or Cmd+Shift+N)</li>
+                            <li>Paste your NEW link into the incognito window</li>
+                            <li>Check what loads:
+                                <ul style="margin-top: 8px;">
+                                    <li>✅ If you see your site → Link is PUBLIC! Submit it!</li>
+                                    <li>❌ If you see "Not Found", Login Screen or anything other than your website → Go back and check permissions</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fa709980 0%, #fee14095 100%); padding: 25px; border-radius: 10px; margin-top: 25px;">
+                        <h4 style="color: #742a2a; margin-bottom: 15px; font-size: 1.3rem; font-weight: 800;">⏰ DON'T WAIT!</h4>
+                        <p style="color: #2d3748; line-height: 1.8; font-weight: 600;">
+                            Fix this NOW and re-submit to the D2L Dropbox with the CORRECT link!<br>
+                            <strong style="color: #c53030; font-size: 1.1rem;">We will NOT accept email submissions!</strong>
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            showStatus('❌ WRONG LINK DETECTED: You shared the EDIT link from your address bar. This will NOT work! Follow the instructions above to get the correct published link.', 'error');
+            showHelp(linkType);
+        }
+
+        function showAlternativeTest() {
+            const previewContainer = document.getElementById('previewContainer');
+            previewContainer.style.display = 'block';
+            
+            const iframeWrapper = document.querySelector('.iframe-wrapper');
+            iframeWrapper.innerHTML = `
+                <div style="padding: 40px; text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">🔐</div>
+                    <h3 style="color: #2d3748; margin-bottom: 15px; font-size: 1.5rem;">Google Sites Detected</h3>
+                    <p style="color: #4a5568; margin-bottom: 25px; line-height: 1.6;">
+                        Google Sites blocks iframe previews for security. This is normal!<br>
+                        Use the method below to properly test your link.
+                    </p>
+                    <div style="background: #e6fffa; padding: 25px; border-radius: 10px; margin-bottom: 20px; border: 3px solid #38b2ac;">
+                        <h4 style="color: #234e52; margin-bottom: 15px; font-size: 1.2rem;">🎯 How to Test Your Google Sites Link:</h4>
+                        <ol style="text-align: left; color: #2c5282; line-height: 2; margin-bottom: 20px;">
+                            <li><strong>Open an Incognito/Private window</strong> (Ctrl+Shift+N or Cmd+Shift+N)</li>
+                            <li><strong>Paste your link</strong> into the incognito window</li>
+                            <li><strong>Check what loads:</strong>
+                                <ul style="margin-top: 10px;">
+                                    <li>✅ If you see your site → Link is PUBLIC!</li>
+                                    <li>❌ If you see "Access Denied" → Link is PRIVATE!</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <button
+                            id="copy-link-btn"
+                            onclick="copyLink(this);" 
+                            style="background: linear-gradient(135deg, #38b2ac, #319795); color: white; padding: 15px 35px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(56, 178, 172, 0.4); transition: all 0.3s ease;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(56, 178, 172, 0.6)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(56, 178, 172, 0.4)';"
+                        >
+                            🔗 Copy Your Link to Test
+                        </button>
+                        <p style="color: #718096; font-size: 0.9rem; margin-top: 15px; font-style: italic;">
+                            Click the button above, then open an incognito window and paste the link there
+                        </p>
+                    </div>
+                    <div style="background: #fff5f5; padding: 20px; border-radius: 10px; border-left: 4px solid #f56565;">
+                        <p style="color: #742a2a; font-weight: 600; margin-bottom: 10px;">⚠️ Common Google Sites Mistakes:</p>
+                        <ul style="text-align: left; color: #742a2a; line-height: 1.8;">
+                            <li>Sharing the <strong>EDIT link</strong> instead of the <strong>PUBLISHED link</strong></li>
+                            <li>Setting permissions to "Restricted" instead of "Anyone"</li>
+                            <li>Forgetting to click "Publish" after making changes</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            showStatus('ℹ️ Google Sites blocks iframe previews. Use the incognito testing method described below!', 'info');
+            showHelp(linkType);
+        }
+
+        function checkIframeContent() {
+            const iframe = document.getElementById('previewFrame');
+            
+            try {
+                // Try to access iframe content (will fail if it's a different origin)
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // If we can access it, check for common error indicators
+                const bodyText = iframeDoc.body ? iframeDoc.body.innerText.toLowerCase() : '';
+                const title = iframeDoc.title ? iframeDoc.title.toLowerCase() : '';
+                
+                if (bodyText.includes('access denied') || bodyText.includes('sign in') || 
+                    bodyText.includes('request access') || bodyText.includes('permission') ||
+                    title.includes('sign in') || title.includes('access denied')) {
+                    
+                    showStatus('❌ ACCESS DENIED: The preview shows a login or access denied page. Your link is NOT public!', 'error');
+                    showHelp(linkType);
+                    return;
+                }
+                
+                if (bodyText.includes('404') || title.includes('not found')) {
+                    showStatus('❌ NOT FOUND: The link appears to be broken or the page does not exist.', 'error');
+                    showHelp(linkType);
+                    return;
+                }
+                
+                // If we get here and can see content, it's likely accessible
+                showStatus('✅ Preview loaded! Check the preview below. If you can see your content, the link appears to be public.', 'success');
+                showHelp(linkType);
+                
+            } catch (e) {
+                // Cross-origin restriction - this is normal for most external sites
+                // We can't inspect the content, so we give a general message
+                showStatus('📋 Preview loaded from external source. Scroll down and check: Can you see your content without logging in? If yes, your link is public! If you see a login screen, your link is NOT public.', 'info');
+                showHelp(linkType);
+            }
+        }
+
+        // Detect if iframe fails to load due to X-Frame-Options
+        function detectIframeBlocking() {
+            const iframe = document.getElementById('previewFrame');
+            const loading = document.getElementById('iframeLoading');
+            
+            setTimeout(() => {
+                try {
+                    // Try to access the iframe's location
+                    const iframeLocation = iframe.contentWindow.location.href;
+                    
+                    // If we get here without error, iframe loaded
+                    if (iframeLocation === 'about:blank' || !iframeLocation) {
+                        // Iframe was blocked
+                        handleIframeBlocked();
+                    }
+                } catch (e) {
+                    // This is normal for cross-origin - iframe loaded but we can't access it
+                    // This is actually good - it means content is loading
+                }
+            }, 2000);
+        }
+
+        function handleIframeBlocked() {
+            const loading = document.getElementById('iframeLoading');
+            const iframe = document.getElementById('previewFrame');
+            
+            loading.style.display = 'none';
+            iframe.style.display = 'none';
+            
+            const iframeWrapper = document.querySelector('.iframe-wrapper');
+            iframeWrapper.innerHTML = `
+                <div style="padding: 40px; text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">🚫</div>
+                    <h3 style="color: #2d3748; margin-bottom: 15px; font-size: 1.5rem;">Preview Blocked by Security Settings</h3>
+                    <p style="color: #4a5568; margin-bottom: 25px; line-height: 1.6;">
+                        Google Sites and many other platforms block iframe embedding for security. 
+                        This is normal and doesn't mean your link is broken!
+                    </p>
+                    <div style="background: #edf2f7; padding: 25px; border-radius: 10px; margin-bottom: 20px;">
+                        <h4 style="color: #2c5282; margin-bottom: 15px; font-size: 1.2rem;">✅ Best Way to Test:</h4>
+                        <p style="color: #4a5568; margin-bottom: 15px; line-height: 1.6;">
+                            Open your link in an <strong>Incognito/Private window</strong> to see exactly what your instructor will see.
+                        </p>
+                        <button 
+                            onclick="window.open('${currentLink}', '_blank')" 
+                            style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 30px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);"
+                        >
+                            🔗 Open Link in New Tab
+                        </button>
+                        <p style="color: #718096; font-size: 0.9rem; margin-top: 10px;">
+                            Then test it in incognito mode using the instructions below
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            showStatus('ℹ️ Direct preview blocked by the platform. Please use the "Open Link in New Tab" button above, then test it in an incognito/private window.', 'info');
+            showHelp(linkType);
+        }
+
+        function copyLink(btn) {
+            const originalText = btn.innerText;
+            const originalBg = btn.style.background;
+
+            btn.innerText = 'Link copied';
+            btn.style.background = 'linear-gradient(90deg,rgba(16, 70, 145, 0.51) 83%, rgba(9, 41, 121, 0.53) 100%)';
+            navigator.clipboard.writeText(currentLink.toString());
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = originalBg;
+            }, 1000);
+        }
+
+        function clearTest() {
+            document.getElementById('linkInput').value = '';
+            document.getElementById('statusMessage').style.display = 'none';
+            document.getElementById('previewContainer').style.display = 'none';
+            document.getElementById('linkTypeIndicator').innerHTML = '';
+            
+            // Reset iframe wrapper to original state
+            const iframeWrapper = document.querySelector('.iframe-wrapper');
+            iframeWrapper.innerHTML = `
+                <div id="iframeLoading" class="iframe-loading">
+                    <div class="spinner"></div>
+                    <p>Loading preview...</p>
+                </div>
+                <iframe 
+                    id="previewFrame" 
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                    referrerpolicy="no-referrer"
+                ></iframe>
+            `;
+            
+            hideAllHelp();
+            currentLink = '';
+            linkType = '';
+        }
+
+        // Auto-test on Enter key
+        document.getElementById('linkInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                testLink();
+            }
+        });
+    </script>
+</body>
+</html>
