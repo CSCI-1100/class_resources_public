@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSCI-1100/1150 Course Overview - Lecture Slides</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <!-- jsPDF and html2canvas for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #DC2626 0%, #1D4ED8 50%, #EAB308 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-size: 1.2em;
+        }
+
+        .presentation-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 95%;
+            max-width: 1400px;
+            height: 95vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #45509D, #1D4ED8);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slide-counter {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .download-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .download-icon {
+            font-size: 1.1em;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            width: 100%;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #EAB308;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+            height: 100%;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        /* PDF GENERATION STYLES */
+        .pdf-mode .slide {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: static !important;
+            height: auto !important;
+            page-break-after: always;
+            margin-bottom: 50px;
+            border: 2px solid #ddd;
+            background: white;
+            padding: 40px;
+        }
+
+        .pdf-mode .slide-content {
+            overflow: visible !important;
+            height: auto !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-title {
+            color: #45509D;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #45509D;
+            padding-bottom: 15px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border-left: 5px solid #DC2626;
+        }
+
+        .section-number {
+            background: #DC2626;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .section-info h2 {
+            color: #1F2937;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .section-info p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .info-grid.three-col {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .info-card {
+            background: white;
+            border: 2px solid #DC2626;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card.blue {
+            border-color: #1D4ED8;
+        }
+
+        .info-card.yellow {
+            border-color: #EAB308;
+        }
+
+        .info-card h3 {
+            margin-bottom: 15px;
+            color: #DC2626;
+        }
+
+        .info-card.blue h3 {
+            color: #1D4ED8;
+        }
+
+        .info-card.yellow h3 {
+            color: #c79904;
+        }
+
+        .highlight-box {
+            background: #FEE2E2;
+            border: 2px solid #DC2626;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .highlight-box.blue {
+            background: #DBEAFE;
+            border-color: #1D4ED8;
+        }
+
+        .highlight-box.yellow {
+            background: #FEF3C7;
+            border-color: #EAB308;
+        }
+
+        .highlight-box h3 {
+            color: #DC2626;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlight-box.blue h3 {
+            color: #1D4ED8;
+        }
+
+        .highlight-box.yellow h3 {
+            color: #a77f08;
+        }
+
+        .bullet-points {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bullet-points li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .bullet-points li::before {
+            content: "▶";
+            color: #DC2626;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        .grade-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .grade-table th {
+            background: #DC2626;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .grade-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .grade-table tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .instructor-card {
+            background: white;
+            border: 2px solid #DC2626;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .instructor-card.blue {
+            border-color: #1D4ED8;
+        }
+
+        .instructor-card.yellow {
+            border-color: #EAB308;
+        }
+
+        .instructor-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .instructor-avatar {
+            width: 60px;
+            height: 60px;
+            background: #DC2626;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            margin-right: 20px;
+        }
+
+        .instructor-card.blue .instructor-avatar {
+            background: #1D4ED8;
+        }
+
+        .instructor-card.yellow .instructor-avatar {
+            background: #EAB308;
+        }
+
+        .instructor-info h3 {
+            color: #DC2626;
+            margin-bottom: 5px;
+        }
+
+        .instructor-card.blue .instructor-info h3 {
+            color: #1D4ED8;
+        }
+
+        .instructor-card.yellow .instructor-info h3 {
+            color: #c89809;
+        }
+
+        .instructor-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .nav-button {
+            background: #45509D;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-button:hover {
+            background: #B91C1C;
+            transform: translateY(-2px);
+        }
+
+        .nav-button:disabled {
+            background: #9CA3AF;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .timer-display {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .objective-item {
+            background: #FEE2E2;
+            border: 2px solid #DC2626;
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .objective-item:nth-child(even) {
+            background: #DBEAFE;
+            border-color: #1D4ED8;
+        }
+
+        .objective-number {
+            background: #DC2626;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .objective-item:nth-child(even) .objective-number {
+            background: #1D4ED8;
+        }
+
+        .policy-card {
+            background: white;
+            border-left: 5px solid #DC2626;
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 0 15px 15px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .policy-card h4 {
+            color: #DC2626;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .email-highlight {
+            background: #EAB308;
+            color: #1F2937;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px auto;
+            font-size: 1.3em;
+            max-width: 800px;
+        }
+
+        /* Loading overlay for PDF generation */
+        .pdf-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .pdf-loading.active {
+            display: flex;
+        }
+
+        .loading-content {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #DC2626;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-text {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #DC2626;
+        }
+
+        .slide-progress {
+            background: rgba(255, 255, 255, 0.2);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .slide-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #DC2626, #1D4ED8);
+            transition: width 0.3s ease;
+        }
+
+        .chart-container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+        
+        .chart-title {
+            font-size: 1.8em;
+            color: #1F2937;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .pie-chart {
+            width: 400px;
+            height: 400px;
+            margin: 0 auto 30px;
+        }
+        
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .legend-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #1F2937;
+        }
+        
+        .legend-percentage {
+            font-size: 0.9em;
+            color: #666;
+            margin-left: auto;
+        }
+        
+        /* Colors matching the course theme */
+        .dca-color { background-color: #DC2626; }
+        .labs-color { background-color: #1D4ED8; }
+        .quizzes-color { background-color: #EAB308; }
+        .exit-color { background-color: #059669; }
+    </style>
+</head>
+<body>
+    <!-- Loading overlay for PDF generation -->
+    <div class="pdf-loading" id="pdfLoading">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="progress-text" id="progressText">🎯 Generating PDF...</div>
+            <div style="font-size: 0.9em; margin-bottom: 15px;">
+                <span id="slideCounter">Slide 0 of 18</span>
+            </div>
+            <div class="slide-progress">
+                <div class="slide-progress-fill" id="slideProgressFill" style="width: 0%"></div>
+            </div>
+            <div style="font-size: 0.8em; margin-top: 15px; opacity: 0.8;">
+                This may take a few moments...
+            </div>
+        </div>
+    </div>
+
+    <div class="presentation-container">
+        <div class="slide-content">
+            <!-- Slide 9: Microsoft 365 Setup -->
+            <div class="slide active">
+                <div class="slide-title">Setting Up Microsoft 365</div>
+                <div class="highlight-box blue">
+                    <h3>📥 Installation Steps</h3>
+                    <div style="font-size: 1.1em;">
+                        <a href="https://youtu.be/_ts5BKO6W4U" target="_blank" style="float: right;">
+                            <button class="download-btn" style="background-color:#1d4fd898;">▶️ Video Guide</button>
+                        </a>
+                        <ol style="text-align: left; max-width: 800px; margin-left: 30px;">
+                            <li>Visit <strong>office.com/apps</strong></li>
+                            <li>Login with your ETSU credentials</li>
+                            <li>Click "Install apps" dropdown (top right)</li>
+                            <li>Select "Microsoft 365 apps"</li>
+                            <li>Run the downloaded installer</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card yellow">
+                        <h3>🔧 Need Help?</h3>
+                        <ul class="bullet-points">
+                            <li>Contact ITS Help Desk: (423) 439-4648</li>
+                            <li>Email: itshelp@etsu.edu</li>
+                            <li>Visit: First floor of Sherrod Library</li>
+                            <li>Help with ETSU Microsoft account issues</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>💡 Pro Tips</h3>
+                        <ul class="bullet-points">
+                            <li>Use incognito/private browsing if you have multiple Microsoft accounts</li>
+                            <li>Clear cookies if login issues persist</li>
+                            <li>Uninstall existing Office before installing student version</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
