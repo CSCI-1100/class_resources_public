@@ -988,16 +988,6 @@
             */
 
             function setupFocusManagement() {
-                // Add tab indices to ensure proper tab order
-                document.getElementById('prev-page').tabIndex = 1;
-                document.getElementById('page-num').tabIndex = 2;
-                document.getElementById('next-page').tabIndex = 3;
-                document.getElementById('zoom-out').tabIndex = 4;
-                document.getElementById('zoom-in').tabIndex = 5;
-                document.getElementById('zoom-fit').tabIndex = 6;
-                document.getElementById('fullscreen').tabIndex = 7;
-                document.getElementById('download').tabIndex = 8;
-                
                 // Focus the currently active TOC item when sidebar is opened
                 document.getElementById('sidebar-toggle').addEventListener('click', function() {
                     if (!sidebar.classList.contains('collapsed')) {
