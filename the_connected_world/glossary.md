@@ -26,9 +26,6 @@ A structure that houses antennas and equipment for transmitting and receiving ce
 **Data Packet**
 A small unit of data transmitted over a network. Large files and streams are broken into many packets, sent individually, and reassembled at the destination.
 
-**DHCP (Dynamic Host Configuration Protocol)**
-A protocol that automatically assigns IP addresses to devices on a network, so they don't need to be configured manually.
-
 **DNS (Domain Name System)**
 The system that translates human-readable domain names (like `google.com`) into IP addresses that computers can use to route traffic.
 
@@ -38,17 +35,8 @@ The rate at which data is received by your device from the internet. Relevant fo
 **Encryption**
 The process of scrambling data so that it can only be read by an authorized recipient who has the key to decrypt it.
 
-**Encryption at Rest**
-Encrypting data while it is stored (on a server, hard drive, etc.), so it remains protected even if the storage medium is accessed without authorization.
-
-**Encryption in Transit**
-Encrypting data while it is being transmitted across a network, so it cannot be intercepted and read by a third party.
-
 **Ethernet**
 A wired networking standard that connects devices to a network using a physical cable. Generally faster and more stable than Wi-Fi.
-
-**FTP (File Transfer Protocol)**
-A protocol used for transferring files between computers over a network.
 
 **HTTP (HyperText Transfer Protocol)**
 The foundational protocol used for transmitting web pages over the internet.
@@ -72,7 +60,7 @@ An IP address assigned to a device within a private network (e.g., your home). N
 A high-frequency radio band used by some 5G deployments. Offers very high speeds but limited range and poor penetration of obstacles. Requires dense infrastructure (beacons on nearly every block) to be effective.
 
 **Modem**
-Short for *modulator-demodulator*. The device that connects your router to your Internet Service Provider (ISP). It translates signals between the format used inside your home and the format used by the ISP's network.
+Short for *modulator-demodulator*. The device that connects your router to your Internet Service Provider (ISP). It translates signals between the format used inside your home and the format used by the ISP's network. In lecture, I obscured this by combining it with the role of the router.
 
 **Packet Loss**
 When one or more data packets fail to reach their destination. Can result in errors, dropped connections, or the need to resend data.
