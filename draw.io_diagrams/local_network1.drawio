@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Safari/605.1.15" version="29.5.2">
   <diagram name="Page-1" id="FZ3B_jTiSXkvgyfn8n26">
-    <mxGraphModel dx="1977" dy="2027" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2428" dy="2398" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -180,18 +180,6 @@
         <mxCell id="rJih6l_jzLuQ9YaExqFm-38" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" value="&lt;b&gt;Public IP address&lt;/b&gt; from ISP:&lt;br&gt;107.199.108.123" vertex="1">
           <mxGeometry height="60" width="200" x="340" y="720" as="geometry" />
         </mxCell>
-        <mxCell id="rJih6l_jzLuQ9YaExqFm-50" connectable="0" parent="1" style="group" value="" vertex="1">
-          <mxGeometry height="130" width="328" x="800" y="-290" as="geometry" />
-        </mxCell>
-        <mxCell id="rJih6l_jzLuQ9YaExqFm-48" parent="rJih6l_jzLuQ9YaExqFm-50" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/SQL_Data_Warehouses.svg;" value="" vertex="1">
-          <mxGeometry height="130" width="128" x="200" as="geometry" />
-        </mxCell>
-        <mxCell id="rJih6l_jzLuQ9YaExqFm-47" parent="rJih6l_jzLuQ9YaExqFm-50" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/SQL_Data_Warehouses.svg;" value="" vertex="1">
-          <mxGeometry height="130" width="128" x="100" as="geometry" />
-        </mxCell>
-        <mxCell id="rJih6l_jzLuQ9YaExqFm-44" parent="rJih6l_jzLuQ9YaExqFm-50" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/SQL_Data_Warehouses.svg;" value="" vertex="1">
-          <mxGeometry height="130" width="128" as="geometry" />
-        </mxCell>
         <mxCell id="rJih6l_jzLuQ9YaExqFm-58" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-52" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-47">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
@@ -272,6 +260,18 @@
         </mxCell>
         <mxCell id="6wpWYjbxTH0iGk9azSe4-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=light-dark(#A20025,#FF95A5);fontColor=#ffffff;strokeColor=#6F0000;" value="&lt;b&gt;Public IP addresses&lt;/b&gt;: These are the addresses everyone on the Internet can see. They are issued by the ISP.&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Your router/modem use the public IP address as the FROM address, telling the servers they request data from (or upload data to) to respond back by sending the data TO that address.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;This allows all the responses to make it back to the router, so it can forward along to the phone, laptop, smart camera, etc.&lt;/div&gt;" vertex="1">
           <mxGeometry height="228" width="210" x="258.5" y="-138" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-50" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="130" width="328" x="800" y="-290" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-48" parent="rJih6l_jzLuQ9YaExqFm-50" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/SQL_Data_Warehouses.svg;" value="" vertex="1">
+          <mxGeometry height="130" width="128" x="200" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-47" parent="rJih6l_jzLuQ9YaExqFm-50" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/SQL_Data_Warehouses.svg;" value="" vertex="1">
+          <mxGeometry height="130" width="128" x="100" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-44" parent="rJih6l_jzLuQ9YaExqFm-50" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/SQL_Data_Warehouses.svg;" value="" vertex="1">
+          <mxGeometry height="130" width="128" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
