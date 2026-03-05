@@ -4,19 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Microsoft Word Overview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-            line-height: 1.6;
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Bellefair&family=Courgette&family=Text+Me+One&display=swap');
+
+        :root {
+            /* Font-families */
+            --ff-serif: "Bellefair", serif;
+            --ff-script: "Courgette", serif;
+            --ff-sans-cond: "Barlow Condensed", sans-serif;
+            --ff-sans-normal: "Barlow", sans-serif;
+            --ff-text-me-one: "Text Me One", serif;
         }
-        
+
+        body {
+            /* Browser default lh is 1.4 */
+            font-family: var(--ff-sans-normal);
+            font-size: var(--fs-300);
+            color: hsl( var(--clr-dark) );
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
+            background: linear-gradient(90deg, #faebb083 0%, #dcf2ff83 51%, #faebb083 100%);
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -29,6 +42,9 @@
             font-size: 2.5em;
             border-bottom: 3px solid #2c5aa0;
             padding-bottom: 15px;
+            font-family: var(--ff-text-me-one);
+            font-weight: 600;
+            text-transform: uppercase;
         }
         
         h2 {
@@ -36,22 +52,29 @@
             border-bottom: 2px solid #e0e6ed;
             padding-bottom: 8px;
             margin-top: 40px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            font-family: var(--ff-text-me-one);
+            font-weight: 600;
+            text-transform: uppercase;
             font-size: 1.8em;
         }
         
         h3 {
             color: #2c5aa0;
             margin-top: 25px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-family: var(--ff-sans);
+            font-size: 1.5rem;
+            font-weight: 500;
         }
         
         .intro-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background-color: #fefefebd;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            color: black;
             padding: 25px;
             border-radius: 8px;
-            margin: 20px 0;
+            margin-top: 20px;
             text-align: center;
         }
         
@@ -318,8 +341,8 @@
         .toc-level-3 { margin-left: 40px; color: #666; }
         
         .feature-highlight {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #4767f346 0%, #2c5aa03e 100%);
+            color: #062b62;
             padding: 20px;
             border-radius: 8px;
             margin: 20px 0;
@@ -327,7 +350,6 @@
         
         .feature-highlight h3 {
             margin-top: 0;
-            color: white;
         }
         
         .info-box {
@@ -342,6 +364,15 @@
         .info-box h4 {
             margin-top: 0;
             color: #1e4d72;
+        }
+
+        .major-section {
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 6px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         }
         
         .content-section {
@@ -389,477 +420,704 @@
         .key-point strong {
             color: #856404;
         }
+        .link-preview {
+            position: relative;
+            width: 420px; /* width of the preview */
+            height: 200px; /* height of the preview */
+            overflow: hidden;
+            border-radius: 15px; /* rounded corners */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* optional shadow for depth */
+        }
+
+        .preview-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .preview-iframe {
+            width: 700px; /* Larger than container to create zoom effect */
+            height: 333px; /* Proportionally larger */
+            border: none;
+            transform: scale(0.6); /* 60% scale */
+            transform-origin: 0 0; /* Scale from top-left corner */
+            pointer-events: none; /* Disables all cursor interactions */
+        }
+
+        .preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%; /* Adjust height of the gradient as needed */
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+            pointer-events: none; /* Disable interaction with the gradient */
+        }
+
+        .view-link {
+            position: absolute;
+            bottom: 10px; /* Position the link slightly above the gradient */
+            left: 40%;
+            padding: 8px 16px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            pointer-events: auto; /* Make the link clickable */
+            z-index: 1; /* Ensure the link is on top of the gradient */
+            transition: all 0.2s ease;
+        }
+
+        .view-link:hover {
+            border: 2px solid #3498db;
+            background-color: white;
+            cursor: pointer;
+            transform: translateY(2px);
+        }
+
+        #customizationOpts li strong {
+            font-size: 1.1em;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* --------------- Navigation rules ------------- */
+        /* General Styles */
+        .major-sections .major-section {
+            display: none;
+        }
+
+        .major-sections .major-section.active {
+            display: block;
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            margin: 20px 0;
+        }
+
+        .nav-menu ul {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .nav-menu a {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background-color: #2c5aa0;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .nav-menu a.active {
+            background-color: #4782da;
+            border: 3px solid white;
+        }
+
+        /* Responsiveness for smaller screens */
+        @media (max-width: 768px) {
+            .nav-menu ul {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-menu ul {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media only screen
+        and (max-width: 440px) {
+            .hide-on-phone {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Microsoft Word Overview</h1>
-        
+    <div class="container" id="top">
         <div class="intro-section">
-            <h2>Welcome to Microsoft Word Mastery</h2>
-            <p>This comprehensive guide combines visual interface elements with detailed explanations to help you understand and master Microsoft Word's powerful features. From basic navigation to advanced document management, you'll learn everything you need to create professional documents efficiently.</p>
+            <h1><i class="bi bi-file-earmark-word"></i> Microsoft Word Overview</h1>
+            <p>This guide combines visual interface elements with detailed explanations to help you understand and master Microsoft Word's powerful features. From basic navigation to advanced document management, you'll learn everything you need to create professional documents efficiently.</p>
         </div>
 
-        <h2>1. Core Interface Elements</h2>
-        
-        <div class="content-section">
-            <p>Microsoft Word's interface is designed around the <strong>Ribbon</strong> system, which organizes all commands and features into logical groups. Understanding this structure is key to working efficiently in Word.</p>
+        <div class="nav-menu">
+            <ul>
+                <li><a href="#core-interface" class="tab-link active">Core Interface</a></li>
+                <li><a href="#text-formatting" class="tab-link">Text Formatting</a></li>
+                <li><a href="#advanced-features" class="tab-link">Advanced Features</a></li>
+                <li><a href="#workflow-integration" class="tab-link">Workflow Integration</a></li>
+                <li><a href="#interface-exploration" class="tab-link">Interface Exploration</a></li>
+                <li><a href="#troubleshooting" class="tab-link">Troubleshooting</a></li>
+                <li><a href="#advanced-customization" class="tab-link">Advanced Customization</a></li>
+                <li><a href="#summary" class="tab-link">Summary</a></li>
+            </ul>
         </div>
 
-        <div class="word-interface">
-            <div class="title-bar">
-                Microsoft Word - Document1
-                <div class="window-controls">
-                    <span class="control-btn minimize"></span>
-                    <span class="control-btn maximize"></span>
-                    <span class="control-btn close"></span>
+        <div class="major-sections">
+            <div class="major-section" id="core-interface">
+                <h2>1. Core Interface Elements</h2>
+                
+                <div class="content-section">
+                    <p>Microsoft Word's interface is designed around the <strong>Ribbon</strong> system, which organizes all commands and features into logical groups. Understanding this structure is key to working efficiently in Word.</p>
                 </div>
-            </div>
-            
-            <div class="quick-access">
-                <div class="callout callout-bottom" style="top: -45px; left: 10px;">Quick Access Toolbar</div>
-                <span class="quick-access-item">💾</span>
-                <span class="quick-access-item">↶</span>
-                <span class="quick-access-item">↷</span>
-                <span class="quick-access-item">🖨️</span>
-            </div>
-            
-            <div class="ribbon">
-                <div class="callout callout-bottom" style="top: -45px; right: 200px;">The Ribbon</div>
-                <div class="ribbon-tabs">
-                    <div class="callout callout-bottom" style="top: -45px; left: 50px;">Ribbon Tabs</div>
-                    <button class="ribbon-tab">File</button>
-                    <button class="ribbon-tab active">Home</button>
-                    <button class="ribbon-tab">Insert</button>
-                    <button class="ribbon-tab">Design</button>
-                    <button class="ribbon-tab">Layout</button>
-                    <button class="ribbon-tab">References</button>
-                    <button class="ribbon-tab">Mailings</button>
-                    <button class="ribbon-tab">Review</button>
-                    <button class="ribbon-tab">View</button>
+
+                <div class="word-interface">
+                    <div class="title-bar">
+                        Microsoft Word - Document1
+                        <div class="window-controls">
+                            <span class="control-btn minimize"></span>
+                            <span class="control-btn maximize"></span>
+                            <span class="control-btn close"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access">
+                        <div class="callout callout-bottom" style="top: -45px; left: 10px;">Quick Access Toolbar</div>
+                        <span class="quick-access-item">💾</span>
+                        <span class="quick-access-item">↶</span>
+                        <span class="quick-access-item">↷</span>
+                        <span class="quick-access-item">🖨️</span>
+                    </div>
+                    
+                    <div class="ribbon">
+                        <div class="callout callout-bottom" style="top: -45px; right: 200px;">The Ribbon</div>
+                        <div class="ribbon-tabs">
+                            <div class="callout callout-bottom" style="top: -45px; left: 50px;">Ribbon Tabs</div>
+                            <button class="ribbon-tab">File</button>
+                            <button class="ribbon-tab active">Home</button>
+                            <button class="ribbon-tab">Insert</button>
+                            <button class="ribbon-tab">Design</button>
+                            <button class="ribbon-tab">Layout</button>
+                            <button class="ribbon-tab">References</button>
+                            <button class="ribbon-tab">Mailings</button>
+                            <button class="ribbon-tab">Review</button>
+                            <button class="ribbon-tab">View</button>
+                        </div>
+                        
+                        <div class="ribbon-content">
+                            <div class="callout callout-top" style="top: -45px; left: 50px;">Groups</div>
+                            <div class="ribbon-group">
+                                <div class="ribbon-actions">
+                                    <button class="action-btn">📋</button>
+                                    <button class="action-btn">✂️</button>
+                                    <button class="action-btn">📄</button>
+                                </div>
+                                <h4>Clipboard</h4>
+                            </div>
+                            
+                            <div class="ribbon-group">
+                                <div class="ribbon-actions">
+                                    <button class="action-btn">B</button>
+                                    <button class="action-btn">I</button>
+                                    <button class="action-btn">U</button>
+                                    <button class="action-btn">🎨</button>
+                                </div>
+                                <h4>Font</h4>
+                            </div>
+                            
+                            <div class="ribbon-group">
+                                <div class="ribbon-actions">
+                                    <button class="action-btn">⬅️</button>
+                                    <button class="action-btn">↔️</button>
+                                    <button class="action-btn">➡️</button>
+                                    <button class="action-btn">• —</button>
+                                </div>
+                                <h4>Paragraph</h4>
+                            </div>
+                            
+                            <div class="ribbon-group">
+                                <div class="ribbon-actions">
+                                    <button class="action-btn">Aa</button>
+                                    <button class="action-btn">🎨</button>
+                                </div>
+                                <h4>Styles</h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="document-area">
+                        <div class="callout callout-left" style="top: 20px; left: -180px;">Document Area</div>
+                        <div class="ruler">
+                            <div class="ruler-marks"></div>
+                        </div>
+                        <div class="page-content">
+                            <p style="margin: 0;">Your document content appears here...</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h3 class="sr-only">Anatomy of the Ribbon</h3>
+                <div style="display: flex; justify-content: center;">
+                    <img src="img/anatomy-of-the-ribbon.jpg" style="min-width: 65%;"
+                        alt="ribbon segment showing Home, Insert, Design, Layout, and other tabs, with Home tab groups and commands visible">
                 </div>
                 
-                <div class="ribbon-content">
-                    <div class="callout callout-top" style="top: -45px; left: 50px;">Groups</div>
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4><i class="bi bi-bookmark-fill"></i> The Ribbon</h4>
+                        <p>The primary interface for accessing commands and features in Word. It's organized into tabs, each containing related groups of actions.</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>📑 Tabs</h4>
+                        <p>Horizontal sections along the Ribbon that categorize commands (e.g., Home, Insert, Page Layout, References, Mailings, Review, View, Help).</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4><i class="bi bi-grid-1x2-fill"></i> Groups</h4>
+                        <p>Collections of related commands within each tab. For example, the Home tab includes groups like Clipboard, Font, Paragraph, and Styles.</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4><i class="bi bi-lightning-charge-fill"></i> Commands</h4>
+                        <p>Individual commands within a group, such as "Bold," "Left Align," or "Insert Picture." Hovering over a command often reveals a description and keyboard shortcut.</p>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    <strong>Quick Access Toolbar:</strong> A customizable toolbar usually located at the very top of the Word window. It provides quick access to frequently used commands, such as Save, Undo, and Redo. It can be customized by adding or removing commands.
+                </div>
+
+                <h3>Backstage View</h3>
+                <div class="word-interface">
+                    <div class="title-bar">
+                        File Tab - Backstage View
+                    </div>
+                    <div style="display: flex; background: #f8f9fa;">
+                        <div style="width: 200px; background: #2c5aa0; color: white; padding: 20px;">
+                            <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">📄 New</div>
+                            <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">📁 Open</div>
+                            <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px; background: rgba(255,255,255,0.2);">ℹ️ Info</div>
+                            <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">💾 Save</div>
+                            <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">💾 Save As</div>
+                            <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">🖨️ Print</div>
+                            <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">🔗 Share</div>
+                            <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">📤 Export</div>
+                            <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">⚙️ Options</div>
+                        </div>
+                        <div style="flex: 1; padding: 20px;">
+                            <h3>Document Properties</h3>
+                            <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid #ddd;">
+                                <p><strong>Title:</strong> Microsoft Word Overview</p>
+                                <p><strong>Author:</strong> Ryan</p>
+                                <p><strong>Subject:</strong> Software Documentation</p>
+                                <p><strong>Keywords:</strong> Word, Interface, Tutorial</p>
+                                <p><strong>Comments:</strong> Comprehensive overview of Word interface</p>
+                                <p><strong>Created:</strong> June 18, 2025</p>
+                                <p><strong>Modified:</strong> June 18, 2025</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <p><strong>Backstage View</strong> is accessed by clicking the File tab (or the Office button in older versions). The Backstage View provides access to document management tasks like opening, saving, printing, sharing, and exporting. It also allows you to modify document properties such as author, title, and keywords.</p>
+                </div>
+            </div>
+
+            <div class="major-section" id="text-formatting">
+                <h2>2. Text Formatting and Styles</h2>
+
+                <div class="content-section">
+                    <p>Word's formatting capabilities are primarily accessed through the Home tab's groups. Understanding how these work together is essential for creating professional-looking documents.</p>
+                </div>
+
+                <h3>Font and Paragraph Groups in Detail</h3>
+                <div class="ribbon-content" style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 15px;">
                     <div class="ribbon-group">
-                        <div class="ribbon-actions">
-                            <button class="action-btn">📋</button>
-                            <button class="action-btn">✂️</button>
-                            <button class="action-btn">📄</button>
+                        <div class="ribbon-actions" style="flex-direction: column; gap: 5px;">
+                            <div style="display: flex; gap: 3px;">
+                                <button class="action-btn">📋 Paste</button>
+                                <button class="action-btn">✂️ Cut</button>
+                                <button class="action-btn">📄 Copy</button>
+                            </div>
+                            <button class="action-btn">🖼️ Format Painter</button>
                         </div>
                         <h4>Clipboard</h4>
                     </div>
                     
                     <div class="ribbon-group">
-                        <div class="ribbon-actions">
-                            <button class="action-btn">B</button>
-                            <button class="action-btn">I</button>
-                            <button class="action-btn">U</button>
-                            <button class="action-btn">🎨</button>
+                        <div class="ribbon-actions" style="flex-direction: column; gap: 5px;">
+                            <div style="display: flex; gap: 3px;">
+                                <button class="action-btn">Calibri ▼</button>
+                                <button class="action-btn">11 ▼</button>
+                            </div>
+                            <div style="display: flex; gap: 3px;">
+                                <button class="action-btn">A↑</button>
+                                <button class="action-btn">A↓</button>
+                            </div>
+                            <div style="display: flex; gap: 3px;">
+                                <button class="action-btn"><strong>B</strong></button>
+                                <button class="action-btn"><em>I</em></button>
+                                <button class="action-btn"><u>U</u></button>
+                                <button class="action-btn">🎨</button>
+                            </div>
                         </div>
                         <h4>Font</h4>
                     </div>
                     
                     <div class="ribbon-group">
-                        <div class="ribbon-actions">
-                            <button class="action-btn">⬅️</button>
-                            <button class="action-btn">↔️</button>
-                            <button class="action-btn">➡️</button>
-                            <button class="action-btn">• —</button>
+                        <div class="ribbon-actions" style="flex-direction: column; gap: 5px;">
+                            <div style="display: flex; gap: 3px;">
+                                <button class="action-btn">• —</button>
+                                <button class="action-btn">1. —</button>
+                            </div>
+                            <div style="display: flex; gap: 3px;">
+                                <button class="action-btn">⬅️</button>
+                                <button class="action-btn">↔️</button>
+                                <button class="action-btn">➡️</button>
+                                <button class="action-btn">≡</button>
+                            </div>
                         </div>
                         <h4>Paragraph</h4>
                     </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4>🔤 Font Group</h4>
+                        <p>Located on the Home tab, this group provides tools for formatting text, including font face, size, color, bolding, italics, underlining, and text effects.</p>
+                    </div>
                     
-                    <div class="ribbon-group">
-                        <div class="ribbon-actions">
-                            <button class="action-btn">Aa</button>
-                            <button class="action-btn">🎨</button>
+                    <div class="info-box">
+                        <h4>📄 Paragraph Group</h4>
+                        <p>Also on the Home tab, this group controls paragraph formatting options, such as alignment (left, center, right, justify), indentation, line spacing, and bulleted/numbered lists.</p>
+                    </div>
+                </div>
+
+                <h3>Understanding Styles</h3>
+                <div class="styles-panel">
+                    <h3 style="margin-top: 0;">Styles Gallery</h3>
+                    <p>Predefined sets of formatting options (font, size, spacing, indentation, etc.) that can be applied to text to ensure consistency. The Styles gallery provides quick access to various style templates.</p>
+                    <div class="styles-grid">
+                        <div class="style-item">
+                            <div style="font-size: 14px; font-weight: normal;">Normal</div>
                         </div>
-                        <h4>Styles</h4>
+                        <div class="style-item">
+                            <div style="font-size: 16px; font-weight: bold; color: #2c5aa0;">Heading 1</div>
+                        </div>
+                        <div class="style-item">
+                            <div style="font-size: 14px; font-weight: bold; color: #2c5aa0;">Heading 2</div>
+                        </div>
+                        <div class="style-item">
+                            <div style="font-size: 12px; font-weight: bold; color: #666;">Heading 3</div>
+                        </div>
+                        <div class="style-item">
+                            <div style="font-size: 14px; color: #0066cc;">Title</div>
+                        </div>
+                        <div class="style-item">
+                            <div style="font-size: 12px; color: #666;">Subtitle</div>
+                        </div>
+                        <div class="style-item">
+                            <div style="font-size: 12px; font-style: italic; color: #888;">Quote</div>
+                        </div>
+                        <div class="style-item">
+                            <div style="font-size: 11px; color: #666;">Caption</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    <strong>Updating Styles:</strong> Modifying a style's definition through right-click and "Update [Style Name] to match selection" can streamline formatting changes across the entire document. The Styles Gallery provides a visual presentation of applied styles, and modification is easily performed directly from this interface.
+                </div>
+            </div>
+
+            <div class="major-section" id="advanced-features">
+                <h2>3. Advanced Features & Navigation</h2>
+
+                <div class="content-section">
+                    <p>Word's advanced features help you create professional documents with sophisticated navigation and automation capabilities. These tools become increasingly important as your documents grow in size and complexity.</p>
+                </div>
+
+                <h3>Table of Contents</h3>
+                <div class="toc-example">
+                    <h3 style="margin-top: 0; color: #2c5aa0;">Table of Contents</h3>
+                    <p style="margin: 0 0 15px 0; font-size: 14px; color: #666;">Automatically generated based on heading styles</p>
+                    <div class="toc-item toc-level-1">1. Introduction .................................. 1</div>
+                    <div class="toc-item toc-level-2">1.1 Getting Started ........................... 2</div>
+                    <div class="toc-item toc-level-2">1.2 Basic Concepts ........................... 3</div>
+                    <div class="toc-item toc-level-1">2. Advanced Features .......................... 5</div>
+                    <div class="toc-item toc-level-2">2.1 Styles and Formatting .................... 6</div>
+                    <div class="toc-item toc-level-3">2.1.1 Creating Custom Styles ............... 7</div>
+                    <div class="toc-item toc-level-3">2.1.2 Modifying Existing Styles ............ 8</div>
+                    <div class="toc-item toc-level-2">2.2 Document Navigation ..................... 10</div>
+                    <div class="toc-item toc-level-1">3. Collaboration Tools ....................... 12</div>
+                </div>
+
+                <div class="content-section">
+                    <p>The <strong>Table of Contents</strong> is automatically generated based on heading styles, providing a navigational overview of the document's structure. This is why consistent use of heading styles (Heading 1, Heading 2, etc.) is so important in document creation.</p>
+                </div>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4><i class="bi bi-search"></i> Find and Replace</h4>
+                        <p>A powerful tool for searching for specific words or phrases and replacing them, facilitating large-scale editing across your entire document.</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4><i class="bi bi-gear-wide"></i> Paragraph Dialogue Box</h4>
+                        <p>Accessed through the Format tab, this provides extended control over paragraph-level formatting options and customization beyond what's available in the Ribbon.</p>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4><i class="bi bi-puzzle"></i> Quick Parts</h4>
+                        <p>Reusable content blocks such as text snippets or graphics, offering efficient insertion of frequently used items like letterheads, signatures, or standard paragraphs.</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4><i class="bi bi-layout-text-sidebar"></i> Document Properties</h4>
+                        <p>Accessible via the File tab, this allows modification of metadata associated with the document, such as author, title, and keywords, which can be useful for document management and search.</p>
+                    </div>
+                </div>
+
+                <div class="feature-highlight">
+                    <h3>Pro Tips for Efficient Word Usage</h3>
+                    <ul style="margin: 0;">
+                        <li><strong>Use Styles Consistently:</strong> Always use heading styles for document structure - this enables automatic Table of Contents generation and improves navigation</li>
+                        <li><strong>Customize Quick Access Toolbar:</strong> Add your most-used commands for instant access without navigating through Ribbon tabs</li>
+                        <li><strong>Learn Keyboard Shortcuts:</strong> Hover over Ribbon commands to see their shortcuts - this dramatically speeds up your workflow</li>
+                        <li><strong>Use Quick Parts:</strong> Save time by creating reusable content blocks for signatures, headers, or frequently used text</li>
+                        <li><strong>Master Find and Replace:</strong> Use advanced options like wildcards and formatting to make complex document changes quickly</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="major-section" id="workflow-integration">
+                <h2>4. Workflow Integration</h2>
+
+                <div class="content-section">
+                    <p>Understanding how these interface elements work together creates an efficient document creation workflow. The key is to think of Word as a system where formatting decisions made early (like consistent heading styles) pay dividends throughout the document creation process.</p>
+                </div>
+
+                <div class="feature-highlight">
+                    <h3>Efficient Document Creation Workflow</h3>
+                    <ol style="margin: 0;">
+                        <li><strong>Start with Document Properties:</strong> Use the Backstage View to set up author, title, and keywords before writing</li>
+                        <li><strong>Apply Heading Styles Early:</strong> Use Heading 1, 2, and 3 styles to structure your content as you write</li>
+                        <li><strong>Use the Styles Gallery:</strong> Apply consistent formatting using predefined styles rather than manual formatting</li>
+                        <li><strong>Generate Table of Contents:</strong> Once your headings are in place, Word can automatically create navigation</li>
+                        <li><strong>Leverage Quick Parts:</strong> Save frequently used content blocks for consistent reuse</li>
+                        <li><strong>Final Polish:</strong> Use Find and Replace for global changes and the Paragraph Dialogue Box for fine-tuning</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="major-section" id="interface-exploration">
+                <h2>5. Learning Exercise: Interface Exploration</h2>
+
+                <div class="content-section">
+                    <h3>Hands-On Practice</h3>
+                    <p>Now that you understand the interface structure, try these exercises to reinforce your learning:</p>
+                    
+                    <div class="info-box">
+                        <h4><i class="bi bi-1-square-fill"></i> Exercise 1: Ribbon Navigation</h4>
+                        <ol>
+                            <li>Open Microsoft Word and identify each Ribbon tab</li>
+                            <li>Click through each tab and observe how the groups change</li>
+                            <li>Find the Font group and identify three different formatting command</li>
+                            <li>Locate the Styles gallery and preview different style options</li>
+                        </ol>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="bi bi-2-square-fill"></i> Exercise 2: Quick Access Customization</h4>
+                        <ol>
+                            <li>Right-click on the Quick Access Toolbar</li>
+                            <li>Add a new command that you use frequently</li>
+                            <li>Test the new command to ensure it works as expected</li>
+                            <li>Observe how this changes your workflow efficiency</li>
+                        </ol>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="bi bi-3-square-fill"></i> Exercise 3: Document Structure Practice</h4>
+                        <ol>
+                            <li>Create a new document and apply different heading styles</li>
+                            <li>Use the References tab to insert a Table of Contents</li>
+                            <li>Add some content under each heading</li>
+                            <li>Update the Table of Contents to see how it reflects your changes</li>
+                        </ol>
                     </div>
                 </div>
             </div>
-            
-            <div class="document-area">
-                <div class="callout callout-left" style="top: 20px; left: -180px;">Document Area</div>
-                <div class="ruler">
-                    <div class="ruler-marks"></div>
-                </div>
-                <div class="page-content">
-                    <p style="margin: 0;">Your document content appears here...</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="two-column">
-            <div class="info-box">
-                <h4>🎀 The Ribbon</h4>
-                <p>The primary interface for accessing commands and features in Word. It's organized into tabs, each containing related groups of actions.</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>📑 Tabs</h4>
-                <p>Horizontal sections along the Ribbon that categorize commands (e.g., Home, Insert, Page Layout, References, Mailings, Review, View, Help).</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>📦 Groups</h4>
-                <p>Collections of related commands within each tab. For example, the Home tab includes groups like Clipboard, Font, Paragraph, and Styles.</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>⚡ Actions</h4>
-                <p>Individual commands within a group, such as "Bold," "Left Align," or "Insert Picture." Hovering over an action often reveals a description and keyboard shortcut.</p>
-            </div>
-        </div>
+            <div class="major-section" id="troubleshooting">
+                <h2>6. Troubleshooting Common Interface Issues</h2>
 
-        <div class="key-point">
-            <strong>Quick Access Toolbar:</strong> A customizable toolbar usually located at the very top of the Word window. It provides quick access to frequently used commands, such as Save, Undo, and Redo. It can be customized by adding or removing commands.
-        </div>
-
-        <h3>Backstage View</h3>
-        <div class="word-interface">
-            <div class="title-bar">
-                File Tab - Backstage View
-            </div>
-            <div style="display: flex; background: #f8f9fa;">
-                <div style="width: 200px; background: #2c5aa0; color: white; padding: 20px;">
-                    <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">📄 New</div>
-                    <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">📁 Open</div>
-                    <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px; background: rgba(255,255,255,0.2);">ℹ️ Info</div>
-                    <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">💾 Save</div>
-                    <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">💾 Save As</div>
-                    <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">🖨️ Print</div>
-                    <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">🔗 Share</div>
-                    <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">📤 Export</div>
-                    <div style="margin: 10px 0; padding: 8px; cursor: pointer; border-radius: 4px;">⚙️ Options</div>
+                <div class="content-section">
+                    <h3>Common Problems and Solutions</h3>
                 </div>
-                <div style="flex: 1; padding: 20px;">
-                    <h3>Document Properties</h3>
-                    <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid #ddd;">
-                        <p><strong>Title:</strong> Microsoft Word Overview</p>
-                        <p><strong>Author:</strong> Ryan</p>
-                        <p><strong>Subject:</strong> Software Documentation</p>
-                        <p><strong>Keywords:</strong> Word, Interface, Tutorial</p>
-                        <p><strong>Comments:</strong> Comprehensive overview of Word interface</p>
-                        <p><strong>Created:</strong> June 18, 2025</p>
-                        <p><strong>Modified:</strong> June 18, 2025</p>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4>❓ "I can't find a command"</h4>
+                        <p><strong>Solution:</strong> Commands are organized logically by function. Text formatting is in Home, insertion tools are in Insert, page setup is in Layout. Use the Tell Me box (lightbulb icon) to search for commands.</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>❓ "My Ribbon looks different"</h4>
+                        <p><strong>Solution:</strong> The Ribbon adapts to screen size. On smaller screens, groups may collapse into dropdown menus. You can also minimize the Ribbon by double-clicking any tab.</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>❓ "Styles aren't working correctly"</h4>
+                        <p><strong>Solution:</strong> Make sure you're selecting text before applying styles. To modify a style, right-click it in the Styles gallery and choose "Modify" or "Update to Match Selection."</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>❓ "Table of Contents won't update"</h4>
+                        <p><strong>Solution:</strong> Ensure you're using actual Heading styles (not just bold text). Right-click the Table of Contents and select "Update Field" to refresh it after making changes.</p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="content-section">
-            <p><strong>Backstage View</strong> is accessed by clicking the File tab (or the Office button in older versions). The Backstage View provides access to document management tasks like opening, saving, printing, sharing, and exporting. It also allows you to modify document properties such as author, title, and keywords.</p>
-        </div>
+            <div class="major-section" id="advanced-customization">
+                <h2>7. Advanced Interface Customization</h2>
 
-        <h2>2. Text Formatting and Styles</h2>
+                <div class="content-section">
+                    <p>Word's interface can be customized to match your workflow preferences and increase productivity.</p>
+                </div>
 
-        <div class="content-section">
-            <p>Word's formatting capabilities are primarily accessed through the Home tab's groups. Understanding how these work together is essential for creating professional-looking documents.</p>
-        </div>
+                <div class="feature-highlight">
+                    <h3 style="color: #204c8e;"><i class="bi bi-sliders"></i> Customization Options</h3>
+                    <ul style="margin: 0;" id="customizationOpts">
+                        <li><strong>Ribbon Customization:</strong>
+                            Add, remove, or rearrange Ribbon tabs and groups through File > Options > Customize Ribbon
+                            <div class="link-preview hide-on-phone">
+                                <div class="preview-container">
+                                    <iframe scrolling="no" class="preview-iframe" src="https://www.youtube-nocookie.com/embed/DjrwRihflvA?si=nQmRcEqo7Ql6YOTf"></iframe>
+                                    <div class="gradient-overlay"></div>
+                                    <a target="_blank" href="https://www.youtube.com/watch?v=DjrwRihflvA" class="view-link">Video: Creating Your Own Custom Rabs & Ribbon ↗️</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li><strong>Quick Access Toolbar:</strong>
+                            Add any command for one-click access, regardless of which Ribbon tab is active
+                            <div class="link-preview hide-on-phone">
+                                <div class="preview-container">
+                                    <iframe scrolling="no" class="preview-iframe" src="https://www.youtube-nocookie.com/embed/uBRY4YJOFg0?si=oOe3kiBTRaAHCEQK"></iframe>
+                                    <div class="gradient-overlay"></div>
+                                    <a target="_blank" href="https://youtu.be/uBRY4YJOFg0?si=oOe3kiBTRaAHCEQK&t=199" class="view-link">Video: Customizing The Quick Access Toolbar ↗️</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li><strong>Status Bar:</strong>
+                            Right-click the status bar to toggle information displays like word count, page number, or zoom level
+                            <div class="link-preview hide-on-phone">
+                                <div class="preview-container">
+                                    <iframe scrolling="no" class="preview-iframe" src="https://www.youtube-nocookie.com/embed/geeaHgORD-A?si=Hamz_FESc6sjyPMu"></iframe>
+                                    <div class="gradient-overlay"></div>
+                                    <a target="_blank" href="https://youtu.be/geeaHgORD-A?si=Hamz_FESc6sjyPMu" class="view-link">Video: Expert Tips to Customize Microsoft Word Status Bar ↗️</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li><strong>Default Styles:</strong>
+                            Modify the Normal template to change default fonts, spacing, and styles for all new documents
+                            <div class="link-preview hide-on-phone">
+                                <div class="preview-container">
+                                    <iframe scrolling="no" class="preview-iframe" src="https://www.youtube-nocookie.com/embed/URcf-QhPZ4E?si=oSsxw4AEVqtZ9dnK"></iframe>
+                                    <div class="gradient-overlay"></div>
+                                    <a target="_blank" href="https://youtu.be/URcf-QhPZ4E?si=WJ6HbPh1RO9wOZqc" class="view-link">Video: How to Setup a Default Template ↗️</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-        <h3>Font and Paragraph Groups in Detail</h3>
-        <div class="ribbon-content" style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 15px;">
-            <div class="ribbon-group">
-                <div class="ribbon-actions" style="flex-direction: column; gap: 5px;">
-                    <div style="display: flex; gap: 3px;">
-                        <button class="action-btn">📋 Paste</button>
-                        <button class="action-btn">✂️ Cut</button>
-                        <button class="action-btn">📄 Copy</button>
+            <div class="major-section" id="summary">
+                <h2>8. Summary and Next Steps</h2>
+
+                <div class="content-section">
+                    <h3>Key Takeaways</h3>
+                    <p>Mastering Microsoft Word's interface is about understanding the logical organization of its features:</p>
+                    
+                    <div class="key-point">
+                        <strong>The Ribbon System:</strong> Tabs organize features by purpose, Groups collect related commands, and commands perform specific tasks. This hierarchy makes Word's extensive feature set manageable and discoverable.
                     </div>
-                    <button class="action-btn">🖼️ Format Painter</button>
-                </div>
-                <h4>Clipboard</h4>
-            </div>
-            
-            <div class="ribbon-group">
-                <div class="ribbon-actions" style="flex-direction: column; gap: 5px;">
-                    <div style="display: flex; gap: 3px;">
-                        <button class="action-btn">Calibri ▼</button>
-                        <button class="action-btn">11 ▼</button>
+                    
+                    <div class="key-point">
+                        <strong>Styles Are Essential:</strong> Using Word's style system instead of manual formatting creates consistency, enables automation (like Table of Contents), and makes document-wide changes effortless.
                     </div>
-                    <div style="display: flex; gap: 3px;">
-                        <button class="action-btn">A↑</button>
-                        <button class="action-btn">A↓</button>
+                    
+                    <div class="key-point">
+                        <strong>Shortcuts Improve Efficiency:</strong> Tailoring the Quick Access Toolbar and learning keyboard shortcuts can dramatically speed up your document creation process.
                     </div>
-                    <div style="display: flex; gap: 3px;">
-                        <button class="action-btn"><strong>B</strong></button>
-                        <button class="action-btn"><em>I</em></button>
-                        <button class="action-btn"><u>U</u></button>
-                        <button class="action-btn">🎨</button>
+                    
+                    <div class="key-point">
+                        <strong>Integration Thinking:</strong> Word's features work together - document properties support organization, heading styles enable navigation, and the Backstage View provides document management tools.
                     </div>
                 </div>
-                <h4>Font</h4>
             </div>
-            
-            <div class="ribbon-group">
-                <div class="ribbon-actions" style="flex-direction: column; gap: 5px;">
-                    <div style="display: flex; gap: 3px;">
-                        <button class="action-btn">• —</button>
-                        <button class="action-btn">1. —</button>
-                    </div>
-                    <div style="display: flex; gap: 3px;">
-                        <button class="action-btn">⬅️</button>
-                        <button class="action-btn">↔️</button>
-                        <button class="action-btn">➡️</button>
-                        <button class="action-btn">≡</button>
-                    </div>
-                </div>
-                <h4>Paragraph</h4>
-            </div>
-        </div>
-
-        <div class="two-column">
-            <div class="info-box">
-                <h4>🔤 Font Group</h4>
-                <p>Located on the Home tab, this group provides tools for formatting text, including font face, size, color, bolding, italics, underlining, and text effects.</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>📄 Paragraph Group</h4>
-                <p>Also on the Home tab, this group controls paragraph formatting options, such as alignment (left, center, right, justify), indentation, line spacing, and bulleted/numbered lists.</p>
-            </div>
-        </div>
-
-        <h3>Understanding Styles</h3>
-        <div class="styles-panel">
-            <h3 style="margin-top: 0;">Styles Gallery</h3>
-            <p>Predefined sets of formatting options (font, size, spacing, indentation, etc.) that can be applied to text to ensure consistency. The Styles gallery provides quick access to various style templates.</p>
-            <div class="styles-grid">
-                <div class="style-item">
-                    <div style="font-size: 14px; font-weight: normal;">Normal</div>
-                </div>
-                <div class="style-item">
-                    <div style="font-size: 16px; font-weight: bold; color: #2c5aa0;">Heading 1</div>
-                </div>
-                <div class="style-item">
-                    <div style="font-size: 14px; font-weight: bold; color: #2c5aa0;">Heading 2</div>
-                </div>
-                <div class="style-item">
-                    <div style="font-size: 12px; font-weight: bold; color: #666;">Heading 3</div>
-                </div>
-                <div class="style-item">
-                    <div style="font-size: 14px; color: #0066cc;">Title</div>
-                </div>
-                <div class="style-item">
-                    <div style="font-size: 12px; color: #666;">Subtitle</div>
-                </div>
-                <div class="style-item">
-                    <div style="font-size: 12px; font-style: italic; color: #888;">Quote</div>
-                </div>
-                <div class="style-item">
-                    <div style="font-size: 11px; color: #666;">Caption</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="key-point">
-            <strong>Updating Styles:</strong> Modifying a style's definition through right-click and "Update [Style Name] to match selection" can streamline formatting changes across the entire document. The Styles Gallery provides a visual presentation of applied styles, and modification is easily performed directly from this interface.
-        </div>
-
-        <h2>3. Advanced Features & Navigation</h2>
-
-        <div class="content-section">
-            <p>Word's advanced features help you create professional documents with sophisticated navigation and automation capabilities. These tools become increasingly important as your documents grow in size and complexity.</p>
-        </div>
-
-        <h3>Table of Contents</h3>
-        <div class="toc-example">
-            <h3 style="margin-top: 0; color: #2c5aa0;">Table of Contents</h3>
-            <p style="margin: 0 0 15px 0; font-size: 14px; color: #666;">Automatically generated based on heading styles</p>
-            <div class="toc-item toc-level-1">1. Introduction .................................. 1</div>
-            <div class="toc-item toc-level-2">1.1 Getting Started ........................... 2</div>
-            <div class="toc-item toc-level-2">1.2 Basic Concepts ........................... 3</div>
-            <div class="toc-item toc-level-1">2. Advanced Features .......................... 5</div>
-            <div class="toc-item toc-level-2">2.1 Styles and Formatting .................... 6</div>
-            <div class="toc-item toc-level-3">2.1.1 Creating Custom Styles ............... 7</div>
-            <div class="toc-item toc-level-3">2.1.2 Modifying Existing Styles ............ 8</div>
-            <div class="toc-item toc-level-2">2.2 Document Navigation ..................... 10</div>
-            <div class="toc-item toc-level-1">3. Collaboration Tools ....................... 12</div>
-        </div>
-
-        <div class="content-section">
-            <p>The <strong>Table of Contents</strong> is automatically generated based on heading styles, providing a navigational overview of the document's structure. This is why consistent use of heading styles (Heading 1, Heading 2, etc.) is so important in document creation.</p>
-        </div>
-
-        <div class="two-column">
-            <div class="info-box">
-                <h4>🔍 Find and Replace</h4>
-                <p>A powerful tool for searching for specific words or phrases and replacing them, facilitating large-scale editing across your entire document.</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>⚙️ Paragraph Dialogue Box</h4>
-                <p>Accessed through the Format tab, this provides extended control over paragraph-level formatting options and customization beyond what's available in the Ribbon.</p>
-            </div>
-        </div>
-
-        <div class="two-column">
-            <div class="info-box">
-                <h4>🧩 Quick Parts</h4>
-                <p>Reusable content blocks such as text snippets or graphics, offering efficient insertion of frequently used items like letterheads, signatures, or standard paragraphs.</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>📋 Document Properties</h4>
-                <p>Accessible via the File tab, this allows modification of metadata associated with the document, such as author, title, and keywords, which can be useful for document management and search.</p>
-            </div>
-        </div>
-
-        <div class="feature-highlight">
-            <h3>🚀 Pro Tips for Efficient Word Usage</h3>
-            <ul style="margin: 0;">
-                <li><strong>Use Styles Consistently:</strong> Always use heading styles for document structure - this enables automatic Table of Contents generation and improves navigation</li>
-                <li><strong>Customize Quick Access Toolbar:</strong> Add your most-used commands for instant access without navigating through Ribbon tabs</li>
-                <li><strong>Learn Keyboard Shortcuts:</strong> Hover over Ribbon commands to see their shortcuts - this dramatically speeds up your workflow</li>
-                <li><strong>Use Quick Parts:</strong> Save time by creating reusable content blocks for signatures, headers, or frequently used text</li>
-                <li><strong>Master Find and Replace:</strong> Use advanced options like wildcards and formatting to make complex document changes quickly</li>
-            </ul>
-        </div>
-
-        <h2>4. Workflow Integration</h2>
-
-        <div class="content-section">
-            <p>Understanding how these interface elements work together creates an efficient document creation workflow. The key is to think of Word as a system where formatting decisions made early (like consistent heading styles) pay dividends throughout the document creation process.</p>
-        </div>
-
-        <div class="feature-highlight">
-            <h3>📈 Efficient Document Creation Workflow</h3>
-            <ol style="margin: 0;">
-                <li><strong>Start with Document Properties:</strong> Use the Backstage View to set up author, title, and keywords before writing</li>
-                <li><strong>Apply Heading Styles Early:</strong> Use Heading 1, 2, and 3 styles to structure your content as you write</li>
-                <li><strong>Use the Styles Gallery:</strong> Apply consistent formatting using predefined styles rather than manual formatting</li>
-                <li><strong>Generate Table of Contents:</strong> Once your headings are in place, Word can automatically create navigation</li>
-                <li><strong>Leverage Quick Parts:</strong> Save frequently used content blocks for consistent reuse</li>
-                <li><strong>Final Polish:</strong> Use Find and Replace for global changes and the Paragraph Dialogue Box for fine-tuning</li>
-            </ol>
-        </div>
-
-        <h2>5. Learning Exercise: Interface Exploration</h2>
-
-        <div class="content-section">
-            <h3>Hands-On Practice</h3>
-            <p>Now that you understand the interface structure, try these exercises to reinforce your learning:</p>
-            
-            <div class="info-box">
-                <h4>🎯 Exercise 1: Ribbon Navigation</h4>
-                <ol>
-                    <li>Open Microsoft Word and identify each Ribbon tab</li>
-                    <li>Click through each tab and observe how the groups change</li>
-                    <li>Find the Font group and identify three different formatting actions</li>
-                    <li>Locate the Styles gallery and preview different style options</li>
-                </ol>
-            </div>
-
-            <div class="info-box">
-                <h4>🎯 Exercise 2: Quick Access Customization</h4>
-                <ol>
-                    <li>Right-click on the Quick Access Toolbar</li>
-                    <li>Add a new command that you use frequently</li>
-                    <li>Test the new command to ensure it works as expected</li>
-                    <li>Observe how this changes your workflow efficiency</li>
-                </ol>
-            </div>
-
-            <div class="info-box">
-                <h4>🎯 Exercise 3: Document Structure Practice</h4>
-                <ol>
-                    <li>Create a new document and apply different heading styles</li>
-                    <li>Use the References tab to insert a Table of Contents</li>
-                    <li>Add some content under each heading</li>
-                    <li>Update the Table of Contents to see how it reflects your changes</li>
-                </ol>
-            </div>
-
-            <div class="info-box">
-                <h4>🎯 Exercise 4: Backstage View Exploration</h4>
-                <ol>
-                    <li>Click the File tab to enter Backstage View</li>
-                    <li>Explore the Info panel and document properties</li>
-                    <li>Try the Export options to see different file formats</li>
-                    <li>Check the Options menu to see customization possibilities</li>
-                </ol>
-            </div>
-        </div>
-
-        <h2>6. Troubleshooting Common Interface Issues</h2>
-
-        <div class="content-section">
-            <h3>Common Problems and Solutions</h3>
-        </div>
-
-        <div class="two-column">
-            <div class="info-box">
-                <h4>❓ "I can't find a command"</h4>
-                <p><strong>Solution:</strong> Commands are organized logically by function. Text formatting is in Home, insertion tools are in Insert, page setup is in Layout. Use the Tell Me box (lightbulb icon) to search for commands.</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>❓ "My Ribbon looks different"</h4>
-                <p><strong>Solution:</strong> The Ribbon adapts to screen size. On smaller screens, groups may collapse into dropdown menus. You can also minimize the Ribbon by double-clicking any tab.</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>❓ "Styles aren't working correctly"</h4>
-                <p><strong>Solution:</strong> Make sure you're selecting text before applying styles. To modify a style, right-click it in the Styles gallery and choose "Modify" or "Update to Match Selection."</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>❓ "Table of Contents won't update"</h4>
-                <p><strong>Solution:</strong> Ensure you're using actual Heading styles (not just bold text). Right-click the Table of Contents and select "Update Field" to refresh it after making changes.</p>
-            </div>
-        </div>
-
-        <h2>7. Advanced Interface Customization</h2>
-
-        <div class="content-section">
-            <p>Word's interface can be customized to match your workflow preferences and increase productivity.</p>
-        </div>
-
-        <div class="feature-highlight">
-            <h3>🔧 Customization Options</h3>
-            <ul style="margin: 0;">
-                <li><strong>Ribbon Customization:</strong> Add, remove, or rearrange Ribbon tabs and groups through File > Options > Customize Ribbon</li>
-                <li><strong>Quick Access Toolbar:</strong> Add any command for one-click access, regardless of which Ribbon tab is active</li>
-                <li><strong>Status Bar:</strong> Right-click the status bar to toggle information displays like word count, page number, or zoom level</li>
-                <li><strong>Keyboard Shortcuts:</strong> Create custom shortcuts for frequently used commands through File > Options > Customize Ribbon > Keyboard Shortcuts</li>
-                <li><strong>Default Styles:</strong> Modify the Normal template to change default fonts, spacing, and styles for all new documents</li>
-            </ul>
-        </div>
-
-        <h2>8. Summary and Next Steps</h2>
-
-        <div class="content-section">
-            <h3>Key Takeaways</h3>
-            <p>Mastering Microsoft Word's interface is about understanding the logical organization of its features:</p>
-            
-            <div class="key-point">
-                <strong>The Ribbon System:</strong> Tabs organize features by purpose, Groups collect related commands, and Actions perform specific tasks. This hierarchy makes Word's extensive feature set manageable and discoverable.
-            </div>
-            
-            <div class="key-point">
-                <strong>Styles Are Essential:</strong> Using Word's style system instead of manual formatting creates consistency, enables automation (like Table of Contents), and makes document-wide changes effortless.
-            </div>
-            
-            <div class="key-point">
-                <strong>Customization Improves Efficiency:</strong> Tailoring the Quick Access Toolbar and learning keyboard shortcuts can dramatically speed up your document creation process.
-            </div>
-            
-            <div class="key-point">
-                <strong>Integration Thinking:</strong> Word's features work together - document properties support organization, heading styles enable navigation, and the Backstage View provides document management tools.
-            </div>
-        </div>
-
-        <div class="feature-highlight">
-            <h3>🎓 Continue Your Learning</h3>
-            <p>Now that you understand Word's interface fundamentals, consider exploring these advanced topics:</p>
-            <ul style="margin: 0;">
-                <li><strong>Mail Merge:</strong> Automate document creation with data from external sources</li>
-                <li><strong>Track Changes:</strong> Collaborate effectively with revision tracking and comments</li>
-                <li><strong>Templates:</strong> Create reusable document frameworks for consistent formatting</li>
-            </ul>
         </div>
     </div>
+
+    <script>
+        // JavaScript to handle the tabbed navigation functionality
+        document.querySelectorAll('.tab-link').forEach(tab => {
+            tab.addEventListener('click', function(event) {
+                setTimeout(() => {
+                    // Deactivate all tabs
+                    document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+                    // Activate the clicked tab
+                    tab.classList.add('active');
+
+                    // Hide all sections
+                    document.querySelectorAll('.major-section').forEach(section => section.classList.remove('active'));
+                    
+                    // Show the corresponding section
+                    const targetSection = document.querySelector(tab.getAttribute('href'));
+                    targetSection.classList.add('active');
+                }, 20);
+                
+                setTimeout(() => {
+                    document.getElementById('top').scrollIntoView({
+                        behavior: 'instant',
+                        block: 'start' // optional, ensures the top edge of the element aligns with the top of the viewport
+                    });
+                }, 10);
+            });
+        });
+    </script>
 </body>
 </html>
