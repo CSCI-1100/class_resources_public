@@ -1,0 +1,276 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Safari/605.1.15" version="29.5.2">
+  <diagram name="Page-1" id="FZ3B_jTiSXkvgyfn8n26">
+    <mxGraphModel dx="2428" dy="2398" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-8" parent="1" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="1065" width="976" x="410" y="-455" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-2" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=light-dark(#03689780,#69D0FF80);strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.buildings.small_business;" value="" vertex="1">
+          <mxGeometry height="134" width="248" x="-101" y="166" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-12" edge="1" parent="1" source="E0chgy53evxBILiAPPOH-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;" target="rJih6l_jzLuQ9YaExqFm-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-3" parent="1" style="strokeColor=#ffffff;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.routers.wireless_router;" value="" vertex="1">
+          <mxGeometry height="77" width="78" x="190" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-4" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.computers_and_peripherals.laptop;" value="" vertex="1">
+          <mxGeometry height="61" width="90" x="-30" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-17" edge="1" parent="1" source="E0chgy53evxBILiAPPOH-9" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;" target="E0chgy53evxBILiAPPOH-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-9" parent="1" style="strokeColor=#ffffff;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.wireless.wireless;rotation=-180;" value="" vertex="1">
+          <mxGeometry height="67" width="37" x="110" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-20" edge="1" parent="1" source="E0chgy53evxBILiAPPOH-10" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.28;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-10" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.computers_and_peripherals.laptop;" value="" vertex="1">
+          <mxGeometry height="61" width="90" x="380" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-18" edge="1" parent="1" source="E0chgy53evxBILiAPPOH-12" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;" target="E0chgy53evxBILiAPPOH-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-12" parent="1" style="points=[[0.03,0.03,0],[0.5,0,0],[0.97,0.03,0],[1,0.4,0],[0.97,0.745,0],[0.5,1,0],[0.03,0.745,0],[0,0.4,0]];verticalLabelPosition=bottom;sketch=0;html=1;verticalAlign=top;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.stealthwatch_management_console_smc2;fillColor=#fafafa;strokeColor=#005073;" value="" vertex="1">
+          <mxGeometry height="64" width="80" x="200" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-14" parent="1" style="points=[[0,0.5,0],[0.19,0.02,0],[0.59,0,0],[0.985,0.02,0],[1,0.5,0],[0.985,0.98,0],[0.59,1,0],[0.19,0.98,0]];verticalLabelPosition=bottom;sketch=0;html=1;verticalAlign=top;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.camera2;fillColor=#fafafa;strokeColor=#005073;" value="" vertex="1">
+          <mxGeometry height="30" width="54" x="326" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-16" edge="1" parent="1" source="E0chgy53evxBILiAPPOH-4" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.95;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.12;entryY=0.93;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" target="E0chgy53evxBILiAPPOH-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-19" edge="1" parent="1" source="E0chgy53evxBILiAPPOH-14" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.59;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.88;entryY=0.93;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" target="E0chgy53evxBILiAPPOH-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Ryans-Macbook-Air&lt;br&gt;Local IP Addr: &lt;b&gt;192.168.1.2&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="160" x="-100" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="GalaxyS24&lt;br&gt;Local IP Addr: &lt;b&gt;192.168.1.3&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="160" x="-13" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="VizioD3250I&lt;br&gt;Local IP Addr: &lt;b&gt;192.168.1.4&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="160" x="160" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="TV" vertex="1">
+          <mxGeometry height="47" width="80" x="200" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-27" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="RingDoorbell &lt;font style=&quot;font-size: 8px;&quot;&gt;(to spy on you + neighbors, instead of just using SD card storage)&lt;/font&gt;&lt;br&gt;Local IP Addr: &lt;b&gt;192.168.1.5&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="180" x="340" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-28" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="HP-Envy-x360&lt;br&gt;Local IP Addr: &lt;b&gt;192.168.1.6&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="160" x="440" y="391" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-36" edge="1" parent="1" source="E0chgy53evxBILiAPPOH-33" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeColor=#FF3333;dashed=1;dashPattern=8 8;" target="E0chgy53evxBILiAPPOH-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-33" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;color: rgb(255, 51, 51);&quot;&gt;&lt;b&gt;GET youtube.com&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="80" y="371" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-35" edge="1" parent="1" source="E0chgy53evxBILiAPPOH-34" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;strokeColor=#FF3333;dashed=1;dashPattern=8 8;" target="E0chgy53evxBILiAPPOH-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-34" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;color: rgb(255, 51, 51);&quot;&gt;&lt;b&gt;GET netflix.com/tvhome?accountId=123df3j&amp;amp;key=12dhf3&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="140" x="178" y="371" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-30" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Your devices:&lt;div&gt;Make requests to your router by sending them to the Router @&amp;nbsp;&lt;b&gt;192.168.1.1&amp;nbsp;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="222" x="118" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-37" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 36px;&quot;&gt;Your Neighbors&#39; Home Network&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="536.25" x="-109.5" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-4" parent="1" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=light-dark(#016EC180,#0089B680);shape=mxgraph.azure.cloud;" value="" vertex="1">
+          <mxGeometry height="120" width="240" x="530" y="-20" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-2" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.buildings.end_office;" value="" vertex="1">
+          <mxGeometry height="80" width="77.14" x="570.0000000000001" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-6" parent="1" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=light-dark(#45069780,#69D0FF80);shape=mxgraph.azure.cloud;" value="" vertex="1">
+          <mxGeometry height="120" width="240" x="530" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-7" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#7A0897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.buildings.end_office;" value="" vertex="1">
+          <mxGeometry height="80" width="77.14" x="570.0000000000001" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-8" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Xfinity&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;comcast&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="670.0000000000002" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 22px; color: rgb(255, 255, 255);&quot;&gt;Brightridge&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="680" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-11" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.modems_and_phones.modem;" value="" vertex="1">
+          <mxGeometry height="27" width="77" x="314.5" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-13" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-11" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.067;entryY=0.854;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" target="rJih6l_jzLuQ9YaExqFm-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E0chgy53evxBILiAPPOH-29" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" value="&lt;b&gt;Public IP address&lt;/b&gt; from ISP:&lt;br&gt;174.100.104.123" vertex="1">
+          <mxGeometry height="60" width="200" x="314.5" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-14" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=light-dark(#45069780,#69D0FF80);strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.buildings.small_business;" value="" vertex="1">
+          <mxGeometry height="134" width="248" x="-110.5" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-15" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#7A0897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.computers_and_peripherals.laptop;" value="" vertex="1">
+          <mxGeometry height="61" width="90" x="-39.5" y="844" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-16" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-17" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="205.5" y="731" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-17" parent="1" style="strokeColor=#ffffff;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#7A0897;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.wireless.wireless;rotation=-180;" value="" vertex="1">
+          <mxGeometry height="67" width="37" x="100.5" y="914" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-20" edge="1" parent="1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="230.5" y="934" as="sourcePoint" />
+            <mxPoint x="221.5" y="731" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-21" parent="1" style="points=[[0,0.5,0],[0.19,0.02,0],[0.59,0,0],[0.985,0.02,0],[1,0.5,0],[0.985,0.98,0],[0.59,1,0],[0.19,0.98,0]];verticalLabelPosition=bottom;sketch=0;html=1;verticalAlign=top;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.camera2;fillColor=#7A0897;strokeColor=#005073;" value="" vertex="1">
+          <mxGeometry height="30" width="54" x="316.5" y="924" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-22" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-15" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.95;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.12;entryY=0.93;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="189.5" y="726" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-23" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-21" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.59;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.88;entryY=0.93;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="249.5" y="726" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Bobs-Macbook-Air&lt;br&gt;Local IP Addr: &lt;b&gt;192.168.1.2&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="160" x="-109.5" y="914" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Bobs-iPhone-16E&lt;br&gt;Local IP Addr: &lt;b&gt;192.168.1.3&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="160" x="-22.5" y="984" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Jans-iPhone-17&lt;br&gt;Local IP Addr: &lt;b&gt;192.168.1.4&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="160" x="150.5" y="1004" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-27" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="RingDoorbell &lt;font style=&quot;font-size: 8px;&quot;&gt;(&quot;We love mass surveillance!&quot;)&lt;/font&gt;&lt;br&gt;Local IP Addr: &lt;b&gt;192.168.1.5&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="189.5" x="330.5" y="964" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-30" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Their devices&lt;div&gt;Make requests to your router by sending them to the Router @&amp;nbsp;&lt;b&gt;192.168.1.1&amp;nbsp;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="222" x="108.5" y="744" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-31" parent="1" style="strokeColor=#ffffff;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#7A0897;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.wireless.wireless;rotation=-180;" value="" vertex="1">
+          <mxGeometry height="67" width="37" x="210.5" y="937" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-32" parent="1" style="strokeColor=#ffffff;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#7A0897;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.routers.wireless_router;" value="" vertex="1">
+          <mxGeometry height="77" width="78" x="180.5" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-33" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.579;entryY=1.024;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" target="rJih6l_jzLuQ9YaExqFm-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-34" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 36px;&quot;&gt;Your Home Network&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="390" x="-90" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-35" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#7A0897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.modems_and_phones.modem;" value="" vertex="1">
+          <mxGeometry height="27" width="77" x="330.5" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-37" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.019;entryY=0.563;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" target="rJih6l_jzLuQ9YaExqFm-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-38" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" value="&lt;b&gt;Public IP address&lt;/b&gt; from ISP:&lt;br&gt;107.199.108.123" vertex="1">
+          <mxGeometry height="60" width="200" x="340" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-58" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-52" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-47">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="970" y="-160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-59" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-52" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.607;entryY=0.988;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-48">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-52" parent="1" style="strokeColor=#ffffff;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.switches.layer_3_switch;" value="" vertex="1">
+          <mxGeometry height="64" width="64" x="800" y="-64" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-53" parent="1" style="strokeColor=#ffffff;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.switches.layer_3_switch;" value="" vertex="1">
+          <mxGeometry height="64" width="64" x="970" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-60" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-52" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.793;entryY=0.988;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-62" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-53" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.781;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-63" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-53" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.822;entryY=0.969;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-2" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-52" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.849;entryY=0.326;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-3" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-53" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.989;entryY=0.826;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-5" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-53" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.89;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-6" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-52" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.8;entryY=0.19;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 36px;&quot;&gt;1 large data center: ~5K-100K servers host millions of websites!&lt;/font&gt;" vertex="1">
+          <mxGeometry height="150" width="550" x="268" y="-310" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-10" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-53" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.955;entryY=0.944;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="rJih6l_jzLuQ9YaExqFm-48">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1020" y="20" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 36px;&quot;&gt;&quot;The Cloud&quot; = Data Centers, so your files are distributed across many servers&lt;/span&gt;" vertex="1">
+          <mxGeometry height="150" width="700" x="800" y="-460" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-13" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 49px;&quot;&gt;&lt;i&gt;THE INTERNET&lt;/i&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="120" width="250" x="830" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;strokeWidth=5;" value="&lt;font style=&quot;font-size: 28px;&quot;&gt;Backbone = the cables and switches running underground and on the sea floor, crossing continents and even oceans&lt;/font&gt;" vertex="1">
+          <mxGeometry height="220" width="270" x="940" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-15" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="What&#39;s happening?&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;When load the Netflix app on your smart TV, that TV sends a request containing the correct access token for your account to the router. It is the router&#39;s job to send that request &#39;&lt;b&gt;packet&lt;/b&gt;&#39; to the Internet Service provider (ISP).&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;The router sends ALL the requests from your local network to your ISP, using the public IP address as the sender address. Once it hits the server it requested (e.g., Netflix.com).&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;The server&#39;s job is to send back the account-specific data needed to load your watch history, titles, lists on your Netflix Home screen. It addresses the packet(s) TO the public IP address and sends the data through its own ISP out over the Internet back to your router.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Finally, your router, serving as the broker, keeps a record of which local client (phone, laptop, printer, etc.) made each request so it knows in this case to deliver the Netflix data back to 192.168.1.4, because that is the &lt;b&gt;local IP address&lt;/b&gt; it assigned to the TV when the TV connected to the Wi-Fi.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="410" width="410" x="-530" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-16" parent="1" style="image;sketch=0;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/mscae/DNS.svg;" value="" vertex="1">
+          <mxGeometry height="93" width="93" x="757" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-18" edge="1" parent="1" source="rJih6l_jzLuQ9YaExqFm-52" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.95;exitY=0.94;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.08;entryY=0.05;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="rJih6l_jzLuQ9YaExqFm-53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-19" edge="1" parent="1" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#008a00;strokeColor=#005700;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="760" y="630" as="sourcePoint" />
+            <mxPoint x="810" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;&lt;b&gt;Domain Name Server (DNS):&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;These special servers are the authoritative address book of the Internet. They keep track of the true address(es) that every domain (e.g., google.com) lives at.&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;A small domain, like my personal website, has a single IP address, whereas Google, Amazon, large services that serve millions of requests/second have MANY IP addresses! Google has 100s of thousands of IP addresses.&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 19px;&quot;&gt;Google likely has 1000s of IP addresses just for the Southeast US alone, largely from massive data centers in Atlanta, GA.&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="520" width="310" x="710" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#008A00B3;fontColor=#ffffff;strokeColor=#005700;align=left;" value="&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border: medium; padding: 0px;&quot;&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; DNS ADDRESS BOOK &amp;nbsp;— &amp;nbsp;Authoritative Record (Simplified)&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;=======================================================&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;DOMAIN &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;IP ADDRESS(ES)&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;---------------------------------------------------------------&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;ryanspersonalsite.com &amp;nbsp; 142.93.18.204&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;amazon.com &amp;nbsp; &amp;nbsp;54.239.28.85&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 54.239.28.86&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 54.239.28.87&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 54.230.129.185&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 205.251.242.103&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ... (hundreds more)&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;google.com &amp;nbsp; &amp;nbsp; &amp;nbsp;142.250.80.46 &amp;nbsp; &amp;nbsp; &amp;nbsp; ← Atlanta, GA&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 142.250.80.47 &amp;nbsp; &amp;nbsp; &amp;nbsp; ← Atlanta, GA&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 142.250.80.48 &amp;nbsp; &amp;nbsp; &amp;nbsp; ← Atlanta, GA&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 74.125.196.100 &amp;nbsp; &amp;nbsp; &amp;nbsp;← Dallas, TX&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 74.125.196.101 &amp;nbsp; &amp;nbsp; &amp;nbsp;← Dallas, TX&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 172.217.164.46 &amp;nbsp; &amp;nbsp; &amp;nbsp;← Ashburn, VA&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 172.217.164.47 &amp;nbsp; &amp;nbsp; &amp;nbsp;← Ashburn, VA&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ... (hundreds of thousands more)&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;======================================================&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; HOW IT WORKS&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;======================================================&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; You type: &amp;nbsp; &amp;nbsp; &amp;nbsp; google.com&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;|&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;v&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; Your computer asks the DNS:&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&quot;Hey, what IP address is google.com?&quot;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;|&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;v&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; DNS replies:&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&quot;That&#39;s 142.250.80.46 (and many others).&quot;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;|&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;v&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;The ISP&#39;s DNS resolver chooses IP address near you and forwards&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;your request to the server that lives there.&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; Without DNS, you&#39;d have to memorize 142.250.80.46&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; instead of just typing &quot;google.com&quot;.&lt;/font&gt;&lt;/div&gt;&lt;/blockquote&gt;" vertex="1">
+          <mxGeometry height="837.5" width="550" x="1020" y="592.5" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" value="&lt;b&gt;Local IP addresses&lt;/b&gt;: Only unique to your home network. Not known by outside networks. (Not sensitive). Your router&#39;s way of knowing exactly &quot;who&quot; each device is." vertex="1">
+          <mxGeometry height="90" width="200" x="450" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="6wpWYjbxTH0iGk9azSe4-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=light-dark(#A20025,#FF95A5);fontColor=#ffffff;strokeColor=#6F0000;" value="&lt;b&gt;Public IP addresses&lt;/b&gt;: These are the addresses everyone on the Internet can see. They are issued by the ISP.&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Your router/modem use the public IP address as the FROM address, telling the servers they request data from (or upload data to) to respond back by sending the data TO that address.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;This allows all the responses to make it back to the router, so it can forward along to the phone, laptop, smart camera, etc.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="228" width="210" x="258.5" y="-138" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-48" parent="1" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/SQL_Data_Warehouses.svg;" value="" vertex="1">
+          <mxGeometry height="130" width="128" x="1000" y="-290" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-47" parent="1" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/SQL_Data_Warehouses.svg;" value="" vertex="1">
+          <mxGeometry height="130" width="128" x="900" y="-290" as="geometry" />
+        </mxCell>
+        <mxCell id="rJih6l_jzLuQ9YaExqFm-44" parent="1" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/integration/SQL_Data_Warehouses.svg;" value="" vertex="1">
+          <mxGeometry height="130" width="128" x="800" y="-290" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
