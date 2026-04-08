@@ -153,6 +153,9 @@
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 /* Accessibility                                                   */
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+ a[href] { color: #0066CC!important; } /* Standard hyperlink color (for light mode) */
+
 /* Screen reader class: Hide content for sighted users but show for screen reader */
 .sr-only {
     position: absolute;
