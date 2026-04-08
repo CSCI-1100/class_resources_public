@@ -56,7 +56,7 @@
     </head>
     
     <body class="body-bg-img">
-        <div class="container-lg br-8 mt-3" style="clear: both; padding: 0;">
+        <header class="container-lg br-8 mt-3" style="clear: both; padding: 0;">
             <div class="text-center text-white p-1">
                 <h1 class="text-white" style="margin-bottom: 0;" id="title">
                     <i class="bi bi-file-earmark-word fs-650 text-putty-yellow"></i> CSCI 1100 Syllabi Archive
@@ -65,7 +65,7 @@
             </div>
 
             <div class="row mt-2 ml-1 mb-2 mr-1">
-                <div class="col-sm center text-white fs-200 mt-5 pr-3 pl-5">
+                <div class="col-sm center text-white textshadow fs-200 mt-5 pr-3 pl-5">
                     <i class="bi bi-pen-fill"></i>&nbsp;Ryan Haas, Asst. Director of Using Information Technology
                     <br>
                     <div class="mt-2"><i class="bi bi-archive"></i>&nbsp;CSCI 1100 Syllabi Archive</div>
@@ -89,11 +89,11 @@
                     </button>
                 </div>
             </nav>
-        </div>
+        </header>
 
-        <div class="container-lg br-8 mb-4 bg-light" style="clear: both; padding: 0; border: 1px dotted white;" id="main" role="main">
-            <div class="tab hide-when-small fs-300 br-8 mb-2 border shadow"
-                style="z-index: 10; margin-top: -130px; margin-left: -260px; position: fixed;">
+        <main class="container-lg br-8 mb-4 bg-white" style="clear: both; padding: 0; border: 1px dotted white;" id="main" role="main">
+            <nav class="tab hide-when-small fs-300 br-8 mb-2 border shadow"
+                style="z-index: 10; margin-top: -130px; margin-left: -260px; position: fixed;" aria-label="Widescreen navigation">
                 <div class="text-center">
                     <span class="text-light fs-450 ff-sans-bold text-center">Navigation<hr color="#9A97D4"></span>
                 </div>
@@ -117,9 +117,9 @@
                     <i class="bi bi-arrow-90deg-down"></i>
                     &ensp;<span class="text-light">Scroll to bottom</span>
                 </button>
-            </div>
+            </nav>
 
-            <div class="scrollbox-wrapper br-8 bg-white" style="margin: 0; padding: 0;">
+            <section class="scrollbox-wrapper br-8 bg-white" style="margin: 0; padding: 0;">
                 <div class="title-container-primary-blue">
                     <h2 class="text-putty-yellow">Available Syllabi</h2>
                 </div>
@@ -131,9 +131,9 @@
                         <!-- Syllabi dynamically generated here -->
                     </ul>
                 </div>
-            </div>
+            </section>
 
-            <div class="row br-8 mt-2 pt-2" id="about">
+            <section class="row br-8 mt-2 pt-2" id="about">
                 <div class="col-md">
                     <div class="title-container-primary-blue">
                         <h2 class="text-putty-yellow">About This Archive</h2>
@@ -175,8 +175,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
         <script>
             function scrollToSection(ID) {

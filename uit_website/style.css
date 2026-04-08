@@ -65,7 +65,6 @@
 .bg-secondary-blue { background-color: hsl( var(--clr-secondary-blue) ); }
 .bg-primary-blue { background-color: hsl( var(--clr-primary-blue) ); }
 .bg-primary-blue-hover { background-color: hsl( var(--clr-primary-blue-hover) ); }
-.bg-light-purple { background-color: hsl( var(--clr-light-purple) ); }
 .bg-accent-light { background-color: hsl( var(--clr-accent-light) ); }
 .bg-putty-yellow { background-color: hsl( var(--clr-putty-yellow) ); }
 .bg-primary-blue-translucent { background-color: rgba(66, 109, 174, 0.7); }
