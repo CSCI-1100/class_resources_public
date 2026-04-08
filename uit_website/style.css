@@ -211,7 +211,7 @@
     }
 
     body, p, li { color: white!important; }
-    a[href] { color: #5395cc!important; }
+    a[href] { color: #6bbcff!important; }
 
     .scrollbox-xs, .scrollbox-md, .scrollbox-lg, .scrollbox-xl {
         border-bottom: 1px solid var(--clr-icon-charcoal);
