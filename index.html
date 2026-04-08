@@ -37,12 +37,56 @@
             gap: 12px;
             padding: 12px;
         }
-        
+
+        #modules-container li {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            cursor: pointer;
+        }
+
+        #modules-container li:hover {
+            scale: 1.02;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(80, 60, 180, 0.18);
+            background: rgba(229, 253, 255, 0.65)!important;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        #modules-container a.card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            height: 100%;
+        }
+
+        #modules-container {
+            background: linear-gradient(rgba(233, 242, 255, 0.5), rgba(218, 232, 255, 0.5)),
+              url("assets/img/desktop-white-green.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
         @media only screen and (max-width: 540px) {
             /* Just one semester per row on small screen */
             #modules-container {
                 display: block;
                 padding: 12px;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            /* Remove background image in dark mode*/
+            #modules-container {
+                background: none;
+            }
+
+            #modules-container li:hover {
+                scale: 1.02;
+                transform: translateY(-3px);
+                box-shadow: 0 8px 24px rgba(80, 60, 180, 0.18);
+                background: rgba(75, 105, 109, 0.65)!important;
+                backdrop-filter: blur(25px);
+                -webkit-backdrop-filter: blur(25px);
             }
         }
     </style>
@@ -117,42 +161,55 @@
             </div>
             <div class="scrollbox-xl" id="modules-list">
                 <ul class="list bg-white fs-400" style="border: none;" id="modules-container">
-                    <li class="border-dotted-primary-blue br-8 p-3 bg-light">
-                        <a class="text-primary-blue text-left fs-550" target="_blank" href="https://csci-1100.github.io/class_resources_public/tech_tips/">🔥 Techology Tips</a>
-                        <div class="text-left">
-                            From boosting productivity with keyboard shortcuts to organizing your digital life with proper file management, this collection of technology tips covers fundamental skills from keyboard shortcuts to file organization, helping students work more efficiently
-                            and effectively.
-                        </div>
+                    <li class="border-dotted-primary-blue br-8 bg-light">
+                        <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/tech_tips/">
+                            <h3 class="card-title text-center fs-550">🔥 Techology Tips</h3>
+                            <div class="text-left text-dark">
+                                From boosting productivity with keyboard shortcuts to organizing your digital life with proper file management, this collection of technology tips covers fundamental skills from keyboard shortcuts to file organization, helping students work more efficiently
+                                and effectively.
+                            </div>
+                        </a>
                     </li>
-                    <li class="border-dotted-primary-blue br-8 p-3 bg-light">
-                        <a class="text-primary-blue text-left fs-550" target="_blank" href="https://csci-1100.github.io/class_resources_public/information_literacy/">🔎 Information Literacy</a>
-                        <div class="text-left">
-                            The ability to use the web, search engines, databases, and critical approaches to navigate, evaluate, and share information effectively and responsibly.
-                        </div>
+                    <li class="border-dotted-primary-blue br-8 bg-light">
+                        <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/information_literacy/">
+                            <h3 class="card-title text-center fs-550">🔎 Information Literacy</h3>
+                            <div class="text-left text-dark">
+                                The ability to use the web, search engines, databases, and critical approaches to navigate, evaluate, and share information effectively and responsibly.
+                            </div>
+                        </a>
                     </li>
-                    <li class="border-dotted-primary-blue br-8 p-3 bg-light">
-                        <a class="text-primary-blue text-left fs-550" target="_blank" href="https://csci-1100.github.io/class_resources_public/tech_product_literacy/">💻 Techology Product Literacy</a>
-                        <div class="text-left">
-                            From smartphones to gaming consoles, from laptops to smart home devices, this module demystifies computer hardware, helping students understand the core components that power the technology they use every day. Armed with this knowledge, students will
-                            hopefully stop buying Chromebooks!
-                        </div>
+                    <li class="border-dotted-primary-blue br-8 bg-light">
+                        <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/tech_product_literacy/">
+                            <h3 class="card-title text-center fs-550">💻 Techology Product Literacy</h3>
+                            <div class="text-left text-dark">
+                                From smartphones to gaming consoles, from laptops to smart home devices, this module demystifies computer hardware, helping students understand the core components that power the technology they use every day. Armed with this knowledge, students will
+                                hopefully stop buying Chromebooks!
+                            </div>
+                        </a>
                     </li>
-                    <li class="border-dotted-primary-blue br-8 p-3 bg-light">
-                        <a class="text-primary-blue text-left fs-550" target="_blank" href="https://csci-1100.github.io/class_resources_public/intro_to_programming_with_python/">🐍 Intro to Programming with Python</a>
-                        <div class="text-left">
-                            Learning the fundamentals of writing code. Students learn basic programming concepts, syntax, and practice computational thinking approaches to problem-solving.
-                        </div>
+                    <li class="border-dotted-primary-blue br-8 bg-light">
+                        <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/intro_to_programming_with_python/">
+                            <h3 class="card-title text-center fs-550">🐍 Intro to Programming with Python</h3>
+                            <div class="text-left text-dark">
+                                Learning the fundamentals of writing code. Students learn basic programming concepts, syntax, and practice computational thinking approaches to problem-solving.
+                            </div>
+                        </a>
                     </li>
-                    <li class="border-dotted-primary-blue br-8 p-3 bg-light">
-                        <a class="text-primary-blue text-left fs-550" target="_blank" href="https://csci-1100.github.io/class_resources_public/data_literacy/">📊 Data Literacy</a>
-                        <div class="text-left">
-                            Understanding, interpreting, and using data. Students learn to analyze data, visualize it using charts and graphs, and make data-driven decisions.
-                        </div>
+                    <li class="border-dotted-primary-blue br-8 bg-light">
+                        <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/data_literacy/">
+                            <h3 class="text-primary-blue text-center fs-550">📊 Data Literacy</h3>
+                            <div class="text-left text-dark">
+                                Understanding, interpreting, and using data. Students learn to analyze data, visualize it using charts and graphs, and make data-driven decisions.
+                            </div>
+                        </a>
                     </li>
-                    <li class="border-dotted-primary-blue br-8 p-3 bg-light">
-                        <a class="text-primary-blue text-left fs-550" target="_blank" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/">🤖 AI & Machine Learning</a>
-                        <div class="text-left">
-                            Demystify AI! Learn about the different types of AI, the data-driven process of Machine Learning, how to maximize your prompting power, and the ethical dimensions around AI technologies and their use.
+                    <li class="border-dotted-primary-blue br-8 bg-light">
+                        <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/">
+                            <h3 class="text-primary-blue text-center fs-550">🤖 AI & Machine Learning</h3>
+                            <div class="text-left text-dark">
+                                Demystify AI! Learn about the different types of AI, the data-driven process of Machine Learning, how to maximize your prompting power, and the ethical dimensions around AI technologies and their use.
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </div>
