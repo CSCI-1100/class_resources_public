@@ -210,7 +210,7 @@
                     </div>
                 </article>
     
-                <article class="row card-row pt-3 hide-on-phone">
+                <article class="row card-row mt-3 hide-on-phone">
                     <div class="col-xl br-8">
                         <div class="title-container-primary-blue" id="topics">
                             <h2 class="text-putty-yellow">Course Topics</h2>
@@ -421,7 +421,7 @@
                     </div>
                 </article>
     
-                <article class="row card-row br-8 pt-3">
+                <article class="row card-row br-8 mt-3">
                     <div class="col-xl br-8">
                         <div class="title-container-primary-blue" id="lesson-materials">
                             <h2 class="text-putty-yellow">Free Lesson Materials</h2>
@@ -457,7 +457,7 @@
                     </div>
                 </article>
 
-                <article class="row card-row br-8 pt-3">
+                <article class="row card-row br-8 mt-3">
                     <div class="col-xl br-8">
                         <div class="title-container-primary-blue" id="requirement">
                             <h2 class="text-putty-yellow">The CSCI 1100 Requirement</h2>
@@ -668,7 +668,7 @@
                     </div>
                 </article>
 
-                <article class="row card-row br-8 pt-3">
+                <article class="row card-row br-8 mt-3">
                     <div class="col-md">
                         <div class="title-container-primary-blue" id="contact">
                             <h2 class="text-putty-yellow">More Questions?</h2>
@@ -685,25 +685,6 @@
         </main>
 
         <script>
-            let collapse = document.getElementsByClassName("collapse-container");
-            for (let i = 0; i < collapse.length; i++) {
-                collapse[i].addEventListener("click", function() {
-                    this.classList.toggle("active");
-                    let content = this.nextElementSibling;
-                    if (content.style.display === "block") {
-                        content.style.display = "none";
-                    }
-                    else {
-                        content.style.display = "block";
-                        this.scrollIntoView();
-                    }
-                });
-            }
-
-            function scrollToSection(ID) {
-                document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
-            }
-
             // Add a flag to track if the user has manually dismissed the modal
             let modalManuallyDismissed = false;
             // Add debounce functionality

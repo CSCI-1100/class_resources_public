@@ -181,7 +181,7 @@
 /* Styles for dark mode */
 @media (prefers-color-scheme: dark) {
     .bg-dark { background-color: hsl( var(--clr-light) )!important; }
-    .bg-light { background-color: var(--clr-icon-charcoal)!important; }
+    .bg-light { background-color: var(--clr-dark)!important; }
     .bg-white { background-color: hsl( var(--clr-dark) )!important; }
     .bg-light-gray { background-color: hsl( var(--clr-light-gray) )!important; }
     .bg-accent-light { background-color: hsl( var(--clr-accent-dark) )!important; }
@@ -237,10 +237,13 @@
 /* ------------------------------------------------------------ */
 /* Responsiveness Media Queries                                 */
 /* ------------------------------------------------------------ */
+.show-when-small, .show-when-small-inline {
+    display: none;
+}
+
 @media only screen and (max-width: 1592px) {
     .hide-when-small {
         display: none;
-
     }
 
     .show-when-small {
@@ -1192,10 +1195,6 @@ input:checked + .slider:before {
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show { display:block; }
-
-.show-when-small, .show-when-small-inline {
-    display: none;
-}
 /* ------------------------------------------------------------ */
 /* End of Navigation Dropdown Menu with content links & profile */
 /* ------------------------------------------------------------ */
