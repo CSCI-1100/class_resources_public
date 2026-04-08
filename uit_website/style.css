@@ -578,6 +578,15 @@ footer {
     padding: 3%;
 }
 
+/* Make cards on UIT site section seamless */
+section > article.card-row {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin-top: -9px;
+}
+
 .card {
     background-color: hsl( var(--clr-white) );
     border: 10px solid hsl( var(--clr-primary-blue) );
@@ -897,7 +906,6 @@ footer {
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
     padding: 20px;
     border-radius: 8px;
     width: 80%;

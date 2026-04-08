@@ -36,7 +36,7 @@
             style="position: absolute!important; top: 0!important; right: 0!important; z-index: -1!important; max-width: 600px; opacity: 0.65;">
 
         <div class="screen-size-modal">
-            <div class="modal-content">
+            <div class="modal-content bg-white">
                 <button class="close-button">&times;</button>
                 <h2>Size Notice</h2>
                 <p class="mb-3">The content area is too narrow for optimal viewing. Tap the link below to launch in a new tab.</p>
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <header class="container-lg br-8 mt-3" style="clear: both; padding: 0;">
+        <header class="container-lg br-8 pt-3" style="clear: both; padding: 0;">
             <div class="text-center text-white" style="margin: 25px 50px 35px;">
                 <h1 class="fs-650 textshadow" style="bottom: 0;" id="title">
                     <img class="fs-150 d-inline rotate-down-sm" src="https://csci-1100.github.io/class_resources_public/uit_website/img/razzyrover0.png" alt="Wobbles the googly-eyed red robot with visible jumper wires and battery pack protruding from top"
@@ -153,7 +153,7 @@
             </nav>
 
             <section class="bg-light mb-4 br-8">
-                <article class="row card-row br-8 pt-3">
+                <article class="row card-row pt-3 br-8">
                     <div class="col-md br-8">
                         <div class="title-container-primary-blue">
                             <h2 class="text-putty-yellow">Our mission</h2>
@@ -210,7 +210,7 @@
                     </div>
                 </article>
     
-                <article class="row card-row mt-3 hide-on-phone">
+                <article class="row card-row pt-3 hide-on-phone">
                     <div class="col-xl br-8">
                         <div class="title-container-primary-blue" id="topics">
                             <h2 class="text-putty-yellow">Course Topics</h2>
@@ -421,7 +421,7 @@
                     </div>
                 </article>
     
-                <article class="row card-row br-8 mt-3">
+                <article class="row card-row pt-3">
                     <div class="col-xl br-8">
                         <div class="title-container-primary-blue" id="lesson-materials">
                             <h2 class="text-putty-yellow">Free Lesson Materials</h2>
@@ -438,7 +438,7 @@
                                             <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
                                         </svg>
                                     </div>
-                                    <div>
+                                    <div class="hide-when-small">
                                         <h3 class="text-primary-blue">Comprehensive Module Resources</h3>
                                         <p class="mb-3">
                                             Explore our growing collection of free educational materials including interactive slides, study guides, 
@@ -452,12 +452,25 @@
                                         </a>
                                     </div>
                                 </div>
+                                <div class="show-when-small">
+                                    <h3 class="text-primary-blue">Comprehensive Module Resources</h3>
+                                    <p class="mb-3">
+                                        Explore our growing collection of free educational materials including interactive slides, study guides, 
+                                        hands-on activities, and video tutorials. Currently featuring modules on <span class="ff-sans-bolder">Introductions to Programming with Python</span>
+                                        and <span class="ff-sans-bolder">Artificial Intelligence & Machine Learning</span>, with more topics planned to release in the coming months!
+                                    </p>
+                                    <a target="_blank" href="https://csci-1100.github.io/class_resources_public/">
+                                        <button class="bttn-putty-yellow-sm">
+                                            <i class="bi bi-collection-fill"></i>&ensp;Browse All Materials&ensp;<i class="bi bi-box-arrow-up-right"></i>
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </article>
 
-                <article class="row card-row br-8 mt-3">
+                <article class="row card-row pt-3">
                     <div class="col-xl br-8">
                         <div class="title-container-primary-blue" id="requirement">
                             <h2 class="text-putty-yellow">The CSCI 1100 Requirement</h2>
@@ -668,7 +681,7 @@
                     </div>
                 </article>
 
-                <article class="row card-row br-8 mt-3">
+                <article class="row card-row pt-3 br-8">
                     <div class="col-md">
                         <div class="title-container-primary-blue" id="contact">
                             <h2 class="text-putty-yellow">More Questions?</h2>
@@ -685,6 +698,21 @@
         </main>
 
         <script type="application/javascript">
+            let collapse = document.getElementsByClassName("collapse-container");
+            for (let i = 0; i < collapse.length; i++) {
+                collapse[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    let content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    }
+                    else {
+                        content.style.display = "block";
+                        this.scrollIntoView();
+                    }
+                });
+            }
+
             function scrollToSection(ID) {
                 document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
             }
