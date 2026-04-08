@@ -41,6 +41,12 @@
         #modules-container li {
             transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
             cursor: pointer;
+            border: 1px solid #bfbffa;
+        }
+
+        #modules-container li .card-text {
+            text-align: left;
+            color: hsl( var(--clr-dark) )!important;
         }
 
         #modules-container li:hover {
@@ -50,6 +56,7 @@
             background: rgba(229, 253, 255, 0.65)!important;
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
+            border: none; /* Remove border on hover*/
         }
 
         #modules-container a.card-link {
@@ -78,6 +85,14 @@
             /* Remove background image in dark mode*/
             #modules-container {
                 background: none;
+            }
+
+            #modules-container li {
+                border: 1px solid #525280;
+            }
+
+            #modules-container li .card-text {
+                color: hsl( var(--clr-light) )!important;
             }
 
             #modules-container li:hover {
@@ -161,52 +176,52 @@
             </div>
             <div class="scrollbox-xl" id="modules-list">
                 <ul class="list bg-white fs-400" style="border: none;" id="modules-container">
-                    <li class="border-dotted-primary-blue br-8 bg-light">
+                    <li class="br-8 bg-light">
                         <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/tech_tips/">
                             <h3 class="card-title text-center fs-550">🔥 Techology Tips</h3>
-                            <div class="text-left text-dark">
+                            <div class="card-text">
                                 From boosting productivity with keyboard shortcuts to organizing your digital life with proper file management, this collection of technology tips covers fundamental skills from keyboard shortcuts to file organization, helping students work more efficiently
                                 and effectively.
                             </div>
                         </a>
                     </li>
-                    <li class="border-dotted-primary-blue br-8 bg-light">
+                    <li class="br-8 bg-light">
                         <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/information_literacy/">
                             <h3 class="card-title text-center fs-550">🔎 Information Literacy</h3>
-                            <div class="text-left text-dark">
+                            <div class="card-text text-dark">
                                 The ability to use the web, search engines, databases, and critical approaches to navigate, evaluate, and share information effectively and responsibly.
                             </div>
                         </a>
                     </li>
-                    <li class="border-dotted-primary-blue br-8 bg-light">
+                    <li class="br-8 bg-light">
                         <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/tech_product_literacy/">
                             <h3 class="card-title text-center fs-550">💻 Techology Product Literacy</h3>
-                            <div class="text-left text-dark">
+                            <div class="card-text text-dark">
                                 From smartphones to gaming consoles, from laptops to smart home devices, this module demystifies computer hardware, helping students understand the core components that power the technology they use every day. Armed with this knowledge, students will
                                 hopefully stop buying Chromebooks!
                             </div>
                         </a>
                     </li>
-                    <li class="border-dotted-primary-blue br-8 bg-light">
+                    <li class="br-8 bg-light">
                         <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/intro_to_programming_with_python/">
                             <h3 class="card-title text-center fs-550">🐍 Intro to Programming with Python</h3>
-                            <div class="text-left text-dark">
+                            <div class="card-text text-dark">
                                 Learning the fundamentals of writing code. Students learn basic programming concepts, syntax, and practice computational thinking approaches to problem-solving.
                             </div>
                         </a>
                     </li>
-                    <li class="border-dotted-primary-blue br-8 bg-light">
+                    <li class="br-8 bg-light">
                         <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/data_literacy/">
                             <h3 class="text-primary-blue text-center fs-550">📊 Data Literacy</h3>
-                            <div class="text-left text-dark">
+                            <div class="card-text text-dark">
                                 Understanding, interpreting, and using data. Students learn to analyze data, visualize it using charts and graphs, and make data-driven decisions.
                             </div>
                         </a>
                     </li>
-                    <li class="border-dotted-primary-blue br-8 bg-light">
+                    <li class="br-8 bg-light">
                         <a class="card-link p-3" target="_blank" href="https://csci-1100.github.io/class_resources_public/ai_and_machine_learning/">
                             <h3 class="text-primary-blue text-center fs-550">🤖 AI & Machine Learning</h3>
-                            <div class="text-left text-dark">
+                            <div class="card-text text-dark">
                                 Demystify AI! Learn about the different types of AI, the data-driven process of Machine Learning, how to maximize your prompting power, and the ethical dimensions around AI technologies and their use.
                             </div>
                         </a>
