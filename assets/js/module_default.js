@@ -28,3 +28,12 @@ for (let i = 0; i < collapse.length; i++) {
 function scrollToSection(ID) {
     document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
 }
+
+// Check on page load
+document.addEventListener('DOMContentLoaded', function() {
+    /* All the scrollable elements must be given a tabindex for keyboard accessibility */
+    const scrollboxes = document.querySelectorAll('[class^="scrollbox"]');
+    scrollboxes.forEach((sb, i) => {
+        sb.setAttribute('tabindex', '0');
+    });
+});
