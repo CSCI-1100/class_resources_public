@@ -31,6 +31,10 @@
     </head>
     
     <body class="body-bg-img">
+        <!-- Hide the CSCI 1100 background image on small screen bc it makes it hard to read the white <h1> text -->
+        <img class="hide-when-small" src="https://csci-1100.github.io/class_resources_public/uit_website/img/uit-logo.png" alt="CSCI 1100 yellow laptop logo"
+            style="position: absolute!important; top: 0!important; right: 0!important; z-index: -1!important; max-width: 600px; opacity: 0.65;">
+
         <div class="screen-size-modal">
             <div class="modal-content">
                 <button class="close-button">&times;</button>
@@ -41,15 +45,20 @@
                 </button></a>
             </div>
         </div>
-        <div class="container-lg br-8 mt-3" style="clear: both; padding: 0;">
-            <div class="text-center text-white p-1">
-                <h1 class="text-white" style="margin-bottom: 0;" id="title"><img class="d-inline" src="https://csci-1100.github.io/class_resources_public/uit_website/img/uit-logo.png" alt="CSCI 1100" style="width: 22%; max-width: 250px;">&nbsp;Using Information Technology</h1>
+
+        <header class="container-lg br-8 mt-3" style="clear: both; padding: 0;">
+            <div class="text-center text-white" style="margin: 25px 50px 35px;">
+                <h1 class="fs-650 textshadow" style="bottom: 0;" id="title">
+                    <img class="fs-150 d-inline rotate-down-sm" src="https://csci-1100.github.io/class_resources_public/uit_website/img/razzyrover0.png" alt="Wobbles the googly-eyed red robot with visible jumper wires and battery pack protruding from top"
+                      style="max-width: 24%; margin-left: -12%;">Using Information Technology
+                </h1>
             </div>
             <div class="alert alert-info" role="alert">
                 <div>
                     <span class="alert-heading fs-450">Proficiency Exam Appointments</span>
-                    <p>The next available appointments for the Proficiency Exam are from January 13th and April 30th, 2026. Registration for these appointments is available now.
-                        <span class="ff-sans-bold">No proficiency exam options are available during winter break before January 13th, 2026.</span>
+                    <p class="mt-1">
+                        CSCI 1100 Proficiency Exam appointments for the Spring semester end on April 30th, 2026. Registration for these appointments is available now.
+                        <span class="ff-sans-bold">Summer appointments are not yet available.</span>
                     </p>
                 </div>
                 <div class="mt-4 p-2">
@@ -60,12 +69,12 @@
                 <div class="col-sm center text-white fs-200 mt-5 pr-3 pl-5">
                     <i class="bi bi-pen-fill"></i>&nbsp;Ryan Haas, Asst. Director of Using Information Technology
                     <br>
-                    <div class="mt-2"><i class="bi bi-clock-history"></i>&nbsp;Last updated 9 December, 2025.</div>
+                    <div class="mt-2"><i class="bi bi-clock-history"></i>&nbsp;Last updated 7 April, 2026.</div>
                     <br>
                 </div>
                 <div class="col-sm text-white text-right mt-5 pb-3 pl-3">
-                    <a target="_blank" href="https://www.etsu.edu/cbat/computing/csci_1100_-_using_information_technology_uit/index.html"><button class="bttn-putty-yellow-sm">
-                        View fullscreen&ensp;<i class="bi bi-box-arrow-up-right fs-400"></i>
+                    <a target="_blank" href="https://www.etsu.edu/cbat/computing/csci_1100_-_using_information_technology_uit/index.html"><button class="bttn-primary-sm border-white shadow">
+                        Expand this page in a separate tab&ensp;<i class="bi bi-box-arrow-up-right fs-400"></i>
                     </button></a>
                     <br>
                 </div>
@@ -100,11 +109,12 @@
                     </button>
                 </div>
             </nav>
-        </div>
+        </header>
 
-        <div class="container-lg br-8 mb-3 pt-3 bg-primary-blue border-dotted-putty-yellow" style="clear: both;" id="main" role="main">
+        <main class="container-lg br-8 mb-3 pt-3 bg-primary-blue border-dotted-putty-yellow" style="clear: both;" id="main" role="main">
             <!-- Desktop Navigation (hide-when-small) -->
-            <div class="tab hide-when-small fs-300 br-8 mb-2 shadow" style="z-index: 10; margin-top: -310px; margin-left: -260px; position: fixed;">
+            <nav class="tab hide-when-small fs-300 br-8 mb-2 shadow"
+              style="z-index: 10; margin-top: -350px!important; margin-left: -285px; position: fixed;">
                 <div class="text-center">
                     <span class="text-putty-yellow fs-450 ff-sans-bold text-center">Navigation<hr color="#9A97D4"></span>
                 </div>
@@ -140,10 +150,10 @@
                     <i class="bi bi-arrow-90deg-down"></i>
                     &ensp;<span class="text-putty-yellow">Scroll to bottom</span>
                 </button>
-            </div>
+            </nav>
 
-            <div class="bg-light mb-4 br-8">
-                <div class="row card-row br-8 pt-3">
+            <section class="bg-light mb-4 br-8">
+                <article class="row card-row br-8 pt-3">
                     <div class="col-md br-8">
                         <div class="title-container-primary-blue">
                             <h2 class="text-putty-yellow">Our mission</h2>
@@ -198,9 +208,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </article>
     
-                <div class="row card-row pt-3 hide-on-phone">
+                <article class="row card-row pt-3 hide-on-phone">
                     <div class="col-xl br-8">
                         <div class="title-container-primary-blue" id="topics">
                             <h2 class="text-putty-yellow">Course Topics</h2>
@@ -409,9 +419,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </article>
     
-                <div class="row card-row br-8 pt-3">
+                <article class="row card-row br-8 pt-3">
                     <div class="col-xl br-8">
                         <div class="title-container-primary-blue" id="lesson-materials">
                             <h2 class="text-putty-yellow">Free Lesson Materials</h2>
@@ -445,9 +455,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="row card-row br-8 pt-3">
+                <article class="row card-row br-8 pt-3">
                     <div class="col-xl br-8">
                         <div class="title-container-primary-blue" id="requirement">
                             <h2 class="text-putty-yellow">The CSCI 1100 Requirement</h2>
@@ -656,8 +666,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row card-row br-8 pt-3">
+                </article>
+
+                <article class="row card-row br-8 pt-3">
                     <div class="col-md">
                         <div class="title-container-primary-blue" id="contact">
                             <h2 class="text-putty-yellow">More Questions?</h2>
@@ -669,9 +680,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </article>
+            </section>
+        </main>
 
         <script>
             let collapse = document.getElementsByClassName("collapse-container");
