@@ -188,7 +188,7 @@
     .bg-light-gray { background-color: hsl( var(--clr-light-gray) )!important; }
     .bg-accent-light { background-color: hsl( var(--clr-accent-dark) )!important; }
 
-    .text-primary-blue { color: #74c3ff!important; }
+    .text-primary-blue { color: #a0b9ff!important; }
     .card-subtitle { color: #7692a8!important; }
 
     .alert-heading { color: #f5ffd1!important; }
