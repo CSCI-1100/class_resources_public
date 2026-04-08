@@ -684,7 +684,11 @@
             </section>
         </main>
 
-        <script>
+        <script type="application/javascript">
+            function scrollToSection(ID) {
+                document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
+            }
+
             // Add a flag to track if the user has manually dismissed the modal
             let modalManuallyDismissed = false;
             // Add debounce functionality
@@ -732,6 +736,12 @@
                         }
                     });
                 }
+
+                /* All the scrollable elements must be given a tabindex for keyboard accessibility */
+                const scrollboxes = document.querySelectorAll('[class^="scrollbox"]');
+                scrollboxes.forEach((sb, i) => {
+                    sb.setAttribute('tabindex', '0');
+                });
             });
 
             // Check on window resize with debounce
