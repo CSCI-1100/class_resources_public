@@ -50,7 +50,7 @@
 
         <header class="container-lg br-8 pt-3" style="clear: both; padding: 0;">
             <div class="text-center text-white" style="margin: 25px 50px 35px;">
-                <h1 class="fs-650 textshadow" style="bottom: 0;" id="title">
+                <h1 class="fs-650 textshadow" style="bottom: 0;">
                     <img class="fs-150 d-inline rotate-down-sm" src="https://csci-1100.github.io/class_resources_public/uit_website/img/razzyrover0.png" alt="Wobbles the googly-eyed red robot with visible jumper wires and battery pack protruding from top"
                       style="max-width: 24%; margin-left: -12%;">Using Information Technology
                 </h1>
@@ -670,7 +670,7 @@
             let resizeTimeout; // Debounce functionality
             const modal = document.querySelector('.screen-size-modal');
             // Element used in checkNavWidth() to see how much width changed
-            const pgTitle = document.getElementById('title');
+            const pgTitle = document.getElementsByTagName('h1')[0];
 
             function checkNavWidth() {
                 // Clear the timeout if it exists
@@ -682,7 +682,7 @@
                 
                     const width = pgTitle.getBoundingClientRect().width;
                     // Use a slightly smaller threshold to prevent flickering
-                    if (width < 280) {  // Changed from 282 to 280 to add some buffer
+                    if (width < 241) {
                         modal.style.display = 'block';
                         modal.focus();
                     } else {

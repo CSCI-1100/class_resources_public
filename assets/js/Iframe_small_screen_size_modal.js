@@ -3,7 +3,7 @@ let modalManuallyDismissed = false;
 let resizeTimeout; // Debounce functionality
 const modal = document.querySelector('.screen-size-modal');
 // Element used in checkNavWidth() to see how much width changed
-const pgTitle = document.getElementById('title');
+const pgTitle = document.getElementsByTagName('h1')[0];
 
 function checkNavWidth() {
     // Clear the timeout if it exists
@@ -15,7 +15,7 @@ function checkNavWidth() {
     
         const width = pgTitle.getBoundingClientRect().width;
         // Use a slightly smaller threshold to prevent flickering
-        if (width < 280) {  // Changed from 282 to 280 to add some buffer
+        if (width < 251) {
             modal.style.display = 'block';
             modal.focus();
         } else {
