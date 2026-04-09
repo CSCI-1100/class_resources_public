@@ -45,8 +45,6 @@ existing modal classes in this file.
     --clr-putty-yellow-hover: 48, 62%, 62%;
     --clr-red: 354, 70%, 53%;
     --clr-red-hover: 354, 70%, 44%;
-    --clr-light-purple: 258, 34%, 64%;
-    --clr-light-purple-hover: 258, 52%, 65%;
 
     --clr-icon-red: #f86e6e;
     --clr-icon-green: #30a76a;
@@ -574,11 +572,7 @@ section > article.card-row {
     background-color: hsl( var(--clr-primary-blue-hover) );
 }
 
-.tab-purple {
-    background-color: hsl( var(--clr-light-purple-hover) );
-}
-
-.tab, .tab-purple {
+.tab {
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
@@ -588,11 +582,8 @@ section > article.card-row {
 }
 
 /* Style the buttons that are used to open the tab content */
-.tab button, .tab-purple button {
-    background-color: inherit;
-}
 
-.tab button, .tab-purple button {
+.tab button {
     color: hsl( var(--clr-white) );
     margin-left: 4px;
     margin-right: 4px;
@@ -604,18 +595,13 @@ section > article.card-row {
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
+    background-color: inherit;
 }
 
 /* Change background color of buttons on hover */
 .tab button:hover {
     color: hsl( var(--clr-putty-yellow-hover) );
     background-color: hsl( var(--clr-primary-blue) );
-    border: 1px solid hsl( var(--clr-light) );
-}
-
-.tab-purple button:hover {
-    color: #aaeef7;
-    background-color: hsl( var(--clr-light-purple) );
     border: 1px solid hsl( var(--clr-light) );
 }
 
