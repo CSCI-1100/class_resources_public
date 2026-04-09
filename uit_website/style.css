@@ -597,7 +597,7 @@ section > article.card-row {
     background-color: inherit;
 }
 
-.tab button:focus {
+.tab button:focus-visible {
     outline: 2px solid hsl(var(--clr-putty-yellow));
     outline-offset: 2px;
 }
@@ -657,7 +657,7 @@ section > article.card-row {
     transform: rotate(90deg);
 }
 
-.collapse-container:focus {
+.collapse-container:focus-visible {
     outline: 2px solid #0066CC;
     outline-offset: 2px;
 }
@@ -1022,7 +1022,7 @@ input:checked + .slider {
     background-color: #2196F3;
 }
 
-input:focus + .slider {
+input:focus-visible + .slider {
     box-shadow: 0 0 1px #2196F3;
 }
 
@@ -1250,7 +1250,7 @@ a.skip-link:focus {
         transition: transform 0.2s ease;
     }
 
-    .collapse-container:focus {
+    .collapse-container:focus-visible {
         outline: 2px solid #6bbcff!important;
         outline-offset: 2px;
     }
