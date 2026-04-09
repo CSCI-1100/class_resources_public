@@ -1,5 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Bellefair&family=Courgette&family=Text+Me+One&display=swap');
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
+
+/*
+JavaScript Dependencies of this CSS design system:
+
+==== Required ====
+1. accessibility.js (always import):
+<script type="application/javascript" src="https://csci-1100.github.io/class_resources_public/assets/js/accessibility.js"></script>
+
+- Necessary for .collapse-container/.expand-content to work & be keyboard-accessible.
+- Necessary for making scrollbox-sm, ..., scrollbox-xl elements keyboard-accessible.
+- Makes the h1 element keyboard-focusable (used by modal scripts to reset focus to that element)
+
+==== Optional ====
+1. simple_modal.js (import if using the modal classes for a modal triggered by a click event):
+<script type="application/javascript" src="https://csci-1100.github.io/class_resources_public/assets/js/simple_modal.js"></script>
+
+- If you want to make the keyboard focus return somewhere other than the first h1 when the modal
+is closed, just copy the script at this URL and then customize the resetFocus() function calls to
+take an argument to your desired focusable element.
+
+2. iframe_small_screen_size_modal.js (import if using Javascript meant for HTML embedded in an iframe so when it is too small it recommends opening the page directly):
+<script type="application/javascript" src="https://csci-1100.github.io/class_resources_public/assets/js/iframe_small_screen_size_modal.js"></script>
+
+- All you need to do is name your modal class "screen-size-modal" and it will work with the other
+existing modal classes in this file.
+*/
+
 /* _________________________ */
 /* Custom Properties         */
 /* _________________________ */
@@ -625,6 +652,11 @@ section > article.card-row {
     font-size: 1.2em;
 }
 
+.collapse-container:focus {
+    outline: 2px solid #0066CC;
+    outline-offset: 2px;
+}
+
 .active, .collapse-container:hover {
     background-color: #dbdbdb;
     color: hsl( var(--clr-dark) );
@@ -1169,9 +1201,15 @@ input:checked + .slider:before {
     }
 
     /* -- Collapsable Content */
+
     .collapse-container {
         background-color: hsl( var(--clr-accent-dark) )!important;
         color: hsl( var(--clr-light) )!important;
+    }
+
+    .collapse-container:focus {
+        outline: 2px solid #6bbcff!important;
+        outline-offset: 2px;
     }
 
     .active,
