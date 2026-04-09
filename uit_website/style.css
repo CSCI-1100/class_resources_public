@@ -1138,8 +1138,19 @@ input:checked + .slider:before {
 /* Accessibility                                                   */
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
+a[href].text-link {
+    /* When a link is surrounded by off-black/gray text, the contrast could be <3:1
+       which is not good enough for WCAG unless there is something else like an underline
+       to visually distinguish it. This was the case with my text-dark color (#262831)
+       and the link color (#0066CC). Don't want underline to be default because this
+       will look bad when I wrap entire cards in anchors, so just use this one for
+       all normal text links.
+    */
+    text-decoration: underline!important;
+}
+
 /* Standard hyperlink color (for light mode) */
-a[href] { color: #0066CC!important; text-decoration: underline!important; }
+a[href] { color: #0066CC!important; }
 
 /* Screen reader class: Hide content for sighted users but show for screen reader */
 .sr-only {
@@ -1216,7 +1227,7 @@ a.skip-link:focus {
     }
 
     body, p, li { color: white!important; }
-    a[href] { color: #6bbcff!important; text-decoration: underline!important; }
+    a[href] { color: #6bbcff!important; }
 
     .scrollbox-xs, .scrollbox-md, .scrollbox-lg, .scrollbox-xl {
         border-bottom: 1px solid var(--clr-icon-charcoal);
