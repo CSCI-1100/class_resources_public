@@ -580,7 +580,6 @@ section > article.card-row {
     overflow: hidden;
     border: 1px solid hsl( var(--clr-primary-blue) );
 }
-
 /* Style the buttons that are used to open the tab content */
 
 .tab button {
@@ -596,6 +595,11 @@ section > article.card-row {
     padding: 14px 16px;
     transition: 0.3s;
     background-color: inherit;
+}
+
+.tab button:focus {
+    outline: 2px solid hsl(var(--clr-putty-yellow));
+    outline-offset: 2px;
 }
 
 /* Change background color of buttons on hover */
@@ -632,10 +636,25 @@ section > article.card-row {
     margin-top: 2%;
     margin-bottom: -4px;
     padding: 18px;
-    width: 100%;
     text-align: left;
     outline: none;
     font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.collapse-container::after {
+    content: '▶';
+    display: inline-block;
+    margin-left: 8px;
+    color: #0066CC;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.collapse-container.active::after {
+    transform: rotate(90deg);
 }
 
 .collapse-container:focus {
@@ -1191,6 +1210,15 @@ input:checked + .slider:before {
     .collapse-container {
         background-color: hsl( var(--clr-accent-dark) )!important;
         color: hsl( var(--clr-light) )!important;
+    }
+
+    .collapse-container::after {
+        content: '▶';
+        display: inline-block;
+        margin-left: 8px;
+        color: #6bbcff;
+        flex-shrink: 0;
+        transition: transform 0.2s ease;
     }
 
     .collapse-container:focus {
