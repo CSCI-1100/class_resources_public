@@ -1153,6 +1153,23 @@ input:checked + .slider:before {
     border: 0;
 }
 
+a.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: hsl(var(--clr-putty-yellow));
+    color: hsl(var(--clr-dark))!important;
+    padding: 8px 16px;
+    font-weight: bold;
+    z-index: 9999;
+    border-radius: 0 0 8px 0;
+}
+
+a.skip-link:focus {
+    top: 0;
+    outline: 2px solid black;
+}
+
 /* Remove animations for those who have turned them off */
 @media (prefers-reduced-motion: reduce) {
     *,
