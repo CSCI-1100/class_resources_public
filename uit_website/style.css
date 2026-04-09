@@ -1138,7 +1138,8 @@ input:checked + .slider:before {
 /* Accessibility                                                   */
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
- a[href] { color: #0066CC!important; } /* Standard hyperlink color (for light mode) */
+/* Standard hyperlink color (for light mode) */
+a[href] { color: #0066CC!important; text-decoration: underline!important; }
 
 /* Screen reader class: Hide content for sighted users but show for screen reader */
 .sr-only {
@@ -1215,7 +1216,7 @@ a.skip-link:focus {
     }
 
     body, p, li { color: white!important; }
-    a[href] { color: #6bbcff!important; }
+    a[href] { color: #6bbcff!important; text-decoration: underline!important; }
 
     .scrollbox-xs, .scrollbox-md, .scrollbox-lg, .scrollbox-xl {
         border-bottom: 1px solid var(--clr-icon-charcoal);
