@@ -28,10 +28,7 @@ triggers.forEach(trigger => {
         trigger.setAttribute('aria-expanded', String(!isExpanded));
         if (content.style.display === 'block') {
             content.style.display = 'none';
-        } else {
-            content.style.display = 'block';
-            trigger.scrollIntoView();
-        }
+        } else { content.style.display = 'block'; }
     };
 
     trigger.addEventListener('click', activate);
