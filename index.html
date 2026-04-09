@@ -38,25 +38,24 @@
             padding: 12px;
         }
 
-        #modules-container li {
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-            cursor: pointer;
-            border: 1px solid #bfbffa;
-        }
-
         #modules-container li .card-text {
             text-align: left;
             color: hsl( var(--clr-dark) )!important;
         }
 
+        #modules-container li {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.6s ease;
+            cursor: pointer;
+            border: 1px solid #bfbffa;
+        }
+
         #modules-container li:hover {
-            scale: 1.02;
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 8px 24px rgba(80, 60, 180, 0.18);
-            background: rgba(229, 253, 255, 0.65)!important;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: none; /* Remove border on hover*/
+            background: rgba(229, 253, 255, 0.65) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: none;
         }
 
         #modules-container a.card-link {
@@ -67,6 +66,7 @@
         }
 
         #modules-container {
+            padding: 30px;
             background: linear-gradient(rgba(233, 242, 255, 0.5), rgba(218, 232, 255, 0.5)),
               url("assets/img/desktop-white-green.jpg");
             background-repeat: no-repeat;
@@ -100,8 +100,8 @@
                 transform: translateY(-3px);
                 box-shadow: 0 8px 24px rgba(80, 60, 180, 0.18);
                 background: rgba(75, 105, 109, 0.65)!important;
-                backdrop-filter: blur(25px);
-                -webkit-backdrop-filter: blur(25px);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
             }
         }
     </style>
