@@ -10,20 +10,38 @@ if (hidePlaylist && hideActivities) {
     document.getElementsByClassName('tab')[0].style.display = 'none';
 }
 
-let collapse = document.getElementsByClassName("collapse-container");
-for (let i = 0; i < collapse.length; i++) {
-    collapse[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        let content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none";
+const triggers = document.querySelectorAll('.collapse-container');
+triggers.forEach(trigger => {
+    trigger.setAttribute('tabindex', '0');
+    trigger.setAttribute('role', 'button');
+    trigger.setAttribute('aria-expanded', 'false');
+
+    // Give each content div a unique id for aria-controls
+    const content = trigger.nextElementSibling;
+    const uid = `expand-${crypto.randomUUID()}`;
+    content.id = uid;
+    trigger.setAttribute('aria-controls', uid);
+
+    const activate = () => {
+        trigger.classList.toggle('active');
+        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+        trigger.setAttribute('aria-expanded', String(!isExpanded));
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+        } else {
+            content.style.display = 'block';
+            trigger.scrollIntoView();
         }
-        else {
-            content.style.display = "block";
-            this.scrollIntoView();
+    };
+
+    trigger.addEventListener('click', activate);
+    trigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            activate();
         }
     });
-}
+});
 
 function scrollToSection(ID) {
     document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
