@@ -32,8 +32,8 @@ function scrollToSection(ID) {
 // Check on page load
 document.addEventListener('DOMContentLoaded', function() {
     /* All the scrollable elements must be given a tabindex for keyboard accessibility */
-    const scrollboxes = document.querySelectorAll('[class^="scrollbox"]');
-    scrollboxes.forEach((sb, i) => {
+    const scrollboxes = document.querySelectorAll('[class*="scrollbox"]:not(.scrollbox-wrapper)');
+    scrollboxes.forEach((sb) => {
         sb.setAttribute('tabindex', '0');
     });
 });

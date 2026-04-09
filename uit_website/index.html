@@ -13,7 +13,7 @@
         <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link type="text/css" rel="stylesheet" href="https://csci-1100.github.io/class_resources_public/uit_website/style.css">
+        <link type="text/css" rel="stylesheet" href="style.css">
 
         <script type="application/javascript"
             src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -35,9 +35,9 @@
         <img class="hide-when-small" src="https://csci-1100.github.io/class_resources_public/uit_website/img/uit-logo.png" alt="CSCI 1100 yellow laptop logo"
             style="position: absolute!important; top: 0!important; right: 0!important; z-index: -1!important; max-width: 600px; opacity: 0.65;">
 
-        <div class="screen-size-modal">
+        <div class="screen-size-modal" tabindex="-1">
             <div class="modal-content bg-white">
-                <button class="close-button">&times;</button>
+                <button class="close-modal-button">&times;</button>
                 <h2>Size Notice</h2>
                 <p class="mb-3">The content area is too narrow for optimal viewing. Tap the link below to launch in a new tab.</p>
                 <a target="_blank" href="https://www.etsu.edu/cbat/computing/csci_1100_-_using_information_technology_uit/index.html"><button class="bttn-putty-yellow-sm">
@@ -717,34 +717,29 @@
                 document.getElementById(ID).scrollIntoView({behavior: 'smooth'});
             }
 
-            // Add a flag to track if the user has manually dismissed the modal
+            // Flag to track if the user has manually dismissed the modal
             let modalManuallyDismissed = false;
-            // Add debounce functionality
-            let resizeTimeout;
+            let resizeTimeout; // Debounce functionality
+            const modal = document.querySelector('.screen-size-modal');
+            // Element used in checkNavWidth() to see how much width changed
+            const pgTitle = document.getElementById('title');
 
             function checkNavWidth() {
                 // Clear the timeout if it exists
-                if (resizeTimeout) {
-                    clearTimeout(resizeTimeout);
-                }
+                if (resizeTimeout) { clearTimeout(resizeTimeout); }
                 
                 // Set a timeout to prevent rapid firing of the function
                 resizeTimeout = setTimeout(function() {
                     // If the modal was manually dismissed, don't show it again
                     if (modalManuallyDismissed) return;
-                    
-                    const pgTitle = document.getElementById('title');
-                    const modal = document.querySelector('.screen-size-modal');
-                    
-                    if (pgTitle && modal) {
-                        const width = pgTitle.getBoundingClientRect().width;
-                        // Use a slightly smaller threshold to prevent flickering
-                        if (width < 280) {  // Changed from 282 to 280 to add some buffer
-                            modal.style.display = 'block';
-                            modal.focus();
-                        } else {
-                            modal.style.display = 'none';
-                        }
+                
+                    const width = pgTitle.getBoundingClientRect().width;
+                    // Use a slightly smaller threshold to prevent flickering
+                    if (width < 280) {  // Changed from 282 to 280 to add some buffer
+                        modal.style.display = 'block';
+                        modal.focus();
+                    } else {
+                        modal.style.display = 'none';
                     }
                 }, 250); // 250ms debounce time
             }
@@ -752,12 +747,11 @@
             // Check on page load
             document.addEventListener('DOMContentLoaded', function() {
                 checkNavWidth();
-                
+
                 // Set up close button listener
-                const closeButton = document.querySelector('.close-button');
+                const closeButton = document.querySelector('.close-modal-button');
                 if (closeButton) {
                     closeButton.addEventListener('click', function() {
-                        const modal = document.querySelector('.screen-size-modal');
                         if (modal) {
                             modal.style.display = 'none';
                             // Reset the focus to the start of the main section before the navigation
@@ -765,25 +759,24 @@
                             // Set the flag when the user manually closes the modal
                             modalManuallyDismissed = true;
                         }
-
-                        // Close modal on Escape key
-                        modal.addEventListener("keydown", function(e) {
-                            if (e.key === "Escape") {
-                                modal.style.display = "none";
-                                // Reset the focus to the start of the main section before the navigation
-                                document.getElementsByName('main')[0].focus();
-                            }
-                        })
                     });
                 }
 
+                // Close modal on Escape key
+                modal.addEventListener("keydown", function(e) {
+                    if (e.key === "Escape") {
+                        modal.style.display = "none";
+                        // Reset the focus to the start of the main section before the navigation
+                        document.getElementsByName('main')[0].focus();
+                    }
+                });
+
                 /* All the scrollable elements must be given a tabindex for keyboard accessibility */
-                const scrollboxes = document.querySelectorAll('[class^="scrollbox"]');
-                scrollboxes.forEach((sb, i) => {
+                const scrollboxes = document.querySelectorAll('[class*="scrollbox"]:not(.scrollbox-wrapper)');
+                scrollboxes.forEach((sb) => {
                     sb.setAttribute('tabindex', '0');
                 });
             });
-
             // Check on window resize with debounce
             window.addEventListener('resize', checkNavWidth);
         </script>
