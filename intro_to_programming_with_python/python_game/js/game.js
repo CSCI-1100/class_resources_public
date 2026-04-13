@@ -29,16 +29,16 @@ const roleScenarios = {
                 content: `
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                     <div class="roster-list">
-                        <div class="roster-header">🎓 CSCI-1100 - UIT (4 students)</div>
+                        <div class="roster-header">🎓 CSCI-1100 - UIT</div>
                         <div class="student-entry">1. Kai - Grade: 95</div>
                         <div class="student-entry">2. Alex - Grade: 92</div>
                     </div>
                     <div class="roster-list">
-                        <div class="roster-header">🧮 MATH-1530 - Prob n Stats (3 students)</div>
+                        <div class="roster-header">🧮 MATH-1530 - Prob n Stats</div>
                         <div class="student-entry">1. Zara - Grade: 87</div>
                     </div> 
                     <div class="roster-list">
-                        <div class="roster-header">⚗️ PHYS-2110 - Physics I Calc (2 students)</div>
+                        <div class="roster-header">⚗️ PHYS-2110 - Physics I Calc</div>
                         <div class="student-entry">(No Students)</div>
                     </div>
                    <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin-top: 20px;">
@@ -257,8 +257,8 @@ function showLevel(levelNum) {
         if (levelNum === 1) {
             setTimeout(function() {
                 alert("**Dean Doomer approaches you slowly, his face somehow more"
-                    + " palid than usual. His face always has the same expression:"
-                    + " if you could give it a name it would be 'disillusioned"
+                    + " palid than usual. It always wears the same expression: if"
+                    + " you could give it a name it would be 'disillusioned"
                     + " resignation with a double shot of melancholy'. But today--"
                     + "today--there is a whisper of a hint of a second expression"
                     + " on his face to complement his sunken and sulky air. Agitation,"
@@ -369,6 +369,7 @@ function completeLevel(levelNum) {
 }
 
 function showCompletion() {
+    document.getElementById('glossary').style.display = 'none';
     document.getElementById('level6').classList.add('hidden');
     document.getElementById('completion').classList.remove('hidden');
     
@@ -527,7 +528,12 @@ function checkFunctionChallenge() {
     const feedback = document.getElementById('function-feedback');
     
     if (input.toLowerCase().includes('len') && input.includes('(') && input.includes(')')) {
-        feedback.innerHTML = '<div class="feedback correct">🎉 Correct! len() counts the number of items in a list!</div>';
+        if (input.toLowerCase().includes('test_scores')) {
+            feedback.innerHTML = '<div class="feedback correct">🎉 Correct! len() counts the number of items in a list!</div>';
+        }
+        else {
+            feedback.innerHTML = '<div class="feedback incorrect">❌ Close... Check your variable name again!</div>';    
+        }
     } else {
         feedback.innerHTML = '<div class="feedback incorrect">❌ Try again! What function counts items in a list?</div>';
     }
@@ -768,8 +774,8 @@ ______ = []  # For pressure readings
 
 print("Experiment datasets initialized")`,
                 blanks: [
-                    { id: 'temp_data', correctAnswers: ['temperature_data', 'temp_data', 'temperature'], hint: 'What would you name temperature experiment data? Try temperature' },
-                    { id: 'pressure_data', correctAnswers: ['pressure_data', 'blood_pressure', 'pressure'], hint: 'What would you name pressure experiment data? Try pressure' }
+                    { id: 'temp_data', correctAnswers: ['temperature_data', 'temp_data', 'temperature', 'temperatures', 'temp_readings',], hint: 'What would you name temperature experiment data? Try temperature' },
+                    { id: 'pressure_data', correctAnswers: ['pressure_data', 'blood_pressure', 'pressure', 'pressures', 'pressure_readings'], hint: 'What would you name pressure experiment data? Try pressure' }
                 ],
                 explanation: 'Great! You\'ve created organized containers for each type of experimental data.'
             },

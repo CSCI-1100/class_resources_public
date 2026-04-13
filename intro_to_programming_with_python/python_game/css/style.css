@@ -187,8 +187,8 @@ aside {
 }
 
 .role-card {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
+    background: linear-gradient(135deg, #f8bdff 0%, #fc8d9c 100%);
+    color: #313030;
     padding: 20px;
     border-radius: 10px;
     cursor: pointer;
@@ -197,12 +197,15 @@ aside {
     line-height: 1.5rem;
 }
 
+
 .role-card:hover {
     transform: translateY(-5px);
+    background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .role-card.selected {
+    color: white;
     background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
     transform: scale(1.05);
 }
