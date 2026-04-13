@@ -99,9 +99,14 @@ h4 {
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #ced1e1 0%, #e1d4ee 100%);
     min-height: 100vh;
     color: #333;
+}
+
+aside {
+    width: 300px;
+    float: left;
 }
 
 .container {
@@ -230,7 +235,7 @@ body {
     border-radius: 8px;
     position: relative;
     overflow-x: auto;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
 }
 
 .output-box {
@@ -247,7 +252,7 @@ body {
 }
 
 .output-content {
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
     font-size: 14px;
     background: #2d3748;
     color: #e2e8f0;
@@ -296,7 +301,7 @@ body {
     border: 2px solid #ddd;
     border-radius: 5px;
     margin: 10px 0;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
 }
 
 .btn {
@@ -533,7 +538,7 @@ body {
     color: #e2e8f0;
     padding: 20px;
     border-radius: 8px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
     line-height: 1.6;
     overflow-x: auto;
     white-space: pre-wrap;
@@ -545,7 +550,7 @@ body {
     border: 2px solid #718096;
     border-radius: 4px;
     padding: 4px 8px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
     font-size: 14px;
     min-width: 80px;
     transition: all 0.3s ease;
@@ -696,7 +701,7 @@ body {
     color: #cfd8dc;
     padding: 10px;
     border-radius: 5px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
     margin: 10px 0;
     border-left: 3px solid #4CAF50;
 }
@@ -727,7 +732,7 @@ body {
     color: #d4d4d4;
     padding: 20px;
     border-radius: 8px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
     font-size: 13px;
     overflow-x: auto;
     border: 2px solid #4CAF50;
@@ -738,7 +743,7 @@ body {
     margin: 0;
     padding: 0;
     white-space: pre;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
     line-height: 1.4;
     overflow-x: auto;
 }
@@ -748,7 +753,7 @@ body {
     color: #00d4aa;
     padding: 20px;
     border-radius: 8px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
     font-size: 13px;
     border: 2px solid #00d4aa;
     text-align: left;
@@ -758,7 +763,7 @@ body {
     margin: 0;
     padding: 0;
     white-space: pre;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
     line-height: 1.4;
     overflow-x: auto;
 }

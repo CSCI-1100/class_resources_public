@@ -1,0 +1,161 @@
+#glossary {
+  display: none; /* JavaScript reveals when Level 1 starts */
+  margin-bottom: 30px;
+}
+/* ── Header ── */
+.glossary-header {
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+.glossary-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: #4a90e2;;
+  text-transform: uppercase;
+}
+.glossary-header p {
+  margin-top: .4rem;
+  color: #86068a;
+  font-size: 1rem;
+  letter-spacing: .06em;
+}
+
+/* ── Grid ── */
+.glossary {
+  background-color: #fefefe;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-bottom: 2px dotted #5d31fa;
+  border-left: 2px dotted #5d31fa;
+  border-right: 2px dotted #5d31fa;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 20px;
+  display: none;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ── Card ── */
+.glossary-term {
+  background: #eeeded62;
+  border: 1px solid #c9c9c9;;
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.glossary-term:hover {
+  border-color: #4a90e2;;
+  box-shadow: 0 10px 14px rgba(88,166,255,.15);
+}
+
+/* ── Term name ── */
+.glossary-term dt {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #0077d9;
+  margin-bottom: .55rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+/* ── Definition text ── */
+.glossary-term dd {
+  color: #0d1117;
+  font-size: 1rem;
+  line-height: 1.6;
+  list-style: none;
+}
+
+/* ── Sub-bullets (e.g. Function note) ── */
+.glossary-term dd ul {
+  margin-top: .5rem;
+  padding-left: 1rem;
+  list-style: none;
+}
+.glossary-term dd ul li::before {
+  content: '– ';
+  color: #86068a;
+}
+
+/* ── Inline code ── */
+code {
+  font-family: var(--term-font);
+  background: #e6e6e6;
+  color: #cf00c5;
+  padding: .1em .35em;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+
+/* ── Code block ── */
+.gl-pre {
+  background: #e6e6e6;
+  border: 1px solid #c9c9c9;;
+  border-radius: 6px;
+  padding: .75rem 1rem;
+  margin-top: .6rem;
+  overflow-x: auto;
+  font-family: var(--term-font);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #002c46;
+}
+
+/* ── Section labels ── */
+.label {
+  display: inline-block;
+  font-size: 1rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #86068a;
+  margin-top: .55rem;
+  margin-bottom: .15rem;
+}
+
+.collapse-container {
+    background-color: #fefefe;
+    color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 2%;
+    margin-bottom: -4px;
+    margin: 0px 20px;
+    padding: 20px;
+    text-align: left;
+    outline: none;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.collapse-container::after {
+    content: '▶';
+    display: inline-block;
+    margin-left: 8px;
+    color: #0066CC;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.collapse-container.active::after {
+    transform: rotate(90deg);
+}
+
+.collapse-container:focus-visible {
+    outline: 2px solid #0066CC;
+    outline-offset: 2px;
+}
+
+.active, .collapse-container:hover {
+    background-color: #dbdbdb;
+    color: hsl( var(--clr-dark) );
+}
