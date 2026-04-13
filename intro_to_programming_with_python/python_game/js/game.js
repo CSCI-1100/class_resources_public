@@ -774,7 +774,7 @@ ______ = []  # For pressure readings
 
 print("Experiment datasets initialized")`,
                 blanks: [
-                    { id: 'temp_data', correctAnswers: ['temperature_data', 'temp_data', 'temperature', 'temperatures', 'temp_readings',], hint: 'What would you name temperature experiment data? Try temperature' },
+                    { id: 'temp_data', correctAnswers: ['temperature_data', 'temp_data', 'temperature', 'temperatures', 'temp_readings', 'temperature_readings'], hint: 'What would you name temperature experiment data? Try temperature' },
                     { id: 'pressure_data', correctAnswers: ['pressure_data', 'blood_pressure', 'pressure', 'pressures', 'pressure_readings'], hint: 'What would you name pressure experiment data? Try pressure' }
                 ],
                 explanation: 'Great! You\'ve created organized containers for each type of experimental data.'
