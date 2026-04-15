@@ -633,11 +633,11 @@ elif class_code == "______":
     print(f"Added {name} to PHYS-2110")`,
                 blanks: [
                     { id: 'csci1100_check', correctAnswers: ['CSCI-1100'], hint: 'What string should we check for CSCI-1100 students?' },
-                    { id: 'csci1100_append', correctAnswers: ['append'], hint: 'What method adds an item to a list?' },
+                    { id: 'csci1100_append', correctAnswers: ['append'], hint: 'What function adds an item to a list?' },
                     { id: 'math1530_check', correctAnswers: ['MATH-1530'], hint: 'What string should we check for MATH-1530 students?' },
-                    { id: 'math1530_append', correctAnswers: ['append'], hint: 'What method adds an item to a list?' },
+                    { id: 'math1530_append', correctAnswers: ['append'], hint: 'What function adds an item to a list?' },
                     { id: 'phys2110_check', correctAnswers: ['PHYS-2110'], hint: 'What string should we check for PHYS-2110 students?' },
-                    { id: 'phys2110_append', correctAnswers: ['append'], hint: 'What method adds an item to a list?' }
+                    { id: 'phys2110_append', correctAnswers: ['append'], hint: 'What function adds an item to a list?' }
                 ],
                 explanation: 'Excellent! Now each student will be added to their correct class roster as a simple list.'
             },
@@ -750,10 +750,10 @@ else:
                 blanks: [
                     { id: 'and1', correctAnswers: ['and'], hint: 'What operator requires ALL conditions to be true?' },
                     { id: 'and2', correctAnswers: ['and'], hint: 'What operator requires ALL conditions to be true?' },
-                    { id: 'append1', correctAnswers: ['append'], hint: 'What method adds an item to a list?' },
+                    { id: 'append1', correctAnswers: ['append'], hint: 'What function adds an item to a list?' },
                     { id: 'or1', correctAnswers: ['or'], hint: 'What operator is true if ANY condition is true?' },
-                    { id: 'append2', correctAnswers: ['append'], hint: 'What method adds an item to a list?' },
-                    { id: 'append3', correctAnswers: ['append'], hint: 'What method adds an item to a list?' }
+                    { id: 'append2', correctAnswers: ['append'], hint: 'What function adds an item to a list?' },
+                    { id: 'append3', correctAnswers: ['append'], hint: 'What function adds an item to a list?' }
                 ],
                 explanation: 'Perfect! Your algorithm now makes consistent, fair decisions based on the criteria using simple list structures.'
             }
@@ -815,9 +815,9 @@ elif unit == "______":
     print(f"  → Added to pressure experiment")`,
                 blanks: [
                     { id: 'temp_unit', correctAnswers: ['temp', 'temperature'], hint: 'What unit value indicates temperature data?' },
-                    { id: 'temp_append', correctAnswers: ['append'], hint: 'What method adds an item to a list?' },
+                    { id: 'temp_append', correctAnswers: ['append'], hint: 'What function adds an item to a list?' },
                     { id: 'pressure_unit', correctAnswers: ['pressure', 'bp'], hint: 'What unit value indicates pressure data?' },
-                    { id: 'pressure_append', correctAnswers: ['append'], hint: 'What method adds an item to a list?' }
+                    { id: 'pressure_append', correctAnswers: ['append'], hint: 'What function adds an item to a list?' }
                 ],
                 explanation: 'Excellent! Now each measurement is going to its correct experiment dataset.'
             },
@@ -896,7 +896,7 @@ for user_record in ______:
     print(f"Processing: {username} ({user_type})")`,
                 blanks: [
                     { id: 'user_records', correctAnswers: ['user_records'], hint: 'What is the name of the list we\'re processing?' },
-                    { id: 'split_method', correctAnswers: ['split'], hint: 'What method separates a string by commas?' },
+                    { id: 'split_method', correctAnswers: ['split'], hint: 'What function separates a string by commas?' },
                     { id: 'username_index', correctAnswers: ['0'], hint: 'What index is the username (first item)?' },
                     { id: 'type_index', correctAnswers: ['1'], hint: 'What index is the user type (second item)?' },
                     { id: 'dept_index', correctAnswers: ['2'], hint: 'What index is the department (third item)?' },
@@ -925,13 +925,13 @@ elif user_type == "______":
     print(f"  → STAFF")`,
                 blanks: [
                     { id: 'suspended_status', correctAnswers: ['suspended', 'blocked', 'inactive'], hint: 'What status indicates a suspended account?' },
-                    { id: 'suspended_append', correctAnswers: ['append'], hint: 'What method adds an item to a list?' },
+                    { id: 'suspended_append', correctAnswers: ['append'], hint: 'What function adds an item to a list?' },
                     { id: 'professor_type', correctAnswers: ['professor', 'faculty', 'teacher'], hint: 'What user type indicates teaching staff?' },
-                    { id: 'professor_append', correctAnswers: ['append'], hint: 'What method adds an item to a list?' },
+                    { id: 'professor_append', correctAnswers: ['append'], hint: 'What function adds an item to a list?' },
                     { id: 'student_type', correctAnswers: ['student'], hint: 'What user type indicates students?' },
-                    { id: 'student_append', correctAnswers: ['append'], hint: 'What method adds an item to a list?' },
+                    { id: 'student_append', correctAnswers: ['append'], hint: 'What function adds an item to a list?' },
                     { id: 'staff_type', correctAnswers: ['staff', 'admin'], hint: 'What user type indicates administrative staff?' },
-                    { id: 'staff_append', correctAnswers: ['append'], hint: 'What method adds an item to a list?' }
+                    { id: 'staff_append', correctAnswers: ['append'], hint: 'What function adds an item to a list?' }
                 ],
                 explanation: 'Excellent! Users are now properly categorized by their role and account status using simple lists.'
             },
@@ -1605,12 +1605,12 @@ All 3 accounts properly organized and secured.`
 function getSkillsForRole(playerRole) {
     const skillSets = {
         'professor-scatterbrain': [
-            'String manipulation with split() method',
+            'String manipulation with split() function',
             'List creation and management',
             'For loop iteration over sequences',
             'Conditional logic with if/elif statements',
             'List indexing and data extraction',
-            'List methods: append() and len()',
+            'List function: append() and len()',
             'Mathematical operations (sum, average)',
             'Data organization and categorization'
         ],
@@ -1831,7 +1831,7 @@ function getSkillsForRole(playerRole) {
             'For loop iteration over sequences',
             'Conditional logic with if/elif statements',
             'List indexing and data extraction',
-            'List methods: append() and len()',
+            'List functions: append() and len()',
             'Mathematical operations (sum, average)',
             'Data organization and categorization'
         ],
