@@ -609,7 +609,7 @@ for student_record in ______:
     print(f"Processing: {name} in {class_code}")`,
                 blanks: [
                     { id: 'mixed_students', correctAnswers: ['mixed_students'], hint: 'What is the name of the list we\'re looping through?' },
-                    { id: 'split_method', correctAnswers: ['split'], hint: 'What method separates a string by commas?' },
+                    { id: 'split_method', correctAnswers: ['split'], hint: 'What function separates a string by commas?' },
                     { id: 'name_index', correctAnswers: ['0'], hint: 'What index is the first item in a list?' },
                     { id: 'class_index', correctAnswers: ['1'], hint: 'What index is the second item in a list?' },
                     { id: 'grade_index', correctAnswers: ['2'], hint: 'What index is the third item in a list?' }
