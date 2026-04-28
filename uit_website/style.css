@@ -2,6 +2,13 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
 
 /*
+ The CSS design system is used in conjunction with Bootstrap. When I started it, I was using Bootstrap
+ v4.5.0, so that's the version I recommend provisionally. I have it saved in my repo to import in the head:
+
+ <link type="text/css" rel="stylesheet" href="https://csci-1100.github.io/class_resources_public/assets/css/bootstrap4.5.0.min.css">
+*/
+
+/*
 JavaScript Dependencies of this CSS design system:
 
 ==== Required ====
