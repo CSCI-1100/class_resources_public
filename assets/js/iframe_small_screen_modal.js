@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    try { document.getElementsByClassName('modal')[0].setAttribute('tabindex', '-1'); }
+    try { document.querySelector('.screen-size-modal').setAttribute('tabindex', '-1'); }
     catch { console.error("Class 'modal' is not found. If you are not using the .modal class, you don't need to import this script.") }
 });
 // Check on window resize with debounce

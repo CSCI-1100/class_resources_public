@@ -28,12 +28,29 @@
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
+
+        <style>
+            #laptopIconLg {
+                position: absolute!important;
+                right: 0!important;
+                z-index: -1!important;
+                max-width: 550px;
+                opacity: 0.90;
+            }
+
+            @media only screen and (max-width: 834px) {
+                #laptopIconLg {
+                    top: 95px!important;
+                    right: 30px!important;
+                    max-width: 20%;   
+                }
+            }
+        </style>
     </head>
     
     <body class="body-bg-img">
         <!-- Hide the CSCI 1100 background image on small screen bc it makes it hard to read the white <h1> text -->
-        <img class="hide-when-small" src="https://csci-1100.github.io/class_resources_public/uit_website/img/uit-logo.png" alt="CSCI 1100 yellow laptop logo"
-            style="position: absolute!important; top: 0!important; right: 0!important; z-index: -1!important; max-width: 600px; opacity: 0.65;">
+        <img id="laptopIconLg" class="fs-150" src="https://csci-1100.github.io/class_resources_public/uit_website/img/uit-logo.png" alt="CSCI 1100 yellow laptop logo">
 
         <div class="screen-size-modal" tabindex="-1">
             <div class="modal-content bg-white">
@@ -56,13 +73,13 @@
                 </h1>
             </div>
             <div class="alert alert-info" role="alert">
-                <div>
-                    <span class="alert-heading fs-450">Proficiency Exam Appointments</span>
-                    <p class="mt-1">
-                        CSCI 1100 Proficiency Exam appointments for the Spring semester end on April 30th, 2026. Registration for these appointments is available now.
-                        <span class="ff-sans-bold">Summer appointments are not yet available.</span>
-                    </p>
-                </div>
+                <span class="alert-heading fs-450">Proficiency Exam Appointments</span>
+                <p class="mt-1">
+                    <span span class="ff-sans-bold">Use <span class="highlight">etsu.edu email address</span> when registering for ProctorU or the Testing Center!</span>
+                </p>
+                <p>
+                   Summer appointments in the Testing Center are available for registration. The Testing Center offers appointments from May 18 through August 13, Mon-Thu 8 am-4:30 pm. 
+                </p>
                 <div class="mt-4 p-2">
                     <a style="float:right;margin-top: -16px;" href="#proficiency-exam"><button class="bttn-putty-yellow-sm">Exam Info&ensp;<i class="bi bi-arrow-down-square-fill"></i></button></a>
                 </div>
@@ -664,73 +681,6 @@
         </main>
         <script type="application/javascript" src="https://csci-1100.github.io/class_resources_public/assets/js/accessibility.js"></script>
         <script type="application/javascript" src="https://csci-1100.github.io/class_resources_public/assets/js/page_links.js"></script>
-        <script type="application/javascript">
-            // Flag to track if the user has manually dismissed the modal
-            let modalManuallyDismissed = false;
-            let resizeTimeout; // Debounce functionality
-            const modal = document.querySelector('.screen-size-modal');
-            // Element used in checkNavWidth() to see how much width changed
-            const pgTitle = document.getElementsByTagName('h1')[0];
-
-            function checkNavWidth() {
-                // Clear the timeout if it exists
-                if (resizeTimeout) { clearTimeout(resizeTimeout); }
-                // Set a timeout to prevent rapid firing of the function
-                resizeTimeout = setTimeout(function() {
-                    // If the modal was manually dismissed, don't show it again
-                    if (modalManuallyDismissed) return;
-                
-                    const width = pgTitle.getBoundingClientRect().width;
-                    // Use a slightly smaller threshold to prevent flickering
-                    if (width < 241) {
-                        modal.style.display = 'block';
-                        modal.focus();
-                    } else {
-                        modal.style.display = 'none';
-                    }
-                }, 250); // 250ms debounce time
-            }
-
-            function resetFocus() {
-                document.getElementsByTagName('h1')[0].focus();
-            }
-
-            function resetFocus(el) { el.focus(); }
-
-            // Check on page load
-            document.addEventListener('DOMContentLoaded', function() {
-                checkNavWidth();
-
-                // Set up close button listener
-                const closeButton = document.querySelector('.close-modal-button');
-                if (closeButton) {
-                    closeButton.addEventListener('click', function() {
-                        if (modal) {
-                            modal.style.display = 'none';
-                            // Important: Return focus to the start of the page
-                            // Customize this if it is not suitable for your use case
-                            resetFocus();
-                            // Set the flag when the user manually closes the modal
-                            modalManuallyDismissed = true;
-                        }
-                    });
-                } else { console.error(".close-modal-button is missing! Fix it!"); }
-
-                // Close modal on Escape key
-                modal.addEventListener("keydown", function(e) {
-                    if (e.key === "Escape") {
-                        modal.style.display = "none";
-                        // Important: Return focus to the start of the page
-                        // Customize this if it is not suitable for your use case
-                        resetFocus();
-                    }
-                });
-
-                try { document.getElementsByClassName('modal')[0].setAttribute('tabindex', '-1'); }
-                catch { console.error("Class 'modal' is not found. If you are not using the .modal class, you don't need to import this script.") }
-            });
-            // Check on window resize with debounce
-            window.addEventListener('resize', checkNavWidth);
-        </script>
+        <script type="application/javascript" src="https://csci-1100.github.io/class_resources_public/assets/js/iframe_small_screen_size_modal.js"></script>
     </body>
 </html>
