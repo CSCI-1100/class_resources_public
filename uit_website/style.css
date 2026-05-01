@@ -740,7 +740,8 @@ section > article.card-row {
 }
 
 .folder-path a {
-    color: hsl( var(--clr-secondary-blue) );
+    color: hsl( var(--clr-white) );
+    text-decoration: underline;
 }
 
 .folder-path span {
