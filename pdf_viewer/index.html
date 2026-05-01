@@ -1098,7 +1098,7 @@
                     break;
                 }
             });
-                        // Add resize listener
+            // Add resize listener
             window.addEventListener('resize', handleResize);
 
             // Initialize the viewer with provided PDF URL
@@ -1113,6 +1113,17 @@
                 `;
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                // Make specific page active
+                const customPage = urlParams.get('data-page');
+                if (customPage) {
+                    let activePage = document.querySelector(`[data-page="${customPage}"]`);
+                    activePage.click();
+                }
+            }, 200);
+        });
     </script>
 </body>
 </html>
