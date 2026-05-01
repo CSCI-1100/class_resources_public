@@ -742,7 +742,8 @@
                             return page.getTextContent();
                         })
                         .then(textContent => {
-                            console.log('Text content for page', num, textContent);
+                            /* NOTE: Uncomment to view what text content is captured for each page */
+                            //console.log('Text content for page', num, textContent);
                             
                             // Create the render task using renderTextLayer
                             const renderTextLayerTask = pdfjsLib.renderTextLayer({
