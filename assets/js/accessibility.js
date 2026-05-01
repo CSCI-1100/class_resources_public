@@ -1,4 +1,11 @@
-// Check on page load
+function scrollToSelf(el) {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({
+        behavior: prefersReducedMotion ? 'instant' : 'smooth'
+    });
+}
+
+// Run on page load
 document.addEventListener('DOMContentLoaded', function() {
     /* Find the <h1> and make it focusable (convenient focus reset point for modals; used by my modal JS scripts) */
     try { document.getElementsByTagName('h1')[0].setAttribute('tabindex', '0'); }
@@ -28,7 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
             trigger.setAttribute('aria-expanded', String(!isExpanded));
             if (content.style.display === 'block') {
                 content.style.display = 'none';
-            } else { content.style.display = 'block'; }
+            } else {
+                content.style.display = 'block';
+                scrollToSelf(trigger);
+            }
         };
 
         trigger.addEventListener('click', activate);
