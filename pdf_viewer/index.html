@@ -1117,8 +1117,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 // Make specific page active
-                const urlParams = new URLSearchParams(window.location.search);
-                const customPage = urlParams.get('data-page');
+                const customPage = window.location.search.get('data-page');
                 if (customPage) {
                     let activePage = document.querySelector(`[data-page="${customPage}"]`);
                     activePage.click();
