@@ -734,6 +734,7 @@
                     
                     // Critical: Set the scale factor CSS variable on the text layer div
                     textLayerDiv.style.setProperty('--scale-factor', scaledViewport.scale);
+                    console.log(textLayerDiv.style.getPropertyValue('--scale-factor'));
                     
                     // First render the canvas
                     page.render(renderContext).promise
