@@ -30,12 +30,24 @@
             crossorigin="anonymous"></script>
 
         <style>
+            /* Targeting the collapsable containers inside course topics div: */
+            .collapse-container > .gridbox-icon-left-sm {
+                min-height: 39px;
+            }
+
             #laptopIconLg {
                 position: absolute!important;
                 right: 0!important;
                 z-index: -1!important;
                 max-width: 550px;
                 opacity: 0.90;
+            }
+
+            @media only screen and (max-width: 1176px) {
+                /* Increase min height to make the box heights uniform */
+                .collapse-container > .gridbox-icon-left-sm {
+                    min-height: 72px;
+                }
             }
 
             @media only screen and (max-width: 834px) {
@@ -241,7 +253,7 @@
                                 significantly—from traditional teaching tools to engaging with information technology
                                 topics crucial in today's digital landscape.
                             </p>
-                            <div class="scrollbox-md fs-400" style="white-space: normal;">
+                            <div class="scrollbox-md fs-350" style="white-space: normal;">
                                 <div class="gridbox-2">
                                     <div>
                                         <div class="collapse-container border-dotted-primary-blue">
@@ -484,7 +496,7 @@
                                 </div>
                                 
                                 <div class="show-when-small">
-                                    <div class="gridbox-icon-left-sm border-dotted-primary-blue text-left">
+                                    <div class="gridbox-icon-left-sm border-dotted-primary-blue text-left" style="min-height: 87px;">
                                         <div>
                                             &nbsp;<i class="bi bi-1-circle fs-600 text-putty-yellow"></i>
                                         </div>
@@ -492,7 +504,7 @@
                                             Successfully complete CSCI 1100 & CSCI 1150.
                                         </div>
                                     </div>
-                                    <div class="gridbox-icon-left-sm border-dotted-primary-blue text-left">
+                                    <div class="gridbox-icon-left-sm border-dotted-primary-blue text-left" style="min-height: 87px;">
                                         <div>
                                             &nbsp;<i class="bi bi-2-circle-fill fs-600 text-putty-yellow"></i>
                                         </div>
@@ -502,7 +514,7 @@
                                             with a course syllabus to determine if a course is equivalent)
                                         </div>
                                     </div>
-                                    <div class="gridbox-icon-left-sm border-dotted-primary-blue text-left">
+                                    <div class="gridbox-icon-left-sm border-dotted-primary-blue text-left" style="min-height: 87px;">
                                         <div>
                                             &nbsp;<i class="bi bi-3-circle fs-600 text-putty-yellow"></i>
                                         </div>
