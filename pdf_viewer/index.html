@@ -517,6 +517,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const pdfUrl = urlParams.get('pdf');
             const pptxUrl = urlParams.get('pptx');
+            const customPage = urlParams.get('data-page');
 
             // Initialize download button
             if (pptxUrl) {
@@ -1052,6 +1053,14 @@
                         // Initial render
                         canvas.style.display = 'block';
                         renderPage(currentPage);
+                    }).then(doc => {
+                        // If data-page param was passed, navigate to the specified page.
+                        if (customPage) {
+                            setTimeout(function() {
+                                let activePage = document.querySelector(`[data-page="${customPage}"]`);
+                                activePage.click();
+                            }, 300)
+                        }
                     })
                     .catch(error => {
                         console.error('Error loading PDF:', error);
@@ -1115,18 +1124,6 @@
                 `;
             }
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                // Make specific page active
-                const urlParams = new URLSearchParams(window.location.search);
-                const customPage = urlParams.get('data-page');
-                if (customPage) {
-                    let activePage = document.querySelector(`[data-page="${customPage}"]`);
-                    activePage.click();
-                }
-            }, 600);
-        });
     </script>
 </body>
 </html>
