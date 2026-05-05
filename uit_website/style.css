@@ -739,9 +739,9 @@ section > article.card-row {
     border-radius: 8px;
 }
 
-.folder-path a {
-    color: hsl( var(--clr-white) );
-    text-decoration: underline;
+.folder-path a, a.folder-path {
+    color: hsl( var(--clr-putty-yellow) )!important;
+    text-decoration: underline!important;
 }
 
 .folder-path span {
