@@ -174,12 +174,8 @@ existing modal classes in this file.
 .fs-100 { font-size: var(--fs-100); }
 .fs-0 { font-size: var(--fs-0); }
 
-.fs-900,
-.fs-800,
-.fs-700,
-.fs-600 {
-    line-height: 1.1;
-}
+.fs-900,.fs-850,.fs-800,.fs-750,
+.fs-700,.fs-650,.fs-600 { line-height: 1.1; }
 
 /* ____________________________________________________________ */
 /* Essentials - Rules for Basic HTML elements                   */
