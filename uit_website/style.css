@@ -652,7 +652,7 @@ section > article.card-row {
     content: '▶';
     display: inline-block;
     margin-left: 8px;
-    color: #0066CC;
+    color: hsl(var(--clr-secondary-blue));
     flex-shrink: 0;
     transition: transform 0.2s ease;
 }
@@ -1154,8 +1154,8 @@ a[href].text-link {
     text-decoration: underline!important;
 }
 
-/* Standard hyperlink color (for light mode) */
-a[href] { color: #0066CC!important; }
+/* Higher-contrast hyperlink color (for light mode) */
+a[href] { color: hsl(var(--clr-secondary-blue))!important; }
 
 /* Screen reader class: Hide content for sighted users but show for screen reader */
 .sr-only {
