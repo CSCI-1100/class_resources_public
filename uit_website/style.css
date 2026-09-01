@@ -46,10 +46,10 @@ existing modal classes in this file.
     --clr-accent-light: 223, 100%, 96%;
     --clr-secondary-blue: 241, 66%, 45%;
     --clr-secondary-blue-hover: 241, 66%, 36%;
-    --clr-primary-blue: 232, 40%, 44%;
-    --clr-primary-blue-hover: 232, 40%, 35%;
-    --clr-putty-yellow: 48 97% 73%;
-    --clr-putty-yellow-hover: 48, 62%, 62%;
+    --clr-primary-blue: 232, 40%, 29%;
+    --clr-primary-blue-hover: 232, 40%, 20%;
+    --clr-putty-yellow: 44, 100%, 66%;
+    --clr-putty-yellow-hover: 48, 100%, 57%;
     --clr-red: 354, 70%, 53%;
     --clr-red-hover: 354, 70%, 44%;
 
@@ -86,6 +86,7 @@ existing modal classes in this file.
     --ff-sans-normal: "Barlow", sans-serif;
     --ff-text-me-one: "Text Me One", serif;
 }
+
 
 /* _________________________ */
 /* Background Colors         */
@@ -286,7 +287,7 @@ footer {
 /* Themed Body & Title Classes                              */
 /* -------------------------------------------------------- */
 .body-bg-img {
-    background: linear-gradient(rgba(66,109,174,.5), rgba(66,109,174,.5)),
+    background: linear-gradient(rgba(0, 5, 62, .5), rgba(0, 5, 62, .5)),
     url("img/abstract-mountain-path_background.png");
     background-repeat: no-repeat;
     background-size: cover;
