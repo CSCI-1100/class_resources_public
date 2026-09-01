@@ -287,7 +287,7 @@ footer {
 /* Themed Body & Title Classes                              */
 /* -------------------------------------------------------- */
 .body-bg-img {
-    background: linear-gradient(rgba(0, 5, 62, .5), rgba(0, 5, 62, .5)),
+    background: linear-gradient(rgba(0, 5, 62, .6), rgba(0, 5, 62, .6)),
     url("img/abstract-mountain-path_background.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -573,7 +573,7 @@ section > article.card-row {
 
 /* Style the tab */
 .tab {
-    background-color: hsl( var(--clr-primary-blue-hover) );
+    
 }
 
 .tab {
@@ -582,7 +582,8 @@ section > article.card-row {
     padding: 0.5rem;
     margin-bottom: none;
     overflow: hidden;
-    border: 1px solid hsl( var(--clr-primary-blue) );
+    background-color: hsl( var(--clr-primary-blue-hover) );
+    border: 1px solid hsl( var(--clr-putty-yellow) );
 }
 /* Style the buttons that are used to open the tab content */
 
