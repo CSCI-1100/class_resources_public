@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Excel Overview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Bellefair&family=Courgette&family=Text+Me+One&display=swap');
+
+        :root {
+            /* Font-families */
+            --ff-serif: "Bellefair", serif;
+            --ff-script: "Courgette", serif;
+            --ff-sans-cond: "Barlow Condensed", sans-serif;
+            --ff-sans-normal: "Barlow", sans-serif;
+            --ff-text-me-one: "Text Me One", serif;
+        }
+
+        body {
+            font-family: var(--ff-sans-normal);
+            font-size: 16px;
+            color: hsl( var(--clr-dark) );
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, #185c37 0%, #2d9558 51%, #185c37 100%);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #217346;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            border-bottom: 3px solid #217346;
+            padding-bottom: 15px;
+            font-family: var(--ff-text-me-one);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            color: #185c37;
+            border-bottom: 2px solid #e0e6ed;
+            padding-bottom: 8px;
+            margin-top: 40px;
+            margin-bottom: 24px;
+            font-family: var(--ff-text-me-one);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #217346;
+            margin-top: 25px;
+            margin-bottom: 20px;
+            font-family: var(--ff-sans);
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .intro-section {
+            background-color: #fefefee0;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            color: black;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .intro-section h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            margin-top: 0;
+        }
+
+        .quote-block {
+            background: #f0f7f4;
+            border-left: 4px solid #217346;
+            padding: 15px 20px;
+            margin: 15px 0;
+            text-align: left;
+            font-style: italic;
+            border-radius: 4px;
+        }
+
+        .quote-block cite {
+            display: block;
+            margin-top: 10px;
+            font-style: normal;
+            font-weight: bold;
+            color: #185c37;
+        }
+
+        .content-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .key-point {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .key-point strong {
+            color: #856404;
+        }
+
+        .info-box {
+            background: #e9f6ee;
+            border: 1px solid #b3ddc4;
+            border-left: 4px solid #217346;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .info-box h4 {
+            margin-top: 0;
+            color: #185c37;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, #21734622 0%, #185c3722 100%);
+            color: #0d3d24;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .feature-highlight h3 {
+            margin-top: 0;
+        }
+
+        .diagram-figure {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .diagram-figure img {
+            max-width: 90%;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .major-section {
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 6px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        }
+
+        code {
+            background: #f0f7f4;
+            color: #185c37;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95em;
+            border: 1px solid #d4e8dd;
+        }
+
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .shortcut-item {
+            background: #f0f7f4;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #d4e8dd;
+        }
+
+        .checklist {
+            background: #f9fcfa;
+            padding: 20px;
+            border-radius: 6px;
+            border: 2px dashed #217346;
+        }
+
+        .checklist ul {
+            list-style: none;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: '\2610';
+            position: absolute;
+            left: 0;
+            color: #217346;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* --------------- Navigation rules ------------- */
+        .major-sections .major-section {
+            display: none;
+        }
+
+        .major-sections .major-section.active {
+            display: block;
+        }
+
+        .nav-menu {
+            margin: 20px 0;
+        }
+
+        .nav-menu ul {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .nav-menu a {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background-color: #217346;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid #f6dd76;
+            font-weight: bolder;
+        }
+
+        .nav-menu a.active {
+            background-color: #2d9558;
+            border: 3px solid white;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu ul {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-menu ul {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="top">
+        <div class="intro-section">
+            <h1><i class="bi bi-file-earmark-spreadsheet"></i> Microsoft Excel Overview</h1>
+            <p>This guide combines a conceptual overview with a hands-on quick reference to help you understand and use Microsoft Excel's core features. From reading a spreadsheet's anatomy to writing your first formulas, this overview is here to help you get started with Excel.</p>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#excel-basics" class="tab-link active">1. Excel Basics</a></li>
+                <li><a href="#formatting" class="tab-link">2. Formatting</a></li>
+                <li><a href="#formulas" class="tab-link">3. Formulas</a></li>
+                <li><a href="#data-manipulation" class="tab-link">4. Data Manipulation</a></li>
+                <li><a href="#charts" class="tab-link">5. Charts</a></li>
+                <li><a href="#quick-reference" class="tab-link">6. Quick Reference</a></li>
+            </ul>
+        </nav>
+
+        <section class="major-sections">
+            <div class="major-section active" id="excel-basics">
+                <h2>1. Why Excel? &amp; The Basics</h2>
+
+                <div class="quote-block">
+                    Microsoft Excel is the industry leader, as far as general spreadsheet software goes, and it's not just for finance or math professionals! Literally every coworker I know uses Excel in some capacity! When I was a hall council member in college, we used Excel to plan our event budgets and schedules. Samantha Hunt, Director of the Testing Center, meticulously monitors the center's seat capacity for testing at all times using the most elaborate Excel workbook I've seen! My point is there are many different ways to use the software, because it's a versatile spreadsheet tool made for everyone!
+                    <cite>&mdash; Professor Haas</cite>
+                </div>
+
+                <div class="content-section">
+                    <p>Excel documents are called <strong>workbooks</strong>, and each workbook contains multiple <strong>sheets</strong> (like pages in a notebook). Every cell is identified by its column letter and row number &mdash; for example, <code>K7</code>. The <strong>Name Box</strong> always shows you exactly which cell is currently active, so you never lose your place.</p>
+                </div>
+
+                <h3 style="text-align: center;">Excel Workbook Anatomy</h3>
+                <figure>
+                <svg viewBox="0 0 780 470" xmlns="http://www.w3.org/2000/svg"
+                    role="img" aria-labelledby="diagram-title diagram-desc">
+
+                <title id="diagram-title">Anatomy of a spreadsheet interface</title>
+                <desc id="diagram-desc">
+                    A diagram of a spreadsheet showing a budget. Callouts point to seven
+                    labeled parts: Ribbon Tabs at the top of the window; Column Headers
+                    above column B; Row Headers to the left of the row numbers; the Active
+                    Cell, which is cell B7; the Formula Result, the value 1,620 dollars
+                    shown in the active cell; the Fill Handle at the bottom-right corner
+                    of the active cell; and the Sheet Tabs at the bottom of the window.
+                    The spreadsheet itself lists a budget with rows for Groceries at 350
+                    dollars, Utilities at 150 dollars, Entertainment at 120 dollars,
+                    Savings at 200 dollars, and a Total of 1,620 dollars using the formula
+                    equals SUM of B2 through B6.
+                </desc>
+
+                <!-- ============ WINDOW FRAME ============ -->
+                <g aria-hidden="true">
+                    <rect x="200" y="115" width="490" height="290" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.5"/>
+                </g>
+
+                <!-- ============ RIBBON TABS ============ -->
+                <g role="group" aria-labelledby="ribbon-label">
+                    <rect x="200" y="115" width="490" height="34" fill="#ffffff" aria-hidden="true"/>
+                    <line x1="200" y1="149" x2="690" y2="149" stroke="#d9d9d9" stroke-width="1" aria-hidden="true"/>
+                    <text x="230" y="137" font-size="14" fill="#3a3a3a" text-anchor="middle">File</text>
+                    <text x="288" y="137" font-size="14" fill="#1a1a1a" font-weight="600" text-anchor="middle">Home</text>
+                    <text x="345" y="137" font-size="14" fill="#3a3a3a" text-anchor="middle">Insert</text>
+                    <text x="421" y="137" font-size="14" fill="#3a3a3a" text-anchor="middle">Page Layout</text>
+                    <text x="510" y="137" font-size="14" fill="#1a1a1a" font-weight="600" text-anchor="middle">Formulas</text>
+                    <text x="575" y="137" font-size="14" fill="#1a1a1a" font-weight="600" text-anchor="middle">Data</text>
+                    <text x="630" y="137" font-size="14" fill="#3a3a3a" text-anchor="middle">Review</text>
+                    <text x="680" y="137" font-size="14" fill="#3a3a3a" text-anchor="middle">View</text>
+                </g>
+
+                <!-- ============ NAME BOX + FORMULA BAR ============ -->
+                <g aria-label="Name box shows B7. Formula bar shows the formula equals SUM open paren B2 colon B6 close paren.">
+                    <rect x="200" y="149" width="490" height="30" fill="#ffffff" aria-hidden="true"/>
+                    <line x1="200" y1="179" x2="690" y2="179" stroke="#d9d9d9" stroke-width="1" aria-hidden="true"/>
+                    <rect x="210" y="156" width="80" height="18" fill="#ffffff" stroke="#c9c9c9" aria-hidden="true"/>
+                    <text x="220" y="169" font-size="13" fill="#1a1a1a">B7</text>
+                    <line x1="300" y1="151" x2="300" y2="177" stroke="#d9d9d9" aria-hidden="true"/>
+                    <text x="330" y="169" font-size="13" fill="#888" font-style="italic" aria-hidden="true">fx</text>
+                    <line x1="350" y1="151" x2="350" y2="177" stroke="#d9d9d9" aria-hidden="true"/>
+                    <text x="365" y="169" font-size="13" fill="#1a1a1a">=SUM(B2:B6)</text>
+                </g>
+
+                <!-- ============ COLUMN HEADERS ============ -->
+                <g role="group" aria-labelledby="colheader-label">
+                    <rect x="200" y="179" width="40" height="24" fill="#f3f3f3" aria-hidden="true"/>
+                    <rect x="240" y="179" width="140" height="24" fill="#f3f3f3" aria-hidden="true"/>
+                    <rect x="380" y="179" width="140" height="24" fill="#e8f3ec" stroke="#3a8a55" stroke-width="1.5" aria-hidden="true"/>
+                    <rect x="520" y="179" width="60" height="24" fill="#f3f3f3" aria-hidden="true"/>
+                    <text x="310" y="196" font-size="13" fill="#555" text-anchor="middle">A</text>
+                    <text x="450" y="196" font-size="13" fill="#1e6b3a" font-weight="600" text-anchor="middle">B</text>
+                    <text x="550" y="196" font-size="13" fill="#555" text-anchor="middle">C</text>
+                </g>
+
+                <!-- ============ ROW HEADERS + GRID ============ -->
+                <!-- shared row geometry: rows 3-7, each 36px tall, starting y=203 -->
+                <g role="group" aria-labelledby="rowheader-label">
+                    <rect x="200" y="203" width="40" height="180" fill="#f3f3f3" aria-hidden="true"/>
+                    <text x="220" y="221" font-size="13" fill="#555" text-anchor="middle">3</text>
+                    <text x="220" y="257" font-size="13" fill="#555" text-anchor="middle">4</text>
+                    <text x="220" y="293" font-size="13" fill="#555" text-anchor="middle">5</text>
+                    <text x="220" y="329" font-size="13" fill="#555" text-anchor="middle">6</text>
+                    <text x="220" y="365" font-size="13" fill="#1e6b3a" font-weight="600" text-anchor="middle">7</text>
+                </g>
+
+                <!-- grid lines -->
+                <g aria-hidden="true" stroke="#e2e2e2" stroke-width="1">
+                    <line x1="240" y1="203" x2="240" y2="383"/>
+                    <line x1="380" y1="203" x2="380" y2="383"/>
+                    <line x1="520" y1="203" x2="520" y2="383"/>
+                    <line x1="200" y1="239" x2="690" y2="239"/>
+                    <line x1="200" y1="275" x2="690" y2="275"/>
+                    <line x1="200" y1="311" x2="690" y2="311"/>
+                    <line x1="200" y1="347" x2="690" y2="347"/>
+                </g>
+
+                <!-- ============ SPREADSHEET DATA ============ -->
+                <g aria-label="Budget data: row 3 Groceries 350 dollars; row 4 Utilities 150 dollars; row 5 Entertainment 120 dollars; row 6 Savings 200 dollars; row 7 Total 1,620 dollars.">
+                    <text x="248" y="221" font-size="14" fill="#1a1a1a">Groceries</text>
+                    <text x="510" y="221" font-size="14" fill="#1a1a1a" text-anchor="end">$350</text>
+
+                    <text x="248" y="257" font-size="14" fill="#1a1a1a">Utilities</text>
+                    <text x="510" y="257" font-size="14" fill="#1a1a1a" text-anchor="end">$150</text>
+
+                    <text x="248" y="293" font-size="14" fill="#1a1a1a">Entertainment</text>
+                    <text x="510" y="293" font-size="14" fill="#1a1a1a" text-anchor="end">$120</text>
+
+                    <text x="248" y="329" font-size="14" fill="#1a1a1a">Savings</text>
+                    <text x="510" y="329" font-size="14" fill="#1a1a1a" text-anchor="end">$200</text>
+
+                    <text x="248" y="365" font-size="14" fill="#1a1a1a">Total</text>
+                </g>
+
+                <!-- ============ ACTIVE CELL (B7) with formula result + fill handle ============ -->
+                <g role="group" aria-labelledby="activecell-label">
+                    <rect x="380" y="347" width="140" height="36" fill="#ffffff" stroke="#1e6b3a" stroke-width="2" aria-hidden="true"/>
+                    <text x="510" y="371" font-size="14" fill="#1a1a1a" font-weight="600" text-anchor="end">$1,620</text>
+                    <rect x="516" y="379" width="8" height="8" fill="#1e6b3a" aria-hidden="true"/>
+                </g>
+
+                <!-- ============ SHEET TABS ============ -->
+                <g role="group" aria-labelledby="sheettabs-label">
+                    <rect x="200" y="383" width="490" height="22" fill="#fafafa" aria-hidden="true"/>
+                    <line x1="200" y1="405" x2="690" y2="405" stroke="#d9d9d9" aria-hidden="true"/>
+                    <text x="335" y="399" font-size="13" fill="#1a1a1a" font-weight="600" text-anchor="middle">Sheet1</text>
+                    <line x1="365" y1="405" x2="365" y2="392" stroke="#1e6b3a" stroke-width="2" aria-hidden="true"/>
+                    <text x="400" y="399" font-size="13" fill="#666" text-anchor="middle">Budget</text>
+                    <text x="475" y="399" font-size="13" fill="#666" text-anchor="middle">Assignment Tracker</text>
+                    <text x="565" y="399" font-size="14" fill="#888" text-anchor="middle">+</text>
+                </g>
+
+                <!-- ============ CALLOUT LABELS + LEADER LINES ============ -->
+                <!-- Column Headers -->
+                <g>
+                    <line x1="365" y1="85" x2="410" y2="178" stroke="#d99a2b" stroke-width="1.5" stroke-dasharray="4,3" aria-hidden="true"/>
+                    <rect x="285" y="55" width="160" height="30" rx="4" fill="#333333" aria-hidden="true"/>
+                    <text id="colheader-label" x="365" y="75" font-size="13" fill="#ffffff" text-anchor="middle">Column Headers</text>
+                </g>
+
+                <!-- Ribbon Tabs -->
+                <g>
+                    <line x1="565" y1="85" x2="545" y2="122" stroke="#d99a2b" stroke-width="1.5" stroke-dasharray="4,3" aria-hidden="true"/>
+                    <rect x="490" y="55" width="150" height="30" rx="4" fill="#333333" aria-hidden="true"/>
+                    <text id="ribbon-label" x="565" y="75" font-size="13" fill="#ffffff" text-anchor="middle">Ribbon Tabs</text>
+                </g>
+
+                <!-- Row Headers -->
+                <g>
+                    <line x1="120" y1="252" x2="205" y2="270" stroke="#d99a2b" stroke-width="1.5" stroke-dasharray="4,3" aria-hidden="true"/>
+                    <rect x="30" y="237" width="145" height="30" rx="4" fill="#333333" aria-hidden="true"/>
+                    <text id="rowheader-label" x="102" y="257" font-size="13" fill="#ffffff" text-anchor="middle">Row Headers</text>
+                </g>
+
+                <!-- Active Cell -->
+                <g>
+                    <line x1="620" y1="297" x2="518" y2="352" stroke="#9b3fa0" stroke-width="1.5" aria-hidden="true"/>
+                    <rect x="620" y="282" width="105" height="30" rx="4" fill="#ffffff" stroke="#333333" aria-hidden="true"/>
+                    <text id="activecell-label" x="672" y="302" font-size="13" fill="#1a1a1a" text-anchor="middle">Active Cell</text>
+                </g>
+
+                <!-- Formula Result -->
+                <g>
+                    <rect x="618" y="333" width="130" height="30" rx="4" fill="#ffffff" stroke="#333333" aria-hidden="true"/>
+                    <text id="formularesult-label" x="683" y="353" font-size="13" fill="#1a1a1a" text-anchor="middle">Formula Result</text>
+                </g>
+
+                <!-- Fill Handle -->
+                <g>
+                    <line x1="632" y1="393" x2="524" y2="384" stroke="#9b3fa0" stroke-width="1.5" aria-hidden="true"/>
+                    <rect x="580" y="393" width="105" height="26" rx="4" fill="#ffffff" stroke="#333333" aria-hidden="true"/>
+                    <text id="fillhandle-label" x="632" y="410" font-size="13" fill="#1a1a1a" text-anchor="middle">Fill Handle</text>
+                </g>
+
+                <!-- Sheet Tabs -->
+                <g>
+                    <line x1="380" y1="440" x2="360" y2="406" stroke="#d99a2b" stroke-width="1.5" stroke-dasharray="4,3" aria-hidden="true"/>
+                    <rect x="315" y="440" width="130" height="28" rx="4" fill="#333333" aria-hidden="true"/>
+                    <text id="sheettabs-label" x="380" y="459" font-size="13" fill="#ffffff" text-anchor="middle">Sheet Tabs</text>
+                </g>
+
+                <!-- Attach the Formula Result and Fill Handle groups' labels retroactively via aria-labelledby on their target groups -->
+                <!-- (Active cell target group above already references activecell-label directly) -->
+
+                </svg>
+                </figure>
+                <figcaption>
+                Callouts (clockwise from top left): Column Headers, Ribbon Tabs, Active Cell,
+                Formula Result, Fill Handle, Sheet Tabs, Row Headers.
+                </figcaption>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4><i class="bi bi-grid-3x3"></i> Workbooks &amp; Sheets</h4>
+                        <p>A workbook is the whole file; sheets are the individual tabs inside it (see <strong>Sheet Tabs</strong> at the bottom of the diagram &mdash; here, "Sheet1," "Budget," and "Assignment Tracker").</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="bi bi-search"></i> Name Box</h4>
+                        <p>Located just above the column headers, it displays the reference of whichever cell is currently selected (the <strong>Active Cell</strong>).</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="bi bi-arrows-move"></i> Fill Handle</h4>
+                        <p>The small black square at the bottom-right corner of a selected cell. Drag it to copy a value or formula down or across neighboring cells.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="bi bi-layout-three-columns"></i> Rows &amp; Columns</h4>
+                        <p><strong>Column Headers</strong> (A, B, C...) run across the top; <strong>Row Headers</strong> (1, 2, 3...) run down the left. A cell reference always combines the two, e.g. <code>B7</code>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="major-section" id="formatting">
+                <h2>2. Formatting</h2>
+
+                <div class="content-section">
+                    <p>Formatting in Excel is split between two tabs: the <strong>Home tab</strong> handles the look of your data (fonts, alignment, colors), while the <strong>Page Layout tab</strong> handles how the whole sheet is arranged and printed.</p>
+                </div>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4><i class="bi bi-type-bold"></i> Home Tab</h4>
+                        <p>Contains aesthetic formatting options: font, size, and both horizontal (left, right, center) and vertical alignment. Also where you'll find <strong>Bold</strong> (<code>Ctrl+B</code>) and number formatting like currency.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="bi bi-file-earmark-ruled"></i> Page Layout Tab</h4>
+                        <p>Contains options for <strong>themes</strong>, margins, and page <strong>orientation</strong> &mdash; portrait (vertical) or landscape (horizontal). <strong>Scaling</strong> options here let you fit content to a specific page size.</p>
+                    </div>
+                </div>
+
+                <h3>Hands-On: Setting Up Your Workbook</h3>
+                <ul>
+                    <li><strong>Choose a theme:</strong> Page Layout tab &rarr; Themes &rarr; Select a theme</li>
+                    <li><strong>Bold text:</strong> Select cells &rarr; Home tab &rarr; Bold button (or <code>Ctrl+B</code>)</li>
+                    <li><strong>Change font size:</strong> Home tab &rarr; Font size dropdown</li>
+                    <li><strong>Center align:</strong> Home tab &rarr; Alignment section &rarr; Center</li>
+                    <li><strong>Left align:</strong> Home tab &rarr; Alignment section &rarr; Align Left</li>
+                </ul>
+
+                <h3>Hands-On: Working with Columns</h3>
+                <ul>
+                    <li><strong>Auto-fit column width:</strong> Double-click the border between column headers</li>
+                    <li><strong>Manual column width:</strong> Drag the border between column headers</li>
+                    <li><strong>Auto-fit via menu:</strong> Home tab &rarr; Format &rarr; AutoFit Column Width</li>
+                </ul>
+
+                <h3>Hands-On: Number Formatting</h3>
+                <ul>
+                    <li><strong>Apply currency format:</strong> Select cells &rarr; Home tab &rarr; Number section &rarr; Currency ($)</li>
+                    <li>Or: Right-click &rarr; Format Cells &rarr; Currency</li>
+                </ul>
+
+                <div class="key-point">
+                    <strong>Format as Table:</strong> Home tab &rarr; Format as Table adds filters and alternating row colors in one click &mdash; a fast way to make raw data readable. See the Data Manipulation section for a visual example.
+                </div>
+            </div>
+
+            <div class="major-section" id="formulas">
+                <h2>3. Formulas</h2>
+
+                <div class="content-section">
+                    <p>Every formula starts with an equal sign (<code>=</code>) to signal to Excel that a calculation follows. Formulas are <strong>dynamic</strong> &mdash; they update automatically whenever the cells they reference change, which is what makes Excel more powerful than a static table.</p>
+                </div>
+
+                <h3 class="sr-only">Excel Formulas: Quick Reference</h3>
+                <figure>
+                <svg viewBox="0 0 1024 716" xmlns="http://www.w3.org/2000/svg"
+                    role="img" aria-labelledby="diagram-title diagram-desc">
+
+                <title id="diagram-title">Excel Formulas: Quick Reference</title>
+                <desc id="diagram-desc">
+                    A quick reference sheet for Excel formulas. General syntax: equals
+                    sign, function name, then arguments in parentheses. Always starts
+                    with an equals sign, followed by the function name, followed by
+                    parentheses containing the arguments. Six common formulas are
+                    listed: SUM adds all numbers in a range of cells, example equals
+                    SUM open paren B2 colon B6 close paren. AVERAGE calculates the
+                    average of a range, example equals AVERAGE open paren C2 colon C10
+                    close paren. COUNT counts cells containing numbers, example equals
+                    COUNT open paren A1 colon A20 close paren. MAX slash MIN finds the
+                    largest or smallest value in a range, example equals MAX open paren
+                    D3 colon D12 close paren or equals MIN open paren D3 colon D12
+                    close paren. IF tests a condition and returns values, example
+                    equals IF open paren A2 greater than 100 comma quote High quote
+                    comma quote Low quote close paren. Absolute References use a
+                    dollar symbol to lock a row or column when a formula is copied,
+                    example equals A1 asterisk dollar B dollar 2, where B2 stays
+                    fixed. A reminder at the bottom notes that formulas are dynamic
+                    and update automatically when cell values change.
+                </desc>
+
+                <!-- ============ TITLE ============ -->
+                <text x="512" y="48" font-size="30" font-weight="700" fill="#1e7a45" text-anchor="middle">
+                    Excel Formulas: Quick Reference
+                </text>
+
+                <!-- ============ SYNTAX BOX ============ -->
+                <g role="group" aria-label="General syntax: equals sign, function name, open parenthesis, arguments, close parenthesis. Always starts with an equals sign, followed by the function name, followed by parentheses containing the arguments.">
+                    <rect x="8" y="88" width="1008" height="100" rx="6" fill="#eaf3fc" stroke="#1e7a45" stroke-width="2" aria-hidden="true"/>
+                    <text x="512" y="132" font-size="24" font-weight="600" fill="#222222" text-anchor="middle" font-family="Consolas, 'Courier New', monospace">
+                    = FUNCTION_NAME ( arguments )
+                    </text>
+                    <text x="512" y="168" font-size="15" fill="#444444" text-anchor="middle">
+                    Always starts with equals sign | Function name | Parentheses containing arguments
+                    </text>
+                </g>
+
+                <!-- ============ SECTION HEADING ============ -->
+                <text x="40" y="232" font-size="22" font-weight="700" fill="#1e7a45">Common Formulas</text>
+
+                <!-- ============ CARD: SUM ============ -->
+                <g role="group" aria-labelledby="sum-title">
+                    <rect x="40" y="262" width="440" height="110" rx="6" fill="#eeeeee" aria-hidden="true"/>
+                    <text id="sum-title" x="64" y="298" font-size="19" font-weight="700" fill="#1a1a1a">SUM</text>
+                    <text x="64" y="325" font-size="15" fill="#333333">Adds all numbers in a range of cells</text>
+                    <text x="64" y="350" font-size="15" fill="#1e7a45" font-family="Consolas, 'Courier New', monospace">=SUM(B2:B6)</text>
+                </g>
+
+                <!-- ============ CARD: AVERAGE ============ -->
+                <g role="group" aria-labelledby="average-title">
+                    <rect x="544" y="262" width="440" height="110" rx="6" fill="#eeeeee" aria-hidden="true"/>
+                    <text id="average-title" x="568" y="298" font-size="19" font-weight="700" fill="#1a1a1a">AVERAGE</text>
+                    <text x="568" y="325" font-size="15" fill="#333333">Calculates the average of a range</text>
+                    <text x="568" y="350" font-size="15" fill="#1e7a45" font-family="Consolas, 'Courier New', monospace">=AVERAGE(C2:C10)</text>
+                </g>
+
+                <!-- ============ CARD: COUNT ============ -->
+                <g role="group" aria-labelledby="count-title">
+                    <rect x="40" y="392" width="440" height="110" rx="6" fill="#eeeeee" aria-hidden="true"/>
+                    <text id="count-title" x="64" y="428" font-size="19" font-weight="700" fill="#1a1a1a">COUNT</text>
+                    <text x="64" y="455" font-size="15" fill="#333333">Counts cells containing numbers</text>
+                    <text x="64" y="480" font-size="15" fill="#1e7a45" font-family="Consolas, 'Courier New', monospace">=COUNT(A1:A20)</text>
+                </g>
+
+                <!-- ============ CARD: MAX / MIN ============ -->
+                <g role="group" aria-labelledby="maxmin-title">
+                    <rect x="544" y="392" width="440" height="110" rx="6" fill="#eeeeee" aria-hidden="true"/>
+                    <text id="maxmin-title" x="568" y="428" font-size="19" font-weight="700" fill="#1a1a1a">MAX / MIN</text>
+                    <text x="568" y="455" font-size="15" fill="#333333">Finds largest/smallest value in range</text>
+                    <text x="568" y="480" font-size="15" fill="#1e7a45" font-family="Consolas, 'Courier New', monospace">=MAX(D3:D12) or =MIN(D3:D12)</text>
+                </g>
+
+                <!-- ============ CARD: IF ============ -->
+                <g role="group" aria-labelledby="if-title">
+                    <rect x="40" y="522" width="440" height="110" rx="6" fill="#eeeeee" aria-hidden="true"/>
+                    <text id="if-title" x="64" y="558" font-size="19" font-weight="700" fill="#1a1a1a">IF</text>
+                    <text x="64" y="585" font-size="15" fill="#333333">Tests a condition and returns values</text>
+                    <text x="64" y="610" font-size="15" fill="#1e7a45" font-family="Consolas, 'Courier New', monospace">=IF(A2&gt;100,"High","Low")</text>
+                </g>
+
+                <!-- ============ CARD: Absolute References ============ -->
+                <g role="group" aria-labelledby="absref-title">
+                    <rect x="544" y="522" width="440" height="110" rx="6" fill="#eeeeee" aria-hidden="true"/>
+                    <text id="absref-title" x="568" y="558" font-size="19" font-weight="700" fill="#1a1a1a">Absolute References</text>
+                    <text x="568" y="585" font-size="15" fill="#333333">$ symbol locks row/column when copied</text>
+                    <text x="568" y="610" font-size="15" fill="#1e7a45" font-family="Consolas, 'Courier New', monospace">=A1*$B$2 (B2 stays fixed)</text>
+                </g>
+
+                <!-- ============ FOOTER NOTE ============ -->
+                <g role="group" aria-label="Reminder: formulas are dynamic and update automatically when cell values change.">
+                    <rect x="40" y="652" width="944" height="46" rx="6" fill="#e9f7ed" stroke="#1e7a45" stroke-width="1.5" aria-hidden="true"/>
+                    <text x="512" y="681" font-size="15" fill="#1a1a1a" text-anchor="middle">
+                    Remember: Formulas are dynamic and update automatically when cell values change!
+                    </text>
+                </g>
+
+                </svg>
+                </figure>
+                <figcaption style="text-align:center;color:#666;font-size:0.85rem;margin-top:0.75rem;">
+                Six common Excel formulas: SUM, AVERAGE, COUNT, MAX/MIN, IF, and Absolute References.
+                </figcaption>
+
+                <h3>Basic Formulas</h3>
+                <ul>
+                    <li><strong>Simple calculation:</strong> <code>=B2*(1+C2)</code> (multiply cells)</li>
+                    <li><strong>SUM function:</strong> <code>=SUM(D2:D4)</code> (add a range of cells)</li>
+                    <li><strong>All formulas start with</strong> <code>=</code></li>
+                </ul>
+
+                <h3>Absolute Cell References</h3>
+                <ul>
+                    <li><strong>Relative reference:</strong> <code>B2</code> (changes when copied)</li>
+                    <li><strong>Absolute reference:</strong> <code>$B$2</code> (stays locked when copied)</li>
+                    <li><strong>Mixed references:</strong> <code>$B2</code> or <code>B$2</code> (locks column or row only)</li>
+                    <li><strong>Shortcut:</strong> Press <code>F4</code> to cycle through reference types (Windows)</li>
+                    <li><strong>Example:</strong> <code>=B2*(1+$F$2)</code> &mdash; locks the tax rate cell</li>
+                </ul>
+
+                <h3>TEXT Function</h3>
+                <ul>
+                    <li><strong>Purpose:</strong> Standardize date or number formats</li>
+                    <li><strong>Syntax:</strong> <code>=TEXT(cell, "format_code")</code></li>
+                    <li><strong>Examples:</strong>
+                        <ul>
+                            <li><code>=TEXT(E2,"MM/DD/YYYY")</code> &rarr; 01/15/2025</li>
+                            <li><code>=TEXT(E2,"MMMM DD, YYYY")</code> &rarr; January 15, 2025</li>
+                            <li><code>=TEXT(A2,"$#,##0.00")</code> &rarr; $1,234.56</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="key-point">
+                    <strong>Fill Handle:</strong> Once a formula works in one cell, drag the Fill Handle (the black crosshair at the bottom-right corner) down or across to copy it &mdash; relative references adjust automatically, absolute references ($) stay put.
+                </div>
+            </div>
+
+            <div class="major-section" id="data-manipulation">
+                <h2>4. Data Manipulation</h2>
+
+                <div class="content-section">
+                    <p>The <strong>Data tab</strong> offers options to sort, filter, and validate data, while several of these tools &mdash; conditional formatting and Format as Table &mdash; live on the <strong>Home tab</strong> since they're about presentation as much as data management.</p>
+                </div>
+
+                <h3 class="sr-only">Excel Data Tools: At a Glance</h3>
+                <figure>
+                <svg viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg"
+                    role="img" aria-labelledby="diagram-title diagram-desc">
+
+                <title id="diagram-title">Excel Data Tools: At a Glance</title>
+                <desc id="diagram-desc">
+                    Four panels showing common Excel data tools. Filtering: a product
+                    table with columns Product, Category, and Price, and an open
+                    dropdown filter on the Category column showing checkboxes for
+                    Select All, Electronics (checked), Books, and Clothing. Found in
+                    the Data tab, under Filter. Shows only rows that meet the chosen
+                    criteria. Conditional Formatting: a table of sales reps and their
+                    performance, color-coded green for Smith at 120 percent, yellow
+                    for Johnson at 85 percent, and red for Williams at 65 percent,
+                    with a legend showing green means above 100 percent, yellow means
+                    70 to 100 percent, and red means below 70 percent. Found in the
+                    Home tab, under Conditional Formatting. Format as Table: a simple
+                    monthly sales table with a styled header row and alternating row
+                    shading, for January at 5,400 dollars, February at 6,200 dollars,
+                    and March at 7,100 dollars. Found in the Home tab, under Format as
+                    Table; it adds filters, alternating colors, and more. Sorting: a
+                    Name and Value table listing Charlie 75, Alice 90, and Bob 60, with
+                    an arrow to a second table showing the names resorted
+                    alphabetically as Alice, Bob, then Charlie. Found in the Data tab,
+                    under Sort; it organizes data alphabetically or numerically.
+                </desc>
+
+                <!-- ============ MAIN TITLE ============ -->
+                <text x="600" y="50" font-size="34" font-weight="700" fill="#1e7a45" text-anchor="middle">
+                    Excel Data Tools: At a Glance
+                </text>
+
+                <!-- ================================================================= -->
+                <!-- PANEL 1: FILTERING -->
+                <!-- ================================================================= -->
+                <g role="group" aria-labelledby="filtering-title">
+                    <rect x="40" y="90" width="540" height="380" rx="12" fill="#f7f7f7" stroke="#1e7a45" stroke-width="2" aria-hidden="true"/>
+                    <text id="filtering-title" x="310" y="140" font-size="26" font-weight="700" fill="#1e7a45" text-anchor="middle">Filtering</text>
+
+                    <!-- base table -->
+                    <g aria-label="Product table with columns Product, Category, and Price. Rows: Laptop; Headphones. The Category filter dropdown is open, partly covering the Category and Price columns.">
+                    <rect x="70" y="180" width="150" height="34" fill="#dcdcdc" stroke="#999" aria-hidden="true"/>
+                    <rect x="220" y="180" width="150" height="34" fill="#dcdcdc" stroke="#999" aria-hidden="true"/>
+                    <rect x="370" y="180" width="130" height="34" fill="#dcdcdc" stroke="#999" aria-hidden="true"/>
+                    <text x="145" y="203" font-size="16" fill="#222" text-anchor="middle">Product</text>
+                    <text x="270" y="203" font-size="16" fill="#222" text-anchor="middle">Category</text>
+                    <text x="435" y="203" font-size="16" fill="#222" text-anchor="middle">Price</text>
+                    <!-- dropdown chevron icon -->
+                    <rect x="330" y="187" width="20" height="20" rx="3" fill="#1e7a45" aria-hidden="true"/>
+                    <path d="M334 194 L340 200 L346 194" stroke="#ffffff" stroke-width="2" fill="none" aria-hidden="true"/>
+
+                    <rect x="70" y="214" width="150" height="34" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <rect x="220" y="214" width="150" height="34" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <rect x="370" y="214" width="130" height="34" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <text x="80" y="237" font-size="15" fill="#222">Laptop</text>
+
+                    <rect x="70" y="248" width="150" height="34" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <rect x="220" y="248" width="150" height="34" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <rect x="370" y="248" width="130" height="34" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <text x="80" y="271" font-size="15" fill="#222">Headphones</text>
+                    </g>
+
+                    <!-- open dropdown -->
+                    <g aria-label="Open Category filter dropdown with checkboxes: Select All (unchecked), Electronics (checked), Books (unchecked), Clothing (unchecked).">
+                    <rect x="220" y="214" width="300" height="180" fill="#ffffff" stroke="#333" stroke-width="1.5" aria-hidden="true"/>
+
+                    <rect x="238" y="228" width="20" height="20" fill="#ffffff" stroke="#555" aria-hidden="true"/>
+                    <text x="270" y="244" font-size="16" fill="#222">(Select All)</text>
+
+                    <rect x="238" y="262" width="20" height="20" fill="#ffffff" stroke="#1e7a45" stroke-width="2" aria-hidden="true"/>
+                    <path d="M241 272 L248 279 L257 265" stroke="#1e7a45" stroke-width="2.5" fill="none" aria-hidden="true"/>
+                    <text x="270" y="278" font-size="16" fill="#222">Electronics</text>
+
+                    <rect x="238" y="296" width="20" height="20" fill="#ffffff" stroke="#555" aria-hidden="true"/>
+                    <text x="270" y="312" font-size="16" fill="#222">Books</text>
+
+                    <rect x="238" y="330" width="20" height="20" fill="#ffffff" stroke="#555" aria-hidden="true"/>
+                    <text x="270" y="346" font-size="16" fill="#222">Clothing</text>
+                    </g>
+
+                    <text x="310" y="435" font-size="15" fill="#333" text-anchor="middle">Found in: Data tab &#8594; Filter</text>
+                    <text x="310" y="458" font-size="15" fill="#333" text-anchor="middle">Show only rows that meet criteria</text>
+                </g>
+
+                <!-- ================================================================= -->
+                <!-- PANEL 2: CONDITIONAL FORMATTING -->
+                <!-- ================================================================= -->
+                <g role="group" aria-labelledby="condformat-title">
+                    <rect x="620" y="90" width="540" height="380" rx="12" fill="#f7f7f7" stroke="#1e7a45" stroke-width="2" aria-hidden="true"/>
+                    <text id="condformat-title" x="890" y="140" font-size="26" font-weight="700" fill="#1e7a45" text-anchor="middle">Conditional Formatting</text>
+
+                    <g aria-label="Sales Rep and Performance table. Smith: 120 percent, shaded green for above 100 percent. Johnson: 85 percent, shaded yellow for 70 to 100 percent. Williams: 65 percent, shaded red for below 70 percent.">
+                    <rect x="650" y="180" width="230" height="36" fill="#dcdcdc" stroke="#999" aria-hidden="true"/>
+                    <rect x="880" y="180" width="230" height="36" fill="#dcdcdc" stroke="#999" aria-hidden="true"/>
+                    <text x="765" y="204" font-size="16" fill="#222" text-anchor="middle">Sales Rep</text>
+                    <text x="995" y="204" font-size="16" fill="#222" text-anchor="middle">Performance</text>
+
+                    <rect x="650" y="216" width="230" height="40" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <rect x="880" y="216" width="230" height="40" fill="#8bd15e" stroke="#999" aria-hidden="true"/>
+                    <text x="660" y="241" font-size="16" fill="#222">Smith</text>
+                    <text x="995" y="241" font-size="16" fill="#1a1a1a" text-anchor="middle">120%</text>
+
+                    <rect x="650" y="256" width="230" height="40" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <rect x="880" y="256" width="230" height="40" fill="#f2e18c" stroke="#999" aria-hidden="true"/>
+                    <text x="660" y="281" font-size="16" fill="#222">Johnson</text>
+                    <text x="995" y="281" font-size="16" fill="#1a1a1a" text-anchor="middle">85%</text>
+
+                    <rect x="650" y="296" width="230" height="40" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <rect x="880" y="296" width="230" height="40" fill="#f2938e" stroke="#999" aria-hidden="true"/>
+                    <text x="660" y="321" font-size="16" fill="#222">Williams</text>
+                    <text x="995" y="321" font-size="16" fill="#1a1a1a" text-anchor="middle">65%</text>
+                    </g>
+
+                    <g aria-label="Legend: green means above 100 percent, yellow means 70 to 100 percent, red means below 70 percent.">
+                    <rect x="650" y="360" width="26" height="26" fill="#8bd15e" aria-hidden="true"/>
+                    <text x="686" y="379" font-size="15" fill="#333">Above 100%</text>
+                    <rect x="830" y="360" width="26" height="26" fill="#f2e18c" aria-hidden="true"/>
+                    <text x="866" y="379" font-size="15" fill="#333">70-100%</text>
+                    <rect x="980" y="360" width="26" height="26" fill="#f2938e" aria-hidden="true"/>
+                    <text x="1016" y="379" font-size="15" fill="#333">Below 70%</text>
+                    </g>
+
+                    <text x="890" y="440" font-size="15" fill="#333" text-anchor="middle">Home tab &#8594; Conditional Formatting</text>
+                </g>
+
+                <!-- ================================================================= -->
+                <!-- PANEL 3: FORMAT AS TABLE (single example table) -->
+                <!-- ================================================================= -->
+                <g role="group" aria-labelledby="formatastable-title">
+                    <rect x="40" y="490" width="540" height="380" rx="12" fill="#f7f7f7" stroke="#1e7a45" stroke-width="2" aria-hidden="true"/>
+                    <text id="formatastable-title" x="310" y="540" font-size="26" font-weight="700" fill="#1e7a45" text-anchor="middle">Format as Table</text>
+
+                    <g aria-label="Month and Sales table styled as an Excel table, with a dark header row and alternating row shading. January: 5,400 dollars. February: 6,200 dollars. March: 7,100 dollars.">
+                    <rect x="140" y="590" width="150" height="36" fill="#3f5fa0" aria-hidden="true"/>
+                    <rect x="290" y="590" width="180" height="36" fill="#3f5fa0" aria-hidden="true"/>
+                    <text x="215" y="614" font-size="16" fill="#ffffff" font-weight="600" text-anchor="middle">Month</text>
+                    <text x="380" y="614" font-size="16" fill="#ffffff" font-weight="600" text-anchor="middle">Sales</text>
+
+                    <rect x="140" y="626" width="150" height="38" fill="#dbe3f5" stroke="#c7cfe0" aria-hidden="true"/>
+                    <rect x="290" y="626" width="180" height="38" fill="#dbe3f5" stroke="#c7cfe0" aria-hidden="true"/>
+                    <text x="215" y="650" font-size="16" fill="#222" text-anchor="middle">Jan</text>
+                    <text x="380" y="650" font-size="16" fill="#222" text-anchor="middle">$5,400</text>
+
+                    <rect x="140" y="664" width="150" height="38" fill="#ffffff" stroke="#c7cfe0" aria-hidden="true"/>
+                    <rect x="290" y="664" width="180" height="38" fill="#ffffff" stroke="#c7cfe0" aria-hidden="true"/>
+                    <text x="215" y="688" font-size="16" fill="#222" text-anchor="middle">Feb</text>
+                    <text x="380" y="688" font-size="16" fill="#222" text-anchor="middle">$6,200</text>
+
+                    <rect x="140" y="702" width="150" height="38" fill="#dbe3f5" stroke="#c7cfe0" aria-hidden="true"/>
+                    <rect x="290" y="702" width="180" height="38" fill="#dbe3f5" stroke="#c7cfe0" aria-hidden="true"/>
+                    <text x="215" y="726" font-size="16" fill="#222" text-anchor="middle">Mar</text>
+                    <text x="380" y="726" font-size="16" fill="#222" text-anchor="middle">$7,100</text>
+                    </g>
+
+                    <text x="310" y="800" font-size="15" fill="#333" text-anchor="middle">Home tab &#8594; Format as Table</text>
+                    <text x="310" y="825" font-size="15" fill="#333" text-anchor="middle">Adds filters, alternating colors, and more</text>
+                </g>
+
+                <!-- ================================================================= -->
+                <!-- PANEL 4: SORTING -->
+                <!-- ================================================================= -->
+                <g role="group" aria-labelledby="sorting-title">
+                    <rect x="620" y="490" width="540" height="380" rx="12" fill="#f7f7f7" stroke="#1e7a45" stroke-width="2" aria-hidden="true"/>
+                    <text id="sorting-title" x="890" y="540" font-size="26" font-weight="700" fill="#1e7a45" text-anchor="middle">Sorting</text>
+
+                    <g aria-label="Name and Value table before sorting: Charlie 75, Alice 90, Bob 60.">
+                    <rect x="650" y="590" width="120" height="34" fill="#dcdcdc" stroke="#999" aria-hidden="true"/>
+                    <rect x="770" y="590" width="110" height="34" fill="#dcdcdc" stroke="#999" aria-hidden="true"/>
+                    <text x="710" y="613" font-size="16" fill="#222" text-anchor="middle">Name</text>
+                    <text x="825" y="613" font-size="16" fill="#222" text-anchor="middle">Value</text>
+
+                    <rect x="650" y="624" width="120" height="36" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <rect x="770" y="624" width="110" height="36" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <text x="660" y="647" font-size="15" fill="#222">Charlie</text>
+                    <text x="825" y="647" font-size="15" fill="#222" text-anchor="middle">75</text>
+
+                    <rect x="650" y="660" width="120" height="36" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <rect x="770" y="660" width="110" height="36" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <text x="660" y="683" font-size="15" fill="#222">Alice</text>
+                    <text x="825" y="683" font-size="15" fill="#222" text-anchor="middle">90</text>
+
+                    <rect x="650" y="696" width="120" height="36" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <rect x="770" y="696" width="110" height="36" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <text x="660" y="719" font-size="15" fill="#222">Bob</text>
+                    <text x="825" y="719" font-size="15" fill="#222" text-anchor="middle">60</text>
+                    </g>
+
+                    <g aria-hidden="true">
+                    <line x1="900" y1="660" x2="945" y2="660" stroke="#1e7a45" stroke-width="2.5"/>
+                    <path d="M935 650 L950 660 L935 670" fill="none" stroke="#1e7a45" stroke-width="2.5"/>
+                    </g>
+
+                    <g aria-label="Name table after sorting alphabetically: Alice, Bob, Charlie.">
+                    <rect x="960" y="590" width="160" height="34" fill="#dcdcdc" stroke="#999" aria-hidden="true"/>
+                    <text x="1040" y="613" font-size="16" fill="#222" text-anchor="middle">Name</text>
+
+                    <rect x="960" y="624" width="160" height="36" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <text x="1040" y="647" font-size="15" fill="#222" text-anchor="middle">Alice</text>
+
+                    <rect x="960" y="660" width="160" height="36" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <text x="1040" y="683" font-size="15" fill="#222" text-anchor="middle">Bob</text>
+
+                    <rect x="960" y="696" width="160" height="36" fill="#ffffff" stroke="#999" aria-hidden="true"/>
+                    <text x="1040" y="719" font-size="15" fill="#222" text-anchor="middle">Charlie</text>
+                    </g>
+
+                    <text x="890" y="800" font-size="15" fill="#333" text-anchor="middle">Found in: Data tab &#8594; Sort</text>
+                    <text x="890" y="825" font-size="15" fill="#333" text-anchor="middle">Organize data alphabetically or numerically</text>
+                </g>
+
+                </svg>
+                </figure>
+                <figcaption style="text-align:center;color:#666;font-size:0.85rem;margin-top:0.75rem;">
+                Four Excel data tools: Filtering, Conditional Formatting, Format as Table, and Sorting.
+                </figcaption>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4><i class="bi bi-palette"></i> Conditional Formatting</h4>
+                        <p>Highlights cells that meet specific criteria &mdash; for example, coloring performance percentages green, yellow, or red. Found under Home tab &rarr; Conditional Formatting.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="bi bi-table"></i> Format as Table</h4>
+                        <p>Provides consistent formatting with alternating row colors, plus built-in filter arrows, in a single click. Found under Home tab &rarr; Format as Table.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="bi bi-funnel"></i> Filtering</h4>
+                        <p>Shows only the rows that meet criteria you choose &mdash; check or uncheck categories from a dropdown. Found under Data tab &rarr; Filter.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="bi bi-sort-alpha-down"></i> Sorting</h4>
+                        <p>Organizes data alphabetically or numerically, ascending or descending. Found under Data tab &rarr; Sort.</p>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    <strong>Data Validation</strong> (Data tab) creates dropdown lists so data entry stays consistent, and <strong>Pivot Tables</strong> summarize large datasets for analysis &mdash; both are worth exploring once you're comfortable with sorting and filtering.
+                </div>
+            </div>
+
+            <div class="major-section" id="charts">
+                <h2>5. Charts</h2>
+
+                <div class="content-section">
+                    <p>Charts turn rows of numbers into something a reader can understand at a glance. The <strong>Insert tab</strong> is where every chart begins &mdash; select your data first, then choose a chart type.</p>
+                </div>
+
+                <h3 class="sr-only">Excel Chart Formatting Guide</h3>
+                <figure>
+                <svg viewBox="0 0 1200 990" xmlns="http://www.w3.org/2000/svg"
+                    role="img" aria-labelledby="diagram-title diagram-desc">
+
+                <title id="diagram-title">Excel Chart Formatting Guide</title>
+                <desc id="diagram-desc">
+                    A guide to formattable chart elements, illustrated with a bar chart
+                    titled Monthly Sales Report, showing Revenue by month: Jan 3,000
+                    dollars, Feb 3,500 dollars, Mar 4,000 dollars, Apr 4,500 dollars,
+                    May 3,500 dollars, Jun 2,500 dollars, Jul 2,000 dollars, on a
+                    vertical axis from 0 to 5,000 dollars and a horizontal axis labeled
+                    Month. Three formattable elements are called out: Chart Title, which
+                    lets you add descriptive titles, change font, size, or color, add or
+                    remove it as needed, and right-click to format it. Axes, which let
+                    you add axis labels, format numbers or dates, adjust scales or
+                    intervals, and add gridlines. Legend, which shows the data series,
+                    lets you customize its position, format its font and colors, and
+                    show or hide it as needed. A footer note reminds you to right-click
+                    any chart element to format it, or select the chart and use the
+                    Chart Tools tabs in the ribbon.
+                </desc>
+
+                <!-- ============ MAIN TITLE ============ -->
+                <text x="600" y="48" font-size="32" font-weight="700" fill="#1e7a45" text-anchor="middle">
+                    Excel Chart Formatting Guide
+                </text>
+
+                <!-- ================================================================= -->
+                <!-- CHART PANEL -->
+                <!-- ================================================================= -->
+                <rect x="30" y="80" width="1140" height="520" rx="12" fill="#f7f7f7" stroke="#d5d5d5" stroke-width="1.5" aria-hidden="true"/>
+
+                <g role="group" aria-label="Bar chart titled Monthly Sales Report, showing Revenue by month. Vertical axis in dollars from 0 to 5,000. January 3,000 dollars, February 3,500 dollars, March 4,000 dollars, April 4,500 dollars, May 3,500 dollars, June 2,500 dollars, July 2,000 dollars.">
+
+                    <!-- gridlines -->
+                    <g aria-hidden="true" stroke="#c2c2e2" stroke-width="1">
+                    <line x1="190" y1="300" x2="1050" y2="300"/>
+                    <line x1="190" y1="356" x2="1050" y2="356"/>
+                    <line x1="190" y1="412" x2="1050" y2="412"/>
+                    <line x1="190" y1="468" x2="1050" y2="468"/>
+                    <line x1="190" y1="524" x2="1050" y2="524"/>
+                    </g>
+
+                    <!-- axes lines -->
+                    <g aria-hidden="true" stroke="#333333" stroke-width="1.5">
+                    <line x1="190" y1="300" x2="190" y2="580"/>
+                    <line x1="190" y1="580" x2="1050" y2="580"/>
+                    </g>
+
+                    <!-- y-axis labels -->
+                    <text x="175" y="305" font-size="17" fill="#333" text-anchor="end">$5,000</text>
+                    <text x="175" y="361" font-size="17" fill="#333" text-anchor="end">$4,000</text>
+                    <text x="175" y="417" font-size="17" fill="#333" text-anchor="end">$3,000</text>
+                    <text x="175" y="473" font-size="17" fill="#333" text-anchor="end">$2,000</text>
+                    <text x="175" y="529" font-size="17" fill="#333" text-anchor="end">$1,000</text>
+                    <text x="175" y="585" font-size="17" fill="#333" text-anchor="end">$0</text>
+
+                    <!-- bars -->
+                    <g aria-hidden="true" fill="#3f5fa0">
+                    <rect x="216" y="412" width="70" height="168"/>
+                    <rect x="339" y="384" width="70" height="196"/>
+                    <rect x="462" y="356" width="70" height="224"/>
+                    <rect x="585" y="328" width="70" height="252"/>
+                    <rect x="708" y="384" width="70" height="196"/>
+                    <rect x="831" y="440" width="70" height="140"/>
+                    <rect x="954" y="468" width="70" height="112"/>
+                    </g>
+
+                    <!-- month labels -->
+                    <text x="251" y="605" font-size="16" fill="#333" text-anchor="middle">Jan</text>
+                    <text x="374" y="605" font-size="16" fill="#333" text-anchor="middle">Feb</text>
+                    <text x="497" y="605" font-size="16" fill="#333" text-anchor="middle">Mar</text>
+                    <text x="620" y="605" font-size="16" fill="#333" text-anchor="middle">Apr</text>
+                    <text x="743" y="605" font-size="16" fill="#333" text-anchor="middle">May</text>
+                    <text x="866" y="605" font-size="16" fill="#333" text-anchor="middle">Jun</text>
+                    <text x="989" y="605" font-size="16" fill="#333" text-anchor="middle">Jul</text>
+
+                    <text x="620" y="647" font-size="18" font-weight="700" fill="#2255aa" text-anchor="middle">Month</text>
+                </g>
+
+                <!-- blue dashed highlight around the axes -->
+                <g aria-hidden="true" stroke="#2255aa" stroke-width="2" stroke-dasharray="6,4" fill="none">
+                    <rect x="120" y="285" width="65" height="305"/>
+                    <rect x="200" y="580" width="830" height="50"/>
+                </g>
+
+                <!-- chart title callout -->
+                <g>
+                    <rect x="430" y="108" width="340" height="55" rx="4" fill="#fdf6e3" stroke="#e5a326" stroke-width="2" stroke-dasharray="6,4" aria-hidden="true"/>
+                    <text x="600" y="143" font-size="22" font-weight="700" fill="#1a1a1a" text-anchor="middle">Monthly Sales Report</text>
+                </g>
+
+                <!-- legend callout (also serves as the chart's actual legend) -->
+                <g role="group" aria-label="Legend: blue square represents Revenue.">
+                    <rect x="850" y="198" width="280" height="72" rx="4" fill="#fdf6e3" stroke="#e5a326" stroke-width="2" stroke-dasharray="6,4" aria-hidden="true"/>
+                    <rect x="870" y="217" width="36" height="30" fill="#3f5fa0" stroke="#28407a" aria-hidden="true"/>
+                    <text x="920" y="240" font-size="19" fill="#222">Revenue</text>
+                </g>
+
+                <!-- ================================================================= -->
+                <!-- BOTTOM PANEL (drawn before the leader lines so the lines sit on top) -->
+                <!-- ================================================================= -->
+                <rect x="30" y="660" width="1140" height="315" rx="12" fill="#eef7ef" stroke="#d5d5d5" stroke-width="1.5" aria-hidden="true"/>
+
+                <!-- ================================================================= -->
+                <!-- LEADER LINES connecting chart callouts to bottom cards -->
+                <!-- ================================================================= -->
+                <g aria-hidden="true" fill="none">
+                    <line x1="600" y1="163" x2="235" y2="735" stroke="#e5a326" stroke-width="2"/>
+                    <line x1="190" y1="580" x2="605" y2="735" stroke="#2255aa" stroke-width="2"/>
+                    <line x1="990" y1="270" x2="975" y2="735" stroke="#e5a326" stroke-width="2"/>
+                </g>
+
+                <!-- "Chart Elements You Can Format" banner -->
+                <g>
+                    <rect x="30" y="660" width="380" height="46" rx="4" fill="#ffffff" stroke="#1e7a45" stroke-width="2" aria-hidden="true"/>
+                    <text x="220" y="691" font-size="22" font-weight="700" fill="#1e7a45" text-anchor="middle">Chart Elements You Can Format</text>
+                </g>
+
+                <!-- Card: Chart Title -->
+                <g role="group" aria-labelledby="charttitle-card-title">
+                    <rect x="70" y="735" width="330" height="170" rx="10" fill="#fdf3dc" stroke="#e5a326" stroke-width="2.5" aria-hidden="true"/>
+                    <text id="charttitle-card-title" x="235" y="770" font-size="22" font-weight="700" fill="#1a1a1a" text-anchor="middle">Chart Title</text>
+                    <text x="100" y="800" font-size="16" fill="#222">&#8226; Add descriptive titles</text>
+                    <text x="100" y="828" font-size="16" fill="#222">&#8226; Change font/size/color</text>
+                    <text x="100" y="856" font-size="16" fill="#222">&#8226; Add/remove as needed</text>
+                    <text x="100" y="884" font-size="16" fill="#222">&#8226; Right-click to format</text>
+                </g>
+
+                <!-- Card: Axes -->
+                <g role="group" aria-labelledby="axes-card-title">
+                    <rect x="440" y="735" width="330" height="170" rx="10" fill="#e4edfb" stroke="#2255aa" stroke-width="2.5" aria-hidden="true"/>
+                    <text id="axes-card-title" x="605" y="770" font-size="22" font-weight="700" fill="#1a1a1a" text-anchor="middle">Axes</text>
+                    <text x="470" y="800" font-size="16" fill="#222">&#8226; Add axis labels</text>
+                    <text x="470" y="828" font-size="16" fill="#222">&#8226; Format numbers/dates</text>
+                    <text x="470" y="856" font-size="16" fill="#222">&#8226; Adjust scales/intervals</text>
+                    <text x="470" y="884" font-size="16" fill="#222">&#8226; Add gridlines</text>
+                </g>
+
+                <!-- Card: Legend -->
+                <g role="group" aria-labelledby="legend-card-title">
+                    <rect x="810" y="735" width="330" height="170" rx="10" fill="#fdf3dc" stroke="#e5a326" stroke-width="2.5" aria-hidden="true"/>
+                    <text id="legend-card-title" x="975" y="770" font-size="22" font-weight="700" fill="#1a1a1a" text-anchor="middle">Legend</text>
+                    <text x="840" y="800" font-size="16" fill="#222">&#8226; Shows data series</text>
+                    <text x="840" y="828" font-size="16" fill="#222">&#8226; Customize position</text>
+                    <text x="840" y="856" font-size="16" fill="#222">&#8226; Format font/colors</text>
+                    <text x="840" y="884" font-size="16" fill="#222">&#8226; Show/hide as needed</text>
+                </g>
+
+                <!-- Footer note -->
+                <g role="group" aria-label="Right-click any chart element to format it, or select the chart and use the Chart Tools tabs in the ribbon.">
+                    <rect x="70" y="925" width="1070" height="42" rx="6" fill="#eef7ef" stroke="#1e7a45" stroke-width="1.5" aria-hidden="true"/>
+                    <text x="605" y="951" font-size="16" fill="#1e7a45" text-anchor="middle">
+                    Right-click any chart element to format OR select chart and use Chart Tools tabs in the ribbon
+                    </text>
+                </g>
+
+                </svg>
+                </figure>
+                <figcaption style="text-align:center;color:#666;font-size:0.85rem;margin-top:0.75rem;">
+                Formattable chart elements: Chart Title, Axes, and Legend.
+                </figcaption>
+                <ul>
+                    <li><strong>Insert tab</strong> allows creation of charts and other visual elements</li>
+                    <li>Excel recommends appropriate chart types based on the data you've selected</li>
+                    <li>Charts update automatically when the underlying data changes</li>
+                    <li>Chart elements (titles, axes, legends) can be edited for clarity</li>
+                </ul>
+
+                <div class="key-point">
+                    <strong>Editing chart elements:</strong> Right-click any chart element to format it, or select the chart and use the Chart Tools tabs that appear in the Ribbon.
+                </div>
+            </div>
+
+            <div class="major-section" id="quick-reference">
+                <h2>6. Quick Reference</h2>
+
+                <div class="content-section">
+                    <p>A condensed cheat sheet of keyboard shortcuts and printing steps for when you just need the answer fast.</p>
+                </div>
+
+                <h3>Keyboard Shortcuts</h3>
+                <div class="shortcut-grid">
+                    <div class="shortcut-item">
+                        <strong>Save:</strong> <code>Ctrl+S</code> (Mac: <code>Cmd+S</code>)
+                    </div>
+                    <div class="shortcut-item">
+                        <strong>Undo:</strong> <code>Ctrl+Z</code> (Mac: <code>Cmd+Z</code>)
+                    </div>
+                    <div class="shortcut-item">
+                        <strong>Copy:</strong> <code>Ctrl+C</code> (Mac: <code>Cmd+C</code>)
+                    </div>
+                    <div class="shortcut-item">
+                        <strong>Paste:</strong> <code>Ctrl+V</code> (Mac: <code>Cmd+V</code>)
+                    </div>
+                    <div class="shortcut-item">
+                        <strong>Bold:</strong> <code>Ctrl+B</code> (Mac: <code>Cmd+B</code>)
+                    </div>
+                    <div class="shortcut-item">
+                        <strong>Absolute Ref:</strong> <code>F4</code> (Windows)
+                    </div>
+                </div>
+
+                <h3>Printing &amp; Export</h3>
+                <ul>
+                    <li><strong>Print setup:</strong> File &rarr; Print</li>
+                    <li><strong>Fit to one page:</strong> Print settings &rarr; "Fit Sheet on One Page"</li>
+                    <li><strong>Adjust margins:</strong> Print settings &rarr; Margins dropdown</li>
+                    <li><strong>Print to PDF (Mac):</strong> Print dialog &rarr; PDF (bottom left) &rarr; Save as PDF</li>
+                    <li><strong>Print to PDF (Windows):</strong> Print dialog &rarr; Printer &rarr; Microsoft Print to PDF</li>
+                    <li><strong>Preview page breaks:</strong> View tab &rarr; Page Layout view</li>
+                </ul>
+            </div>
+
+            <div class="major-section" id="checklist">
+                <h2>7. Common Tasks Checklist</h2>
+
+                <div class="content-section">
+                    <p>Use this checklist to confirm you've covered the core skills from this guide before submitting an assignment.</p>
+                </div>
+
+                <div class="checklist">
+                    <ul>
+                        <li>Applied professional theme to workbook</li>
+                        <li>Formatted headers (bold, centered, larger font)</li>
+                        <li>Auto-fit all columns for readability</li>
+                        <li>Applied currency formatting to money columns</li>
+                        <li>Created formulas with proper cell references</li>
+                        <li>Used absolute references ($) where needed</li>
+                        <li>Standardized data with TEXT function</li>
+                        <li>Set up worksheet to print on one page</li>
+                        <li>Exported worksheet to PDF</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // JavaScript to handle the tabbed navigation functionality
+        document.querySelectorAll('.tab-link').forEach(tab => {
+            tab.addEventListener('click', function(event) {
+                setTimeout(() => {
+                    // Deactivate all tabs
+                    document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+                    // Activate the clicked tab
+                    tab.classList.add('active');
+
+                    // Hide all sections
+                    document.querySelectorAll('.major-section').forEach(section => section.classList.remove('active'));
+
+                    // Show the corresponding section
+                    const targetSection = document.querySelector(tab.getAttribute('href'));
+                    targetSection.classList.add('active');
+                }, 20);
+
+                setTimeout(() => {
+                    document.getElementById('top').scrollIntoView({
+                        behavior: 'instant',
+                        block: 'start'
+                    });
+                }, 10);
+            });
+        });
+    </script>
+</body>
+</html>
